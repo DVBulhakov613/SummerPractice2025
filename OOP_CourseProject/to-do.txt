@@ -1,0 +1,42 @@
+﻿top priorities:
+- implement functionality
+-- considering the amount of fields, i can probably use the get; set; properties instead of methods for validation
+- add tests to cover important cases
+- expand to UI
+- add more features in general?
+- think through the design of both UI and backend
+- think through how to handle the data
+- think through how to handle multiple Employee roles
+-- specifically, how to handle access to different parts of the system for the same Employee
+--- how to handle this in the UI is also very important
+- figure out *good* places to add delegates and events
+
+- more interfaces could be good!
+-- define common behavior for classes and use interfaces for it
+
+
+low priorities:
+- add more tests to cover all cases
+- idk
+
+
+potential features:
+- implement an Authentication system
+- implement a Report / Feedback system
+- statistics
+
+
+
+misc:
+- phone number validation for Person?
+- method to update email?
+
+- method to update Package.CurrentLocation?
+- method to update Package.Log?
+- ensure validation of Package.PackageID
+
+- ensure valid range for Coordinates.Latitude and Coordinates.Longitude
+
+- ensure validation of BaseLocation.LocationID
+- methods to manage Staff and StoredPackages
+
