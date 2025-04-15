@@ -1,21 +1,26 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.ComponentModel.DataAnnotations;
 using System.Linq;
 using System.Text;
 using System.Text.RegularExpressions;
 using System.Threading.Tasks;
 
-namespace OOP_CourseProject
+namespace Class_Lib
 {
-    public class Person
+    public class Person : IHasIdentification
     {
-        public int ID { get; init; }
-        public required string Name { get; set; }
-        public required string Surname { get; set; }
-        public required string PhoneNumber { get; set; }
+        public uint ID { get; private set; }
+        public string Name { get; set; }
+        public string Surname { get; set; }
+        public string FullName { get => Name + " " + Surname; }
+        public string PhoneNumber { get; set; }
         public string? Email { get; private set; }
+        protected Person()
+        {
+        }
 
-        public Person(int id, string name, string surname, string phoneNumber, string? email = null)
+        public Person(uint id, string name, string surname, string phoneNumber, string? email = null)
         {
             ID = id;
             Name = name;
@@ -28,5 +33,7 @@ namespace OOP_CourseProject
         // regex for future use (Email validation) @"^[^@\s]+@[^@\s]+\.[^@\s]+$"
         // follows a format of *@*.* where * is any character except for whitespace or @
 
+        [Timestamp] // concurrency token property
+        public byte[] RowVersion { get; set; }
     }
 }

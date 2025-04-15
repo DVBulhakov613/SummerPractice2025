@@ -4,7 +4,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace OOP_CourseProject.Package_related
+namespace Class_Lib
 {
     public enum ContentType
     {
