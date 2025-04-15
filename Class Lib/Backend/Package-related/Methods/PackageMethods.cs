@@ -24,19 +24,31 @@ namespace Class_Lib.Backend.Package_related
             return await _packageRepository.GetAllAsync();
         }
 
-        public async Task AddPackageAsync(Person user, Package package, Client client)
+        public async Task AddPackageSentAsync(Person user, Package package, Client client)
         {
             if (!AccessService.CanPerformAction(user.GetType(), "CreatePackage"))
             {
                 throw new UnauthorizedAccessException("Немає доступу до створення посилки.");
             }
 
-            client.Packages.Add(package);
+            client.PackagesSent.Add(package);
 
             await _packageRepository.AddAsync(package);
         }
 
-        public async Task DeletePackageAsync(Person user, Package package)
+        public async Task AddPackageReceivedAsync(Person user, Package package, Client client)
+        {
+            if (!AccessService.CanPerformAction(user.GetType(), "CreatePackage"))
+            {
+                throw new UnauthorizedAccessException("Немає доступу до створення посилки.");
+            }
+
+            client.PackagesReceived.Add(package);
+
+            await _packageRepository.AddAsync(package);
+        }
+
+        public async Task DeletePackageSentAsync(Person user, Package package)
         {
             if (!AccessService.CanPerformAction(user.GetType(), "DeletePackage"))
             {
@@ -50,8 +62,28 @@ namespace Class_Lib.Backend.Package_related
                 throw new InvalidOperationException("Не можна видаляти посилку яку не: доставили, відмінили, або повернули.");
             }
 
-            package.Sender.Packages.Remove(package);
-            package.Receiver.Packages.Remove(package);
+            package.Sender.PackagesSent.Remove(package);
+            package.Receiver.PackagesSent.Remove(package);
+            await _packageRepository.DeleteAsync(package);
+
+        }
+
+        public async Task DeletePackageReceivedAsync(Person user, Package package)
+        {
+            if (!AccessService.CanPerformAction(user.GetType(), "DeletePackage"))
+            {
+                throw new UnauthorizedAccessException("Немає дозволу видаляти посилки.");
+            }
+
+            if (package.PackageStatus != PackageStatus.DELIVERED &&
+                package.PackageStatus != PackageStatus.CANCELED &&
+                package.PackageStatus != PackageStatus.RETURNED)
+            {
+                throw new InvalidOperationException("Не можна видаляти посилку яку не: доставили, відмінили, або повернули.");
+            }
+
+            package.Sender.PackagesReceived.Remove(package);
+            package.Receiver.PackagesReceived.Remove(package);
             await _packageRepository.DeleteAsync(package);
 
         }

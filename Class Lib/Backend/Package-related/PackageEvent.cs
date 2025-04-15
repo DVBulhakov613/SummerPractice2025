@@ -8,13 +8,13 @@ namespace Class_Lib
 {
     public class PackageEvent
     {
-        public uint PackageID { get => Package.ID; }
+        public uint PackageID { get => Package.ID; private set; }
         public Package Package { get; private set; } // the package to which this event belongs
         public DateTime Timestamp { get; } = DateTime.Now; // logs are always created with the current time
         public Coordinates Location { get; private set; } // location of the event
         public string Description { get; private set; } // and description of the event
 
-        protected PackageEvent()
+        protected internal PackageEvent()
         {
         }
 

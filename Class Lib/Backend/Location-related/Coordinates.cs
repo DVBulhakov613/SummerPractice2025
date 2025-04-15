@@ -34,31 +34,20 @@ namespace Class_Lib
             {
                 if(value < -180 || value > 180)
                     throw new ArgumentOutOfRangeException("Longitude must be between -180 and 180");
+                _longitude = value;
             }
         }
         public string? Address
         { get; set; }
         public string Region
         { get; set; }
-        public string Country // should be pulled from db? do we need this?
-        {
-            get
-            {
-                throw new NotImplementedException();
-            }
-            set
-            {
-                throw new NotImplementedException();
-            }
-        }
 
-        public Coordinates(double? latitude, double? longitude, string? address, string region, string country)
+        public Coordinates(double? latitude, double? longitude, string? address, string region)
         {
             Latitude = latitude;
             Longitude = longitude;
             Address = address;
             Region = region;
-            Country = country;
         }
 
         [Timestamp] // concurrency token property

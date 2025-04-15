@@ -10,7 +10,7 @@ namespace Class_Lib
 {
     public class Repository<T> where T : class
     {
-        protected readonly AppDbContext _context;
+        protected internal readonly AppDbContext _context;
 
         public Repository(AppDbContext context)
         {

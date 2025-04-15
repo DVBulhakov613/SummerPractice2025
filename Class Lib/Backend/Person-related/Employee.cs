@@ -8,11 +8,11 @@ namespace Class_Lib
 {
     public class Employee : Person
     {
-        public uint WorkplaceID { get => Workplace.ID; } // workplace ID (for db purposes)
+        public uint WorkplaceID { get => Workplace.ID; private set; } // workplace ID (for db purposes)
         public string Position { get; set; }
         public  BaseLocation Workplace { get; set; } // current workplace of the employee
 
-        protected Employee()
+        protected internal Employee()
         {
         }
 

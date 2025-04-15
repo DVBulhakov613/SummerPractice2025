@@ -13,7 +13,7 @@ namespace Class_Lib
 
         public bool HandlesPublicDropOffs { get; set; }
         public bool IsRegionalHQ { get; set; }
-        protected PostalOffice() : base()
+        protected internal PostalOffice() : base()
         {
         }
         public PostalOffice(Coordinates location, uint maxStorageCapacity, bool isAutomated, bool handlesPublicDropOffs, bool isRegionalHQ)

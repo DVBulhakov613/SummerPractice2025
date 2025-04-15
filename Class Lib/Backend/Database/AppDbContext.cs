@@ -1,5 +1,4 @@
 ﻿using Microsoft.EntityFrameworkCore;
-using Class_Lib.Backend.Delivery_vehicles;
 using Class_Lib.Backend.Package_related.enums;
 using Class_Lib.Backend.Person_related;
 
@@ -7,31 +6,35 @@ namespace Class_Lib
 {
     public class AppDbContext : DbContext
     {
+        public AppDbContext(DbContextOptions<AppDbContext> options) : base(options)
+        {
+        }
+
         public DbSet<Client> Clients { get; set; }
         public DbSet<Employee> Employees { get; set; }
-        public DbSet<DeliveryVehicle> DeliveryVehicles { get; set; }
+        //public DbSet<DeliveryVehicle> DeliveryVehicles { get; set; }
         public DbSet<Package> Packages { get; set; }
         public DbSet<Content> Contents { get; set; }
         public DbSet<PackageEvent> PackageEvents { get; set; }
         public DbSet<BaseLocation> Locations { get; set; }
-        public DbSet<Country> Countries { get; set; }
+        //public DbSet<Country> Countries { get; set; }
 
-        protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
-        {
-            var projectDirectory = System.IO.Path.Combine(AppDomain.CurrentDomain.BaseDirectory, @"..\..\..\");
-            var dbPath = System.IO.Path.Combine(projectDirectory, "app.db");
-            System.Diagnostics.Debug.WriteLine($"Using database at: {dbPath}"); // debug line
-            optionsBuilder.UseSqlite($"Data Source={dbPath}");
-        }
+        //protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
+        //{
+        //    var projectDirectory = System.IO.Path.Combine(AppDomain.CurrentDomain.BaseDirectory, @"..\..\..\");
+        //    var dbPath = System.IO.Path.Combine(projectDirectory, "app.db");
+        //    //System.Diagnostics.Debug.WriteLine($"Using database at: {dbPath}"); // debug line
+        //    optionsBuilder.UseSqlite($"Data Source={dbPath}");
+        //}
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
             // initial data seeding
             base.OnModelCreating(modelBuilder);
-            modelBuilder.Entity<Country>().HasData(
-                new Country ("Ukraine", "UA"),
-                new Country ("Poland", "PL"),
-                new Country ("Romania", "RO"));
+            //modelBuilder.Entity<Country>().HasData(
+            //    new Country ("Ukraine", "UA"),
+            //    new Country ("Poland", "PL"),
+            //    new Country ("Romania", "RO"));
 
 
             #region base location table specifications
@@ -79,6 +82,22 @@ namespace Class_Lib
             modelBuilder.Entity<Package>() // assigns a default value to the PackageStatus property
                 .Property(p => p.PackageStatus)
                 .HasDefaultValue(PackageStatus.STORED);
+            // Sender relationship
+            modelBuilder.Entity<Package>()
+                .HasOne(p => p.Sender) // each Package has one Sender
+                .WithMany(c => c.PackagesSent) // each Client can send many Packages
+                .HasForeignKey(p => p.SenderID) // foreign key in the Package table
+                .OnDelete(DeleteBehavior.Restrict); // prevent cascade delete to avoid deleting clients when packages are deleted
+            // Receiver relationship
+            modelBuilder.Entity<Package>()
+                .HasOne(p => p.Receiver) // each Package has one Receiver
+                .WithMany(c => c.PackagesReceived) // each Client can receive many Packages
+                .HasForeignKey(p => p.ReceiverID) // foreign key in the Package table
+                .OnDelete(DeleteBehavior.Restrict); // prevent cascade delete to avoid deleting clients when packages are deleted
+            modelBuilder.Entity<Package>()
+                .Property(p => p.RowVersion)
+                .IsRowVersion(); // marks it as a row version column for concurrency control
+
             #endregion
 
             #region packageEvent table specifications
@@ -102,16 +121,16 @@ namespace Class_Lib
             #endregion
 
             #region delivery vehicle table specifications
-            modelBuilder.Entity<DeliveryVehicle>() // defines the primary key for the delivery vehicle table
-                .HasKey(dv => dv.ID);
-            modelBuilder.Entity<DeliveryVehicle>() // auto-increment for ID
-                .Property(dv => dv.ID)
-                .ValueGeneratedOnAdd();
-            modelBuilder.Entity<DeliveryVehicle>() // restricts removal of delivery vehicles if they have packages
-                .HasMany(dv => dv.StoredPackages)
-                .WithOne()
-                .HasForeignKey(p => p.ID)
-                .OnDelete(DeleteBehavior.Restrict);
+            //modelBuilder.Entity<DeliveryVehicle>() // defines the primary key for the delivery vehicle table
+            //    .HasKey(dv => dv.ID);
+            //modelBuilder.Entity<DeliveryVehicle>() // auto-increment for ID
+            //    .Property(dv => dv.ID)
+            //    .ValueGeneratedOnAdd();
+            //modelBuilder.Entity<DeliveryVehicle>() // restricts removal of delivery vehicles if they have packages
+            //    .HasMany(dv => dv.StoredPackages)
+            //    .WithOne()
+            //    .HasForeignKey(p => p.ID)
+            //    .OnDelete(DeleteBehavior.Restrict);
             #endregion
 
             #region coordinates table specifications
@@ -120,8 +139,8 @@ namespace Class_Lib
             #endregion
 
             #region country table specifications
-            modelBuilder.Entity<Country>() // defines the primary key for the country table
-                .HasKey(c => c.ISO2Code);
+            //modelBuilder.Entity<Country>() // defines the primary key for the country table
+            //    .HasKey(c => c.ISO2Code);
             #endregion
 
             #region employee table specifications
@@ -149,6 +168,7 @@ namespace Class_Lib
             modelBuilder.Entity<Client>() // restricts the length of the PhoneNumber property to 15 characters
                 .Property(p => p.PhoneNumber)
                 .HasMaxLength(15);
+            
             #endregion
         }
     }

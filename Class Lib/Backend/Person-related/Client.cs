@@ -8,8 +8,9 @@ namespace Class_Lib.Backend.Person_related
 {
     public class Client : Person
     {
-        public List<Package> Packages { get; set; } = new List<Package>(); // list of packages associated with the client (sender / receiver)
-        protected Client() // empty constructor for EF core
+        public List<Package> PackagesSent { get; set; } = new List<Package>(); // list of packages associated with the client (sender)
+        public List<Package> PackagesReceived { get; set; } = new List<Package>(); // list of packages associated with the client (receiver)
+        protected internal Client() // empty constructor for EF core
         { }
 
         public Client(uint id, string firstName, string lastName, string email, string phoneNumber)

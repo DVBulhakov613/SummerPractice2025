@@ -1,11 +1,4 @@
-﻿using Class_Lib.Backend.Delivery_vehicles;
-using System;
-using System.Collections.Generic;
-using System.ComponentModel.DataAnnotations;
-using System.Diagnostics.Contracts;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+﻿using System.ComponentModel.DataAnnotations;
 
 namespace Class_Lib
 {
@@ -14,10 +7,10 @@ namespace Class_Lib
         public uint ID { get; private set; } // could have either -1 or 0 for an undefined location, otherwise positive integers
         public Coordinates GeoData { get; private set; } // location related data (coordinates, address, etc.)
         public List<Employee> Staff { get; set; } = new(); // staff assigned to this location
-        public List<DeliveryVehicle> Vehicles { get; set; } = new(); // vehicles currently present at this location
+        //public List<DeliveryVehicle> Vehicles { get; set; } = new(); // vehicles currently present at this location
 
 
-        protected BaseLocation()
+        protected internal BaseLocation()
         {
         }
         public BaseLocation(uint id, Coordinates geoData)

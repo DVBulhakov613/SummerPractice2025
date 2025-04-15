@@ -40,7 +40,7 @@ namespace Class_Lib
                     _amount = value;
             }
         }
-        public uint PackageID { get => Package.ID; }
+        public uint PackageID { get => Package.ID; private set; }
         public Package Package { get; set; } // the package that this content belongs to
         private Content()
         {

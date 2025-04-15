@@ -12,12 +12,11 @@ namespace Class_Lib
 
         public uint MaxStorageCapacity { get; set; }
         public bool IsAutomated { get; set; }
-        public List<Package> Packages { get; set; } = [];
-        public List<Package> StoredPackages { get => throw new NotImplementedException(); set => throw new NotImplementedException(); }
+        public List<Package> StoredPackages { get; set; } = [];
 
         public bool IsFull => throw new NotImplementedException();
 
-        protected Warehouse() : base()
+        protected internal Warehouse() : base()
         {
         }
 
@@ -27,38 +26,37 @@ namespace Class_Lib
             IsAutomated = isAutomated;
         }
 
-        public Warehouse(uint maxStorageCapacity, bool isAutomated, List<Package> packages, List<Package> storedPackages) : base()
+        public Warehouse(uint maxStorageCapacity, bool isAutomated, List<Package> storedPackages) : base()
         {
             MaxStorageCapacity = maxStorageCapacity;
-            Packages = packages;
             StoredPackages = storedPackages;
         }
 
         public void StorePackage(Package package) // adds a package to a warehouse's storage
         {
-            if (Packages.Count == MaxStorageCapacity)
+            if (StoredPackages.Count == MaxStorageCapacity)
                 throw new InvalidOperationException("Склад повний.");
             else
-                Packages.Add(package);
+                StoredPackages.Add(package);
         }
         public void RemovePackage(Package package) // removes a package from a warehouse's storage
         {
-            if (!Packages.Contains(package))
+            if (!StoredPackages.Contains(package))
                 throw new InvalidOperationException("Видалення неможливо: Посилку не знайдено на складі.");
             else
-                Packages.Remove(package);
+                StoredPackages.Remove(package);
         }
         public void ClearStorage() // clears the storage of a warehouse
         {
-            Packages.Clear();
+            StoredPackages.Clear();
         }
 
         public void SendPackage(Package package, PostalOffice sentFrom, PostalOffice sentTo) // sends a package from one postal office to another
         {
-            if (Packages.Contains(package))
+            if (StoredPackages.Contains(package))
             {
-                Packages.Remove(package);
-                sentTo.Packages.Add(package); // temporary thing as i cant really simulate the entire delivery of a package
+                StoredPackages.Remove(package);
+                sentTo.StoredPackages.Add(package); // temporary thing as i cant really simulate the entire delivery of a package
             }
             else
             {

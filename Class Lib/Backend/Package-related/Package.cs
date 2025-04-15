@@ -23,11 +23,13 @@ namespace Class_Lib
         #endregion
 
         #region Route info // for all this the ui is already done, kind of
-        public Client Sender { get; private set; }
-        public Client Receiver { get; private set; }
-        public uint SentFromID { get => SentFrom.ID; }
+        public uint SenderID { get => Sender.ID; private set; } // id of sender for db purposes
+        public Client Sender { get; private set; } // sender reference
+        public uint ReceiverID { get => Receiver.ID; private set; } // id of receiver for db purposes
+        public Client Receiver { get; private set; } // receiver reference
+        public uint SentFromID { get => SentFrom.ID; private set; } // id of the department which creates this package for db purposes
         public Warehouse SentFrom { get; private set; } // taken from the department which creates this package
-        public uint SentToID { get => SentTo.ID; }
+        public uint SentToID { get => SentTo.ID; private set; } // id of the department which receives this package for db purposes
         public Warehouse SentTo { get; set; } // taken from destination
         public Coordinates CurrentLocation { get; set; } // same as SentFrom, but can be changed
         public List<Content> DeclaredContent { get; private set; } = []; // declared contents should not be changed

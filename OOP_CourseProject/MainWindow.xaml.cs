@@ -12,6 +12,7 @@ using System.Windows.Shapes;
 using System.Linq;
 using Microsoft.EntityFrameworkCore.Scaffolding.Metadata;
 using Class_Lib;
+using Microsoft.Extensions.Options;
 
 namespace OOP_CourseProject
 {
@@ -24,7 +25,13 @@ namespace OOP_CourseProject
         public MainWindow()
         {
             InitializeComponent();
-            _context = new AppDbContext();
+            var projectDirectory = System.IO.Path.Combine(AppDomain.CurrentDomain.BaseDirectory, @"..\..\..\");
+            var dbPath = System.IO.Path.Combine(projectDirectory, "app.db");
+            var options = new DbContextOptionsBuilder<AppDbContext>()
+                .UseSqlite($"Data Source={dbPath}")
+                .Options;
+
+            _context = new AppDbContext(options);
         }
 
         #region debug

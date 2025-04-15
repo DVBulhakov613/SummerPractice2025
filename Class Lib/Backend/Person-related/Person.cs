@@ -16,7 +16,7 @@ namespace Class_Lib
         public string FullName { get => Name + " " + Surname; }
         public string PhoneNumber { get; set; }
         public string? Email { get; private set; }
-        protected Person()
+        protected internal Person()
         {
         }
 
