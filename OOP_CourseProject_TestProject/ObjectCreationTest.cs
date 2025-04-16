@@ -2,6 +2,7 @@
 using Class_Lib.Backend.Package_related;
 using Class_Lib.Backend.Package_related.enums;
 using Class_Lib.Backend.Person_related;
+using Class_Lib.Backend.Person_related.Methods;
 using Class_Lib.Backend.Services;
 using Class_Lib.Database.Repositories;
 using Microsoft.EntityFrameworkCore;
@@ -102,14 +103,14 @@ namespace OOP_CourseProject_TestProject
 
         public static IEnumerable<object[]> CorrectPostalOffice => new List<object[]>
             {
-                new object[] { new PostalOffice((Coordinates)CorrectCoordinates.ElementAt(0)[0], 150, true, true, true) },
-                new object[] { new PostalOffice((Coordinates)CorrectCoordinates.ElementAt(1)[0], 200, true, true, false) },
-                new object[] { new PostalOffice((Coordinates)CorrectCoordinates.ElementAt(2)[0], 250, true, false, true) },
-                new object[] { new PostalOffice((Coordinates)CorrectCoordinates.ElementAt(3)[0], 300, true, false, false) },
-                new object[] { new PostalOffice((Coordinates)CorrectCoordinates.ElementAt(4)[0], 350, false, true, true) },
-                new object[] { new PostalOffice((Coordinates)CorrectCoordinates.ElementAt(5)[0], 400, false, true, false) },
-                new object[] { new PostalOffice((Coordinates)CorrectCoordinates.ElementAt(6)[0], 450, false, false, true) },
-                new object[] { new PostalOffice((Coordinates)CorrectCoordinates.ElementAt(7)[0], 500, false, false, false) }
+                new object[] { new PostalOffice(10, (Coordinates)CorrectCoordinates.ElementAt(0)[0], 150, true, true, true) },
+                new object[] { new PostalOffice(11, (Coordinates)CorrectCoordinates.ElementAt(1)[0], 200, true, true, false) },
+                new object[] { new PostalOffice(12, (Coordinates)CorrectCoordinates.ElementAt(2)[0], 250, true, false, true) },
+                new object[] { new PostalOffice(13, (Coordinates)CorrectCoordinates.ElementAt(3)[0], 300, true, false, false) },
+                new object[] { new PostalOffice(14, (Coordinates)CorrectCoordinates.ElementAt(4)[0], 350, false, true, true) },
+                new object[] { new PostalOffice(15, (Coordinates)CorrectCoordinates.ElementAt(5)[0], 400, false, true, false) },
+                new object[] { new PostalOffice(16, (Coordinates)CorrectCoordinates.ElementAt(6)[0], 450, false, false, true) },
+                new object[] { new PostalOffice(17, (Coordinates)CorrectCoordinates.ElementAt(7)[0], 500, false, false, false) }
             };
     }
 
@@ -174,31 +175,127 @@ namespace OOP_CourseProject_TestProject
     {
         private AppDbContext _context;
         private PackageRepository _repository;
+        private PackageMethods _methods;
+
 
         [TestInitialize]
         public void Setup()
         {
             var options = new DbContextOptionsBuilder<AppDbContext>()
-                .UseInMemoryDatabase(databaseName: "TestDatabase")
+                .EnableSensitiveDataLogging()
+                .UseInMemoryDatabase(databaseName: $"TestDatabase_{Guid.NewGuid()}")
                 .Options;
 
             _context = new AppDbContext(options);
             _repository = new PackageRepository(_context);
+            _methods = new PackageMethods(_repository);
         }
 
         [TestMethod]
         public async Task AddPackage_ShouldPersistToDatabase()
         {
-            // Arrange
-            var package = new Package(1, 10, 10, 10, 5, new Client(), new Client(), new Warehouse(), new Warehouse(), new Coordinates(0, 0, "Test", "Region"), new List<Content>(), PackageType.Standard);
+            // arrange
+            var warehouseSent = new Warehouse(0, new Coordinates(0, 0, "Test", "Region"), 500, true);
+            var warehouseReceived = new Warehouse(0, new Coordinates(2, 2, "Test", "Region"), 500, true);
+            var employee = new Employee(0, "Name", "Surname", "+380955548027", "Clerk", warehouseSent);
+            var sender = new Client(0, "Name", "Surname", "+380955648027");
+            var receiver = new Client(1, "Name", "Surname", "+380955748027");
 
-            // Act
-            await _repository.AddAsync(package);
+            var package = new Package(0, 10, 10, 10, 5, sender, receiver, warehouseSent, warehouseReceived, new Coordinates(3, 3, "Test", "Region"), new List<Content>(), PackageType.Standard);
+            
+            // act
+            await _methods.AddPackageAsync(employee, package, sender, receiver);
             var retrievedPackage = await _repository.GetByIdAsync(1);
 
-            // Assert
+            // assert
             Assert.IsNotNull(retrievedPackage);
             Assert.AreEqual(package.ID, retrievedPackage.ID);
         }
+
+        [TestMethod]
+        public async Task GetPackagesByStatus_ShouldReturnCorrectPackages()
+        {
+            // Arrange
+            var package1 = new Package(1, 10, 10, 10, 5, null, null, null, null, null, new List<Content>(), PackageType.Standard)
+            {
+                PackageStatus = PackageStatus.IN_TRANSIT
+            };
+            var package2 = new Package(2, 15, 15, 15, 10, null, null, null, null, null, new List<Content>(), PackageType.Standard)
+            {
+                PackageStatus = PackageStatus.DELIVERED
+            };
+            await _repository.AddAsync(package1);
+            await _repository.AddAsync(package2);
+
+            // Act
+            var inTransitPackages = await _repository.GetPackagesByStatusAsync(PackageStatus.IN_TRANSIT);
+
+            // Assert
+            Assert.AreEqual(1, inTransitPackages.Count());
+            Assert.AreEqual(package1.ID, inTransitPackages.First().ID);
+        }
+
+    }
+
+    [TestClass]
+    public class PersonRepositoryTests
+    {
+        private AppDbContext _context;
+        private ClientRepository _clientRepository;
+        private EmployeeRepository _employeeRepository;
+        private PersonMethods _methods;
+
+
+        [TestInitialize]
+        public void Setup()
+        {
+            var options = new DbContextOptionsBuilder<AppDbContext>()
+                .EnableSensitiveDataLogging()
+                .UseInMemoryDatabase(databaseName: $"TestDatabase_{Guid.NewGuid()}")
+                .Options;
+
+            _context = new AppDbContext(options);
+            _clientRepository = new ClientRepository(_context);
+            _employeeRepository = new EmployeeRepository(_context);
+            _methods = new PersonMethods(_employeeRepository, _clientRepository);
+        }
+
+        [TestCleanup]
+        public void Cleanup()
+        {
+            _context.Dispose();
+        }
+
+        [TestMethod]
+        public async Task AddClient_ShouldPersistToDatabase()
+        {
+            // Arrange
+            var client = new Client(0, "John", "Doe", "+123456789");
+
+            // Act
+            await _clientRepository.AddAsync(client);
+            var retrievedClient = await _clientRepository.GetByIdAsync(1);
+
+            // Assert
+            Assert.IsNotNull(retrievedClient);
+            Assert.AreEqual(client.ID, retrievedClient.ID);
+        }
+
+        [TestMethod]
+        public async Task GetClientsByName_ShouldReturnCorrectClients()
+        {
+            // Arrange
+            var client1 = new Client(1, "John", "Doe", "+123456789");
+            var client2 = new Client(2, "Jane", "Doe", "+987654321");
+            await _clientRepository.AddAsync(client1);
+            await _clientRepository.AddAsync(client2);
+
+            // Act
+            var clients = await _clientRepository.GetClientsByLastNameAsync("Doe");
+
+            // Assert
+            Assert.AreEqual(2, clients.Count());
+        }
+
     }
 }

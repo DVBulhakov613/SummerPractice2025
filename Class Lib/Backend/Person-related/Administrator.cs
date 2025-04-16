@@ -9,8 +9,8 @@ namespace Class_Lib
 {
     public class Administrator : Manager
     {
-        public Administrator(uint id, string name, string surname, string phoneNumber, string? email, string position, BaseLocation workplace) 
-            : base(id, name, surname, phoneNumber, email, position, workplace)
+        public Administrator(string name, string surname, string phoneNumber, string? email, string position, BaseLocation workplace) 
+            : base(name, surname, phoneNumber, email, position, workplace)
         {
         }
 

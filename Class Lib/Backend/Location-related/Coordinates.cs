@@ -41,13 +41,17 @@ namespace Class_Lib
         { get; set; }
         public string Region
         { get; set; }
-
+        protected Coordinates()
+        {
+            RowVersion = Array.Empty<byte>();
+        }
         public Coordinates(double? latitude, double? longitude, string? address, string region)
         {
             Latitude = latitude;
             Longitude = longitude;
             Address = address;
             Region = region;
+            RowVersion = Array.Empty<byte>();
         }
 
         [Timestamp] // concurrency token property

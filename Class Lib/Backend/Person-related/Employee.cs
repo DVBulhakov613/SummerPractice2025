@@ -16,8 +16,8 @@ namespace Class_Lib
         {
         }
 
-        public Employee(uint id, string name, string surname, string phoneNumber, string? email, string position, BaseLocation workplace)
-            : base(id, name, surname, phoneNumber, email)
+        public Employee(string name, string surname, string phoneNumber, string position, BaseLocation workplace, string? email = null)
+            : base(name, surname, phoneNumber, email)
         {
             Position = position;
             Workplace = workplace;

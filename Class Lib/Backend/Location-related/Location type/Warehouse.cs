@@ -1,5 +1,6 @@
 ﻿using Class_Lib.Location_related.Interfaces;
 using System;
+using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -14,22 +15,18 @@ namespace Class_Lib
         public bool IsAutomated { get; set; }
         public List<Package> StoredPackages { get; set; } = [];
 
-        public bool IsFull => throw new NotImplementedException();
+        public bool IsFull => StoredPackages.Count() == MaxStorageCapacity;
 
         protected internal Warehouse() : base()
         {
         }
 
-        public Warehouse(uint maxStorageCapacity, bool isAutomated) : base()
+        public Warehouse(Coordinates geoData, uint maxStorageCapacity, bool isAutomated, List<Package>? storedPackages = null, List<Employee>? staff = null) : base(id, geoData, staff)
         {
             MaxStorageCapacity = maxStorageCapacity;
             IsAutomated = isAutomated;
-        }
-
-        public Warehouse(uint maxStorageCapacity, bool isAutomated, List<Package> storedPackages) : base()
-        {
-            MaxStorageCapacity = maxStorageCapacity;
-            StoredPackages = storedPackages;
+            if (storedPackages != null)
+                StoredPackages = storedPackages;
         }
 
         public void StorePackage(Package package) // adds a package to a warehouse's storage

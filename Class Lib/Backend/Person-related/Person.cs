@@ -18,16 +18,18 @@ namespace Class_Lib
         public string? Email { get; private set; }
         protected internal Person()
         {
+            RowVersion = Array.Empty<byte>();
         }
 
-        public Person(uint id, string name, string surname, string phoneNumber, string? email = null)
+        public Person(string name, string surname, string phoneNumber, string? email = null)
         {
-            ID = id;
             Name = name;
             Surname = surname;
             PhoneNumber = phoneNumber;
             if(email != null && Regex.IsMatch(email, @"^[^@\s]+@[^@\s]+\.[^@\s]+$"))
                 Email = email;
+
+            RowVersion = Array.Empty<byte>();
         }
 
         // regex for future use (Email validation) @"^[^@\s]+@[^@\s]+\.[^@\s]+$"

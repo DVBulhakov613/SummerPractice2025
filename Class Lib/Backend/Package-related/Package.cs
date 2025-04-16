@@ -40,14 +40,14 @@ namespace Class_Lib
 
         public Package()
         {
+            RowVersion = Array.Empty<byte>();
         }
 
         public Package
-            (uint packageID, uint length, uint width, uint height, uint weight, Client sender, Client receiver,
+            (uint length, uint width, uint height, uint weight, Client sender, Client receiver,
             Warehouse sentFrom, Warehouse sentTo, Coordinates currentLocation, List<Content> declaredContent,
             PackageType type)
         {
-            ID = packageID;
             Length = length;
             Width = width;
             Height = height;
@@ -60,6 +60,7 @@ namespace Class_Lib
             DeclaredContent = declaredContent;
             Type = type;
 
+            RowVersion = Array.Empty<byte>();
             Log.Add(new PackageEvent(CurrentLocation, "Посилку створено", this));
         }
 
