@@ -12,7 +12,7 @@ namespace Class_Lib
         public string Position { get; set; }
         public  BaseLocation Workplace { get; set; } // current workplace of the employee
 
-        protected internal Employee()
+        protected internal Employee() : base()
         {
         }
 

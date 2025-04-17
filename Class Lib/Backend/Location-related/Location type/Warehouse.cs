@@ -21,7 +21,7 @@ namespace Class_Lib
         {
         }
 
-        public Warehouse(Coordinates geoData, uint maxStorageCapacity, bool isAutomated, List<Package>? storedPackages = null, List<Employee>? staff = null) : base(id, geoData, staff)
+        public Warehouse(Coordinates geoData, uint maxStorageCapacity, bool isAutomated, List<Package>? storedPackages = null, List<Employee>? staff = null) : base(geoData, staff)
         {
             MaxStorageCapacity = maxStorageCapacity;
             IsAutomated = isAutomated;

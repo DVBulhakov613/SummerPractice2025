@@ -9,6 +9,7 @@ namespace Class_Lib
     public class Manager : Employee
     {
         public List<BaseLocation> ManagedLocations { get; set; } = new(); // list of locations managed by this manager
+        protected internal Manager() : base() { }
         public Manager(string name, string surname, string phoneNumber, string? email, string position, BaseLocation workplace)
             : base(name, surname, phoneNumber, position, workplace, email)
         {

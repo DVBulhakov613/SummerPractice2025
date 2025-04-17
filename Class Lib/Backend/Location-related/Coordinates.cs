@@ -11,6 +11,9 @@ namespace Class_Lib
     {
         private double? _latitude;
         private double? _longitude;
+        private string? _address;
+        private string _region;
+
         public double? Latitude
         {
             get
@@ -20,7 +23,7 @@ namespace Class_Lib
             set
             {
                 if(value < -90 || value > 90)
-                    throw new ArgumentOutOfRangeException("Latitude must be between -90 and 90");
+                    throw new ArgumentException("Широта повинна бути між -90 та 90");
                 _latitude = value;
             }
         }
@@ -33,14 +36,36 @@ namespace Class_Lib
             set
             {
                 if(value < -180 || value > 180)
-                    throw new ArgumentOutOfRangeException("Longitude must be between -180 and 180");
+                    throw new ArgumentException("Довгота повинна бути між -180 та 180");
                 _longitude = value;
             }
         }
         public string? Address
-        { get; set; }
+        { 
+            get
+            {
+                return _address;
+            }
+            set
+            {
+                if (string.IsNullOrWhiteSpace(value))
+                    throw new ArgumentException("Поле \"Адреса\" не може бути пустою.");
+                _address = value;
+            }
+        }
         public string Region
-        { get; set; }
+        {
+            get
+            {
+                return _region;
+            }
+            set
+            {
+                if (string.IsNullOrWhiteSpace(value))
+                    throw new ArgumentException("Поле \"Регіон\" не може бути пустим.");
+                _region = value;
+            }
+        }
         protected Coordinates()
         {
             RowVersion = Array.Empty<byte>();

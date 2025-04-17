@@ -36,9 +36,9 @@ namespace Class_Lib.Backend.Services
             { "Event", new Dictionary<string, List<Type>>
                 {
                     { "ReadEvent", AllRoles },
-                    { "CreateEvent", AdminAndManagerRoles },
+                    { "CreateEvent", AllRoles },
                     { "UpdateEvent", AdminAndManagerRoles },
-                    { "DeleteEvent", AdminAndManagerRoles }
+                    { "DeleteEvent", AdminOnlyRoles }
                 }
             },
 
@@ -46,8 +46,8 @@ namespace Class_Lib.Backend.Services
             { "Content", new Dictionary<string, List<Type>>
                 {
                     { "ReadContent", AllRoles },
-                    { "CreateContent", AdminAndManagerRoles },
-                    { "UpdateContent", AdminAndManagerRoles },
+                    { "CreateContent", AllRoles },
+                    { "UpdateContent", AllRoles },
                     { "DeleteContent", AdminAndManagerRoles }
                 }
             },
