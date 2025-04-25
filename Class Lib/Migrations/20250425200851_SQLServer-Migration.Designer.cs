@@ -3,6 +3,7 @@ using System;
 using Class_Lib;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
+using Microsoft.EntityFrameworkCore.Metadata;
 using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 
@@ -11,42 +12,48 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace Class_Lib.Migrations
 {
     [DbContext(typeof(AppDbContext))]
-    [Migration("20250415202831_v0-1-0")]
-    partial class v010
+    [Migration("20250425200851_SQLServer-Migration")]
+    partial class SQLServerMigration
     {
         /// <inheritdoc />
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
-            modelBuilder.HasAnnotation("ProductVersion", "9.0.4");
+            modelBuilder
+                .HasAnnotation("ProductVersion", "9.0.4")
+                .HasAnnotation("Relational:MaxIdentifierLength", 128);
+
+            SqlServerModelBuilderExtensions.UseIdentityColumns(modelBuilder);
 
             modelBuilder.Entity("Class_Lib.Backend.Person_related.Client", b =>
                 {
-                    b.Property<uint>("ID")
+                    b.Property<long>("ID")
                         .ValueGeneratedOnAdd()
-                        .HasColumnType("INTEGER");
+                        .HasColumnType("bigint");
+
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<long>("ID"));
 
                     b.Property<string>("Email")
-                        .HasColumnType("TEXT");
+                        .HasColumnType("nvarchar(max)");
 
                     b.Property<string>("Name")
                         .IsRequired()
-                        .HasColumnType("TEXT");
+                        .HasColumnType("nvarchar(max)");
 
                     b.Property<string>("PhoneNumber")
                         .IsRequired()
                         .HasMaxLength(15)
-                        .HasColumnType("TEXT");
+                        .HasColumnType("nvarchar(15)");
 
                     b.Property<byte[]>("RowVersion")
                         .IsConcurrencyToken()
                         .IsRequired()
                         .ValueGeneratedOnAddOrUpdate()
-                        .HasColumnType("BLOB");
+                        .HasColumnType("rowversion");
 
                     b.Property<string>("Surname")
                         .IsRequired()
-                        .HasColumnType("TEXT");
+                        .HasColumnType("nvarchar(max)");
 
                     b.HasKey("ID");
 
@@ -55,26 +62,28 @@ namespace Class_Lib.Migrations
 
             modelBuilder.Entity("Class_Lib.BaseLocation", b =>
                 {
-                    b.Property<uint>("ID")
+                    b.Property<long>("ID")
                         .ValueGeneratedOnAdd()
-                        .HasColumnType("INTEGER");
+                        .HasColumnType("bigint");
+
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<long>("ID"));
 
                     b.Property<double>("GeoDataLatitude")
-                        .HasColumnType("REAL");
+                        .HasColumnType("float");
 
                     b.Property<double>("GeoDataLongitude")
-                        .HasColumnType("REAL");
+                        .HasColumnType("float");
 
                     b.Property<byte[]>("RowVersion")
                         .IsConcurrencyToken()
                         .IsRequired()
                         .ValueGeneratedOnAddOrUpdate()
-                        .HasColumnType("BLOB");
+                        .HasColumnType("rowversion");
 
                     b.Property<string>("WarehouseType")
                         .IsRequired()
                         .HasMaxLength(13)
-                        .HasColumnType("TEXT");
+                        .HasColumnType("nvarchar(13)");
 
                     b.HasKey("ID");
 
@@ -90,22 +99,22 @@ namespace Class_Lib.Migrations
             modelBuilder.Entity("Class_Lib.Content", b =>
                 {
                     b.Property<string>("Name")
-                        .HasColumnType("TEXT");
+                        .HasColumnType("nvarchar(450)");
 
-                    b.Property<uint>("PackageID")
-                        .HasColumnType("INTEGER");
+                    b.Property<long>("PackageID")
+                        .HasColumnType("bigint");
 
-                    b.Property<uint>("Amount")
-                        .HasColumnType("INTEGER");
+                    b.Property<long>("Amount")
+                        .HasColumnType("bigint");
 
                     b.Property<byte[]>("RowVersion")
                         .IsConcurrencyToken()
                         .IsRequired()
                         .ValueGeneratedOnAddOrUpdate()
-                        .HasColumnType("BLOB");
+                        .HasColumnType("rowversion");
 
                     b.Property<int>("Type")
-                        .HasColumnType("INTEGER");
+                        .HasColumnType("int");
 
                     b.HasKey("Name", "PackageID");
 
@@ -117,23 +126,23 @@ namespace Class_Lib.Migrations
             modelBuilder.Entity("Class_Lib.Coordinates", b =>
                 {
                     b.Property<double>("Longitude")
-                        .HasColumnType("REAL");
+                        .HasColumnType("float");
 
                     b.Property<double>("Latitude")
-                        .HasColumnType("REAL");
+                        .HasColumnType("float");
 
                     b.Property<string>("Address")
-                        .HasColumnType("TEXT");
+                        .HasColumnType("nvarchar(max)");
 
                     b.Property<string>("Region")
                         .IsRequired()
-                        .HasColumnType("TEXT");
+                        .HasColumnType("nvarchar(max)");
 
                     b.Property<byte[]>("RowVersion")
                         .IsConcurrencyToken()
                         .IsRequired()
                         .ValueGeneratedOnAddOrUpdate()
-                        .HasColumnType("BLOB");
+                        .HasColumnType("rowversion");
 
                     b.HasKey("Longitude", "Latitude");
 
@@ -142,38 +151,40 @@ namespace Class_Lib.Migrations
 
             modelBuilder.Entity("Class_Lib.Employee", b =>
                 {
-                    b.Property<uint>("ID")
+                    b.Property<long>("ID")
                         .ValueGeneratedOnAdd()
-                        .HasColumnType("INTEGER");
+                        .HasColumnType("bigint");
+
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<long>("ID"));
 
                     b.Property<string>("Email")
-                        .HasColumnType("TEXT");
+                        .HasColumnType("nvarchar(max)");
 
                     b.Property<string>("Name")
                         .IsRequired()
-                        .HasColumnType("TEXT");
+                        .HasColumnType("nvarchar(max)");
 
                     b.Property<string>("PhoneNumber")
                         .IsRequired()
                         .HasMaxLength(15)
-                        .HasColumnType("TEXT");
+                        .HasColumnType("nvarchar(15)");
 
                     b.Property<string>("Position")
                         .IsRequired()
-                        .HasColumnType("TEXT");
+                        .HasColumnType("nvarchar(max)");
 
                     b.Property<byte[]>("RowVersion")
                         .IsConcurrencyToken()
                         .IsRequired()
                         .ValueGeneratedOnAddOrUpdate()
-                        .HasColumnType("BLOB");
+                        .HasColumnType("rowversion");
 
                     b.Property<string>("Surname")
                         .IsRequired()
-                        .HasColumnType("TEXT");
+                        .HasColumnType("nvarchar(max)");
 
-                    b.Property<uint>("WorkplaceID")
-                        .HasColumnType("INTEGER");
+                    b.Property<long>("WorkplaceID")
+                        .HasColumnType("bigint");
 
                     b.HasKey("ID");
 
@@ -184,46 +195,53 @@ namespace Class_Lib.Migrations
 
             modelBuilder.Entity("Class_Lib.Package", b =>
                 {
-                    b.Property<uint>("ID")
+                    b.Property<long>("ID")
                         .ValueGeneratedOnAdd()
-                        .HasColumnType("INTEGER");
+                        .HasColumnType("bigint");
 
-                    b.Property<double>("CurrentLocationLatitude")
-                        .HasColumnType("REAL");
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<long>("ID"));
 
-                    b.Property<double>("CurrentLocationLongitude")
-                        .HasColumnType("REAL");
+                    b.Property<long>("CurrentLocationID")
+                        .HasColumnType("bigint");
+
+                    b.Property<long>("PackageID")
+                        .HasColumnType("bigint");
 
                     b.Property<int>("PackageStatus")
                         .ValueGeneratedOnAdd()
-                        .HasColumnType("INTEGER")
+                        .HasColumnType("int")
                         .HasDefaultValue(0);
 
-                    b.Property<uint>("ReceiverID")
-                        .HasColumnType("INTEGER");
+                    b.Property<long>("ReceiverID")
+                        .HasColumnType("bigint");
 
                     b.Property<byte[]>("RowVersion")
                         .IsConcurrencyToken()
                         .IsRequired()
                         .ValueGeneratedOnAddOrUpdate()
-                        .HasColumnType("BLOB");
+                        .HasColumnType("rowversion");
 
-                    b.Property<uint>("SenderID")
-                        .HasColumnType("INTEGER");
+                    b.Property<long>("SenderID")
+                        .HasColumnType("bigint");
 
-                    b.Property<uint>("SentFromID")
-                        .HasColumnType("INTEGER");
+                    b.Property<long>("SentFromID")
+                        .HasColumnType("bigint");
 
-                    b.Property<uint>("SentToID")
-                        .HasColumnType("INTEGER");
+                    b.Property<long>("SentToID")
+                        .HasColumnType("bigint");
 
                     b.Property<int>("Type")
-                        .HasColumnType("INTEGER");
+                        .HasColumnType("int");
 
-                    b.Property<uint>("Weight")
-                        .HasColumnType("INTEGER");
+                    b.Property<long?>("WarehouseID")
+                        .HasColumnType("bigint");
+
+                    b.Property<double>("Weight")
+                        .HasColumnType("float");
 
                     b.HasKey("ID");
+
+                    b.HasIndex("CurrentLocationID");
 
                     b.HasIndex("ReceiverID");
 
@@ -233,7 +251,7 @@ namespace Class_Lib.Migrations
 
                     b.HasIndex("SentToID");
 
-                    b.HasIndex("CurrentLocationLongitude", "CurrentLocationLatitude");
+                    b.HasIndex("WarehouseID");
 
                     b.ToTable("Packages");
                 });
@@ -241,26 +259,23 @@ namespace Class_Lib.Migrations
             modelBuilder.Entity("Class_Lib.PackageEvent", b =>
                 {
                     b.Property<DateTime>("Timestamp")
-                        .HasColumnType("TEXT");
+                        .HasColumnType("datetime2");
 
-                    b.Property<uint>("PackageID")
-                        .HasColumnType("INTEGER");
+                    b.Property<long>("PackageID")
+                        .HasColumnType("bigint");
 
                     b.Property<string>("Description")
                         .IsRequired()
-                        .HasColumnType("TEXT");
+                        .HasColumnType("nvarchar(max)");
 
-                    b.Property<double>("LocationLatitude")
-                        .HasColumnType("REAL");
-
-                    b.Property<double>("LocationLongitude")
-                        .HasColumnType("REAL");
+                    b.Property<long>("LocationID")
+                        .HasColumnType("bigint");
 
                     b.HasKey("Timestamp", "PackageID");
 
-                    b.HasIndex("PackageID");
+                    b.HasIndex("LocationID");
 
-                    b.HasIndex("LocationLongitude", "LocationLatitude");
+                    b.HasIndex("PackageID");
 
                     b.ToTable("PackageEvents");
                 });
@@ -270,10 +285,10 @@ namespace Class_Lib.Migrations
                     b.HasBaseType("Class_Lib.BaseLocation");
 
                     b.Property<bool>("IsAutomated")
-                        .HasColumnType("INTEGER");
+                        .HasColumnType("bit");
 
-                    b.Property<uint>("MaxStorageCapacity")
-                        .HasColumnType("INTEGER");
+                    b.Property<long>("MaxStorageCapacity")
+                        .HasColumnType("bigint");
 
                     b.HasDiscriminator().HasValue("Warehouse");
                 });
@@ -283,10 +298,10 @@ namespace Class_Lib.Migrations
                     b.HasBaseType("Class_Lib.Warehouse");
 
                     b.Property<bool>("HandlesPublicDropOffs")
-                        .HasColumnType("INTEGER");
+                        .HasColumnType("bit");
 
                     b.Property<bool>("IsRegionalHQ")
-                        .HasColumnType("INTEGER");
+                        .HasColumnType("bit");
 
                     b.HasDiscriminator().HasValue("PostalOffice");
                 });
@@ -326,6 +341,12 @@ namespace Class_Lib.Migrations
 
             modelBuilder.Entity("Class_Lib.Package", b =>
                 {
+                    b.HasOne("Class_Lib.BaseLocation", "CurrentLocation")
+                        .WithMany()
+                        .HasForeignKey("CurrentLocationID")
+                        .OnDelete(DeleteBehavior.Restrict)
+                        .IsRequired();
+
                     b.HasOne("Class_Lib.Backend.Person_related.Client", "Receiver")
                         .WithMany("PackagesReceived")
                         .HasForeignKey("ReceiverID")
@@ -339,22 +360,20 @@ namespace Class_Lib.Migrations
                         .IsRequired();
 
                     b.HasOne("Class_Lib.Warehouse", "SentFrom")
-                        .WithMany("StoredPackages")
+                        .WithMany("PackagesSentFromHere")
                         .HasForeignKey("SentFromID")
                         .OnDelete(DeleteBehavior.Restrict)
                         .IsRequired();
 
                     b.HasOne("Class_Lib.Warehouse", "SentTo")
-                        .WithMany()
+                        .WithMany("PackagesSentToHere")
                         .HasForeignKey("SentToID")
                         .OnDelete(DeleteBehavior.Restrict)
                         .IsRequired();
 
-                    b.HasOne("Class_Lib.Coordinates", "CurrentLocation")
-                        .WithMany()
-                        .HasForeignKey("CurrentLocationLongitude", "CurrentLocationLatitude")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
+                    b.HasOne("Class_Lib.Warehouse", null)
+                        .WithMany("StoredPackages")
+                        .HasForeignKey("WarehouseID");
 
                     b.Navigation("CurrentLocation");
 
@@ -369,15 +388,15 @@ namespace Class_Lib.Migrations
 
             modelBuilder.Entity("Class_Lib.PackageEvent", b =>
                 {
-                    b.HasOne("Class_Lib.Package", "Package")
-                        .WithMany("Log")
-                        .HasForeignKey("PackageID")
+                    b.HasOne("Class_Lib.BaseLocation", "Location")
+                        .WithMany()
+                        .HasForeignKey("LocationID")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
-                    b.HasOne("Class_Lib.Coordinates", "Location")
-                        .WithMany()
-                        .HasForeignKey("LocationLongitude", "LocationLatitude")
+                    b.HasOne("Class_Lib.Package", "Package")
+                        .WithMany("Log")
+                        .HasForeignKey("PackageID")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
@@ -407,6 +426,10 @@ namespace Class_Lib.Migrations
 
             modelBuilder.Entity("Class_Lib.Warehouse", b =>
                 {
+                    b.Navigation("PackagesSentFromHere");
+
+                    b.Navigation("PackagesSentToHere");
+
                     b.Navigation("StoredPackages");
                 });
 #pragma warning restore 612, 618

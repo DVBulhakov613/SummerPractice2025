@@ -9,10 +9,8 @@ namespace Class_Lib
         {
             var optionsBuilder = new DbContextOptionsBuilder<AppDbContext>();
 
-            // Configure the database provider (e.g., SQLite)
-            var projectDirectory = System.IO.Path.Combine(AppDomain.CurrentDomain.BaseDirectory, @"..\..\..");
-            var dbPath = System.IO.Path.Combine(projectDirectory, "app.db");
-            optionsBuilder.UseSqlite($"Data Source={dbPath}");
+            var connectionString = "Server=localhost\\SQLEXPRESS;Database=PackageDb;Trusted_Connection=True;MultipleActiveResultSets=true;TrustServerCertificate=True";
+            optionsBuilder.UseSqlServer(connectionString);
 
             return new AppDbContext(optionsBuilder.Options);
         }

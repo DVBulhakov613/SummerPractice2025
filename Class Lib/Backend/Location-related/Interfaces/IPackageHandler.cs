@@ -11,7 +11,7 @@ namespace Class_Lib.Location_related.Interfaces
     {
         Package CreatePackage
             (uint length, uint width, uint height, uint weight, Client sender, Client receiver,
-            PostalOffice sentFrom, PostalOffice sentTo, Coordinates currentLocation, List<Content> declaredContent,
+            PostalOffice sentFrom, PostalOffice sentTo, BaseLocation currentLocation, List<Content> declaredContent,
             PackageType type);
     }
 }

@@ -52,10 +52,15 @@ namespace Class_Lib
 
             // since postal office is also a warehouse
             #region warehouse table specifications
-            modelBuilder.Entity<Warehouse>() // restricts from deleting when there are packages
-                .HasMany(po => po.StoredPackages)
+            modelBuilder.Entity<Warehouse>()
+                .HasMany(po => po.PackagesSentFromHere)
                 .WithOne(p => p.SentFrom)
                 .HasForeignKey(p => p.SentFromID)
+                .OnDelete(DeleteBehavior.Restrict);
+            modelBuilder.Entity<Warehouse>()
+                .HasMany(po => po.PackagesSentToHere)
+                .WithOne(p => p.SentTo)
+                .HasForeignKey(p => p.SentToID)
                 .OnDelete(DeleteBehavior.Restrict);
             modelBuilder.Entity<Warehouse>()
                 .HasDiscriminator<string>("WarehouseType")
@@ -69,31 +74,26 @@ namespace Class_Lib
             modelBuilder.Entity<Package>() // auto increment for package ID
                 .Property(p => p.ID)
                 .ValueGeneratedOnAdd();
-            modelBuilder.Entity<Package>() // restricts deleting a package if its stored in a fixed location
-                .HasOne(p => p.SentFrom)
-                .WithMany(po => po.StoredPackages)
-                .HasForeignKey(p => p.SentFromID)
-                .OnDelete(DeleteBehavior.Restrict);
-            modelBuilder.Entity<Package>() // restricts deleting a package if it has a destination
-                .HasOne(p => p.SentTo)
-                .WithMany()
-                .HasForeignKey(p => p.SentToID)
-                .OnDelete(DeleteBehavior.Restrict);
             modelBuilder.Entity<Package>() // assigns a default value to the PackageStatus property
                 .Property(p => p.PackageStatus)
                 .HasDefaultValue(PackageStatus.STORED);
-            // Sender relationship
+            // sender relationship
             modelBuilder.Entity<Package>()
                 .HasOne(p => p.Sender) // each Package has one Sender
                 .WithMany(c => c.PackagesSent) // each Client can send many Packages
                 .HasForeignKey(p => p.SenderID) // foreign key in the Package table
                 .OnDelete(DeleteBehavior.Restrict); // prevent cascade delete to avoid deleting clients when packages are deleted
-            // Receiver relationship
+            // receiver relationship
             modelBuilder.Entity<Package>()
                 .HasOne(p => p.Receiver) // each Package has one Receiver
                 .WithMany(c => c.PackagesReceived) // each Client can receive many Packages
                 .HasForeignKey(p => p.ReceiverID) // foreign key in the Package table
                 .OnDelete(DeleteBehavior.Restrict); // prevent cascade delete to avoid deleting clients when packages are deleted
+            modelBuilder.Entity<Package>()
+                .HasOne(p => p.CurrentLocation)
+                .WithMany()
+                .HasForeignKey(p => p.CurrentLocationID)
+                .OnDelete(DeleteBehavior.Restrict); // Prevent cascade delete
             modelBuilder.Entity<Package>()
                 .Property(p => p.RowVersion)
                 .IsRowVersion(); // marks it as a row version column for concurrency control
@@ -120,27 +120,13 @@ namespace Class_Lib
                 .OnDelete(DeleteBehavior.Cascade);
             #endregion
 
-            #region delivery vehicle table specifications
-            //modelBuilder.Entity<DeliveryVehicle>() // defines the primary key for the delivery vehicle table
-            //    .HasKey(dv => dv.ID);
-            //modelBuilder.Entity<DeliveryVehicle>() // auto-increment for ID
-            //    .Property(dv => dv.ID)
-            //    .ValueGeneratedOnAdd();
-            //modelBuilder.Entity<DeliveryVehicle>() // restricts removal of delivery vehicles if they have packages
-            //    .HasMany(dv => dv.StoredPackages)
-            //    .WithOne()
-            //    .HasForeignKey(p => p.ID)
-            //    .OnDelete(DeleteBehavior.Restrict);
-            #endregion
-
             #region coordinates table specifications
             modelBuilder.Entity<Coordinates>() // defines the composite key for the Coordinates table (if i have one)
                 .HasKey(c => new {c.Longitude, c.Latitude });
             #endregion
 
             #region country table specifications
-            //modelBuilder.Entity<Country>() // defines the primary key for the country table
-            //    .HasKey(c => c.ISO2Code);
+
             #endregion
 
             #region employee table specifications

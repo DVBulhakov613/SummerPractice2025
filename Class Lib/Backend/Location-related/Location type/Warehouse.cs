@@ -17,6 +17,9 @@ namespace Class_Lib
 
         public bool IsFull => StoredPackages.Count() == MaxStorageCapacity;
 
+        public List<Package> PackagesSentFromHere { get; set; } = new List<Package>();
+        public List<Package> PackagesSentToHere { get; set; } = new List<Package>();
+
         protected internal Warehouse() : base()
         {
         }

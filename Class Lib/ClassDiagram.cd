@@ -76,7 +76,7 @@
   <Class Name="Class_Lib.Warehouse" Collapsed="true">
     <Position X="8.75" Y="4.75" Width="1.5" />
     <TypeIdentifier>
-      <HashCode>AAAAAAAAEAAAgQAAABAAAAAAAAAAABAIAAAAAEAAACA=</HashCode>
+      <HashCode>AAAAAAAAEAAAgQAAABAAAQAAAAAABBAIAAAAAEAAACA=</HashCode>
       <FileName>Backend\Location-related\Location type\Warehouse.cs</FileName>
     </TypeIdentifier>
     <Lollipop Position="0.2" />
@@ -84,7 +84,7 @@
   <Class Name="Class_Lib.Coordinates" Collapsed="true">
     <Position X="19" Y="1.5" Width="1.5" />
     <TypeIdentifier>
-      <HashCode>AAAAAAAAgEAAAAAAAIAIBAAAAAAAAAACAAAAAAAAEAA=</HashCode>
+      <HashCode>AAAAAAACgEAAAAAAAIAIBAAAAAAAAAACAAAAAEAAEAA=</HashCode>
       <FileName>Backend\Location-related\Coordinates.cs</FileName>
     </TypeIdentifier>
   </Class>
@@ -98,7 +98,7 @@
   <Class Name="Class_Lib.Package" Collapsed="true" BaseTypeListCollapsed="true">
     <Position X="17.25" Y="2.5" Width="1.5" />
     <TypeIdentifier>
-      <HashCode>AACAAGAABAABgAAAACAABEhAADgEIAAAAQIACAAIAAQ=</HashCode>
+      <HashCode>AACAAGAABAABgAAAACAABEhAADgEIAAAAQIACAAIAEQ=</HashCode>
       <FileName>Backend\Package-related\Package.cs</FileName>
     </TypeIdentifier>
     <Lollipop Position="0.2" Collapsed="true" />
@@ -202,13 +202,6 @@
       <FileName>Backend\Services\AccessService.cs</FileName>
     </TypeIdentifier>
   </Class>
-  <Class Name="Class_Lib.Migrations.InitialCreate" Collapsed="true">
-    <Position X="22.5" Y="1.5" Width="1.5" />
-    <TypeIdentifier>
-      <HashCode>AAAAAAIAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAEAAAAI=</HashCode>
-      <FileName>Migrations\20250409214041_InitialCreate.cs</FileName>
-    </TypeIdentifier>
-  </Class>
   <Class Name="Class_Lib.Migrations.Test1" Collapsed="true">
     <Position X="24.5" Y="4.25" Width="1.5" />
     <TypeIdentifier>
@@ -254,7 +247,7 @@
   <Interface Name="Class_Lib.Location_related.Interfaces.IDeliveryHandler" Collapsed="true">
     <Position X="17.25" Y="7.5" Width="1.5" />
     <TypeIdentifier>
-      <HashCode>AAAAAAAAAAAAAAAAABAAAAAAAAAAAAAAAAAAAEAAAAA=</HashCode>
+      <HashCode>AAAAAAAAAAAAAAAAABAAAQAAAAAABAAAAAAAAEAAAAA=</HashCode>
       <FileName>Backend\Location-related\Interfaces\IDeliveryHandler.cs</FileName>
     </TypeIdentifier>
   </Interface>
