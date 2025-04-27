@@ -145,13 +145,11 @@ namespace Class_Lib
             #endregion
 
             #region user table
-            modelBuilder.Entity<User>() // defines the primary key for the user table
-                .HasKey(u => u.Username);
             modelBuilder.Entity<User>()
-                .HasOne(u => u.Person)
-                .WithOne()
-                .HasForeignKey<User>(u => u.PersonID)
-                .OnDelete(DeleteBehavior.Cascade); // if a user is deleted, the associated person is also deleted
+                .HasKey(u => u.PersonID); // PersonID as the PK
+            modelBuilder.Entity<User>()
+                .HasIndex(u => u.Username) // unique index for username
+                .IsUnique();
             #endregion
 
             #region client table specifications
