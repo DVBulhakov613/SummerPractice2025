@@ -7,12 +7,19 @@ using System.Text;
 using System.Threading.Tasks;
 using System.Linq.Expressions;
 using Class_Lib.Backend.Person_related;
+using Class_Lib.Backend.Database;
 
 namespace Class_Lib.Database.Repositories
 {
     public class PackageRepository : Repository<Package>
     {
         public PackageRepository(AppDbContext context) : base(context) { }
+
+        // for the query builder
+        public QueryBuilder<Package> Query()
+        {
+            return new QueryBuilder<Package>(_context.Packages);
+        }
 
         // generic query method
         public async Task<IEnumerable<Package>> GetPackagesByCriteriaAsync(Expression<Func<Package, bool>> predicate)
@@ -23,49 +30,55 @@ namespace Class_Lib.Database.Repositories
         }
 
         // searching criteria:
-        // 1. By status
+
+        // by ID
+        public async Task<IEnumerable<Package>> GetPackageByIDAsync(uint id)
+        {
+            return await GetPackagesByCriteriaAsync(p => p.ID == id);
+        }
+        // by status
         public async Task<IEnumerable<Package>> GetPackagesByStatusAsync(PackageStatus status)
         {
             return await GetPackagesByCriteriaAsync(p => p.PackageStatus == status);
         }
 
-        // 2. By starting point
+        // by starting point
         public async Task<IEnumerable<Package>> GetPackagesByStartingPoint(PostalOffice startingPoint)
         {
             return await GetPackagesByCriteriaAsync(p => p.SentFrom == startingPoint);
         }
 
-        // 3. By destination
+        // by destination
         public async Task<IEnumerable<Package>> GetPackagesByDestination(PostalOffice destination)
         {
             return await GetPackagesByCriteriaAsync(p => p.SentTo == destination);
         }
 
-        // 4. By sender
+        // by sender
         public async Task<IEnumerable<Package>> GetPackagesBySender(Client sender)
         {
             return await GetPackagesByCriteriaAsync(p => p.Sender == sender);
         }
 
-        // 5. By receiver
+        // by receiver
         public async Task<IEnumerable<Package>> GetPackagesByReceiver(Client receiver)
         {
             return await GetPackagesByCriteriaAsync(p => p.Receiver == receiver);
         }
 
-        // 6. By content (?)
+        // by content (?)
         // to-do
 
-        // 7. By package type
+        // by package type
         public async Task<IEnumerable<Package>> GetPackagesByPackageType(PackageType packageType)
         {
             return await GetPackagesByCriteriaAsync(p => p.Type == packageType);
         }
 
-        // 8. By package ID (already in Repository)
+        // by package ID (already in Repository)
 
-        // 9. By package weight
-        public async Task<IEnumerable<Package>> GetPackagesByWeight(uint weight)
+        // by package weight
+        public async Task<IEnumerable<Package>> GetPackagesByWeightAsync(uint weight)
         {
             return await GetPackagesByCriteriaAsync(p => p.Weight == weight);
         }
@@ -75,8 +88,8 @@ namespace Class_Lib.Database.Repositories
             return await GetPackagesByCriteriaAsync(p => p.Weight >= minWeight && p.Weight <= maxWeight);
         }
 
-        // 10. By package volume
-        public async Task<IEnumerable<Package>> GetPackagesByVolume(uint volume)
+        // by package volume
+        public async Task<IEnumerable<Package>> GetPackagesByVolumeAsync(uint volume)
         {
             return await GetPackagesByCriteriaAsync(p => p.Volume == volume);
         }
@@ -86,10 +99,10 @@ namespace Class_Lib.Database.Repositories
             return await GetPackagesByCriteriaAsync(p => p.Volume >= minVolume && p.Volume <= maxVolume);
         }
 
-        // 11. By package dimensions (length, width, height) (nvm not possible as they are private)
+        // by package dimensions (length, width, height) (nvm not possible as they are private)
 
-        // 12. By package creation date
-        public async Task<IEnumerable<Package>> GetPackagesByCreationDate(DateTime time)
+        // by package creation date
+        public async Task<IEnumerable<Package>> GetPackagesByCreationDateAsync(DateTime time)
         {
             return await GetPackagesByCriteriaAsync(p => p.CreatedAt == time);
         }
@@ -99,7 +112,7 @@ namespace Class_Lib.Database.Repositories
             return await GetPackagesByCriteriaAsync(p => p.CreatedAt >= startDate && p.CreatedAt <= endDate);
         }
 
-        // 13. By package delivery date (?)
+        // by package delivery date (?)
 
     }
 }

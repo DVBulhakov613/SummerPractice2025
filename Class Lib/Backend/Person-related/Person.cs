@@ -11,11 +11,11 @@ namespace Class_Lib
     public class Person : IHasIdentification
     {
         public uint ID { get; private set; }
-        public string Name { get; set; }
+        public string FirstName { get; set; }
         public string Surname { get; set; }
-        public string FullName { get => Name + " " + Surname; }
+        public string FullName { get => FirstName + " " + Surname; }
         public string PhoneNumber { get; set; }
-        public string? Email { get; private set; }
+        public string? Email { get; set; }
         protected internal Person()
         {
             RowVersion = Array.Empty<byte>();
@@ -23,7 +23,7 @@ namespace Class_Lib
 
         public Person(string name, string surname, string phoneNumber, string? email = null)
         {
-            Name = name;
+            FirstName = name;
             Surname = surname;
             PhoneNumber = phoneNumber;
             if(email != null && Regex.IsMatch(email, @"^[^@\s]+@[^@\s]+\.[^@\s]+$"))

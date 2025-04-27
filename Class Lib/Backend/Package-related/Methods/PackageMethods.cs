@@ -4,11 +4,10 @@ using Class_Lib.Backend.Services;
 using Class_Lib.Database.Repositories;
 using System;
 using System.Collections.Generic;
-using System.Linq;
-using System.Text;
+using System.Linq.Expressions;
 using System.Threading.Tasks;
 
-namespace Class_Lib.Backend.Package_related
+namespace Class_Lib.Backend.Package_related.Methods
 {
     public class PackageMethods
     {
@@ -19,35 +18,42 @@ namespace Class_Lib.Backend.Package_related
             _packageRepository = packageRepository;
         }
 
-        public async Task<IEnumerable<Package>> GetAllPackagesAsync()
-        {
-            return await _packageRepository.GetAllAsync();
-        }
-
-        public async Task AddPackageAsync(Employee user, Package package, Client sender, Client receiver)
+        // Create
+        public async Task AddPackageAsync(Employee user, Package package)
         {
             if (!AccessService.CanPerformAction(user.GetType(), "CreatePackage"))
             {
                 throw new UnauthorizedAccessException("Немає доступу до створення посилки.");
             }
 
-            sender.PackagesSent.Add(package);
-            receiver.PackagesReceived.Add(package);
             await _packageRepository.AddAsync(package);
         }
 
-        //public async Task AddPackageReceivedAsync(Employee user, Package package, Client receiver)
-        //{
-        //    if (!AccessService.CanPerformAction(user.GetType(), "CreatePackage"))
-        //    {
-        //        throw new UnauthorizedAccessException("Немає доступу до створення посилки.");
-        //    }
+        // Read
+        public async Task<IEnumerable<Package>> GetPackagesByCustomCriteriaAsync(Employee user, Expression<Func<Package, bool>> filter)
+        {
+            if (!AccessService.CanPerformAction(user.GetType(), "ReadPackage"))
+            {
+                throw new UnauthorizedAccessException("Немає доступу до перегляду посилок.");
+            }
 
-        //    receiver.PackagesReceived.Add(package);
+            return await _packageRepository.Query()
+                .Where(filter)
+                .ExecuteAsync();
+        }
 
-        //    await _packageRepository.AddAsync(package);
-        //}
+        // Update
+        public async Task UpdatePackageAsync(Employee user, Package package)
+        {
+            if (!AccessService.CanPerformAction(user.GetType(), "UpdatePackage"))
+            {
+                throw new UnauthorizedAccessException("Немає дозволу змінювати посилки.");
+            }
 
+            await _packageRepository.UpdateAsync(package);
+        }
+
+        // Delete
         public async Task DeletePackageAsync(Employee user, Package package)
         {
             if (!AccessService.CanPerformAction(user.GetType(), "DeletePackage"))
@@ -55,37 +61,7 @@ namespace Class_Lib.Backend.Package_related
                 throw new UnauthorizedAccessException("Немає дозволу видаляти посилки.");
             }
 
-            if (package.PackageStatus != PackageStatus.DELIVERED &&
-                package.PackageStatus != PackageStatus.CANCELED &&
-                package.PackageStatus != PackageStatus.RETURNED)
-            {
-                throw new InvalidOperationException("Не можна видаляти посилку яку не: доставили, відмінили, або повернули.");
-            }
-
-            package.Sender.PackagesSent.Remove(package);
-            package.Receiver.PackagesReceived.Remove(package);
             await _packageRepository.DeleteAsync(package);
-
         }
-
-        //public async Task DeletePackageReceivedAsync(Employee user, Package package)
-        //{
-        //    if (!AccessService.CanPerformAction(user.GetType(), "DeletePackage"))
-        //    {
-        //        throw new UnauthorizedAccessException("Немає дозволу видаляти посилки.");
-        //    }
-
-        //    if (package.PackageStatus != PackageStatus.DELIVERED &&
-        //        package.PackageStatus != PackageStatus.CANCELED &&
-        //        package.PackageStatus != PackageStatus.RETURNED)
-        //    {
-        //        throw new InvalidOperationException("Не можна видаляти посилку яку не: доставили, відмінили, або повернули.");
-        //    }
-
-        //    package.Sender.PackagesReceived.Remove(package);
-        //    package.Receiver.PackagesReceived.Remove(package);
-        //    await _packageRepository.DeleteAsync(package);
-
-        //}
     }
 }

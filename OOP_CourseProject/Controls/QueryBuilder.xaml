@@ -1,0 +1,22 @@
+﻿<Window x:Class="OOP_CourseProject.Controls.QueryBuilder"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        Title="Query Builder" Height="450" Width="800">
+    <Grid>
+        <Grid.RowDefinitions>
+            <RowDefinition Height="Auto"/>
+            <RowDefinition Height="*"/>
+        </Grid.RowDefinitions>
+
+        <!-- query builder controls -->
+        <StackPanel Orientation="Horizontal" Grid.Row="0" Margin="10">
+            <ComboBox x:Name="FieldSelector" Width="150" Margin="5" ItemsSource="{Binding Fields}" SelectedItem="{Binding SelectedField}"/>
+            <ComboBox x:Name="OperatorSelector" Width="150" Margin="5" ItemsSource="{Binding Operators}" SelectedItem="{Binding SelectedOperator}"/>
+            <TextBox x:Name="ValueInput" Width="150" Margin="5" Text="{Binding ValueInput}"/>
+            <Button Content="Add Condition" Width="150" Margin="5" Command="{Binding AddConditionCommand}"/>
+        </StackPanel>
+
+        <!-- query results -->
+        <DataGrid x:Name="QueryResults" Grid.Row="1" ItemsSource="{Binding QueryResults}" AutoGenerateColumns="True"/>
+    </Grid>
+</Window>

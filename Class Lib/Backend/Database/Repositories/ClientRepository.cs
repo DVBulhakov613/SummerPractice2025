@@ -1,4 +1,5 @@
-﻿using Class_Lib.Backend.Person_related;
+﻿using Class_Lib.Backend.Database;
+using Class_Lib.Backend.Person_related;
 using Microsoft.EntityFrameworkCore;
 using System;
 using System.Collections.Generic;
@@ -13,6 +14,13 @@ namespace Class_Lib.Database.Repositories
     {
         public ClientRepository(AppDbContext context) : base(context) { }
 
+
+        // for the query builder
+        public QueryBuilder<Client> Query()
+        {
+            return new QueryBuilder<Client>(_context.Clients);
+        }
+
         // generic query method
         public async Task<IEnumerable<Client>> GetClientsByCriteria(Expression<Func<Client, bool>> predicate)
         {
@@ -23,35 +31,28 @@ namespace Class_Lib.Database.Repositories
 
         // searching criteria:
 
-        // 1. by ID
+        // by ID
         public async Task<IEnumerable<Client>> GetClientsByIDAsync(uint id)
         {
             return await GetClientsByCriteria(p => p.ID == id);
         }
 
-        // 2. by first name
+        // by first name
         public async Task<IEnumerable<Client>> GetClientsByFirstNameAsync(string firstName)
         {
-            return await GetClientsByCriteria(p => p.Name.ToLower() == firstName.ToLower());
+            return await GetClientsByCriteria(p => p.FirstName.ToLower() == firstName.ToLower());
         }
 
-        // 3. by last name
+        // by last name
         public async Task<IEnumerable<Client>> GetClientsByLastNameAsync(string lastName)
         {
             return await GetClientsByCriteria(p => p.Surname.ToLower() == lastName.ToLower());
         }
 
-        // 4. by full name
+        // by full name
         public async Task<IEnumerable<Client>> GetClientsByFullNameAsync(string fullName)
         {
-            return await GetClientsByCriteria(p => p.Name.ToLower() + " " + p.Surname.ToLower() == fullName.ToLower());
-        }
-
-        // get all
-        public async Task<IEnumerable<Client>> GetAllClientsAsync()
-        {
-            return await _context.Clients
-                .ToListAsync();
+            return await GetClientsByCriteria(p => p.FirstName.ToLower() + " " + p.Surname.ToLower() == fullName.ToLower());
         }
     }
 }

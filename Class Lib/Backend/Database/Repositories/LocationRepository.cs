@@ -1,17 +1,32 @@
-﻿using Microsoft.EntityFrameworkCore;
+﻿using Class_Lib.Backend.Person_related;
+using Microsoft.EntityFrameworkCore;
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Linq.Expressions;
 using System.Text;
 using System.Threading.Tasks;
 
 namespace Class_Lib.Backend.Database.Repositories
 {
-    internal class LocationRepository : Repository<BaseLocation>
+    public class LocationRepository : Repository<BaseLocation>
     {
-        AppDbContext _context;
         public LocationRepository(AppDbContext context) : base(context) { }
-        // Add any specific methods for LocationRepository here
+
+        // for the query builder
+        public QueryBuilder<BaseLocation> Query()
+        {
+            return new QueryBuilder<BaseLocation>(_context.Locations);
+        }
+
+        // generic query method
+        public async Task<IEnumerable<BaseLocation>> GetPackagesByCriteriaAsync(Expression<Func<BaseLocation, bool>> predicate)
+        {
+            return await _context.Locations
+                .Where(predicate)
+                .ToListAsync();
+        }
+
         public async Task<IEnumerable<BaseLocation>> GetLocationsByTypeAsync(string type)
         {
             return await _context.Locations

@@ -54,7 +54,7 @@ namespace Class_Lib.Migrations
 
                     b.HasKey("ID");
 
-                    b.ToTable("Clients");
+                    b.ToTable("Clients", (string)null);
                 });
 
             modelBuilder.Entity("Class_Lib.BaseLocation", b =>
@@ -86,7 +86,7 @@ namespace Class_Lib.Migrations
 
                     b.HasIndex("GeoDataLongitude", "GeoDataLatitude");
 
-                    b.ToTable("Locations");
+                    b.ToTable("Locations", (string)null);
 
                     b.HasDiscriminator<string>("WarehouseType").HasValue("BaseLocation");
 
@@ -117,7 +117,7 @@ namespace Class_Lib.Migrations
 
                     b.HasIndex("PackageID");
 
-                    b.ToTable("Contents");
+                    b.ToTable("Contents", (string)null);
                 });
 
             modelBuilder.Entity("Class_Lib.Coordinates", b =>
@@ -143,7 +143,7 @@ namespace Class_Lib.Migrations
 
                     b.HasKey("Longitude", "Latitude");
 
-                    b.ToTable("Coordinates");
+                    b.ToTable("Coordinates", (string)null);
                 });
 
             modelBuilder.Entity("Class_Lib.Employee", b =>
@@ -187,7 +187,7 @@ namespace Class_Lib.Migrations
 
                     b.HasIndex("WorkplaceID");
 
-                    b.ToTable("Employees");
+                    b.ToTable("Employees", (string)null);
                 });
 
             modelBuilder.Entity("Class_Lib.Package", b =>
@@ -250,7 +250,7 @@ namespace Class_Lib.Migrations
 
                     b.HasIndex("WarehouseID");
 
-                    b.ToTable("Packages");
+                    b.ToTable("Packages", (string)null);
                 });
 
             modelBuilder.Entity("Class_Lib.PackageEvent", b =>
@@ -274,7 +274,7 @@ namespace Class_Lib.Migrations
 
                     b.HasIndex("PackageID");
 
-                    b.ToTable("PackageEvents");
+                    b.ToTable("PackageEvents", (string)null);
                 });
 
             modelBuilder.Entity("Class_Lib.Warehouse", b =>

@@ -1,0 +1,77 @@
+﻿tests needed for:
+Person
+    Employee
+        GetEmployeesByWorkplaceIdAsync
+        GetEmployeesByFirstNameAsync
+        GetEmployeesByLastNameAsync
+        GetEmployeesByFullNameAsync
+        EmployeeRepository
+            GetEmployeesByCriteria
+                GetEmployeesByIDAsync
+                GetEmployeesByWorkplaceIdAsync  (done)
+                GetEmployeesByFirstNameAsync    (done)
+                GetEmployeesByLastNameAsync     (done)
+                GetEmployeesByFullNameAsync     (done)
+    Manager
+    Administrator
+    Client
+        GetClientsByFirstNameAsync
+        GetClientsByLastNameAsync
+        GetClientsByFullNameAsync
+        ClientRepository
+            GetClientsByCriteria
+                GetClientsByIDAsync
+                GetClientsByFirstNameAsync
+                GetClientsByLastNameAsync
+                GetClientsByFullNameAsync
+    PersonMethods
+        AddEmployeeAsync
+        AddClientAsync
+        DeleteAdministratorAsync
+
+Package
+    Package
+        GetPackagesByStatusAsync
+        GetPackagesBySenderAsync
+        GetPackagesByReceiverAsync
+        GetPackagesByWeightRangeAsync
+        GetPackagesByVolumeAsync
+        GetPackagesByCreationDateRangeAsync
+PackageRepository
+    GetPackagesByCriteria
+        GetPackagesByStatusAsync
+        GetPackagesByStartingPointAsync
+        GetPackagesByDestinationAsync
+        GetPackagesBySenderAsync
+        GetPackagesByReceiverAsync
+        GetPackagesByPackageTypeAsync
+        GetPackagesByWeightAsync
+        GetPackagesByWeightRangeAsync
+        GetPackagesByVolumeAsync
+        GetPackagesByVolumeRangeAsync
+        GetPackagesByCreationDateAsync
+        GetPackagesByCreationDateRangeAsync
+    Content
+        Retrieving contents for a specific package
+    PackageEvent
+        Logging
+        Retrieving events for a specific package
+    PackageMethods
+        AddPackageAsync
+        DeletePackageAsync
+        GetAllPackagesAsync
+
+BaseLocation
+    PostalOffice
+        Assignment of employees
+    Warehouse
+        Assignment of employees
+        Storage and retrieval of packages
+        Capacity limits
+User
+    GetByUsernameAsync
+    PasswordHelper
+Coordinates
+    Data validation (latitude, longitude, address) (done)
+AccessService (done)
+AuthService

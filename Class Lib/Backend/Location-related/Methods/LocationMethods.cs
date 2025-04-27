@@ -1,56 +1,65 @@
-﻿using Class_Lib.Backend.Services;
+﻿using Class_Lib.Backend.Database.Repositories;
+using Class_Lib.Backend.Services;
 using System;
 using System.Collections.Generic;
-using System.Linq;
-using System.Text;
+using System.Linq.Expressions;
 using System.Threading.Tasks;
 
 namespace Class_Lib.Backend.Location_related.Methods
 {
     public class LocationMethods
     {
-        private readonly AppDbContext _context;
+        private readonly LocationRepository _locationRepository;
 
-        public LocationMethods(AppDbContext context)
+        public LocationMethods(LocationRepository locationRepository)
         {
-            _context = context;
+            _locationRepository = locationRepository;
         }
 
-        public async Task AddBaseLocationAsync(Person user, BaseLocation location)
+        // Create
+        public async Task AddLocationAsync(Employee user, BaseLocation location)
         {
             if (!AccessService.CanPerformAction(user.GetType(), "CreateLocation"))
             {
                 throw new UnauthorizedAccessException("Немає дозволу створювати локації.");
             }
 
-            _context.Locations.Add(location);
-
-            await _context.SaveChangesAsync();
+            await _locationRepository.AddAsync(location);
         }
 
-        public async Task EditBaseLocationAsync(Person user, BaseLocation location)
+        // Read
+        public async Task<IEnumerable<BaseLocation>> GetLocationsByCustomCriteriaAsync(Employee user, Expression<Func<BaseLocation, bool>> filter)
+        {
+            if (!AccessService.CanPerformAction(user.GetType(), "ReadLocation"))
+            {
+                throw new UnauthorizedAccessException("Немає доступу до перегляду локацій.");
+            }
+
+            return await _locationRepository.Query()
+                .Where(filter)
+                .ExecuteAsync();
+        }
+
+        // Update
+        public async Task UpdateLocationAsync(Employee user, BaseLocation location)
         {
             if (!AccessService.CanPerformAction(user.GetType(), "UpdateLocation"))
             {
                 throw new UnauthorizedAccessException("Немає дозволу змінювати локації.");
             }
 
-            _context.Locations.Update(location);
-
-            await _context.SaveChangesAsync();
+            await _locationRepository.UpdateAsync(location);
         }
 
-        public async Task DeleteBaseLocationAsync(Person user, BaseLocation location)
+        // Delete
+        public async Task DeleteLocationAsync(Employee user, BaseLocation location)
         {
             if (!AccessService.CanPerformAction(user.GetType(), "DeleteLocation"))
             {
                 throw new UnauthorizedAccessException("Немає дозволу видаляти локації.");
             }
 
-            _context.Locations.Remove(location);
-
-            await _context.SaveChangesAsync();
+            await _locationRepository.DeleteAsync(location);
         }
     }
-
 }

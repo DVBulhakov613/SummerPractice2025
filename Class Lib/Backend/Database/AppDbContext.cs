@@ -6,9 +6,7 @@ namespace Class_Lib
 {
     public class AppDbContext : DbContext
     {
-        public AppDbContext(DbContextOptions<AppDbContext> options) : base(options)
-        {
-        }
+        public AppDbContext(DbContextOptions<AppDbContext> options) : base(options) { }
 
         public DbSet<Client> Clients { get; set; }
         public DbSet<Employee> Employees { get; set; }
@@ -17,6 +15,7 @@ namespace Class_Lib
         public DbSet<Content> Contents { get; set; }
         public DbSet<PackageEvent> PackageEvents { get; set; }
         public DbSet<BaseLocation> Locations { get; set; }
+        public DbSet<User> Users { get; set; }
         //public DbSet<Country> Countries { get; set; }
 
         //protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
@@ -143,6 +142,16 @@ namespace Class_Lib
                 .WithMany(po => po.Staff)
                 .HasForeignKey(e => e.WorkplaceID)
                 .OnDelete(DeleteBehavior.Restrict);
+            #endregion
+
+            #region user table
+            modelBuilder.Entity<User>() // defines the primary key for the user table
+                .HasKey(u => u.Username);
+            modelBuilder.Entity<User>()
+                .HasOne(u => u.Person)
+                .WithOne()
+                .HasForeignKey<User>(u => u.PersonID)
+                .OnDelete(DeleteBehavior.Cascade); // if a user is deleted, the associated person is also deleted
             #endregion
 
             #region client table specifications

@@ -1,16 +1,22 @@
-﻿using Microsoft.EntityFrameworkCore;
+﻿using Class_Lib;
+using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Design;
 
-namespace Class_Lib
+namespace Class_Lib.Backend.Database
 {
-    public class AppDbContextFactory : IDesignTimeDbContextFactory<AppDbContext>
+    public class AppDbContextFactory
     {
-        public AppDbContext CreateDbContext(string[] args)
+        private readonly string _connectionString;
+
+        public AppDbContextFactory(string connectionString)
+        {
+            _connectionString = connectionString;
+        }
+
+        public AppDbContext CreateDbContext()
         {
             var optionsBuilder = new DbContextOptionsBuilder<AppDbContext>();
-
-            var connectionString = "Server=localhost\\SQLEXPRESS;Database=PackageDb;Trusted_Connection=True;MultipleActiveResultSets=true;TrustServerCertificate=True";
-            optionsBuilder.UseSqlServer(connectionString);
+            optionsBuilder.UseSqlServer(_connectionString);
 
             return new AppDbContext(optionsBuilder.Options);
         }

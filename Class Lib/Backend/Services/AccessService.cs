@@ -111,6 +111,17 @@ namespace Class_Lib.Backend.Services
                     { "UpdateCountry", AdminOnlyRoles },
                     { "DeleteCountry", AdminOnlyRoles }
                 }
+            },
+
+            // user account permissions
+            {
+                "User", new Dictionary<string, List<Type>>
+                {
+                    { "ReadUser", AdminOnlyRoles },
+                    { "CreateUser", AdminOnlyRoles },
+                    { "UpdateUser", AdminOnlyRoles },
+                    { "DeleteUser", AdminOnlyRoles }
+                }
             }
         };
 

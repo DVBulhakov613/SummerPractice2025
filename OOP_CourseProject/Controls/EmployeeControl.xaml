@@ -1,0 +1,28 @@
+﻿<UserControl x:Class="OOP_CourseProject.Controls.EmployeeControl"
+             xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+             mc:Ignorable="d"
+             d:DesignHeight="450" d:DesignWidth="800">
+    
+    <!-- PLACEHOLDER, simply here to test the application's workings -->
+    <Grid>
+        <Grid.RowDefinitions>
+            <RowDefinition Height="Auto"/>
+            <RowDefinition Height="*"/>
+        </Grid.RowDefinitions>
+
+        <!-- toolbar -->
+        <StackPanel Orientation="Horizontal" Grid.Row="0" Margin="10">
+            <Button Content="Add Employee" Click="AddEmployee_Click" Margin="5"/>
+            <Button Content="Edit Employee" Click="EditEmployee_Click" Margin="5"/>
+            <Button Content="Delete Employee" Click="DeleteEmployee_Click" Margin="5"/>
+            <Button Content="Promote to Manager" Click="PromoteToManager_Click" Margin="5"/>
+            <Button Content="Promote to Administrator" Click="PromoteToAdministrator_Click" Margin="5"/>
+        </StackPanel>
+
+        <!-- employee table -->
+        <DataGrid x:Name="EmployeeTable" Grid.Row="1" AutoGenerateColumns="True" Margin="10" SelectionMode="Single"/>
+    </Grid>
+</UserControl>
