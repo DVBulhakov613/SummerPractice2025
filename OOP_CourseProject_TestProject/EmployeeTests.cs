@@ -30,8 +30,8 @@ namespace OOP_CourseProject_TestProject
             _repository = new EmployeeRepository(_context);
 
             _workplace = (PostalOffice)TestUtilities.CorrectPostalOffice.First()[0];
-            _employee1 = new Employee("John", "Doe", "+123456789", "Clerk", _workplace);
-            _employee2 = new Employee("Jane", "Smith", "+987654321", "Manager", _workplace);
+            _employee1 = new Employee("John", "Doe", "+123456789", "Працівник", _workplace);
+            _employee2 = new Employee("Jane", "Smith", "+987654321", "Менеджер", _workplace);
         }
 
         [TestCleanup]
@@ -121,5 +121,190 @@ namespace OOP_CourseProject_TestProject
             Assert.AreEqual(1, employees.Count());
             Assert.AreEqual("John Doe", employees.First().FullName);
         }
+
+        [TestMethod]
+        public async Task AddEmployeeAsync_ShouldAddEmployee_WhenUserHasPermission()
+        {
+            // Arrange string name, string surname, string phoneNumber, string? email, string position, BaseLocation workplace
+            var employeeMethods = new EmployeeMethods(_repository);
+            var user = new Administrator("Admin", "User", "+123456789", null, "Системний Адміністратор", _workplace);
+            var newEmployee = new Employee("New", "Працівник", "+987654321", "Працівник", _workplace);
+
+            // Act
+            await employeeMethods.AddEmployeeAsync(user, newEmployee);
+            var employees = await _repository.GetAllAsync();
+
+            // Assert
+            Assert.AreEqual(1, employees.Count());
+            Assert.AreEqual("New", employees.First().FirstName);
+        }
+
+        [TestMethod]
+        [ExpectedException(typeof(UnauthorizedAccessException))]
+        public async Task AddEmployeeAsync_ShouldThrowException_WhenUserLacksPermission()
+        {
+            // Arrange
+            var employeeMethods = new EmployeeMethods(_repository);
+            var user = new Employee("Regular", "User", "+123456789", "Працівник", _workplace);
+            var newEmployee = new Employee("New", "Працівник", "+987654321", "Працівник", _workplace);
+
+            // Act
+            await employeeMethods.AddEmployeeAsync(user, newEmployee);
+        }
+
+        [TestMethod]
+        public async Task DeleteEmployeeAsync_ShouldDeleteEmployee_WhenUserHasPermission()
+        {
+            // Arrange
+            var employeeMethods = new EmployeeMethods(_repository);
+            var user = new Administrator("Admin", "User", "+123456789", null, "Системний Адміністратор", _workplace);
+            await _repository.AddAsync(_employee1);
+
+            // Act
+            await employeeMethods.DeleteEmployeeAsync(user, _employee1);
+            var employees = await _repository.GetAllAsync();
+
+            // Assert
+            Assert.AreEqual(0, employees.Count());
+        }
+
+        [TestMethod]
+        [ExpectedException(typeof(InvalidOperationException))]
+        public async Task DeleteEmployeeAsync_ShouldThrowException_WhenDeletingLastAdministrator()
+        {
+            // Arrange
+            var employeeMethods = new EmployeeMethods(_repository);
+            var user = new Administrator("Admin", "User", "+123456789", null, "Системний Адміністратор", _workplace);
+            var admin = new Administrator("Admin", "Last", "+123456789", "admin@example.com", "Системний Адміністратор", _workplace);
+            await _repository.AddAsync(admin);
+
+            // Act
+            await employeeMethods.DeleteEmployeeAsync(user, admin);
+        }
+
+        [TestMethod]
+        public async Task PromoteEmployeeToManager_ShouldPromoteToManager()
+        {
+            // Arrange
+            var user = new Administrator("Jane", "Smith", "987654321", null, "Працівник", _workplace);
+            await _repository.AddAsync(user);
+            await _repository.AddAsync(_employee1);
+
+            var managedLocations = new List<BaseLocation> { _workplace };
+
+            // Act
+            var employeeMethods = new EmployeeMethods(_repository);
+            await employeeMethods.PromoteToManagerAsync(user, _employee1, managedLocations);
+            var manager = await _repository.GetByIdAsync(_employee1.ID) as Manager;
+
+            // Assert
+            Assert.IsNotNull(manager);
+            Assert.AreEqual(user.FirstName, manager.FirstName);
+            Assert.AreEqual(managedLocations.Count, manager.ManagedLocations.Count);
+            Assert.IsInstanceOfType(manager, typeof(Manager));
+            Assert.IsNotInstanceOfType(manager, typeof(Employee)); // Ensure role change
+        }
+
+        [TestMethod]
+        [ExpectedException(typeof(KeyNotFoundException))]
+        public async Task PromoteToManagerAsync_ShouldThrowException_WhenEmployeeNotFound()
+        {
+            // Arrange
+            var employeeMethods = new EmployeeMethods(_repository);
+            var user = new Administrator("Admin", "User", "+123456789", null, "Системний Адміністратор", _workplace);
+            var nonExistentEmployee = new Employee("Non", "Existent", "+000000000", "Працівник", _workplace);
+
+            // Act
+            await employeeMethods.PromoteToManagerAsync(user, nonExistentEmployee, new List<BaseLocation>());
+        }
+
+        [TestMethod]
+        public async Task PromoteToAdministratorAsync_ShouldPromoteEmployeeToAdministrator()
+        {
+            // Arrange
+            var employeeMethods = new EmployeeMethods(_repository);
+            var user = new Administrator("Admin", "User", "+123456789", null, "Системний Адміністратор", _workplace);
+            await _repository.AddAsync(_employee1);
+
+            // Act
+            await employeeMethods.PromoteToAdministratorAsync(user, _employee1);
+            var administrators = await _repository.GetEmployeesByCriteria(e => e.Position == "Системний Адміністратор");
+
+            // Assert
+            Assert.AreEqual(1, administrators.Count());
+        }
+
+        [TestMethod]
+        public async Task PromoteEmployeeToAdministrator_ShouldUpdateRoleCorrectly()
+        {
+            // Arrange
+            var user = new Administrator("Admin", "User", "+123456789", null, "Системний Адміністратор", _workplace);
+            await _repository.AddAsync(_employee1);
+
+            // Act
+            var employeeMethods = new EmployeeMethods(_repository);
+            await employeeMethods.PromoteToAdministratorAsync(user, _employee1);
+            var administrator = await _repository.GetByIdAsync(_employee1.ID) as Administrator;
+
+            // Assert
+            Assert.IsNotNull(administrator);
+            Assert.AreEqual(_employee1.FirstName, administrator.FirstName);
+            Assert.IsInstanceOfType(administrator, typeof(Administrator));
+            Assert.IsNotInstanceOfType(administrator, typeof(Manager)); // Ensure role change
+            Assert.IsNotInstanceOfType(administrator, typeof(Employee)); // Ensure role change
+        }
+
+
+        [TestMethod]
+        public async Task ManagerData_ShouldPersistCorrectly()
+        {
+            // Arrange
+            var workplace = new Warehouse(new Coordinates(50.45, 30.52, "Kyiv", "Ukraine"), 0, false);
+            var manager = new Manager("John", "Doe", "123456789", "john.doe@example.com", "Менеджер", workplace)
+            {
+                ManagedLocations = new List<BaseLocation>
+        {
+            workplace,
+            new Warehouse(new Coordinates(50, 30, "Kyiv", "Ukraine"), 0, true),
+            new Warehouse(new Coordinates(50.4, 30.5, "Kyiv", "Ukraine"), 50, false)
+        }
+            };
+
+            await _repository.AddAsync(manager);
+
+            // Act
+            var retrievedManager = await _repository.GetByIdAsync(manager.ID) as Manager;
+
+            // Assert
+            Assert.IsNotNull(retrievedManager);
+            Assert.AreEqual(manager.FirstName, retrievedManager.FirstName);
+            Assert.AreEqual(manager.Position, retrievedManager.Position);
+            Assert.AreEqual(manager.ManagedLocations.Count, retrievedManager.ManagedLocations.Count);
+            Assert.IsInstanceOfType(retrievedManager, typeof(Manager));
+            Assert.IsInstanceOfType(retrievedManager, typeof(Employee)); // Inheritance check
+        }
+
+        [TestMethod]
+        public async Task AdministratorData_ShouldPersistCorrectly()
+        {
+            // Arrange
+            var workplace = new Warehouse(new Coordinates(50.45, 30.52, "Kyiv", "Ukraine"), 0, false);
+            var administrator = new Administrator("Jane", "Smith", "987654321", "jane.smith@example.com", "Системний Адміністратор", workplace);
+
+            await _repository.AddAsync(administrator);
+
+            // Act
+            var retrievedAdministrator = await _repository.GetByIdAsync(administrator.ID) as Administrator;
+
+            // Assert
+            Assert.IsNotNull(retrievedAdministrator);
+            Assert.AreEqual(administrator.FirstName, retrievedAdministrator.FirstName);
+            Assert.AreEqual(administrator.Position, retrievedAdministrator.Position);
+            Assert.IsInstanceOfType(retrievedAdministrator, typeof(Administrator));
+            Assert.IsInstanceOfType(retrievedAdministrator, typeof(Manager)); // Inheritance check
+            Assert.IsInstanceOfType(retrievedAdministrator, typeof(Employee)); // Inheritance check
+        }
+
+
     }
 }

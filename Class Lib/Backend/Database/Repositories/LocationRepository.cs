@@ -14,9 +14,9 @@ namespace Class_Lib.Backend.Database.Repositories
         public LocationRepository(AppDbContext context) : base(context) { }
 
         // for the query builder
-        public QueryBuilder<BaseLocation> Query()
+        public QueryBuilderService<BaseLocation> Query()
         {
-            return new QueryBuilder<BaseLocation>(_context.Locations);
+            return new QueryBuilderService<BaseLocation>(_context.Locations);
         }
 
         // generic query method

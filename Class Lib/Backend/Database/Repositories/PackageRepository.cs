@@ -16,9 +16,9 @@ namespace Class_Lib.Database.Repositories
         public PackageRepository(AppDbContext context) : base(context) { }
 
         // for the query builder
-        public QueryBuilder<Package> Query()
+        public QueryBuilderService<Package> Query()
         {
-            return new QueryBuilder<Package>(_context.Packages);
+            return new QueryBuilderService<Package>(_context.Packages);
         }
 
         // generic query method

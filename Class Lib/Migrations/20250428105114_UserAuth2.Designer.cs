@@ -4,6 +4,7 @@ using Class_Lib;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 
 #nullable disable
@@ -11,9 +12,11 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace Class_Lib.Migrations
 {
     [DbContext(typeof(AppDbContext))]
-    partial class AppDbContextModelSnapshot : ModelSnapshot
+    [Migration("20250428105114_UserAuth2")]
+    partial class UserAuth2
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        /// <inheritdoc />
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -54,7 +57,7 @@ namespace Class_Lib.Migrations
 
                     b.HasKey("ID");
 
-                    b.ToTable("Clients", (string)null);
+                    b.ToTable("Clients");
                 });
 
             modelBuilder.Entity("Class_Lib.Backend.Person_related.User", b =>
@@ -96,24 +99,26 @@ namespace Class_Lib.Migrations
                     b.Property<double>("GeoDataLongitude")
                         .HasColumnType("float");
 
-                    b.Property<long?>("ManagerID")
-                        .HasColumnType("bigint");
-
                     b.Property<byte[]>("RowVersion")
                         .IsConcurrencyToken()
                         .IsRequired()
                         .ValueGeneratedOnAddOrUpdate()
                         .HasColumnType("rowversion");
 
-                    b.HasKey("ID");
+                    b.Property<string>("WarehouseType")
+                        .IsRequired()
+                        .HasMaxLength(13)
+                        .HasColumnType("nvarchar(13)");
 
-                    b.HasIndex("ManagerID");
+                    b.HasKey("ID");
 
                     b.HasIndex("GeoDataLongitude", "GeoDataLatitude");
 
-                    b.ToTable("Locations", (string)null);
+                    b.ToTable("Locations");
 
-                    b.UseTptMappingStrategy();
+                    b.HasDiscriminator<string>("WarehouseType").HasValue("BaseLocation");
+
+                    b.UseTphMappingStrategy();
                 });
 
             modelBuilder.Entity("Class_Lib.Content", b =>
@@ -210,9 +215,7 @@ namespace Class_Lib.Migrations
 
                     b.HasIndex("WorkplaceID");
 
-                    b.ToTable("Employees", (string)null);
-
-                    b.UseTptMappingStrategy();
+                    b.ToTable("Employees");
                 });
 
             modelBuilder.Entity("Class_Lib.Package", b =>
@@ -312,14 +315,7 @@ namespace Class_Lib.Migrations
                     b.Property<long>("MaxStorageCapacity")
                         .HasColumnType("bigint");
 
-                    b.ToTable("Warehouses", (string)null);
-                });
-
-            modelBuilder.Entity("Class_Lib.Manager", b =>
-                {
-                    b.HasBaseType("Class_Lib.Employee");
-
-                    b.ToTable("Managers", (string)null);
+                    b.HasDiscriminator().HasValue("Warehouse");
                 });
 
             modelBuilder.Entity("Class_Lib.PostalOffice", b =>
@@ -332,14 +328,7 @@ namespace Class_Lib.Migrations
                     b.Property<bool>("IsRegionalHQ")
                         .HasColumnType("bit");
 
-                    b.ToTable("PostalOffices", (string)null);
-                });
-
-            modelBuilder.Entity("Class_Lib.Administrator", b =>
-                {
-                    b.HasBaseType("Class_Lib.Manager");
-
-                    b.ToTable("Administrators", (string)null);
+                    b.HasDiscriminator().HasValue("PostalOffice");
                 });
 
             modelBuilder.Entity("Class_Lib.Backend.Person_related.User", b =>
@@ -355,11 +344,6 @@ namespace Class_Lib.Migrations
 
             modelBuilder.Entity("Class_Lib.BaseLocation", b =>
                 {
-                    b.HasOne("Class_Lib.Manager", null)
-                        .WithMany("ManagedLocations")
-                        .HasForeignKey("ManagerID")
-                        .OnDelete(DeleteBehavior.Restrict);
-
                     b.HasOne("Class_Lib.Coordinates", "GeoData")
                         .WithMany()
                         .HasForeignKey("GeoDataLongitude", "GeoDataLatitude")
@@ -457,42 +441,6 @@ namespace Class_Lib.Migrations
                     b.Navigation("Package");
                 });
 
-            modelBuilder.Entity("Class_Lib.Warehouse", b =>
-                {
-                    b.HasOne("Class_Lib.BaseLocation", null)
-                        .WithOne()
-                        .HasForeignKey("Class_Lib.Warehouse", "ID")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
-                });
-
-            modelBuilder.Entity("Class_Lib.Manager", b =>
-                {
-                    b.HasOne("Class_Lib.Employee", null)
-                        .WithOne()
-                        .HasForeignKey("Class_Lib.Manager", "ID")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
-                });
-
-            modelBuilder.Entity("Class_Lib.PostalOffice", b =>
-                {
-                    b.HasOne("Class_Lib.Warehouse", null)
-                        .WithOne()
-                        .HasForeignKey("Class_Lib.PostalOffice", "ID")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
-                });
-
-            modelBuilder.Entity("Class_Lib.Administrator", b =>
-                {
-                    b.HasOne("Class_Lib.Manager", null)
-                        .WithOne()
-                        .HasForeignKey("Class_Lib.Administrator", "ID")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
-                });
-
             modelBuilder.Entity("Class_Lib.Backend.Person_related.Client", b =>
                 {
                     b.Navigation("PackagesReceived");
@@ -524,11 +472,6 @@ namespace Class_Lib.Migrations
                     b.Navigation("PackagesSentToHere");
 
                     b.Navigation("StoredPackages");
-                });
-
-            modelBuilder.Entity("Class_Lib.Manager", b =>
-                {
-                    b.Navigation("ManagedLocations");
                 });
 #pragma warning restore 612, 618
         }

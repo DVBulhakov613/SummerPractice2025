@@ -16,9 +16,9 @@ namespace Class_Lib.Database.Repositories
 
 
         // for the query builder
-        public QueryBuilder<Client> Query()
+        public QueryBuilderService<Client> Query()
         {
-            return new QueryBuilder<Client>(_context.Clients);
+            return new QueryBuilderService<Client>(_context.Clients);
         }
 
         // generic query method

@@ -12,34 +12,34 @@ namespace Class_Lib.Backend.Database
     /// A generic query builder for constructing LINQ queries in a fluent manner.
     /// </summary>
     /// <typeparam name="T"></typeparam>
-    public class QueryBuilder<T> where T : class
+    public class QueryBuilderService<T> where T : class
     {
         private IQueryable<T> _query;
 
-        public QueryBuilder(IQueryable<T> source)
+        public QueryBuilderService(IQueryable<T> source)
         {
             _query = source;
         }
 
-        public QueryBuilder<T> Where(Expression<Func<T, bool>> predicate)
+        public QueryBuilderService<T> Where(Expression<Func<T, bool>> predicate)
         {
             _query = _query.Where(predicate);
             return this;
         }
 
-        public QueryBuilder<T> OrderBy<TKey>(Expression<Func<T, TKey>> keySelector)
+        public QueryBuilderService<T> OrderBy<TKey>(Expression<Func<T, TKey>> keySelector)
         {
             _query = _query.OrderBy(keySelector);
             return this;
         }
 
-        public QueryBuilder<T> OrderByDescending<TKey>(Expression<Func<T, TKey>> keySelector)
+        public QueryBuilderService<T> OrderByDescending<TKey>(Expression<Func<T, TKey>> keySelector)
         {
             _query = _query.OrderByDescending(keySelector);
             return this;
         }
 
-        public QueryBuilder<T> Include<TProperty>(Expression<Func<T, TProperty>> navigationProperty)
+        public QueryBuilderService<T> Include<TProperty>(Expression<Func<T, TProperty>> navigationProperty)
         {
             _query = _query.Include(navigationProperty);
             return this;

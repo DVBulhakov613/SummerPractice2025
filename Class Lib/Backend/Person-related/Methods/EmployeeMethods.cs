@@ -21,7 +21,7 @@ namespace Class_Lib.Backend.Person_related.Methods
         // Create
         public async Task AddEmployeeAsync(Employee user, Employee employee)
         {
-            if (!AccessService.CanPerformAction(user.GetType(), "CreatePerson"))
+            if (!user.HasPermission(AccessService.PermissionKey.CreatePerson))
             {
                 throw new UnauthorizedAccessException("Немає доступу до створення працівника.");
             }
@@ -29,10 +29,11 @@ namespace Class_Lib.Backend.Person_related.Methods
             await _employeeRepository.AddAsync(employee);
         }
 
+
         // Read
         public async Task<IEnumerable<Employee>> GetEmployeesByCriteriaAsync(Employee user, Expression<Func<Employee, bool>> filter)
         {
-            if (!AccessService.CanPerformAction(user.GetType(), "ReadPerson"))
+            if (!user.HasPermission(AccessService.PermissionKey.CreatePerson))
             {
                 throw new UnauthorizedAccessException("Немає доступу до перегляду працівників.");
             }
@@ -45,7 +46,7 @@ namespace Class_Lib.Backend.Person_related.Methods
         // Update
         public async Task UpdateEmployeeAsync(Employee user, Employee updatedEmployee)
         {
-            if (!AccessService.CanPerformAction(user.GetType(), "UpdatePerson"))
+            if (!user.HasPermission(AccessService.PermissionKey.CreatePerson))
             {
                 throw new UnauthorizedAccessException("Немає доступу до оновлення працівника.");
             }
@@ -67,14 +68,14 @@ namespace Class_Lib.Backend.Person_related.Methods
         // Delete
         public async Task DeleteEmployeeAsync(Employee user, Employee employee)
         {
-            if (!AccessService.CanPerformAction(user.GetType(), "DeletePerson"))
+            if (!user.HasPermission(AccessService.PermissionKey.DeletePerson))
             {
                 throw new UnauthorizedAccessException("Немає доступу до видалення працівника.");
             }
 
             if (employee is Administrator)
             {
-                // Use the repository to count administrators
+                // use the repository to count administrators
                 var adminCount = await _employeeRepository.GetAdministratorCountAsync();
                 if (adminCount <= 1)
                 {
@@ -86,9 +87,11 @@ namespace Class_Lib.Backend.Person_related.Methods
         }
 
         // Employee-Specific Methods
+
+        // switches out permission list to manager's
         public async Task PromoteToManagerAsync(Employee user, Employee employee, List<BaseLocation> managedLocations)
         {
-            if (!AccessService.CanPerformAction(user.GetType(), "UpdatePerson"))
+            if (!user.HasPermission(AccessService.PermissionKey.UpdatePerson))
             {
                 throw new UnauthorizedAccessException("Немає доступу до підвищення працівника.");
             }
@@ -99,25 +102,22 @@ namespace Class_Lib.Backend.Person_related.Methods
                 throw new KeyNotFoundException("Працівника не знайдено.");
             }
 
-            var manager = new Manager(
-                existingEmployee.FirstName,
-                existingEmployee.Surname,
-                existingEmployee.PhoneNumber,
-                existingEmployee.Email,
-                existingEmployee.Position,
-                existingEmployee.Workplace
-            )
-            {
-                ManagedLocations = managedLocations
-            };
+            // Update role and permissions
+            existingEmployee.Position = "Менеджер";
+            AccessService.AssignRolePermissions(existingEmployee, "Менеджер");
 
-            await _employeeRepository.DeleteAsync(existingEmployee);
-            await _employeeRepository.AddAsync(manager);
+            if (existingEmployee is Manager manager)
+            {
+                manager.ManagedLocations = managedLocations;
+            }
+
+            await _employeeRepository.UpdateAsync(existingEmployee);
         }
 
+        // switches out permission list to administrator's
         public async Task PromoteToAdministratorAsync(Employee user, Employee employee)
         {
-            if (!AccessService.CanPerformAction(user.GetType(), "UpdatePerson"))
+            if (!user.HasPermission(AccessService.PermissionKey.UpdatePerson))
             {
                 throw new UnauthorizedAccessException("Немає доступу до підвищення працівника.");
             }
@@ -128,17 +128,12 @@ namespace Class_Lib.Backend.Person_related.Methods
                 throw new KeyNotFoundException("Працівника не знайдено.");
             }
 
-            var administrator = new Administrator(
-                existingEmployee.FirstName,
-                existingEmployee.Surname,
-                existingEmployee.PhoneNumber,
-                existingEmployee.Email,
-                existingEmployee.Position,
-                existingEmployee.Workplace
-            );
+            // Update role and permissions
+            existingEmployee.Position = "Системний Адміністратор";
+            AccessService.AssignRolePermissions(existingEmployee, "Системний Адміністратор");
 
-            await _employeeRepository.DeleteAsync(existingEmployee);
-            await _employeeRepository.AddAsync(administrator);
+            await _employeeRepository.UpdateAsync(existingEmployee);
         }
+
     }
 }

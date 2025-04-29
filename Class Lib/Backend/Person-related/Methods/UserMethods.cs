@@ -19,7 +19,7 @@ namespace Class_Lib.Backend.Person_related.Methods
         // Create
         public async Task AddUserAsync(Employee user, User newUser)
         {
-            if (!AccessService.CanPerformAction(user.GetType(), "CreateUser"))
+            if (!user.HasPermission(AccessService.PermissionKey.CreateUser))
             {
                 throw new UnauthorizedAccessException("Немає дозволу створювати користувачів.");
             }
@@ -30,7 +30,7 @@ namespace Class_Lib.Backend.Person_related.Methods
         // Read
         public async Task<IEnumerable<User>> GetUsersByCustomCriteriaAsync(Employee user, Expression<Func<User, bool>> filter)
         {
-            if (!AccessService.CanPerformAction(user.GetType(), "ReadUser"))
+            if (!user.HasPermission(AccessService.PermissionKey.ReadPerson))
             {
                 throw new UnauthorizedAccessException("Немає доступу до перегляду користувачів.");
             }
@@ -43,7 +43,7 @@ namespace Class_Lib.Backend.Person_related.Methods
         // Update
         public async Task UpdateUserAsync(Employee user, User updatedUser)
         {
-            if (!AccessService.CanPerformAction(user.GetType(), "UpdateUser"))
+            if (!user.HasPermission(AccessService.PermissionKey.CreateUser))
             {
                 throw new UnauthorizedAccessException("Немає дозволу змінювати користувачів.");
             }
@@ -54,7 +54,7 @@ namespace Class_Lib.Backend.Person_related.Methods
         // Delete
         public async Task DeleteUserAsync(Employee user, User targetUser)
         {
-            if (!AccessService.CanPerformAction(user.GetType(), "DeleteUser"))
+            if (!user.HasPermission(AccessService.PermissionKey.DeleteUser))
             {
                 throw new UnauthorizedAccessException("Немає дозволу видаляти користувачів.");
             }

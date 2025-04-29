@@ -21,7 +21,7 @@ namespace Class_Lib.Backend.Package_related.Methods
         // Create
         public async Task AddPackageAsync(Employee user, Package package)
         {
-            if (!AccessService.CanPerformAction(user.GetType(), "CreatePackage"))
+            if (!user.HasPermission(AccessService.PermissionKey.CreatePackage))
             {
                 throw new UnauthorizedAccessException("Немає доступу до створення посилки.");
             }
@@ -32,7 +32,7 @@ namespace Class_Lib.Backend.Package_related.Methods
         // Read
         public async Task<IEnumerable<Package>> GetPackagesByCustomCriteriaAsync(Employee user, Expression<Func<Package, bool>> filter)
         {
-            if (!AccessService.CanPerformAction(user.GetType(), "ReadPackage"))
+            if (!user.HasPermission(AccessService.PermissionKey.ReadPackage))
             {
                 throw new UnauthorizedAccessException("Немає доступу до перегляду посилок.");
             }
@@ -45,7 +45,7 @@ namespace Class_Lib.Backend.Package_related.Methods
         // Update
         public async Task UpdatePackageAsync(Employee user, Package package)
         {
-            if (!AccessService.CanPerformAction(user.GetType(), "UpdatePackage"))
+            if (!user.HasPermission(AccessService.PermissionKey.UpdatePackage))
             {
                 throw new UnauthorizedAccessException("Немає дозволу змінювати посилки.");
             }
@@ -56,7 +56,7 @@ namespace Class_Lib.Backend.Package_related.Methods
         // Delete
         public async Task DeletePackageAsync(Employee user, Package package)
         {
-            if (!AccessService.CanPerformAction(user.GetType(), "DeletePackage"))
+            if (!user.HasPermission(AccessService.PermissionKey.DeletePackage))
             {
                 throw new UnauthorizedAccessException("Немає дозволу видаляти посилки.");
             }

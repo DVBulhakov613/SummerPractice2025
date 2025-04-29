@@ -27,7 +27,7 @@ namespace OOP_CourseProject
                 return;
             }
 
-            App.CurrentEmployee = user.Person;
+            App.CurrentEmployee = user.Employee;
 
             // close the login window and open the main application
             var mainWindow = new MainWindow();

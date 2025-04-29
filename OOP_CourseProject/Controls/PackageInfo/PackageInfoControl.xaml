@@ -1,0 +1,56 @@
+﻿<UserControl x:Class="OOP_CourseProject.Controls.PackageInfo.PackageInfoControl"
+             xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             Background="{StaticResource PrimaryBackgroundBrush}">
+
+    <StackPanel Margin="10">
+
+        <TextBlock Text="Інформація відправника та отримувача посилки" FontWeight="Bold" Margin="0,0,0,5"/>
+        <Grid Margin="0,0,0,10">
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="*"/>
+                <ColumnDefinition Width="*"/>
+            </Grid.ColumnDefinitions>
+
+            <StackPanel Grid.Column="0">
+                <TextBlock Text="Відправник: Ім'я Ім'я"/>
+                <TextBlock>
+                    Номер телефону: 
+                    <Hyperlink Click="SenderPhone_Click">+000(00)000-0000</Hyperlink>
+                </TextBlock>
+                <TextBlock Text="Адреса електронної пошти: example@email.com"/>
+            </StackPanel>
+
+            <StackPanel Grid.Column="1">
+                <TextBlock Text="Отримувач: Ім'я Ім'я"/>
+                <TextBlock>
+                    Номер телефону:
+                    <Hyperlink Click="ReceiverPhone_Click">Немає</Hyperlink>
+                </TextBlock>
+                <TextBlock Text="Адреса електронної пошти: Немає"/>
+            </StackPanel>
+        </Grid>
+
+        <TextBlock Text="Інформація посилки" FontWeight="Bold" Margin="0,10,0,5"/>
+        <StackPanel Margin="0,0,0,10">
+            <TextBlock Text="Час оформлення: 23:59"/>
+            <TextBlock Text="Розмір: 100 x 100 x 100 cm"/>
+            <TextBlock Text="Вага: 10кг 500г"/>
+            <TextBlock Text="Тип: Велика посилка, Крихкий"/>
+        </StackPanel>
+
+        <TextBlock Text="Інформація доставки" FontWeight="Bold" Margin="0,10,0,5"/>
+        <StackPanel>
+            <TextBlock>
+                Пункт відправлення:
+                <Hyperlink Click="DeparturePoint_Click">#JPc-TOKYO-0</Hyperlink>
+            </TextBlock>
+            <TextBlock>
+                Пункт отримання:
+                <Hyperlink Click="ArrivalPoint_Click">#AUc-SYDNEY-0</Hyperlink>
+            </TextBlock>
+            <TextBlock Text="Розрахований час доставки: 5д 16г"/>
+        </StackPanel>
+
+    </StackPanel>
+</UserControl>

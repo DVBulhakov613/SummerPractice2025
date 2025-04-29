@@ -17,9 +17,9 @@ namespace Class_Lib.Backend.Database.Repositories
 
 
         // for the query builder
-        public QueryBuilder<Content> Query()
+        public QueryBuilderService<Content> Query()
         {
-            return new QueryBuilder<Content>(_context.Contents);
+            return new QueryBuilderService<Content>(_context.Contents);
         }
 
         // generic method

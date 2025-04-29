@@ -10,31 +10,29 @@ namespace Class_Lib
 
         public DbSet<Client> Clients { get; set; }
         public DbSet<Employee> Employees { get; set; }
-        //public DbSet<DeliveryVehicle> DeliveryVehicles { get; set; }
+        public DbSet<Manager> Managers { get; set; }
+        public DbSet<Administrator> Administrators { get; set; }
+        public DbSet<BaseLocation> Locations { get; set; }
+        public DbSet<Warehouse> Warehouses { get; set; }
+        public DbSet<PostalOffice> PostalOffices { get; set; }
         public DbSet<Package> Packages { get; set; }
         public DbSet<Content> Contents { get; set; }
         public DbSet<PackageEvent> PackageEvents { get; set; }
-        public DbSet<BaseLocation> Locations { get; set; }
         public DbSet<User> Users { get; set; }
-        //public DbSet<Country> Countries { get; set; }
-
-        //protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
-        //{
-        //    var projectDirectory = System.IO.Path.Combine(AppDomain.CurrentDomain.BaseDirectory, @"..\..\..\");
-        //    var dbPath = System.IO.Path.Combine(projectDirectory, "app.db");
-        //    //System.Diagnostics.Debug.WriteLine($"Using database at: {dbPath}"); // debug line
-        //    optionsBuilder.UseSqlite($"Data Source={dbPath}");
-        //}
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
-            // initial data seeding
             base.OnModelCreating(modelBuilder);
-            //modelBuilder.Entity<Country>().HasData(
-            //    new Country ("Ukraine", "UA"),
-            //    new Country ("Poland", "PL"),
-            //    new Country ("Romania", "RO"));
 
+            modelBuilder.Entity<Employee>().ToTable("Employees");
+            modelBuilder.Entity<Manager>().ToTable("Managers");
+            modelBuilder.Entity<Administrator>().ToTable("Administrators");
+            modelBuilder.Entity<Client>().ToTable("Clients");
+
+
+            modelBuilder.Entity<BaseLocation>().ToTable("Locations");
+            modelBuilder.Entity<Warehouse>().ToTable("Warehouses");
+            modelBuilder.Entity<PostalOffice>().ToTable("PostalOffices");
 
             #region base location table specifications
             modelBuilder.Entity<BaseLocation>() // ID as primary key
@@ -61,10 +59,6 @@ namespace Class_Lib
                 .WithOne(p => p.SentTo)
                 .HasForeignKey(p => p.SentToID)
                 .OnDelete(DeleteBehavior.Restrict);
-            modelBuilder.Entity<Warehouse>()
-                .HasDiscriminator<string>("WarehouseType")
-                .HasValue<Warehouse>("Warehouse")
-                .HasValue<PostalOffice>("PostalOffice");
             #endregion
 
             #region package table specifications
@@ -141,8 +135,19 @@ namespace Class_Lib
                 .HasOne(e => e.Workplace)
                 .WithMany(po => po.Staff)
                 .HasForeignKey(e => e.WorkplaceID)
-                .OnDelete(DeleteBehavior.Restrict);
+                .OnDelete(DeleteBehavior.Restrict)
+                .IsRequired(false);
+            modelBuilder.Entity<Employee>() // ties user data to employee objects
+                .HasOne(e => e.User)
+                .WithOne(u => u.Employee)
+                .HasForeignKey<User>(u => u.PersonID);
             #endregion
+
+            // manager table specifications
+            modelBuilder.Entity<Manager>() // has many managed locations with one manager, restrict deletion
+                .HasMany(m => m.ManagedLocations)
+                .WithOne()
+                .OnDelete(DeleteBehavior.Restrict);
 
             #region user table
             modelBuilder.Entity<User>()

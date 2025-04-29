@@ -15,9 +15,9 @@ namespace Class_Lib.Database.Repositories
         public EmployeeRepository(AppDbContext context) : base(context) { }
 
         // for the query builder
-        public QueryBuilder<Employee> Query()
+        public QueryBuilderService<Employee> Query()
         {
-            return new QueryBuilder<Employee>(_context.Employees);
+            return new QueryBuilderService<Employee>(_context.Employees);
         }
 
         // generic query method

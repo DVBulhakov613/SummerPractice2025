@@ -13,11 +13,14 @@ using System.Windows.Media.Imaging;
 using System.Windows.Navigation;
 using System.Windows.Shapes;
 
-namespace OOP_CourseProject.Controls
+namespace OOP_CourseProject.Controls.PackageInfo
 {
-    public partial class CreateDeliveryControl : UserControl
+    /// <summary>
+    /// Interaction logic for RouteViewControl.xaml
+    /// </summary>
+    public partial class RouteViewControl : UserControl
     {
-        public CreateDeliveryControl()
+        public RouteViewControl()
         {
             InitializeComponent();
         }

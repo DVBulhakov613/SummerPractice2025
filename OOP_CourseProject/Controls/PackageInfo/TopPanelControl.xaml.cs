@@ -15,9 +15,12 @@ using System.Windows.Shapes;
 
 namespace OOP_CourseProject.Controls
 {
-    public partial class CreateDeliveryControl : UserControl
+    /// <summary>
+    /// Interaction logic for TopPanelControl.xaml
+    /// </summary>
+    public partial class TopPanelControl : UserControl
     {
-        public CreateDeliveryControl()
+        public TopPanelControl()
         {
             InitializeComponent();
         }

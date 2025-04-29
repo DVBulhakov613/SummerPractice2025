@@ -8,141 +8,229 @@ namespace Class_Lib.Backend.Services
 {
     public static class AccessService
     {
-        private static readonly List<Type> AllRoles = new() { typeof(Employee) };
-        private static readonly List<Type> AdminAndManagerRoles = new() { typeof(Manager) };
-        private static readonly List<Type> AdminOnlyRoles = new() { typeof(Administrator) };
-
-        private static readonly Dictionary<string, Dictionary<string, List<Type>>> Permissions = new()
+        public enum PermissionKey
         {
             // scope permissions
-            { "Scope", new Dictionary<string, List<Type>>
-                {
-                    { "LocalPermissions", AllRoles },
-                    { "GlobalPermissions", AdminOnlyRoles }
-                }
-            },
+            LocalPermissions = 1,
+            GlobalPermissions = 2,
 
             // package permissions
-            { "Package", new Dictionary<string, List<Type>>
-                {
-                    { "ReadPackage", AllRoles },
-                    { "CreatePackage", AllRoles },
-                    { "UpdatePackage", AdminAndManagerRoles },
-                    { "DeletePackage", AdminAndManagerRoles }
-                }
-            },
+            ReadPackage = 10,
+            CreatePackage = 11,
+            UpdatePackage = 12,
+            DeletePackage = 13,
 
             // package event permissions
-            { "Event", new Dictionary<string, List<Type>>
-                {
-                    { "ReadEvent", AllRoles },
-                    { "CreateEvent", AllRoles },
-                    { "UpdateEvent", AdminAndManagerRoles },
-                    { "DeleteEvent", AdminOnlyRoles }
-                }
-            },
+            ReadEvent = 20,
+            CreateEvent = 21,
+            UpdateEvent = 22,
+            DeleteEvent = 23,
 
             // content permissions
-            { "Content", new Dictionary<string, List<Type>>
-                {
-                    { "ReadContent", AllRoles },
-                    { "CreateContent", AllRoles },
-                    { "UpdateContent", AllRoles },
-                    { "DeleteContent", AdminAndManagerRoles }
-                }
-            },
+            ReadContent = 30,
+            CreateContent = 31,
+            UpdateContent = 32,
+            DeleteContent = 33,
 
             // person permissions
-            { "Person", new Dictionary<string, List<Type>>
-                {
-                    { "ReadPerson", AllRoles },
-                    { "CreatePerson", AdminAndManagerRoles },
-                    { "UpdatePerson", AdminAndManagerRoles },
-                    { "DeletePerson", AdminAndManagerRoles }
-                }
-            },
+            ReadPerson = 40,
+            CreatePerson = 41,
+            UpdatePerson = 42,
+            DeletePerson = 43,
 
             // location permissions
-            { "Location", new Dictionary<string, List<Type>>
-                {
-                    { "ReadLocation", AllRoles },
-                    { "CreateLocation", AdminAndManagerRoles },
-                    { "UpdateLocation", AdminAndManagerRoles },
-                    { "DeleteLocation", AdminAndManagerRoles }
-                }
-            },
+            ReadLocation = 50,
+            CreateLocation = 51,
+            UpdateLocation = 52,
+            DeleteLocation = 53,
 
             // report permissions
-            {
-                "Report", new Dictionary<string, List<Type>>
-                {
-                    { "ReadReport", AllRoles },
-                    { "CreateReport", AdminAndManagerRoles },
-                    { "UpdateReport", AdminAndManagerRoles },
-                    { "DeleteReport", AdminAndManagerRoles }
-                }
-            },
+            ReadReport = 60,
+            CreateReport = 61,
+            UpdateReport = 62,
+            DeleteReport = 63,
 
             // delivery vehicle permissions
-            { "DeliveryVehicle", new Dictionary<string, List<Type>>
-                {
-                    { "CreateDeliveryVehicle", AdminAndManagerRoles },
-                    { "UpdateDeliveryVehicle", AdminAndManagerRoles },
-                    { "DeleteDeliveryVehicle", AdminAndManagerRoles }
-                }
-            },
+            ReadDeliveryVehicle = 70,
+            CreateDeliveryVehicle = 71,
+            UpdateDeliveryVehicle = 72,
+            DeleteDeliveryVehicle = 73,
 
-            // database-related and constant-related permissions
-            { "Database", new Dictionary<string, List<Type>>
-                {
-                    { "AddContentType", AdminOnlyRoles },
-                    { "UpdateContentType", AdminOnlyRoles },
-                    { "DeleteContentType", AdminOnlyRoles },
+            // database-related permissions
+            ReadContentType = 80,
+            CreateContentType = 81,
+            UpdateContentType = 82,
+            DeleteContentType = 83,
 
-                    { "AddPackageStatus", AdminOnlyRoles },
-                    { "UpdatePackageStatus", AdminOnlyRoles },
-                    { "DeletePackageStatus", AdminOnlyRoles },
+            ReadPackageStatus = 90,
+            CreatePackageStatus = 91,
+            UpdatePackageStatus = 92,
+            DeletePackageStatus = 93,
 
-                    { "AddPackageType", AdminOnlyRoles },
-                    { "UpdatePackageType", AdminOnlyRoles },
-                    { "DeletePackageType", AdminOnlyRoles },
+            ReadPackageType = 101,
+            CreatePackageType = 102,
+            UpdatePackageType = 103,
+            DeletePackageType = 104,
 
-                    { "AddCountry", AdminOnlyRoles },
-                    { "UpdateCountry", AdminOnlyRoles },
-                    { "DeleteCountry", AdminOnlyRoles }
-                }
-            },
+            ReadCountry = 110,
+            CreateCountry = 111,
+            UpdateCountry = 112,
+            DeleteCountry = 113,
 
             // user account permissions
-            {
-                "User", new Dictionary<string, List<Type>>
+            ReadUser = 100,
+            CreateUser = 101,
+            UpdateUser = 102,
+            DeleteUser = 103
+        }
+
+        // default permissions for roles
+        private static readonly Dictionary<string, HashSet<PermissionKey>> RolePermissions = new()
+        {
+            { "Працівник", new HashSet<PermissionKey>
                 {
-                    { "ReadUser", AdminOnlyRoles },
-                    { "CreateUser", AdminOnlyRoles },
-                    { "UpdateUser", AdminOnlyRoles },
-                    { "DeleteUser", AdminOnlyRoles }
+                    PermissionKey.LocalPermissions,
+
+                    PermissionKey.CreatePackage,
+                    PermissionKey.ReadPackage,
+                    PermissionKey.UpdatePackage,
+                    PermissionKey.DeletePackage,
+
+                    PermissionKey.CreateEvent,
+                    PermissionKey.ReadEvent,
+                    PermissionKey.UpdateEvent,
+
+                    PermissionKey.ReadPerson,
+
+                    PermissionKey.ReadReport,
+
+                    PermissionKey.ReadLocation,
+
+                }
+            },
+            { "Менеджер", new HashSet<PermissionKey>
+                {
+                    PermissionKey.LocalPermissions,
+
+                    PermissionKey.CreatePackage,
+                    PermissionKey.ReadPackage,
+                    PermissionKey.UpdatePackage,
+                    PermissionKey.DeletePackage,
+
+                    PermissionKey.CreateEvent,
+                    PermissionKey.ReadEvent,
+                    PermissionKey.UpdateEvent,
+
+                    PermissionKey.CreateContent,
+                    PermissionKey.ReadContent,
+                    PermissionKey.UpdateContent,
+                    PermissionKey.DeleteContent,
+
+                    PermissionKey.CreatePerson,
+                    PermissionKey.ReadPerson,
+                    PermissionKey.UpdatePerson,
+                    PermissionKey.DeletePerson,
+
+                    PermissionKey.ReadLocation,
+                    PermissionKey.UpdateLocation,
+
+                    PermissionKey.CreateReport,
+                    PermissionKey.ReadReport,
+                    PermissionKey.UpdateReport,
+                    PermissionKey.DeleteReport,
+
+                    PermissionKey.CreateDeliveryVehicle,
+                    PermissionKey.ReadDeliveryVehicle,
+                    PermissionKey.UpdateDeliveryVehicle,
+                    PermissionKey.DeleteDeliveryVehicle
+                }
+            },
+            
+            // all permissions, pretty much
+            { "Системний Адміністратор", new HashSet<PermissionKey>
+                {
+                    PermissionKey.GlobalPermissions,
+                    PermissionKey.LocalPermissions,
+
+                        PermissionKey.CreatePackage,
+                        PermissionKey.ReadPackage,
+                        PermissionKey.UpdatePackage,
+                        PermissionKey.DeletePackage,
+
+                        PermissionKey.CreateEvent,
+                        PermissionKey.ReadEvent,
+                        PermissionKey.UpdateEvent,
+                        PermissionKey.DeleteEvent,
+
+                        PermissionKey.CreateContent,
+                        PermissionKey.ReadContent,
+                        PermissionKey.UpdateContent,
+                        PermissionKey.DeleteContent,
+
+                        PermissionKey.CreatePerson,
+                        PermissionKey.ReadPerson,
+                        PermissionKey.UpdatePerson,
+                        PermissionKey.DeletePerson,
+
+                        PermissionKey.CreateLocation,
+                        PermissionKey.ReadLocation,
+                        PermissionKey.UpdateLocation,
+                        PermissionKey.DeleteLocation,
+
+                        PermissionKey.CreateReport,
+                        PermissionKey.ReadReport,
+                        PermissionKey.UpdateReport,
+                        PermissionKey.DeleteReport,
+
+                        PermissionKey.CreateDeliveryVehicle,
+                        PermissionKey.ReadDeliveryVehicle,
+                        PermissionKey.UpdateDeliveryVehicle,
+                        PermissionKey.DeleteDeliveryVehicle,
+
+                    PermissionKey.ReadContentType,
+                    PermissionKey.CreateContentType,
+                    PermissionKey.UpdateContentType,
+                    PermissionKey.DeleteContentType,
+
+                    PermissionKey.ReadPackageStatus,
+                    PermissionKey.CreatePackageStatus,
+                    PermissionKey.UpdatePackageStatus,
+                    PermissionKey.DeletePackageStatus,
+
+                    PermissionKey.ReadContentType,
+                    PermissionKey.CreatePackageType,
+                    PermissionKey.UpdatePackageType,
+                    PermissionKey.DeletePackageType,
+
+                    PermissionKey.ReadCountry,
+                    PermissionKey.CreateCountry,
+                    PermissionKey.UpdateCountry,
+                    PermissionKey.DeleteCountry,
+
+                    PermissionKey.ReadUser,
+                    PermissionKey.CreateUser,
+                    PermissionKey.UpdateUser,
+                    PermissionKey.DeleteUser
                 }
             }
         };
 
-        public static bool CanPerformAction(Type role, string action)
+        public static bool CanPerformAction(Employee employee, int permissionKey)
         {
-            foreach (var category in Permissions.Values)
-            {
-                if (category.TryGetValue(action, out var allowedRoles))
-                {
-                    foreach (var allowedRole in allowedRoles)
-                    {
-                        // This allows roles that inherit from allowedRole
-                        if (allowedRole.IsAssignableFrom(role))
-                        {
-                            return true;
-                        }
-                    }
-                }
-            }
+            return employee.Permissions.Contains(permissionKey);
+        }
 
-            return false;
+        // assign default permissions based on role
+        public static void AssignRolePermissions(Employee employee, string role)
+        {
+            if (RolePermissions.TryGetValue(role, out var permissions))
+            {
+                employee.Permissions = permissions.Select(p => (int)p).ToList();
+            }
+            else
+            {
+                throw new ArgumentException($"Роль '{role}' не існує.");
+            }
         }
     }
 }

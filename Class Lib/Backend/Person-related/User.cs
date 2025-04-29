@@ -12,7 +12,19 @@ namespace Class_Lib.Backend.Person_related
         public string PasswordHash { get; set; } // hashed password
         public string Role { get; set; } // "Administrator", "Manager", "Employee", NOT client; wait do we even need this? no prob not
         public uint? PersonID { get; set; } // Foreign key to Person table
-        public Employee Person { get; set; } // Navigation property
+        public Employee Employee { get; set; } // Navigation property
+
+
+        private User() { } // just for EFC
+
+        public User(string username, string passwordHash, string role, Employee employee)
+        {
+            Username = username;
+            PasswordHash = passwordHash;
+            Role = role;
+            Employee = employee;
+            PersonID = employee.ID; // set the PersonID to the ID of the employee
+        }
     }
 
 }

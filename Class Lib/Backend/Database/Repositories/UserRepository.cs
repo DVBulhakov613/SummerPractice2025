@@ -8,15 +8,15 @@ namespace Class_Lib.Backend.Database.Repositories
         public UserRepository(AppDbContext context) : base(context) { }
 
         // for the query builder
-        public QueryBuilder<User> Query()
+        public QueryBuilderService<User> Query()
         {
-            return new QueryBuilder<User>(_context.Users);
+            return new QueryBuilderService<User>(_context.Users);
         }
 
         public async Task<User?> GetByUsernameAsync(string username)
         {
             return await _context.Users
-                .Include(u => u.Person) // include related Person data
+                .Include(u => u.Employee) // include related Person data
                 .FirstOrDefaultAsync(u => u.Username == username);
         }
     }

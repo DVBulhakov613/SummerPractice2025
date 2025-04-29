@@ -12,9 +12,9 @@ namespace Class_Lib.Backend.Database.Repositories
         public PackageEventRepository(AppDbContext context) : base(context) { }
 
         // for the query builder
-        public QueryBuilder<PackageEvent> Query()
+        public QueryBuilderService<PackageEvent> Query()
         {
-            return new QueryBuilder<PackageEvent>(_context.PackageEvents);
+            return new QueryBuilderService<PackageEvent>(_context.PackageEvents);
         }
 
         // generic query method

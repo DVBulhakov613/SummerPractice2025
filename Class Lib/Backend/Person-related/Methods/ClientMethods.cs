@@ -19,7 +19,7 @@ namespace Class_Lib.Backend.Person_related.Methods
         // Create
         public async Task AddClientAsync(Employee user, Client client)
         {
-            if (!AccessService.CanPerformAction(user.GetType(), "CreatePerson"))
+            if (!user.HasPermission(AccessService.PermissionKey.CreatePerson))
             {
                 throw new UnauthorizedAccessException("Немає доступу до створення клієнта.");
             }
@@ -30,7 +30,7 @@ namespace Class_Lib.Backend.Person_related.Methods
         // Read
         public async Task<IEnumerable<Client>> GetClientsByCriteriaAsync(Employee user, Expression<Func<Client, bool>> filter)
         {
-            if (!AccessService.CanPerformAction(user.GetType(), "ReadPerson"))
+            if (!user.HasPermission(AccessService.PermissionKey.ReadPerson))
             {
                 throw new UnauthorizedAccessException("Немає доступу до перегляду клієнтів.");
             }
@@ -43,7 +43,7 @@ namespace Class_Lib.Backend.Person_related.Methods
         // Delete
         public async Task DeleteClientAsync(Employee user, Client client)
         {
-            if (!AccessService.CanPerformAction(user.GetType(), "DeletePerson"))
+            if (!user.HasPermission(AccessService.PermissionKey.DeletePerson))
             {
                 throw new UnauthorizedAccessException("Немає доступу до видалення клієнта.");
             }

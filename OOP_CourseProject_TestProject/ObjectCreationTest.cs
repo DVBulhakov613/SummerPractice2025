@@ -40,7 +40,7 @@ namespace OOP_CourseProject_TestProject
             // arrange
             var warehouseSent = new Warehouse(new Coordinates(0, 0, "Test", "Region"), 500, true);
             var warehouseReceived = new Warehouse(new Coordinates(2, 2, "Test", "Region"), 500, true);
-            var employee = new Employee("Name", "Surname", "+380955548027", "Clerk", warehouseSent);
+            var employee = new Employee("Name", "Surname", "+380955548027", "Працівник", warehouseSent);
             var sender = new Client("Name", "Surname", "+380955648027");
             var receiver = new Client("Name", "Surname", "+380955748027");
 

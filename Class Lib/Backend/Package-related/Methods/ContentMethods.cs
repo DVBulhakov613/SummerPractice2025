@@ -20,7 +20,7 @@ namespace Class_Lib.Backend.Package_related.Methods
         // Create
         public async Task AddContentAsync(Employee user, Content content)
         {
-            if (!AccessService.CanPerformAction(user.GetType(), "CreateContent"))
+            if (!user.HasPermission(AccessService.PermissionKey.CreateContent))
             {
                 throw new UnauthorizedAccessException("Немає дозволу створювати вміст посилки.");
             }
@@ -31,7 +31,7 @@ namespace Class_Lib.Backend.Package_related.Methods
         // Read
         public async Task<IEnumerable<Content>> GetContentsByCustomCriteriaAsync(Employee user, Expression<Func<Content, bool>> filter)
         {
-            if (!AccessService.CanPerformAction(user.GetType(), "ReadContent"))
+            if (!user.HasPermission(AccessService.PermissionKey.ReadContent))
             {
                 throw new UnauthorizedAccessException("Немає доступу до перегляду вмісту посилки.");
             }
@@ -44,7 +44,7 @@ namespace Class_Lib.Backend.Package_related.Methods
         // Update
         public async Task UpdateContentAsync(Employee user, Content content)
         {
-            if (!AccessService.CanPerformAction(user.GetType(), "UpdateContent"))
+            if (!user.HasPermission(AccessService.PermissionKey.UpdateContent))
             {
                 throw new UnauthorizedAccessException("Немає дозволу змінювати вміст посилки.");
             }
@@ -55,7 +55,7 @@ namespace Class_Lib.Backend.Package_related.Methods
         // Delete
         public async Task DeleteContentAsync(Employee user, Content content)
         {
-            if (!AccessService.CanPerformAction(user.GetType(), "DeleteContent"))
+            if (!user.HasPermission(AccessService.PermissionKey.DeleteContent))
             {
                 throw new UnauthorizedAccessException("Немає дозволу видаляти вміст посилки.");
             }
