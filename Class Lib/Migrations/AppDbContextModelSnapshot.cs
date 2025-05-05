@@ -31,6 +31,7 @@ namespace Class_Lib.Migrations
                     SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<long>("ID"));
 
                     b.Property<string>("Email")
+                        .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
                     b.Property<string>("FirstName")
@@ -57,31 +58,6 @@ namespace Class_Lib.Migrations
                     b.ToTable("Clients", (string)null);
                 });
 
-            modelBuilder.Entity("Class_Lib.Backend.Person_related.User", b =>
-                {
-                    b.Property<long>("PersonID")
-                        .HasColumnType("bigint");
-
-                    b.Property<string>("PasswordHash")
-                        .IsRequired()
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<string>("Role")
-                        .IsRequired()
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<string>("Username")
-                        .IsRequired()
-                        .HasColumnType("nvarchar(450)");
-
-                    b.HasKey("PersonID");
-
-                    b.HasIndex("Username")
-                        .IsUnique();
-
-                    b.ToTable("Users");
-                });
-
             modelBuilder.Entity("Class_Lib.BaseLocation", b =>
                 {
                     b.Property<long>("ID")
@@ -90,13 +66,7 @@ namespace Class_Lib.Migrations
 
                     SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<long>("ID"));
 
-                    b.Property<double>("GeoDataLatitude")
-                        .HasColumnType("float");
-
-                    b.Property<double>("GeoDataLongitude")
-                        .HasColumnType("float");
-
-                    b.Property<long?>("ManagerID")
+                    b.Property<long?>("EmployeeID")
                         .HasColumnType("bigint");
 
                     b.Property<byte[]>("RowVersion")
@@ -107,9 +77,7 @@ namespace Class_Lib.Migrations
 
                     b.HasKey("ID");
 
-                    b.HasIndex("ManagerID");
-
-                    b.HasIndex("GeoDataLongitude", "GeoDataLatitude");
+                    b.HasIndex("EmployeeID");
 
                     b.ToTable("Locations", (string)null);
 
@@ -143,32 +111,6 @@ namespace Class_Lib.Migrations
                     b.ToTable("Contents");
                 });
 
-            modelBuilder.Entity("Class_Lib.Coordinates", b =>
-                {
-                    b.Property<double>("Longitude")
-                        .HasColumnType("float");
-
-                    b.Property<double>("Latitude")
-                        .HasColumnType("float");
-
-                    b.Property<string>("Address")
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<string>("Region")
-                        .IsRequired()
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<byte[]>("RowVersion")
-                        .IsConcurrencyToken()
-                        .IsRequired()
-                        .ValueGeneratedOnAddOrUpdate()
-                        .HasColumnType("rowversion");
-
-                    b.HasKey("Longitude", "Latitude");
-
-                    b.ToTable("Coordinates");
-                });
-
             modelBuilder.Entity("Class_Lib.Employee", b =>
                 {
                     b.Property<long>("ID")
@@ -178,9 +120,14 @@ namespace Class_Lib.Migrations
                     SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<long>("ID"));
 
                     b.Property<string>("Email")
+                        .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
                     b.Property<string>("FirstName")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.PrimitiveCollection<string>("Permissions")
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
@@ -203,7 +150,7 @@ namespace Class_Lib.Migrations
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
-                    b.Property<long>("WorkplaceID")
+                    b.Property<long?>("WorkplaceID")
                         .HasColumnType("bigint");
 
                     b.HasKey("ID");
@@ -211,8 +158,6 @@ namespace Class_Lib.Migrations
                     b.HasIndex("WorkplaceID");
 
                     b.ToTable("Employees", (string)null);
-
-                    b.UseTptMappingStrategy();
                 });
 
             modelBuilder.Entity("Class_Lib.Package", b =>
@@ -222,6 +167,9 @@ namespace Class_Lib.Migrations
                         .HasColumnType("bigint");
 
                     SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<long>("ID"));
+
+                    b.Property<DateTime>("CreatedAt")
+                        .HasColumnType("datetime2");
 
                     b.Property<long>("CurrentLocationID")
                         .HasColumnType("bigint");
@@ -254,6 +202,9 @@ namespace Class_Lib.Migrations
 
                     b.Property<int>("Type")
                         .HasColumnType("int");
+
+                    b.Property<double>("Volume")
+                        .HasColumnType("float");
 
                     b.Property<long?>("WarehouseID")
                         .HasColumnType("bigint");
@@ -302,6 +253,31 @@ namespace Class_Lib.Migrations
                     b.ToTable("PackageEvents");
                 });
 
+            modelBuilder.Entity("Class_Lib.User", b =>
+                {
+                    b.Property<long>("PersonID")
+                        .HasColumnType("bigint");
+
+                    b.Property<string>("PasswordHash")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("Role")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("Username")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(450)");
+
+                    b.HasKey("PersonID");
+
+                    b.HasIndex("Username")
+                        .IsUnique();
+
+                    b.ToTable("Users");
+                });
+
             modelBuilder.Entity("Class_Lib.Warehouse", b =>
                 {
                     b.HasBaseType("Class_Lib.BaseLocation");
@@ -313,13 +289,6 @@ namespace Class_Lib.Migrations
                         .HasColumnType("bigint");
 
                     b.ToTable("Warehouses", (string)null);
-                });
-
-            modelBuilder.Entity("Class_Lib.Manager", b =>
-                {
-                    b.HasBaseType("Class_Lib.Employee");
-
-                    b.ToTable("Managers", (string)null);
                 });
 
             modelBuilder.Entity("Class_Lib.PostalOffice", b =>
@@ -335,38 +304,46 @@ namespace Class_Lib.Migrations
                     b.ToTable("PostalOffices", (string)null);
                 });
 
-            modelBuilder.Entity("Class_Lib.Administrator", b =>
-                {
-                    b.HasBaseType("Class_Lib.Manager");
-
-                    b.ToTable("Administrators", (string)null);
-                });
-
-            modelBuilder.Entity("Class_Lib.Backend.Person_related.User", b =>
-                {
-                    b.HasOne("Class_Lib.Employee", "Employee")
-                        .WithOne("User")
-                        .HasForeignKey("Class_Lib.Backend.Person_related.User", "PersonID")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
-
-                    b.Navigation("Employee");
-                });
-
             modelBuilder.Entity("Class_Lib.BaseLocation", b =>
                 {
-                    b.HasOne("Class_Lib.Manager", null)
+                    b.HasOne("Class_Lib.Employee", null)
                         .WithMany("ManagedLocations")
-                        .HasForeignKey("ManagerID")
-                        .OnDelete(DeleteBehavior.Restrict);
+                        .HasForeignKey("EmployeeID");
 
-                    b.HasOne("Class_Lib.Coordinates", "GeoData")
-                        .WithMany()
-                        .HasForeignKey("GeoDataLongitude", "GeoDataLatitude")
-                        .OnDelete(DeleteBehavior.Cascade)
+                    b.OwnsOne("Class_Lib.Coordinates", "GeoData", b1 =>
+                        {
+                            b1.Property<long>("BaseLocationID")
+                                .HasColumnType("bigint");
+
+                            b1.Property<string>("Address")
+                                .HasMaxLength(255)
+                                .HasColumnType("nvarchar(255)")
+                                .HasColumnName("Address");
+
+                            b1.Property<double?>("Latitude")
+                                .HasColumnType("float")
+                                .HasColumnName("Latitude");
+
+                            b1.Property<double?>("Longitude")
+                                .HasColumnType("float")
+                                .HasColumnName("Longitude");
+
+                            b1.Property<string>("Region")
+                                .IsRequired()
+                                .HasMaxLength(100)
+                                .HasColumnType("nvarchar(100)")
+                                .HasColumnName("Region");
+
+                            b1.HasKey("BaseLocationID");
+
+                            b1.ToTable("Locations");
+
+                            b1.WithOwner()
+                                .HasForeignKey("BaseLocationID");
+                        });
+
+                    b.Navigation("GeoData")
                         .IsRequired();
-
-                    b.Navigation("GeoData");
                 });
 
             modelBuilder.Entity("Class_Lib.Content", b =>
@@ -385,8 +362,7 @@ namespace Class_Lib.Migrations
                     b.HasOne("Class_Lib.BaseLocation", "Workplace")
                         .WithMany("Staff")
                         .HasForeignKey("WorkplaceID")
-                        .OnDelete(DeleteBehavior.Restrict)
-                        .IsRequired();
+                        .OnDelete(DeleteBehavior.Restrict);
 
                     b.Navigation("Workplace");
                 });
@@ -457,6 +433,17 @@ namespace Class_Lib.Migrations
                     b.Navigation("Package");
                 });
 
+            modelBuilder.Entity("Class_Lib.User", b =>
+                {
+                    b.HasOne("Class_Lib.Employee", "Employee")
+                        .WithOne("User")
+                        .HasForeignKey("Class_Lib.User", "PersonID")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.Navigation("Employee");
+                });
+
             modelBuilder.Entity("Class_Lib.Warehouse", b =>
                 {
                     b.HasOne("Class_Lib.BaseLocation", null)
@@ -466,29 +453,11 @@ namespace Class_Lib.Migrations
                         .IsRequired();
                 });
 
-            modelBuilder.Entity("Class_Lib.Manager", b =>
-                {
-                    b.HasOne("Class_Lib.Employee", null)
-                        .WithOne()
-                        .HasForeignKey("Class_Lib.Manager", "ID")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
-                });
-
             modelBuilder.Entity("Class_Lib.PostalOffice", b =>
                 {
                     b.HasOne("Class_Lib.Warehouse", null)
                         .WithOne()
                         .HasForeignKey("Class_Lib.PostalOffice", "ID")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
-                });
-
-            modelBuilder.Entity("Class_Lib.Administrator", b =>
-                {
-                    b.HasOne("Class_Lib.Manager", null)
-                        .WithOne()
-                        .HasForeignKey("Class_Lib.Administrator", "ID")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
                 });
@@ -507,6 +476,8 @@ namespace Class_Lib.Migrations
 
             modelBuilder.Entity("Class_Lib.Employee", b =>
                 {
+                    b.Navigation("ManagedLocations");
+
                     b.Navigation("User");
                 });
 
@@ -524,11 +495,6 @@ namespace Class_Lib.Migrations
                     b.Navigation("PackagesSentToHere");
 
                     b.Navigation("StoredPackages");
-                });
-
-            modelBuilder.Entity("Class_Lib.Manager", b =>
-                {
-                    b.Navigation("ManagedLocations");
                 });
 #pragma warning restore 612, 618
         }

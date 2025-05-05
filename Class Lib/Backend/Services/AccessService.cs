@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Data;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -232,5 +233,61 @@ namespace Class_Lib.Backend.Services
                 throw new ArgumentException($"Роль '{role}' не існує.");
             }
         }
+
+        public static PermissionKey? GetReadPermissionForType(Type entityType)
+        {
+            return entityType.Name switch
+            {
+                nameof(Package) => PermissionKey.ReadPackage,
+                nameof(PackageEvent) => PermissionKey.ReadEvent,
+                nameof(Content) => PermissionKey.ReadContent,
+                nameof(Person) => PermissionKey.ReadPerson,
+                nameof(BaseLocation) => PermissionKey.ReadLocation,
+                //nameof(Report) => PermissionKey.ReadReport,
+                //nameof(DeliveryVehicle) => PermissionKey.ReadDeliveryVehicle,
+                nameof(ContentType) => PermissionKey.ReadContentType,
+                //nameof(PackageStatus) => PermissionKey.ReadPackageStatus,
+                nameof(PackageType) => PermissionKey.ReadPackageType,
+                //nameof(Country) => PermissionKey.ReadCountry,
+                nameof(User) => PermissionKey.ReadUser,
+
+                _ => null
+            };
+        }
+    }
+
+    /// <summary>
+    /// Represents a role in the system.
+    /// </summary>
+    public class Role
+    {
+        public uint ID { get; set; }
+        public string Name { get; set; }
+
+        public ICollection<RolePermission> RolePermissions { get; set; }
+        public ICollection<Employee> Employees { get; set; }
+    }
+
+    /// <summary>
+    /// Represents a many-to-many relationship between roles and permissions.
+    /// </summary>
+    public class RolePermission
+    {
+        public uint RoleID { get; set; }
+        public int PermissionID { get; set; }
+
+        public Role Role { get; set; }
+        public Permission Permission { get; set; }
+    }
+
+    /// <summary>
+    /// Represents a permission in the system.
+    /// </summary>
+    public class  Permission
+    {
+        public uint ID { get; set; }
+        public string Name { get; set; }
+
+        public ICollection<RolePermission> RolePermissions { get; set; }
     }
 }

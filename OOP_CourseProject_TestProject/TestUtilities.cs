@@ -113,5 +113,17 @@ namespace OOP_CourseProject_TestProject
                 new object[] { new PostalOffice((Coordinates)CorrectCoordinates.ElementAt(6)[0], 450, false, false, true) },
                 new object[] { new PostalOffice((Coordinates)CorrectCoordinates.ElementAt(7)[0], 500, false, false, false) }
             };
+
+        public static IEnumerable<object[]> CorrectEmployees => new List<object[]>
+            {
+                new object[] {new Employee("Joe", "John", "+123456789", "example@example.com", "Працівник", CorrectPostalOffice.ElementAt(7)[0] as PostalOffice)},
+                new object[] {new Employee("John", "Joe", "+123456789", "example@example.com", "Менеджер", CorrectPostalOffice.ElementAt(7)[0] as PostalOffice)},
+                new object[] {new Employee("Joe", "Joe", "+123456789", "example@example.com", "Системний Адміністратор", CorrectPostalOffice.ElementAt(7)[0] as PostalOffice)}
+                //new object[] {new Employee("Jolinna", "Joe", "+123456789", "example@example.com", "Системний Адміністратор", CorrectPostalOffice.ElementAt(7)[0] as PostalOffice)},
+                //new object[] {new Employee("Jo", "Je", "+123456789", "example@example.com", "Системний Адміністратор", CorrectPostalOffice.ElementAt(7)[0] as PostalOffice)},
+                //new object[] {new Employee("Jenn", "Jen", "+123456789", "example@example.com", "Системний Адміністратор", CorrectPostalOffice.ElementAt(7)[0] as PostalOffice)},
+                //new object[] {new Employee("June", "Jith", "+123456789", "example@example.com", "Системний Адміністратор", CorrectPostalOffice.ElementAt(7)[0] as PostalOffice)},
+                //new object[] {new Employee("Jeeb", "Jobs", "+123456789", "example@example.com", "Системний Адміністратор", CorrectPostalOffice.ElementAt(7)[0] as PostalOffice)},
+            };
     }
 }

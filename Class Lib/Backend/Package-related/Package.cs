@@ -13,13 +13,13 @@ namespace Class_Lib
         public uint PackageID { get => ID; private set; } // explicit implementation of the IHasIdentification interface
         public uint ID { get; private set; }
         public PackageStatus PackageStatus { get; set; } = PackageStatus.STORED; // status of the package, set to Created by default
-        public DateTime CreatedAt { get; } = DateTime.Now; // the date when the package was created, set at creation time and never changed
+        public DateTime CreatedAt { get; private set; } // the date when the package was created, set at creation time and never changed
         #region Package Properties
         private uint Length { get; set; }
         private uint Width { get; set; }
         private uint Height { get; set; }
-        public double Weight { get; private set; }
-        public double Volume => Length * Width * Height; // volume of the package, calculated from length, width and height
+        public double Weight { get; set; }
+        public double Volume { get; private set; } // volume of the package, calculated from length, width and height
         #endregion
 
         #region Route info // for all this the ui is already done, kind of
@@ -45,7 +45,7 @@ namespace Class_Lib
         }
 
         public Package
-            (uint length, uint width, uint height, uint weight, Client sender, Client receiver,
+            (uint length, uint width, uint height, double weight, Client sender, Client receiver,
             Warehouse sentFrom, Warehouse sentTo, BaseLocation currentLocation, List<Content> declaredContent,
             PackageType type)
         {
@@ -63,6 +63,8 @@ namespace Class_Lib
 
             RowVersion = Array.Empty<byte>();
             Log.Add(new PackageEvent(CurrentLocation, "Посилку створено", this));
+            CreatedAt = DateTime.Now; // set the creation date to now
+            Volume = Length * Width * Height;
         }
 
         // all of these may be deprecated due to DB interaction

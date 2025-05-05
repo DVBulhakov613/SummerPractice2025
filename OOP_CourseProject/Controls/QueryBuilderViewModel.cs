@@ -1,88 +1,66 @@
-﻿using Class_Lib;
+﻿using Class_Lib.Backend.Database;
 using GalaSoft.MvvmLight.Command;
+using Microsoft.Extensions.DependencyInjection;
 using MvvmHelpers;
 using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.Linq;
 using System.Linq.Expressions;
+using System.Reflection;
 using System.Windows.Input;
 
 namespace OOP_CourseProject.Controls
 {
-    public class QueryBuilderViewModel : BaseViewModel
+    public class QueryBuilderViewModel<T> : BaseViewModel where T : class
     {
-        // fields for the query builder
-        public ObservableCollection<string> Fields { get; set; } = new ObservableCollection<string> { "Name", "WorkplaceID", "Position" };
-        public ObservableCollection<string> Operators { get; set; } = new ObservableCollection<string> { "==", "StartsWith", "Contains" };
+        // Available fields and operators for query building
+        public ObservableCollection<string> Fields { get; set; } = new();
+        public ObservableCollection<string> Operators { get; set; } = new() { "==", "StartsWith", "Contains" };
 
-        // user-selected values
+        // User inputs
         public string SelectedField { get; set; }
         public string SelectedOperator { get; set; }
         public string ValueInput { get; set; }
 
-        // list of conditions
-        public ObservableCollection<string> Conditions { get; set; } = new ObservableCollection<string>();
+        // List of raw conditions (data only)
+        public ObservableCollection<QueryCondition> Conditions { get; set; } = new();
 
-        // event to send the query back to the parent window
-        public event Action<List<Expression<Func<Employee, bool>>>> QuerySubmitted;
+        // Query submission event
+        public event Action<List<Expression<Func<T, bool>>>> QuerySubmitted;
 
-        public QueryBuilderViewModel(Type entityType)
+        public QueryBuilderViewModel()
         {
-            // populate fields dynamically based on the entity type
-            var properties = entityType.GetProperties();
-            foreach (var property in properties)
+            // Populate fields dynamically based on type T
+            var properties = typeof(T).GetProperties(BindingFlags.Public | BindingFlags.Instance);
+            foreach (var prop in properties)
             {
-                Fields.Add(property.Name);
+                Fields.Add(prop.Name);
             }
         }
 
-        // commands
+        // Commands
         public ICommand AddConditionCommand => new RelayCommand(AddCondition);
         public ICommand SubmitQueryCommand => new RelayCommand(SubmitQuery);
 
-        // internal list of conditions
-        private readonly List<Expression<Func<Employee, bool>>> _conditionExpressions = new List<Expression<Func<Employee, bool>>>();
-
-        // add a condition to the query
         private void AddCondition()
         {
-            if (!string.IsNullOrEmpty(SelectedField) && !string.IsNullOrEmpty(SelectedOperator) && !string.IsNullOrEmpty(ValueInput))
+            if (!string.IsNullOrWhiteSpace(SelectedField)
+                && !string.IsNullOrWhiteSpace(SelectedOperator)
+                && !string.IsNullOrWhiteSpace(ValueInput))
             {
-                // add a readable condition to the list
-                Conditions.Add($"{SelectedField} {SelectedOperator} {ValueInput}");
-
-                // build the LINQ expression
-                var condition = BuildFilter<Employee>(SelectedField, SelectedOperator, ValueInput);
-                _conditionExpressions.Add(condition);
+                var condition = new QueryCondition (SelectedField, SelectedOperator, ValueInput);
+                Conditions.Add(condition);
             }
         }
 
-        // submit the query back to the parent window
         private void SubmitQuery()
         {
-            QuerySubmitted?.Invoke(_conditionExpressions);
-        }
+            var expressions = Conditions
+                .Select(c => QueryBuilderService<T>.BuildFilter<T>(c.Field, c.Operator, c.Value))
+                .ToList();
 
-        // build a filter dynamically
-        private static Expression<Func<T, bool>> BuildFilter<T>(string propertyName, string operation, object value)
-        {
-            var parameter = Expression.Parameter(typeof(T), "x");
-            var property = Expression.Property(parameter, propertyName);
-            var constant = Expression.Constant(value);
-
-            Expression comparison = operation switch
-            {
-                "==" => Expression.Equal(property, constant),
-                "!=" => Expression.NotEqual(property, constant),
-                ">" => Expression.GreaterThan(property, constant),
-                "<" => Expression.LessThan(property, constant),
-                "StartsWith" => Expression.Call(property, "StartsWith", null, constant),
-                "Contains" => Expression.Call(property, "Contains", null, constant),
-                _ => throw new NotSupportedException($"Operation '{operation}' is not supported.")
-            };
-
-            return Expression.Lambda<Func<T, bool>>(comparison, parameter);
+            QuerySubmitted?.Invoke(expressions);
         }
     }
 }

@@ -8,9 +8,9 @@ namespace Class_Lib.Backend.Database.Repositories
         public UserRepository(AppDbContext context) : base(context) { }
 
         // for the query builder
-        public QueryBuilderService<User> Query()
+        new public QueryBuilderService<User> Query()
         {
-            return new QueryBuilderService<User>(_context.Users);
+            return new QueryBuilderService<User>(null, _context.Users);
         }
 
         public async Task<User?> GetByUsernameAsync(string username)

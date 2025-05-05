@@ -1,19 +1,17 @@
 ﻿tests needed for:
 Person
     Employee
-        GetEmployeesByWorkplaceIdAsync
-        GetEmployeesByFirstNameAsync
-        GetEmployeesByLastNameAsync
-        GetEmployeesByFullNameAsync
+        GetEmployeesByWorkplaceIdAsync          (done)
+        GetEmployeesByFirstNameAsync            (done)
+        GetEmployeesByLastNameAsync             (done)
+        GetEmployeesByFullNameAsync             (done)
         EmployeeRepository
-            GetEmployeesByCriteria
-                GetEmployeesByIDAsync
+            GetEmployeesByCriteria              
+                GetEmployeesByIDAsync           
                 GetEmployeesByWorkplaceIdAsync  (done)
                 GetEmployeesByFirstNameAsync    (done)
                 GetEmployeesByLastNameAsync     (done)
                 GetEmployeesByFullNameAsync     (done)
-    Manager
-    Administrator
     Client
         GetClientsByFirstNameAsync
         GetClientsByLastNameAsync
@@ -31,6 +29,7 @@ Person
 
 Package
     Package
+        CRUD operations
         GetPackagesByStatusAsync
         GetPackagesBySenderAsync
         GetPackagesByReceiverAsync
@@ -75,3 +74,38 @@ Coordinates
     Data validation (latitude, longitude, address) (done)
 AccessService (done)
 AuthService
+
+
+
+        Read / ID (done)
+        Read / All (done)
+        Read / Multiple
+
+        GetByCriteriaAsync
+        GetByStatusAsync (done)
+        GetByStartingPointAsync
+        GetByDestinationAsync
+        GetBySenderAsync (done)
+        GetByReceiverAsync (done)
+        GetByTypeAsync (done)
+        GetByWeightAsync (done)
+        GetByWeightRangeAsync (done)
+        GetByVolumeAsync (done)
+        GetByVolumeRangeAsync (done)
+        GetByCreationDateAsync (done)
+        GetByCreationDateRangeAsync (done)
+
+
+
+        GENERIC TESTING SUITE:
+        1. CRUD
+        2. RBAC
+        - List entities
+        - Access specific fields and related data
+        - Creating, updating, deleting entities
+        3. Edge cases
+        - Empty database
+        - Invalid data
+        -- Null
+        -- Invalid formats
+        -- Legacy data

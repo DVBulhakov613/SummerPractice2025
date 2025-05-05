@@ -18,7 +18,7 @@ namespace OOP_CourseProject.Controls
         {
             InitializeComponent();
 
-            var employeeRepository = new EmployeeRepository(dbContext);
+            var employeeRepository = new EmployeeRepository(dbContext, App.CurrentEmployee);
             _employeeMethods = new EmployeeMethods(employeeRepository);
 
             LoadEmployees();

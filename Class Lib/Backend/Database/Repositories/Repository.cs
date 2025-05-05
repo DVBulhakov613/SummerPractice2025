@@ -1,4 +1,5 @@
-﻿using Microsoft.EntityFrameworkCore;
+﻿using Class_Lib.Backend.Database;
+using Microsoft.EntityFrameworkCore;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -11,10 +12,24 @@ namespace Class_Lib
     public class Repository<T> where T : class
     {
         protected internal readonly AppDbContext _context;
+        protected internal readonly Employee? _user;
 
-        public Repository(AppDbContext context)
+        public Repository(AppDbContext context, Employee? user = null)
         {
             _context = context;
+            _user = user;
+        }
+
+        public QueryBuilderService<T> Query()
+        {
+            return new QueryBuilderService<T>(_user, _context.Set<T>());
+        }
+
+        public async Task<IEnumerable<T>> GetByCriteriaAsync(Expression<Func<T, bool>> predicate)
+        {
+            return await _context.Set<T>()
+                .Where(predicate)
+                .ToListAsync();
         }
 
         public async Task<IEnumerable<T>> GetAllAsync()

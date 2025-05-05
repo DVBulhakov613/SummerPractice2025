@@ -17,42 +17,86 @@
 
             <!-- top cards -->
             <UniformGrid Rows="1" Columns="4" Margin="0,0,0,20">
+                
                 <Border Background="White" CornerRadius="10" Margin="5" Padding="10" BorderBrush="LightGray" BorderThickness="1">
                     <StackPanel>
                         <TextBlock Text="Затримані посилки" FontFamily="{StaticResource PrimaryFont}" FontWeight="Bold"/>
                         <TextBlock Text="Кількість: 10" FontFamily="{StaticResource PrimaryFont}"/>
                     </StackPanel>
                 </Border>
+                
                 <Border Background="White" CornerRadius="10" Margin="5" Padding="10" BorderBrush="LightGray" BorderThickness="1">
                     <StackPanel>
                         <TextBlock Text="Знайти посилку" FontFamily="{StaticResource PrimaryFont}" FontWeight="Bold"/>
                         <TextBlock Text="Будь-де, по ID" FontFamily="{StaticResource PrimaryFont}"/>
                     </StackPanel>
                 </Border>
+                
                 <Border Background="White" CornerRadius="10" Margin="5" Padding="10" BorderBrush="LightGray" BorderThickness="1">
                     <StackPanel>
                         <TextBlock Text="Інформація" FontFamily="{StaticResource PrimaryFont}" FontWeight="Bold"/>
                         <TextBlock Text="Для клієнтів або нових працівників" FontFamily="{StaticResource PrimaryFont}"/>
                     </StackPanel>
                 </Border>
+                
                 <Border Background="White" CornerRadius="10" Margin="5" Padding="10" BorderBrush="LightGray" BorderThickness="1">
                     <StackPanel>
                         <TextBlock Text="Оголошення" FontFamily="{StaticResource PrimaryFont}" FontWeight="Bold"/>
                         <TextBlock Text="Важливі повідомлення" FontFamily="{StaticResource PrimaryFont}"/>
                     </StackPanel>
                 </Border>
+                
             </UniformGrid>
 
             <!-- table and package details -->
             <Grid Grid.Row="1">
+                <Grid.RowDefinitions>
+                    <RowDefinition Height="Auto"/>
+                    <!-- toolbar row -->
+                    <RowDefinition Height="*"/>
+                    <!-- main content row -->
+                </Grid.RowDefinitions>
                 <Grid.ColumnDefinitions>
                     <ColumnDefinition Width="2*"/>
-                    <ColumnDefinition Width="*" />
+                    <ColumnDefinition Width="*"/>
                 </Grid.ColumnDefinitions>
 
-                <!-- DataGrid (might be placeholder) -->
-                <DataGrid Grid.Column="0" AutoGenerateColumns="False" Margin="0,0,10,0" HeadersVisibility="Column" 
-                          CanUserAddRows="False" IsReadOnly="True">
+                <!-- Toolbar panel -->
+                <StackPanel Grid.Row="0" Grid.ColumnSpan="1" Orientation="Horizontal" Margin="0,0,0,10">
+                    <Button Background="Transparent">
+                        <StackPanel Orientation="Horizontal" VerticalAlignment="Center">
+                            <Image Source="/Assets/ButtonIcons/Variant=Add.png" Width="16" Height="16" Margin="0,0,5,0"/>
+                            <TextBlock Text="Додати" VerticalAlignment="Center" Foreground="Black"/>
+                        </StackPanel>
+                    </Button>
+                    <!--<Button>
+                        <StackPanel Orientation="Horizontal" VerticalAlignment="Center">
+                            <Image Source="/Assets/ButtonIcons/Variant=Refresh.png" Width="16" Height="16" Margin="0,0,5,0"/>
+                            <TextBlock Text="Редагувати" VerticalAlignment="Center"/>
+                        </StackPanel>
+                    </Button>-->
+                    <Button Background="Transparent">
+                        <StackPanel Orientation="Vertical" VerticalAlignment="Center">
+                            <Image Source="/Assets/ButtonIcons/Variant=Download.png" Width="16" Height="16" Margin="0,0,5,0"/>
+                            <TextBlock Text="Серіалізувати" VerticalAlignment="Center" Foreground="Black"/>
+                        </StackPanel>
+                    </Button>
+                    <Button Background="Transparent">
+                        <StackPanel Orientation="Horizontal" VerticalAlignment="Center">
+                            <Image Source="/Assets/ButtonIcons/Variant=Search.png" Width="16" Height="16" Margin="0,0,5,0"/>
+                            <TextBlock Text="Пошук" VerticalAlignment="Center" Foreground="Black"/>
+                        </StackPanel>
+                    </Button>
+                    <Button Background="Transparent">
+                        <StackPanel Orientation="Horizontal" VerticalAlignment="Center">
+                            <Image Source="/Assets/ButtonIcons/Variant=Refresh.png" Width="16" Height="16" Margin="0,0,5,0"/>
+                            <TextBlock Text="Оновити" VerticalAlignment="Center" Foreground="Black"/>
+                        </StackPanel>
+                    </Button>
+                </StackPanel>
+
+                <!-- DataGrid -->
+                <DataGrid Grid.Row="1" Grid.Column="0" AutoGenerateColumns="False" Margin="0,0,10,0" HeadersVisibility="Column" CanUserAddRows="False" IsReadOnly="True">
                     <DataGrid.Columns>
                         <DataGridTextColumn Header="ID" Binding="{Binding ID}" Width="*"/>
                         <DataGridTextColumn Header="Напрямок" Binding="{Binding Direction}" Width="*"/>
@@ -65,8 +109,9 @@
                     </DataGrid.Columns>
                 </DataGrid>
 
-                <!-- details panel (placeholder) -->
-                <Border Background="White" CornerRadius="10" Padding="10" BorderBrush="LightGray" BorderThickness="1" Grid.Column="1">
+                <!-- Details panel -->
+                <Border Background="White" CornerRadius="10" Padding="10" BorderBrush="LightGray" BorderThickness="1" 
+            Grid.Row="1" Grid.Column="1">
                     <StackPanel>
                         <TextBox Text="placeholder text" Margin="0,0,0,10"/>
                         <TextBlock Text="Інформація відправника та отримувача" FontWeight="Bold"/>
@@ -74,6 +119,7 @@
                     </StackPanel>
                 </Border>
             </Grid>
+
         </Grid>
     </Grid>
     </UserControl>

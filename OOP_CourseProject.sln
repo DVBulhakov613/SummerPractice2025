@@ -14,6 +14,8 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "OOP_CourseProject_TestProje
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Class Lib", "Class Lib\Class Lib.csproj", "{B7EA7CCB-9477-4588-84CD-4526B42FE115}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Query", "Query\Query.csproj", "{532C35ED-58BA-46B7-9884-B5F5BB249410}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -32,6 +34,10 @@ Global
 		{B7EA7CCB-9477-4588-84CD-4526B42FE115}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{B7EA7CCB-9477-4588-84CD-4526B42FE115}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{B7EA7CCB-9477-4588-84CD-4526B42FE115}.Release|Any CPU.Build.0 = Release|Any CPU
+		{532C35ED-58BA-46B7-9884-B5F5BB249410}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{532C35ED-58BA-46B7-9884-B5F5BB249410}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{532C35ED-58BA-46B7-9884-B5F5BB249410}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{532C35ED-58BA-46B7-9884-B5F5BB249410}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

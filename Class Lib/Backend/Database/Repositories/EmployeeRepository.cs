@@ -12,57 +12,43 @@ namespace Class_Lib.Database.Repositories
 {
     public class EmployeeRepository : Repository<Employee>
     {
-        public EmployeeRepository(AppDbContext context) : base(context) { }
-
-        // for the query builder
-        public QueryBuilderService<Employee> Query()
-        {
-            return new QueryBuilderService<Employee>(_context.Employees);
-        }
-
-        // generic query method
-        public async Task<IEnumerable<Employee>> GetEmployeesByCriteria(Expression<Func<Employee, bool>> predicate)
-        {
-            return await _context.Employees
-                .Where(predicate)
-                .ToListAsync();
-        }
-
-        // searching criteria:
+        public EmployeeRepository(AppDbContext context, Employee user) : base(context, user) { }
 
         // by ID
-        public async Task<IEnumerable<Employee>> GetEmployeesByIDAsync(uint id)
+        public async Task<IEnumerable<Employee>> GetByIDAsync(uint id)
         {
-            return await GetEmployeesByCriteria(p => p.ID == id);
+            return await GetByCriteriaAsync(p => p.ID == id);
         }
         // by workplace ID
-        public async Task<IEnumerable<Employee>> GetEmployeesByWorkplaceIdAsync(uint workplaceId)
+        public async Task<IEnumerable<Employee>> GetByWorkplaceIdAsync(uint workplaceId)
         {
-            return await GetEmployeesByCriteria(p => p.WorkplaceID == workplaceId);
+            return await GetByCriteriaAsync(p => p.WorkplaceID == workplaceId);
         }
 
         // by first name
-        public async Task<IEnumerable<Employee>> GetEmployeesByFirstNameAsync(string firstName)
+        public async Task<IEnumerable<Employee>> GetByFirstNameAsync(string firstName)
         {
-            return await GetEmployeesByCriteria(p => p.FirstName.ToLower() == firstName.ToLower());
+            return await GetByCriteriaAsync(p => p.FirstName.ToLower() == firstName.ToLower());
         }
 
         // by last name
-        public async Task<IEnumerable<Employee>> GetEmployeesByLastNameAsync(string lastName)
+        public async Task<IEnumerable<Employee>> GetByLastNameAsync(string lastName)
         {
-            return await GetEmployeesByCriteria(p => p.Surname.ToLower() == lastName.ToLower());
+            return await GetByCriteriaAsync(p => p.Surname.ToLower() == lastName.ToLower());
         }
 
         // by full name
-        public async Task<IEnumerable<Employee>> GetEmployeesByFullNameAsync(string fullName)
+        public async Task<IEnumerable<Employee>> GetByFullNameAsync(string fullName)
         {
-            return await GetEmployeesByCriteria(p => p.FirstName.ToLower() + " " + p.Surname.ToLower() == fullName.ToLower());
+            return await GetByCriteriaAsync(p => p.FirstName.ToLower() + " " + p.Surname.ToLower() == fullName.ToLower());
         }
 
-        // administrator count (for deletion restriction)
-        public async Task<int> GetAdministratorCountAsync()
-        {
-            return await _context.Employees.OfType<Administrator>().CountAsync();
-        }
+        //// administrator count (for deletion restriction)
+        //public async Task<int> GetAdministratorCountAsync()
+        //{
+        //    return await _context.Employees
+        //        .Where(e => e.Position == "Системний Адміністратор")
+        //        .CountAsync();
+        //}
     }
 }

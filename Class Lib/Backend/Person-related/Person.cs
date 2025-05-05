@@ -15,18 +15,18 @@ namespace Class_Lib
         public string Surname { get; set; }
         public string FullName { get => FirstName + " " + Surname; }
         public string PhoneNumber { get; set; }
-        public string? Email { get; set; }
+        public string Email { get; set; }
         protected internal Person()
         {
             RowVersion = Array.Empty<byte>();
         }
 
-        public Person(string name, string surname, string phoneNumber, string? email = null)
+        public Person(string name, string surname, string phoneNumber, string email)
         {
             FirstName = name;
             Surname = surname;
             PhoneNumber = phoneNumber;
-            if(email != null && Regex.IsMatch(email, @"^[^@\s]+@[^@\s]+\.[^@\s]+$"))
+            if(Regex.IsMatch(email, @"^[^@\s]+@[^@\s]+\.[^@\s]+$"))
                 Email = email;
 
             RowVersion = Array.Empty<byte>();

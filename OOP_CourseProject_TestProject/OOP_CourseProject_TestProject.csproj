@@ -30,4 +30,9 @@
     <Using Include="Microsoft.VisualStudio.TestTools.UnitTesting" />
   </ItemGroup>
 
+  <ItemGroup>
+    <Folder Include="[Name]Repository\" />
+    <Folder Include="[Name]Methods\" />
+  </ItemGroup>
+
 </Project>

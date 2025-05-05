@@ -11,21 +11,7 @@ namespace Class_Lib.Backend.Database.Repositories
 {
     public class LocationRepository : Repository<BaseLocation>
     {
-        public LocationRepository(AppDbContext context) : base(context) { }
-
-        // for the query builder
-        public QueryBuilderService<BaseLocation> Query()
-        {
-            return new QueryBuilderService<BaseLocation>(_context.Locations);
-        }
-
-        // generic query method
-        public async Task<IEnumerable<BaseLocation>> GetPackagesByCriteriaAsync(Expression<Func<BaseLocation, bool>> predicate)
-        {
-            return await _context.Locations
-                .Where(predicate)
-                .ToListAsync();
-        }
+        public LocationRepository(AppDbContext context, Employee user) : base(context, user) { }
 
         public async Task<IEnumerable<BaseLocation>> GetLocationsByTypeAsync(string type)
         {

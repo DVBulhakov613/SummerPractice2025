@@ -68,7 +68,6 @@ namespace Class_Lib
         }
         protected Coordinates()
         {
-            RowVersion = Array.Empty<byte>();
         }
         public Coordinates(double? latitude, double? longitude, string? address, string region)
         {
@@ -76,10 +75,9 @@ namespace Class_Lib
             Longitude = longitude;
             Address = address;
             Region = region;
-            RowVersion = Array.Empty<byte>();
         }
 
-        [Timestamp] // concurrency token property
-        public byte[] RowVersion { get; set; }
+        //[Timestamp] // concurrency token property
+        //public byte[] RowVersion { get; set; }
     }
 }

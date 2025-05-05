@@ -28,7 +28,7 @@ namespace OOP_CourseProject
                     // Register UI components
                     services.AddSingleton<MainWindow>();
                     services.AddTransient<EmployeeControl>();
-                    services.AddTransient<QueryBuilderViewModel>();
+                    services.AddTransient<QueryBuilder>();
                 })
                 .Build();
         }

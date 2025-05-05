@@ -1,6 +1,7 @@
 ﻿using Microsoft.EntityFrameworkCore;
 using Class_Lib.Backend.Package_related.enums;
 using Class_Lib.Backend.Person_related;
+using Class_Lib.Backend.Services;
 
 namespace Class_Lib
 {
@@ -10,8 +11,6 @@ namespace Class_Lib
 
         public DbSet<Client> Clients { get; set; }
         public DbSet<Employee> Employees { get; set; }
-        public DbSet<Manager> Managers { get; set; }
-        public DbSet<Administrator> Administrators { get; set; }
         public DbSet<BaseLocation> Locations { get; set; }
         public DbSet<Warehouse> Warehouses { get; set; }
         public DbSet<PostalOffice> PostalOffices { get; set; }
@@ -19,20 +18,47 @@ namespace Class_Lib
         public DbSet<Content> Contents { get; set; }
         public DbSet<PackageEvent> PackageEvents { get; set; }
         public DbSet<User> Users { get; set; }
+        public DbSet<Role> Roles { get; set; }
+        public DbSet<Permission> Permissions { get; set; }
+        public DbSet<RolePermission> RolePermissions { get; set; }
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
             base.OnModelCreating(modelBuilder);
 
-            modelBuilder.Entity<Employee>().ToTable("Employees");
-            modelBuilder.Entity<Manager>().ToTable("Managers");
-            modelBuilder.Entity<Administrator>().ToTable("Administrators");
-            modelBuilder.Entity<Client>().ToTable("Clients");
+            modelBuilder.Entity<Permission>().HasData(
+                Enum.GetValues(typeof(AccessService.PermissionKey))
+                    .Cast<AccessService.PermissionKey>()
+                    .Select(p => new Permission
+                    {
+                        ID = (uint)p,
+                        Name = p.ToString()
+                    }).ToArray()
+            );
 
+            modelBuilder.Entity<Employee>().ToTable("Employees");
+            modelBuilder.Entity<Client>().ToTable("Clients");
 
             modelBuilder.Entity<BaseLocation>().ToTable("Locations");
             modelBuilder.Entity<Warehouse>().ToTable("Warehouses");
             modelBuilder.Entity<PostalOffice>().ToTable("PostalOffices");
+
+
+            #region Role Permissions specifications
+            modelBuilder.Entity<RolePermission>()
+                .HasKey(rp => new { rp.RoleID, rp.PermissionID });
+
+            modelBuilder.Entity<RolePermission>()
+                .HasOne(rp => rp.Role)
+                .WithMany(r => r.RolePermissions)
+                .HasForeignKey(rp => rp.RoleID);
+
+            modelBuilder.Entity<RolePermission>()
+                .HasOne(rp => rp.Permission)
+                .WithMany(p => p.RolePermissions)
+                .HasForeignKey(rp => rp.PermissionID);
+            #endregion
+
 
             #region base location table specifications
             modelBuilder.Entity<BaseLocation>() // ID as primary key
@@ -45,6 +71,15 @@ namespace Class_Lib
                 .WithOne(e => e.Workplace)
                 .HasForeignKey(e => e.WorkplaceID)
                 .OnDelete(DeleteBehavior.Restrict);
+            modelBuilder.Entity<BaseLocation>()
+                .OwnsOne(l => l.GeoData,
+                    nav =>
+                    {
+                        nav.Property(c => c.Latitude).HasColumnName("Latitude");
+                        nav.Property(c => c.Longitude).HasColumnName("Longitude");
+                        nav.Property(c => c.Address).HasColumnName("Address").HasMaxLength(255);
+                        nav.Property(c => c.Region).HasColumnName("Region").IsRequired().HasMaxLength(100);
+                    });
             #endregion
 
             // since postal office is also a warehouse
@@ -113,10 +148,10 @@ namespace Class_Lib
                 .OnDelete(DeleteBehavior.Cascade);
             #endregion
 
-            #region coordinates table specifications
-            modelBuilder.Entity<Coordinates>() // defines the composite key for the Coordinates table (if i have one)
-                .HasKey(c => new {c.Longitude, c.Latitude });
-            #endregion
+            //#region coordinates table specifications
+            //modelBuilder.Entity<Coordinates>() // defines the composite key for the Coordinates table (if i have one)
+            //    .HasKey(c => new {c.Longitude, c.Latitude });
+            //#endregion
 
             #region country table specifications
 
@@ -136,18 +171,23 @@ namespace Class_Lib
                 .WithMany(po => po.Staff)
                 .HasForeignKey(e => e.WorkplaceID)
                 .OnDelete(DeleteBehavior.Restrict)
-                .IsRequired(false);
+                .IsRequired(false); // not all employees have a workplace
             modelBuilder.Entity<Employee>() // ties user data to employee objects
                 .HasOne(e => e.User)
                 .WithOne(u => u.Employee)
                 .HasForeignKey<User>(u => u.PersonID);
+            modelBuilder.Entity<Employee>()
+                .HasOne(e => e.Role)
+                .WithMany(r => r.Employees)
+                .HasForeignKey(e => e.RoleID)
+                .OnDelete(DeleteBehavior.SetNull);
             #endregion
 
-            // manager table specifications
-            modelBuilder.Entity<Manager>() // has many managed locations with one manager, restrict deletion
-                .HasMany(m => m.ManagedLocations)
-                .WithOne()
-                .OnDelete(DeleteBehavior.Restrict);
+            //// manager table specifications
+            //modelBuilder.Entity<Manager>() // has many managed locations with one manager, restrict deletion
+            //    .HasMany(m => m.ManagedLocations)
+            //    .WithOne()
+            //    .OnDelete(DeleteBehavior.Restrict);
 
             #region user table
             modelBuilder.Entity<User>()

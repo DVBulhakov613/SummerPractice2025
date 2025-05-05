@@ -9,13 +9,7 @@ namespace Class_Lib.Backend.Database.Repositories
 {
     public class PackageEventRepository : Repository<PackageEvent>
     {
-        public PackageEventRepository(AppDbContext context) : base(context) { }
-
-        // for the query builder
-        public QueryBuilderService<PackageEvent> Query()
-        {
-            return new QueryBuilderService<PackageEvent>(_context.PackageEvents);
-        }
+        public PackageEventRepository(AppDbContext context, Employee user) : base(context, user) { }
 
         // generic query method
         public async Task<IEnumerable<PackageEvent>> GetPackageEventsByCriteriaAsync(Expression<Func<PackageEvent, bool>> predicate)

@@ -4,7 +4,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace Class_Lib.Backend.Person_related
+namespace Class_Lib
 {
     public class User
     {

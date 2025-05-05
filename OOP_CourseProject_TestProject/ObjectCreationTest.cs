@@ -30,7 +30,7 @@ namespace OOP_CourseProject_TestProject
                 .Options;
 
             _context = new AppDbContext(options);
-            _repository = new PackageRepository(_context);
+            _repository = new PackageRepository(_context, TestUtilities.CorrectEmployees.ElementAt(2)[0] as Employee);
             _methods = new PackageMethods(_repository);
         }
 
@@ -40,9 +40,9 @@ namespace OOP_CourseProject_TestProject
             // arrange
             var warehouseSent = new Warehouse(new Coordinates(0, 0, "Test", "Region"), 500, true);
             var warehouseReceived = new Warehouse(new Coordinates(2, 2, "Test", "Region"), 500, true);
-            var employee = new Employee("Name", "Surname", "+380955548027", "Працівник", warehouseSent);
-            var sender = new Client("Name", "Surname", "+380955648027");
-            var receiver = new Client("Name", "Surname", "+380955748027");
+            var employee = new Employee("Name", "Surname", "+380955548027", "example@email.com", "Працівник", warehouseSent);
+            var sender = new Client("Name", "Surname", "+380955648027", "example@example.com");
+            var receiver = new Client("Name", "Surname", "+380955748027", "example@example.com");
 
             var package = new Package(10, 10, 10, 5, sender, receiver, warehouseSent, warehouseReceived, warehouseSent, new List<Content>(), PackageType.Standard);
             
@@ -71,7 +71,7 @@ namespace OOP_CourseProject_TestProject
             await _repository.AddAsync(package2);
 
             // Act
-            var inTransitPackages = await _repository.GetPackagesByStatusAsync(PackageStatus.IN_TRANSIT);
+            var inTransitPackages = await _repository.GetByStatusAsync(PackageStatus.IN_TRANSIT);
 
             // Assert
             Assert.AreEqual(1, inTransitPackages.Count());

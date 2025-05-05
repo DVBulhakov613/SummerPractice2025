@@ -13,7 +13,7 @@ namespace Class_Lib.Backend.Person_related
         protected internal Client() // empty constructor for EF core
         { }
 
-        public Client(string firstName, string lastName, string phoneNumber, string? email = null)
+        public Client(string firstName, string lastName, string phoneNumber, string email)
             : base(firstName, lastName, phoneNumber, email)
         {
         }

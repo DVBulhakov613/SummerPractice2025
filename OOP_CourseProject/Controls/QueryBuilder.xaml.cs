@@ -7,9 +7,11 @@ namespace OOP_CourseProject.Controls
 {
     public partial class QueryBuilder : Window
     {
-        private readonly QueryBuilderViewModel _viewModel;
+        private readonly object _viewModel;
+        private readonly Type _viewModelType;
+        private readonly Delegate _onQuerySubmitted;
 
-        public QueryBuilder(Type entityType, Action<List<Expression<Func<Employee, bool>>>> onQuerySubmitted)
+        public QueryBuilder(Type entityType, Delegate onQuerySubmitted)
         {
             if (entityType == null)
             {
@@ -22,15 +24,18 @@ namespace OOP_CourseProject.Controls
 
             InitializeComponent();
 
-            // initialize the ViewModel
-            _viewModel = new QueryBuilderViewModel(entityType);
-            _viewModel.QuerySubmitted += onQuerySubmitted;
+            _viewModelType = typeof(QueryBuilderViewModel<>).MakeGenericType(entityType);
+            _viewModel = Activator.CreateInstance(_viewModelType);
 
-            // set the DataContext
+            // Subscribe to the event
+            var eventInfo = _viewModelType.GetEvent("QuerySubmitted");
+            eventInfo.AddEventHandler(_viewModel, onQuerySubmitted);
+
             DataContext = _viewModel;
 
-            // unsubscribe from the event when the window is closed (to avoid memory leaks)
-            Closed += (s, e) => _viewModel.QuerySubmitted -= onQuerySubmitted;
+            Closed += (s, e) => {
+                eventInfo.RemoveEventHandler(_viewModel, onQuerySubmitted);
+            };
         }
     }
 }

@@ -13,103 +13,83 @@ namespace Class_Lib.Database.Repositories
 {
     public class PackageRepository : Repository<Package>
     {
-        public PackageRepository(AppDbContext context) : base(context) { }
-
-        // for the query builder
-        public QueryBuilderService<Package> Query()
-        {
-            return new QueryBuilderService<Package>(_context.Packages);
-        }
-
-        // generic query method
-        public async Task<IEnumerable<Package>> GetPackagesByCriteriaAsync(Expression<Func<Package, bool>> predicate)
-        {
-            return await _context.Packages
-                .Where(predicate)
-                .ToListAsync();
-        }
+        public PackageRepository(AppDbContext context, Employee user) : base(context, user) { }
 
         // searching criteria:
-
-        // by ID
-        public async Task<IEnumerable<Package>> GetPackageByIDAsync(uint id)
-        {
-            return await GetPackagesByCriteriaAsync(p => p.ID == id);
-        }
         // by status
-        public async Task<IEnumerable<Package>> GetPackagesByStatusAsync(PackageStatus status)
+        public async Task<IEnumerable<Package>> GetByStatusAsync(PackageStatus status)
         {
-            return await GetPackagesByCriteriaAsync(p => p.PackageStatus == status);
+            return await GetByCriteriaAsync(p => p.PackageStatus == status);
         }
 
         // by starting point
-        public async Task<IEnumerable<Package>> GetPackagesByStartingPoint(PostalOffice startingPoint)
+        public async Task<IEnumerable<Package>> GetByStartingPointAsync(Warehouse startingPoint)
         {
-            return await GetPackagesByCriteriaAsync(p => p.SentFrom == startingPoint);
+            return await GetByCriteriaAsync(p => p.SentFrom == startingPoint);
         }
 
         // by destination
-        public async Task<IEnumerable<Package>> GetPackagesByDestination(PostalOffice destination)
+        public async Task<IEnumerable<Package>> GetByDestinationAsync(Warehouse destination)
         {
-            return await GetPackagesByCriteriaAsync(p => p.SentTo == destination);
+            return await GetByCriteriaAsync(p => p.SentTo == destination);
         }
 
         // by sender
-        public async Task<IEnumerable<Package>> GetPackagesBySender(Client sender)
+        public async Task<IEnumerable<Package>> GetBySenderAsync(Client sender)
         {
-            return await GetPackagesByCriteriaAsync(p => p.Sender == sender);
+            return await GetByCriteriaAsync(p => p.Sender == sender);
         }
 
         // by receiver
-        public async Task<IEnumerable<Package>> GetPackagesByReceiver(Client receiver)
+        public async Task<IEnumerable<Package>> GetByReceiverAsync(Client receiver)
         {
-            return await GetPackagesByCriteriaAsync(p => p.Receiver == receiver);
+            return await GetByCriteriaAsync(p => p.Receiver == receiver);
         }
 
         // by content (?)
         // to-do
 
         // by package type
-        public async Task<IEnumerable<Package>> GetPackagesByPackageType(PackageType packageType)
+        public async Task<IEnumerable<Package>> GetByTypeAsync(PackageType packageType)
         {
-            return await GetPackagesByCriteriaAsync(p => p.Type == packageType);
+            return await GetByCriteriaAsync(p => p.Type == packageType);
         }
 
         // by package ID (already in Repository)
 
         // by package weight
-        public async Task<IEnumerable<Package>> GetPackagesByWeightAsync(uint weight)
+        public async Task<IEnumerable<Package>> GetByWeightAsync(uint weight)
         {
-            return await GetPackagesByCriteriaAsync(p => p.Weight == weight);
+            return await GetByCriteriaAsync(p => p.Weight == weight);
         }
 
-        public async Task<IEnumerable<Package>> GetPackagesByWeightRangeAsync(uint minWeight, uint maxWeight)
+        public async Task<IEnumerable<Package>> GetByWeightRangeAsync(uint minWeight, uint maxWeight)
         {
-            return await GetPackagesByCriteriaAsync(p => p.Weight >= minWeight && p.Weight <= maxWeight);
+            return await GetByCriteriaAsync(p => p.Weight >= minWeight && p.Weight <= maxWeight);
         }
 
         // by package volume
-        public async Task<IEnumerable<Package>> GetPackagesByVolumeAsync(uint volume)
+        public async Task<IEnumerable<Package>> GetByVolumeAsync(uint volume)
         {
-            return await GetPackagesByCriteriaAsync(p => p.Volume == volume);
+            return await GetByCriteriaAsync(p => p.Volume == volume);
         }
 
-        public async Task<IEnumerable<Package>> GetPackagesByVolumeRangeAsync(uint minVolume, uint maxVolume)
+        public async Task<IEnumerable<Package>> GetByVolumeRangeAsync(uint minVolume, uint maxVolume)
         {
-            return await GetPackagesByCriteriaAsync(p => p.Volume >= minVolume && p.Volume <= maxVolume);
+            return await GetByCriteriaAsync(p => p.Volume >= minVolume && p.Volume <= maxVolume);
         }
 
         // by package dimensions (length, width, height) (nvm not possible as they are private)
 
         // by package creation date
-        public async Task<IEnumerable<Package>> GetPackagesByCreationDateAsync(DateTime time)
+        public async Task<IEnumerable<Package>> GetByCreationDateAsync(DateTime time)
         {
-            return await GetPackagesByCriteriaAsync(p => p.CreatedAt == time);
+            return await GetByCriteriaAsync(p => p.CreatedAt.Date == time.Date);
         }
 
-        public async Task<IEnumerable<Package>> GetPackagesByCreationDateRangeAsync(DateTime startDate, DateTime endDate)
+        public async Task<IEnumerable<Package>> GetByCreationDateRangeAsync(DateTime startDate, DateTime endDate)
         {
-            return await GetPackagesByCriteriaAsync(p => p.CreatedAt >= startDate && p.CreatedAt <= endDate);
+            return await GetByCriteriaAsync(p => p.CreatedAt >= startDate && p.CreatedAt <= endDate);
         }
 
         // by package delivery date (?)
