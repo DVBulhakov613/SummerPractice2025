@@ -262,19 +262,19 @@
 //            // Arrange
 //            var workplace = new Warehouse(new Coordinates(50.45, 30.52, "Kyiv", "Ukraine"), 0, false);
 //            var manager = new Employee("Manager", "NotUser", "+123456789", "manager@example.com", "Менеджер", _workplace);
-            
+
 //            manager.ManagedLocations = new List<BaseLocation>
 //            {
 //            workplace,
 //            new Warehouse(new Coordinates(50, 30, "Kyiv", "Ukraine"), 0, true),
 //            new Warehouse(new Coordinates(50.4, 30.5, "Kyiv", "Ukraine"), 50, false)
-            
+
 //            };
 
 //            await _repository.AddAsync(manager);
 
-//                // Act
-//                var retrievedManager = await _repository.GetByIdAsync(manager.ID);
+//            // Act
+//            var retrievedManager = await _repository.GetByIdAsync(manager.ID);
 
 //            // Assert
 //            Assert.IsNotNull(retrievedManager);

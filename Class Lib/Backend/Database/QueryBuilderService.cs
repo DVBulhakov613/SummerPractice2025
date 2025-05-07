@@ -24,6 +24,8 @@ namespace Class_Lib.Backend.Database
         private int? _take;
         private Expression<Func<T, object>>? _orderBy;
         private bool _orderDescending;
+        private readonly List<string> _includes = new();
+
 
         public QueryBuilderService(Employee? user, IQueryable<T> source)
         {
@@ -55,6 +57,19 @@ namespace Class_Lib.Backend.Database
             return this;
         }
 
+        /// <summary>
+        /// Adds an include expression directly to the query.
+        /// </summary>
+        /// <param name="includeExpression"></param>
+        /// <returns></returns>
+        public QueryBuilderService<T> Include<TProperty>(Expression<Func<T, TProperty>> includeExpression)
+        {
+            _query = _query.Include(includeExpression);
+            return this;
+        }
+
+
+
         public QueryBuilderService<T> OrderBy(Expression<Func<T, object>> keySelector)
         {
             _orderBy = keySelector;
@@ -70,7 +85,7 @@ namespace Class_Lib.Backend.Database
         }
 
         /// <summary>
-        /// Executes with the specified predicate. Ignores previously added conditions. Use with caution.
+        /// Adds a Where clause to the query.
         /// </summary>
         /// <param name="predicate"></param>
         /// <returns></returns>
@@ -80,6 +95,12 @@ namespace Class_Lib.Backend.Database
             return this;
         }
 
+        /// <summary>
+        /// Executes the query and returns the results as a list.
+        /// </summary>
+        /// <returns></returns>
+        /// <exception cref="UnauthorizedAccessException"></exception>
+        /// <exception cref="InvalidOperationException"></exception>
         public async Task<List<T>> ExecuteAsync()
         {
             var permission = AccessService.GetReadPermissionForType(typeof(T));
@@ -87,6 +108,9 @@ namespace Class_Lib.Backend.Database
             {
                 throw new UnauthorizedAccessException($"Немає доступу до {typeof(T).Name}.");
             }
+
+            foreach (var include in _includes)
+                _query = _query.Include(include);
 
             foreach (var filter in _filters)
                 _query = _query.Where(filter);
@@ -110,20 +134,21 @@ namespace Class_Lib.Backend.Database
             }
         }
 
-        public async Task<List<TResult>> ExecuteAsync<TResult>(Expression<Func<T, TResult>> selector)
-        {
-            var permission = AccessService.GetReadPermissionForType(typeof(T));
 
-            if (permission.HasValue && !AccessService.CanPerformAction(_user, (int)permission.Value))
-            {
-                throw new UnauthorizedAccessException($"You do not have permission to read {typeof(T).Name} data.");
-            }
+        //public async Task<List<TResult>> ExecuteAsync<TResult>(Expression<Func<T, TResult>> selector)
+        //{
+        //    var permission = AccessService.GetReadPermissionForType(typeof(T));
 
-            foreach (var filter in _filters)
-                _query = _query.Where(filter);
+        //    if (permission.HasValue && !AccessService.CanPerformAction(_user, (int)permission.Value))
+        //    {
+        //        throw new UnauthorizedAccessException($"You do not have permission to read {typeof(T).Name} data.");
+        //    }
 
-            return await _query.Select(selector).ToListAsync();
-        }
+        //    foreach (var filter in _filters)
+        //        _query = _query.Where(filter);
+
+        //    return await _query.Select(selector).ToListAsync();
+        //}
 
 
         //public List<Expression<Func<T, bool>>> BuildConditions<T>(List<QueryCondition> conditions)

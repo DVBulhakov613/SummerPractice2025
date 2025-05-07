@@ -8,11 +8,11 @@
             <RowDefinition Height="Auto"/>
         </Grid.RowDefinitions>
 
-        <!-- Login Form -->
+        <!-- login form -->
         <StackPanel VerticalAlignment="Center" HorizontalAlignment="Center">
             <TextBox x:Name="UsernameTextBox" Width="200" Margin="5"/>
             <PasswordBox x:Name="PasswordBox" Width="200" Margin="5"/>
-            <Button Content="Login" Width="200" Margin="5" Click="LoginButton_Click"/>
+            <Button Content="Login" Width="200" Margin="5" Click="LoginButton_Click" Background="Gray"/>
         </StackPanel>
     </Grid>
 </Window>

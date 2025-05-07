@@ -43,12 +43,12 @@ namespace Class_Lib.Database.Repositories
             return await GetByCriteriaAsync(p => p.FirstName.ToLower() + " " + p.Surname.ToLower() == fullName.ToLower());
         }
 
-        //// administrator count (for deletion restriction)
-        //public async Task<int> GetAdministratorCountAsync()
-        //{
-        //    return await _context.Employees
-        //        .Where(e => e.Position == "Системний Адміністратор")
-        //        .CountAsync();
-        //}
+        // administrator count (for deletion restriction)
+        public async Task<int> GetAdministratorCountAsync()
+        {
+            return await _context.Employees
+                .Where(e => e.Role.Name == "Системний Адміністратор")
+                .CountAsync();
+        }
     }
 }

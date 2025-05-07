@@ -6,7 +6,7 @@
     <Grid Margin="10">
         <ListBox x:Name="EventListBox"
                  ItemsSource="{Binding Events}"
-                 Background="{StaticResource SidePanelBackgroundBrush}"
+                 Background="{StaticResource SecondaryBackgroundBrush}"
                  Foreground="White">
             <ListBox.ItemTemplate>
                 <DataTemplate>

@@ -13,7 +13,7 @@
             <RowDefinition Height="*"/>
         </Grid.RowDefinitions>
 
-        <!-- toolbar -->
+         <!--toolbar--> 
         <StackPanel Orientation="Horizontal" Grid.Row="0" Margin="10">
             <Button Content="Add Employee" Click="AddEmployee_Click" Margin="5"/>
             <Button Content="Edit Employee" Click="EditEmployee_Click" Margin="5"/>
@@ -22,7 +22,7 @@
             <Button Content="Promote to Administrator" Click="PromoteToAdministrator_Click" Margin="5"/>
         </StackPanel>
 
-        <!-- employee table -->
+         <!--employee table--> 
         <DataGrid x:Name="EmployeeTable" Grid.Row="1" AutoGenerateColumns="True" Margin="10" SelectionMode="Single"/>
     </Grid>
 </UserControl>

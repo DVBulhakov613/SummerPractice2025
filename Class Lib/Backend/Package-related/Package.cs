@@ -1,24 +1,25 @@
 ﻿using Class_Lib.Backend.Package_related.enums;
 using Class_Lib.Backend.Person_related;
 using System.ComponentModel.DataAnnotations;
+using System.ComponentModel.DataAnnotations.Schema;
 using System.Xml.Linq;
 
 
 namespace Class_Lib
 {
-    public class Package : IHasIdentification
+    public class Package
     {
         // format of ID:
         // [Postal Code, 5 numbers][Country, 2 letters]-[Day]-[Month]-[Year]-[4 random letters]
-        public uint PackageID { get => ID; private set; } // explicit implementation of the IHasIdentification interface
+        
         public uint ID { get; private set; }
         public PackageStatus PackageStatus { get; set; } = PackageStatus.STORED; // status of the package, set to Created by default
         public DateTime CreatedAt { get; private set; } // the date when the package was created, set at creation time and never changed
         #region Package Properties
-        private uint Length { get; set; }
-        private uint Width { get; set; }
-        private uint Height { get; set; }
-        public double Weight { get; set; }
+        public uint Length { get; set; }
+        public uint Width { get; set; }
+        public uint Height { get; set; }
+        public double Weight { get; set; } // in kg
         public double Volume { get; private set; } // volume of the package, calculated from length, width and height
         #endregion
 
@@ -31,8 +32,8 @@ namespace Class_Lib
         public Warehouse SentFrom { get; private set; } // taken from the department which creates this package
         public uint SentToID { get => SentTo.ID; private set; } // id of the department which receives this package for db purposes
         public Warehouse SentTo { get; set; } // taken from destination
-        public uint CurrentLocationID { get => CurrentLocation.ID; private set; } // id of the department which currently has this package for db purposes
-        public BaseLocation CurrentLocation { get; set; } // default should be SentFrom, but can be changed to any location in the system
+        // public uint CurrentLocationID { get => CurrentLocation.ID; private set; } // id of the department which currently has this package for db purposes
+        // public BaseLocation CurrentLocation { get; set; } // default should be SentFrom, but can be changed to any location in the system
         public List<Content> DeclaredContent { get; private set; } = []; // declared contents should not be changed
         public PackageType Type { get; private set; }  // the type of package corresponds to what kind of packaging is used, and is thus immutable
         #endregion
@@ -46,7 +47,7 @@ namespace Class_Lib
 
         public Package
             (uint length, uint width, uint height, double weight, Client sender, Client receiver,
-            Warehouse sentFrom, Warehouse sentTo, BaseLocation currentLocation, List<Content> declaredContent,
+            Warehouse sentFrom, Warehouse sentTo, List<Content> declaredContent,
             PackageType type)
         {
             Length = length;
@@ -57,12 +58,12 @@ namespace Class_Lib
             Receiver = receiver;
             SentFrom = sentFrom;
             SentTo = sentTo;
-            CurrentLocation = currentLocation;
+            // CurrentLocation = currentLocation;
             DeclaredContent = declaredContent;
             Type = type;
 
             RowVersion = Array.Empty<byte>();
-            Log.Add(new PackageEvent(CurrentLocation, "Посилку створено", this));
+            Log.Add(new PackageEvent(SentFrom, "Посилку створено", this));
             CreatedAt = DateTime.Now; // set the creation date to now
             Volume = Length * Width * Height;
         }

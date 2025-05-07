@@ -58,6 +58,307 @@ namespace Class_Lib.Migrations
                     b.ToTable("Clients", (string)null);
                 });
 
+            modelBuilder.Entity("Class_Lib.Backend.Services.Permission", b =>
+                {
+                    b.Property<long>("ID")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("bigint");
+
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<long>("ID"));
+
+                    b.Property<string>("Name")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.HasKey("ID");
+
+                    b.ToTable("Permissions");
+
+                    b.HasData(
+                        new
+                        {
+                            ID = 1L,
+                            Name = "LocalPermissions"
+                        },
+                        new
+                        {
+                            ID = 2L,
+                            Name = "GlobalPermissions"
+                        },
+                        new
+                        {
+                            ID = 10L,
+                            Name = "ReadPackage"
+                        },
+                        new
+                        {
+                            ID = 11L,
+                            Name = "CreatePackage"
+                        },
+                        new
+                        {
+                            ID = 12L,
+                            Name = "UpdatePackage"
+                        },
+                        new
+                        {
+                            ID = 13L,
+                            Name = "DeletePackage"
+                        },
+                        new
+                        {
+                            ID = 20L,
+                            Name = "ReadEvent"
+                        },
+                        new
+                        {
+                            ID = 21L,
+                            Name = "CreateEvent"
+                        },
+                        new
+                        {
+                            ID = 22L,
+                            Name = "UpdateEvent"
+                        },
+                        new
+                        {
+                            ID = 23L,
+                            Name = "DeleteEvent"
+                        },
+                        new
+                        {
+                            ID = 30L,
+                            Name = "ReadContent"
+                        },
+                        new
+                        {
+                            ID = 31L,
+                            Name = "CreateContent"
+                        },
+                        new
+                        {
+                            ID = 32L,
+                            Name = "UpdateContent"
+                        },
+                        new
+                        {
+                            ID = 33L,
+                            Name = "DeleteContent"
+                        },
+                        new
+                        {
+                            ID = 40L,
+                            Name = "ReadPerson"
+                        },
+                        new
+                        {
+                            ID = 41L,
+                            Name = "CreatePerson"
+                        },
+                        new
+                        {
+                            ID = 42L,
+                            Name = "UpdatePerson"
+                        },
+                        new
+                        {
+                            ID = 43L,
+                            Name = "DeletePerson"
+                        },
+                        new
+                        {
+                            ID = 50L,
+                            Name = "ReadLocation"
+                        },
+                        new
+                        {
+                            ID = 51L,
+                            Name = "CreateLocation"
+                        },
+                        new
+                        {
+                            ID = 52L,
+                            Name = "UpdateLocation"
+                        },
+                        new
+                        {
+                            ID = 53L,
+                            Name = "DeleteLocation"
+                        },
+                        new
+                        {
+                            ID = 60L,
+                            Name = "ReadReport"
+                        },
+                        new
+                        {
+                            ID = 61L,
+                            Name = "CreateReport"
+                        },
+                        new
+                        {
+                            ID = 62L,
+                            Name = "UpdateReport"
+                        },
+                        new
+                        {
+                            ID = 63L,
+                            Name = "DeleteReport"
+                        },
+                        new
+                        {
+                            ID = 70L,
+                            Name = "ReadDeliveryVehicle"
+                        },
+                        new
+                        {
+                            ID = 71L,
+                            Name = "CreateDeliveryVehicle"
+                        },
+                        new
+                        {
+                            ID = 72L,
+                            Name = "UpdateDeliveryVehicle"
+                        },
+                        new
+                        {
+                            ID = 73L,
+                            Name = "DeleteDeliveryVehicle"
+                        },
+                        new
+                        {
+                            ID = 80L,
+                            Name = "ReadContentType"
+                        },
+                        new
+                        {
+                            ID = 81L,
+                            Name = "CreateContentType"
+                        },
+                        new
+                        {
+                            ID = 82L,
+                            Name = "UpdateContentType"
+                        },
+                        new
+                        {
+                            ID = 83L,
+                            Name = "DeleteContentType"
+                        },
+                        new
+                        {
+                            ID = 90L,
+                            Name = "ReadPackageStatus"
+                        },
+                        new
+                        {
+                            ID = 91L,
+                            Name = "CreatePackageStatus"
+                        },
+                        new
+                        {
+                            ID = 92L,
+                            Name = "UpdatePackageStatus"
+                        },
+                        new
+                        {
+                            ID = 93L,
+                            Name = "DeletePackageStatus"
+                        },
+                        new
+                        {
+                            ID = 100L,
+                            Name = "ReadPackageType"
+                        },
+                        new
+                        {
+                            ID = 101L,
+                            Name = "CreatePackageType"
+                        },
+                        new
+                        {
+                            ID = 102L,
+                            Name = "UpdatePackageType"
+                        },
+                        new
+                        {
+                            ID = 103L,
+                            Name = "DeletePackageType"
+                        },
+                        new
+                        {
+                            ID = 110L,
+                            Name = "ReadCountry"
+                        },
+                        new
+                        {
+                            ID = 111L,
+                            Name = "CreateCountry"
+                        },
+                        new
+                        {
+                            ID = 112L,
+                            Name = "UpdateCountry"
+                        },
+                        new
+                        {
+                            ID = 113L,
+                            Name = "DeleteCountry"
+                        },
+                        new
+                        {
+                            ID = 120L,
+                            Name = "ReadUser"
+                        },
+                        new
+                        {
+                            ID = 121L,
+                            Name = "CreateUser"
+                        },
+                        new
+                        {
+                            ID = 122L,
+                            Name = "UpdateUser"
+                        },
+                        new
+                        {
+                            ID = 123L,
+                            Name = "DeleteUser"
+                        });
+                });
+
+            modelBuilder.Entity("Class_Lib.Backend.Services.Role", b =>
+                {
+                    b.Property<long>("ID")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("bigint");
+
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<long>("ID"));
+
+                    b.Property<string>("Name")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.HasKey("ID");
+
+                    b.ToTable("Roles");
+                });
+
+            modelBuilder.Entity("Class_Lib.Backend.Services.RolePermission", b =>
+                {
+                    b.Property<long>("RoleID")
+                        .HasColumnType("bigint");
+
+                    b.Property<long>("PermissionID")
+                        .HasColumnType("bigint");
+
+                    b.HasKey("RoleID", "PermissionID");
+
+                    b.HasIndex("PermissionID");
+
+                    b.ToTable("RolePermissions");
+                });
+
             modelBuilder.Entity("Class_Lib.BaseLocation", b =>
                 {
                     b.Property<long>("ID")
@@ -127,18 +428,13 @@ namespace Class_Lib.Migrations
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
-                    b.PrimitiveCollection<string>("Permissions")
-                        .IsRequired()
-                        .HasColumnType("nvarchar(max)");
-
                     b.Property<string>("PhoneNumber")
                         .IsRequired()
                         .HasMaxLength(15)
                         .HasColumnType("nvarchar(15)");
 
-                    b.Property<string>("Position")
-                        .IsRequired()
-                        .HasColumnType("nvarchar(max)");
+                    b.Property<long?>("RoleID")
+                        .HasColumnType("bigint");
 
                     b.Property<byte[]>("RowVersion")
                         .IsConcurrencyToken()
@@ -154,6 +450,8 @@ namespace Class_Lib.Migrations
                         .HasColumnType("bigint");
 
                     b.HasKey("ID");
+
+                    b.HasIndex("RoleID");
 
                     b.HasIndex("WorkplaceID");
 
@@ -171,10 +469,10 @@ namespace Class_Lib.Migrations
                     b.Property<DateTime>("CreatedAt")
                         .HasColumnType("datetime2");
 
-                    b.Property<long>("CurrentLocationID")
+                    b.Property<long>("Height")
                         .HasColumnType("bigint");
 
-                    b.Property<long>("PackageID")
+                    b.Property<long>("Length")
                         .HasColumnType("bigint");
 
                     b.Property<int>("PackageStatus")
@@ -200,21 +498,22 @@ namespace Class_Lib.Migrations
                     b.Property<long>("SentToID")
                         .HasColumnType("bigint");
 
+                    b.Property<long?>("StoredInWarehouseID")
+                        .HasColumnType("bigint");
+
                     b.Property<int>("Type")
                         .HasColumnType("int");
 
                     b.Property<double>("Volume")
                         .HasColumnType("float");
 
-                    b.Property<long?>("WarehouseID")
-                        .HasColumnType("bigint");
-
                     b.Property<double>("Weight")
                         .HasColumnType("float");
 
-                    b.HasKey("ID");
+                    b.Property<long>("Width")
+                        .HasColumnType("bigint");
 
-                    b.HasIndex("CurrentLocationID");
+                    b.HasKey("ID");
 
                     b.HasIndex("ReceiverID");
 
@@ -224,7 +523,7 @@ namespace Class_Lib.Migrations
 
                     b.HasIndex("SentToID");
 
-                    b.HasIndex("WarehouseID");
+                    b.HasIndex("StoredInWarehouseID");
 
                     b.ToTable("Packages");
                 });
@@ -304,6 +603,25 @@ namespace Class_Lib.Migrations
                     b.ToTable("PostalOffices", (string)null);
                 });
 
+            modelBuilder.Entity("Class_Lib.Backend.Services.RolePermission", b =>
+                {
+                    b.HasOne("Class_Lib.Backend.Services.Permission", "Permission")
+                        .WithMany("RolePermissions")
+                        .HasForeignKey("PermissionID")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.HasOne("Class_Lib.Backend.Services.Role", "Role")
+                        .WithMany("RolePermissions")
+                        .HasForeignKey("RoleID")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.Navigation("Permission");
+
+                    b.Navigation("Role");
+                });
+
             modelBuilder.Entity("Class_Lib.BaseLocation", b =>
                 {
                     b.HasOne("Class_Lib.Employee", null)
@@ -359,22 +677,23 @@ namespace Class_Lib.Migrations
 
             modelBuilder.Entity("Class_Lib.Employee", b =>
                 {
+                    b.HasOne("Class_Lib.Backend.Services.Role", "Role")
+                        .WithMany("Employees")
+                        .HasForeignKey("RoleID")
+                        .OnDelete(DeleteBehavior.SetNull);
+
                     b.HasOne("Class_Lib.BaseLocation", "Workplace")
                         .WithMany("Staff")
                         .HasForeignKey("WorkplaceID")
                         .OnDelete(DeleteBehavior.Restrict);
+
+                    b.Navigation("Role");
 
                     b.Navigation("Workplace");
                 });
 
             modelBuilder.Entity("Class_Lib.Package", b =>
                 {
-                    b.HasOne("Class_Lib.BaseLocation", "CurrentLocation")
-                        .WithMany()
-                        .HasForeignKey("CurrentLocationID")
-                        .OnDelete(DeleteBehavior.Restrict)
-                        .IsRequired();
-
                     b.HasOne("Class_Lib.Backend.Person_related.Client", "Receiver")
                         .WithMany("PackagesReceived")
                         .HasForeignKey("ReceiverID")
@@ -401,9 +720,8 @@ namespace Class_Lib.Migrations
 
                     b.HasOne("Class_Lib.Warehouse", null)
                         .WithMany("StoredPackages")
-                        .HasForeignKey("WarehouseID");
-
-                    b.Navigation("CurrentLocation");
+                        .HasForeignKey("StoredInWarehouseID")
+                        .OnDelete(DeleteBehavior.NoAction);
 
                     b.Navigation("Receiver");
 
@@ -467,6 +785,18 @@ namespace Class_Lib.Migrations
                     b.Navigation("PackagesReceived");
 
                     b.Navigation("PackagesSent");
+                });
+
+            modelBuilder.Entity("Class_Lib.Backend.Services.Permission", b =>
+                {
+                    b.Navigation("RolePermissions");
+                });
+
+            modelBuilder.Entity("Class_Lib.Backend.Services.Role", b =>
+                {
+                    b.Navigation("Employees");
+
+                    b.Navigation("RolePermissions");
                 });
 
             modelBuilder.Entity("Class_Lib.BaseLocation", b =>

@@ -2,9 +2,7 @@
 using Class_Lib.Backend.Services;
 using System;
 using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+using System.ComponentModel.DataAnnotations.Schema;
 
 namespace Class_Lib
 {
@@ -15,12 +13,12 @@ namespace Class_Lib
         public uint? WorkplaceID { get; private set; } // workplace ID (for db purposes)
         public BaseLocation? Workplace { get; set; } // current workplace of the employee
         public User? User { get; set; } // user account of the employee (if any)
-        public List<int> Permissions { get; set; } = new();
+        [NotMapped] public List<int> CachedPermissions { get; set; } = new();
         public List<BaseLocation>? ManagedLocations { get; set; } = new();
 
         protected internal Employee() : base() { }
 
-        public Employee(string name, string surname, string phoneNumber, string email, string position, BaseLocation? workplace, List<BaseLocation>? managedLocations = null)
+        public Employee(string name, string surname, string phoneNumber, string email, uint roleId, BaseLocation? workplace, List<BaseLocation>? managedLocations = null)
             : base(name, surname, phoneNumber, email)
         {
             Workplace = workplace;
@@ -33,22 +31,51 @@ namespace Class_Lib
             if(managedLocations != null)
                 ManagedLocations = managedLocations;
 
-            AccessService.AssignRolePermissions(this, position); // assign permissions based on the position
+            RoleID = roleId; // set the role ID for db purposes
         }
 
-        //public void AddPermission(AccessService.PermissionKey permissionKey)
-        //{
-        //    Permissions.Add((int)permissionKey);
-        //}
+        public Employee(string name, string surname, string phoneNumber, string email, string position, BaseLocation? workplace, List<BaseLocation>? managedLocations = null)
+            : base(name, surname, phoneNumber, email)
+        {
+            Workplace = workplace;
+            //Position = position;
+            if (workplace != null)
+                WorkplaceID = workplace.ID; // set the workplace ID for db purposes
+            else
+                WorkplaceID = null; // set to null if no workplace is assigned
 
-        //public void RemovePermission(AccessService.PermissionKey permissionKey)
-        //{
-        //    Permissions.Remove((int)permissionKey);
-        //}
+            if (managedLocations != null)
+                ManagedLocations = managedLocations;
+
+            RoleID = TextToRoleId(position); // set the role ID for db purposes
+        }
 
         public bool HasPermission(AccessService.PermissionKey permissionKey)
         {
-            return Permissions.Contains((int)permissionKey);
+            return CachedPermissions.Contains((int)permissionKey);
         }
+
+        static private string RoleIdToText(uint roleId)
+        {
+            return roleId switch
+            {
+                1 => "Системний Адміністратор",
+                2 => "Менеджер",
+                3 => "Працівник",
+                _ => "Невідома роль"
+            };
+        }
+
+        static private uint TextToRoleId(string position)
+        {
+            return position switch
+            {
+                "Системний Адміністратор" => 1,
+                "Менеджер" => 2,
+                "Працівник" => 3,
+                _ => 0
+            };
+        }
+
     }
 }

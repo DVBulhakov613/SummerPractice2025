@@ -4,18 +4,26 @@
     <!-- colors -->
     <Color x:Key="PrimaryBackgroundColor">#FFF5F5F5</Color>
     <Color x:Key="SidePanelBackgroundColor">#FFEEEEEE</Color>
-    <Color x:Key="AccentColor">#FF1E90FF</Color>
-    <Color x:Key="AccentColor2">#FF00C853</Color>
-    <Color x:Key="ButtonColor">#FFDEE4EC</Color>
+
+    <Color x:Key="AccentColor1">#FF3C5EB4</Color>
+    <Color x:Key="AccentColor2">#FF4B70BF</Color>
+    <Color x:Key="AccentColor3">#FF5984DF</Color>
+    <Color x:Key="AccentColor4">#FF7193EB</Color>
+    <Color x:Key="AccentColor5">#FFB5C5FB</Color>
+    <Color x:Key="Background">#FFDEE4EC</Color>
+    <Color x:Key="Highlight">#FFFFFFFF</Color>
+    <Color x:Key="Logtextcolor">#FF383838</Color>
     <Color x:Key="WarningColor">#FFFFC107</Color>
-    <Color x:Key="ErrorColor">#FFFF5252</Color>
+    <Color x:Key="ErrorColor">#FFB4463C</Color>
 
     <!-- brushes -->
-    <SolidColorBrush x:Key="PrimaryBackgroundBrush" Color="{StaticResource PrimaryBackgroundColor}"/>
-    <SolidColorBrush x:Key="SidePanelBackgroundBrush" Color="{StaticResource SidePanelBackgroundColor}"/>
-    <SolidColorBrush x:Key="AccentBrush" Color="{StaticResource AccentColor}"/>
+    <SolidColorBrush x:Key="PrimaryBackgroundBrush" Color="{StaticResource Background}"/>
+    <SolidColorBrush x:Key="SecondaryBackgroundBrush" Color="{StaticResource Highlight}"/>
+    <SolidColorBrush x:Key="AccentBrush" Color="{StaticResource AccentColor1}"/>
     <SolidColorBrush x:Key="AccentBrush2" Color="{StaticResource AccentColor2}"/>
-    <SolidColorBrush x:Key="ButtonBrush1" Color="{StaticResource ButtonColor}"/>
+    <SolidColorBrush x:Key="AccentBrush3" Color="{StaticResource AccentColor2}"/>
+    <SolidColorBrush x:Key="AccentBrush4" Color="{StaticResource AccentColor2}"/>
+    <SolidColorBrush x:Key="AccentBrush5" Color="{StaticResource AccentColor5}"/>
     <SolidColorBrush x:Key="WarningBrush" Color="{StaticResource WarningColor}"/>
     <SolidColorBrush x:Key="ErrorBrush" Color="{StaticResource ErrorColor}"/>
 
@@ -24,21 +32,22 @@
 
     <!-- styles -->
     <Style TargetType="DataGrid">
-        <Setter Property="Background" Value="{StaticResource PrimaryBackgroundBrush}"/>
+        <Setter Property="Background" Value="{StaticResource SecondaryBackgroundBrush}"/>
         <Setter Property="Foreground" Value="Black"/>
-        <Setter Property="RowBackground" Value="{StaticResource SidePanelBackgroundBrush}"/>
-        <Setter Property="AlternatingRowBackground" Value="#FF3A3A3A"/>
-        <Setter Property="GridLinesVisibility" Value="None"/>
-        <Setter Property="HorizontalGridLinesBrush" Value="{StaticResource AccentBrush}"/>
-        <Setter Property="VerticalGridLinesBrush" Value="{StaticResource AccentBrush}"/>
+        <Setter Property="RowBackground" Value="{StaticResource SecondaryBackgroundBrush}"/>
+        <Setter Property="AlternatingRowBackground" Value="#ffF2F2F2"/>
+        <Setter Property="GridLinesVisibility" Value="Horizontal"/>
+        <!--<Setter Property="HorizontalGridLinesBrush" Value="{StaticResource AccentBrush}"/>
+        <Setter Property="VerticalGridLinesBrush" Value="{StaticResource AccentBrush}"/>-->
         <Setter Property="BorderThickness" Value="1"/>
+        <Setter Property="BorderBrush" Value="#ffbbbbbb"/>
         <Setter Property="RowHeight" Value="32"/>
         <Setter Property="FontFamily" Value="{StaticResource PrimaryFont}"/>
         <Setter Property="FontSize" Value="14"/>
     </Style>
 
     <Style TargetType="Button">
-        <Setter Property="Background" Value="{StaticResource SidePanelBackgroundBrush}"/>
+        <Setter Property="Background" Value="Transparent"/>
         <Setter Property="Foreground" Value="White"/>
         <Setter Property="FontFamily" Value="{StaticResource PrimaryFont}"/>
         <Setter Property="Margin" Value="5"/>
@@ -47,5 +56,4 @@
         <Setter Property="Cursor" Value="Hand"/>
         <Setter Property="FontWeight" Value="SemiBold"/>
     </Style>
-
 </ResourceDictionary>

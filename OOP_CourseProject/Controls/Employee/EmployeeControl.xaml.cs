@@ -14,12 +14,10 @@ namespace OOP_CourseProject.Controls
     {
         private readonly EmployeeMethods _employeeMethods;
 
-        public EmployeeControl(AppDbContext dbContext)
+        public EmployeeControl(EmployeeMethods employeeMethods)
         {
             InitializeComponent();
-
-            var employeeRepository = new EmployeeRepository(dbContext, App.CurrentEmployee);
-            _employeeMethods = new EmployeeMethods(employeeRepository);
+            _employeeMethods = employeeMethods;
 
             LoadEmployees();
         }
@@ -39,7 +37,7 @@ namespace OOP_CourseProject.Controls
 
         private async void AddEmployee_Click(object sender, RoutedEventArgs e)
         {
-           // to do (probably with another window / user control, which will then parse an object here)
+            // to do (probably with another window / user control, which will then parse an object here)
         }
 
         private async void EditEmployee_Click(object sender, RoutedEventArgs e)
@@ -81,11 +79,11 @@ namespace OOP_CourseProject.Controls
             var selectedEmployee = EmployeeTable.SelectedItem as Employee;
             if (selectedEmployee != null)
             {
-                try 
+                try
                 {
                     await _employeeMethods.PromoteToManagerAsync(App.CurrentEmployee, selectedEmployee, new List<BaseLocation> { selectedEmployee.Workplace });
                 }
-                catch(Exception ex)
+                catch (Exception ex)
                 {
                     MessageBox.Show($"{ex.Message}");
                 }

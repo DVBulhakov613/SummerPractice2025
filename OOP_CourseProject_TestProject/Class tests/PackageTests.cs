@@ -53,7 +53,7 @@ namespace OOP_CourseProject_TestProject.Class_tests
         public async Task AddPackage_ShouldPersistToDatabase()
         {
             // Arrange
-            var package = new Package(10, 10, 10, 5, _sender, _receiver, _sentFrom, _sentTo, _sentFrom, new List<Content>(), PackageType.Standard);
+            var package = new Package(10, 10, 10, 5, _sender, _receiver, _sentFrom, _sentTo, new List<Content>(), PackageType.Standard);
             
             // Act
             await _repository.AddAsync(package);
@@ -73,8 +73,8 @@ namespace OOP_CourseProject_TestProject.Class_tests
         public async Task ReadPackage_ShouldReturnAllPackages()
         {
             // Arrange
-            var package1 = new Package(10, 10, 10, 5, _sender, _receiver, _sentFrom, _sentTo, _sentFrom, new List<Content>(), PackageType.Standard);
-            var package2 = new Package(10, 10, 10, 5, _sender, _receiver, _sentFrom, _sentTo, _sentFrom, new List<Content>(), PackageType.Standard);
+            var package1 = new Package(10, 10, 10, 5, _sender, _receiver, _sentFrom, _sentTo, new List<Content>(), PackageType.Standard);
+            var package2 = new Package(10, 10, 10, 5, _sender, _receiver, _sentFrom, _sentTo, new List<Content>(), PackageType.Standard);
             await _repository.AddAsync(package1);
             await _repository.AddAsync(package2);
 
@@ -90,7 +90,7 @@ namespace OOP_CourseProject_TestProject.Class_tests
         public async Task ReadPackage_ShouldReturnPackageById()
         {
             // Arrange
-            var package = new Package(10, 10, 10, 5, _sender, _receiver, _sentFrom, _sentTo, _sentFrom, new List<Content>(), PackageType.Standard);
+            var package = new Package(10, 10, 10, 5, _sender, _receiver, _sentFrom, _sentTo, new List<Content>(), PackageType.Standard);
             await _repository.AddAsync(package);
 
             // Act
@@ -105,8 +105,8 @@ namespace OOP_CourseProject_TestProject.Class_tests
         public async Task ReadPackage_ShouldReturnPackagesByStatus()
         {
             // Arrange
-            var package1 = new Package(10, 10, 10, 5, _sender, _receiver, _sentFrom, _sentTo, _sentFrom, new List<Content>(), PackageType.Standard);
-            var package2 = new Package(10, 10, 10, 5, _sender, _receiver, _sentFrom, _sentTo, _sentFrom, new List<Content>(), PackageType.Standard);
+            var package1 = new Package(10, 10, 10, 5, _sender, _receiver, _sentFrom, _sentTo, new List<Content>(), PackageType.Standard);
+            var package2 = new Package(10, 10, 10, 5, _sender, _receiver, _sentFrom, _sentTo, new List<Content>(), PackageType.Standard);
             await _repository.AddAsync(package1);
             await _repository.AddAsync(package2);
 
@@ -122,8 +122,8 @@ namespace OOP_CourseProject_TestProject.Class_tests
         public async Task ReadPackage_ShouldReturnPackageByStartingPoint()
         {
             // Arrange
-            var package1 = new Package(10, 10, 10, 5, _sender, _receiver, _sentFrom, _sentTo, _sentFrom, new List<Content>(), PackageType.Standard);
-            var package2 = new Package(10, 10, 10, 5, _sender, _receiver, _sentFrom, _sentTo, _sentFrom, new List<Content>(), PackageType.Standard);
+            var package1 = new Package(10, 10, 10, 5, _sender, _receiver, _sentFrom, _sentTo, new List<Content>(), PackageType.Standard);
+            var package2 = new Package(10, 10, 10, 5, _sender, _receiver, _sentFrom, _sentTo, new List<Content>(), PackageType.Standard);
             await _repository.AddAsync(package1);
             await _repository.AddAsync(package2);
 
@@ -139,8 +139,8 @@ namespace OOP_CourseProject_TestProject.Class_tests
         public async Task ReadPackage_ShouldReturnPackageByDestination()
         {
             // Arrange
-            var package1 = new Package(10, 10, 10, 5, _sender, _receiver, _sentFrom, _sentTo, _sentFrom, new List<Content>(), PackageType.Standard);
-            var package2 = new Package(10, 10, 10, 5, _sender, _receiver, _sentFrom, _sentTo, _sentFrom, new List<Content>(), PackageType.Standard);
+            var package1 = new Package(10, 10, 10, 5, _sender, _receiver, _sentFrom, _sentTo, new List<Content>(), PackageType.Standard);
+            var package2 = new Package(10, 10, 10, 5, _sender, _receiver, _sentFrom, _sentTo, new List<Content>(), PackageType.Standard);
             await _repository.AddAsync(package1);
             await _repository.AddAsync(package2);
 
@@ -156,8 +156,8 @@ namespace OOP_CourseProject_TestProject.Class_tests
         public async Task ReadPackage_ShouldReturnPackagesBySender()
         {
             // Arrange
-            var package1 = new Package(10, 10, 10, 5, _sender, _receiver, _sentFrom, _sentTo, _sentFrom, new List<Content>(), PackageType.Standard);
-            var package2 = new Package(10, 10, 10, 5, _sender, _receiver, _sentFrom, _sentTo, _sentFrom, new List<Content>(), PackageType.Standard);
+            var package1 = new Package(10, 10, 10, 5, _sender, _receiver, _sentFrom, _sentTo, new List<Content>(), PackageType.Standard);
+            var package2 = new Package(10, 10, 10, 5, _sender, _receiver, _sentFrom, _sentTo, new List<Content>(), PackageType.Standard);
             await _repository.AddAsync(package1);
             await _repository.AddAsync(package2);
 
@@ -172,8 +172,8 @@ namespace OOP_CourseProject_TestProject.Class_tests
         public async Task ReadPackage_ShouldReturnPackagesByReceiver()
         {
             // Arrange
-            var package1 = new Package(10, 10, 10, 5, _sender, _receiver, _sentFrom, _sentTo, _sentFrom, new List<Content>(), PackageType.Standard);
-            var package2 = new Package(10, 10, 10, 5, _sender, _receiver, _sentFrom, _sentTo, _sentFrom, new List<Content>(), PackageType.Standard);
+            var package1 = new Package(10, 10, 10, 5, _sender, _receiver, _sentFrom, _sentTo, new List<Content>(), PackageType.Standard);
+            var package2 = new Package(10, 10, 10, 5, _sender, _receiver, _sentFrom, _sentTo, new List<Content>(), PackageType.Standard);
             await _repository.AddAsync(package1);
             await _repository.AddAsync(package2);
 
@@ -189,8 +189,8 @@ namespace OOP_CourseProject_TestProject.Class_tests
         public async Task ReadPackage_ShouldReturnPackagesByType()
         {
             // Arrange
-            var package1 = new Package(10, 10, 10, 5, _sender, _receiver, _sentFrom, _sentTo, _sentFrom, new List<Content>(), PackageType.File);
-            var package2 = new Package(10, 10, 10, 5, _sender, _receiver, _sentFrom, _sentTo, _sentFrom, new List<Content>(), PackageType.Standard);
+            var package1 = new Package(10, 10, 10, 5, _sender, _receiver, _sentFrom, _sentTo, new List<Content>(), PackageType.File);
+            var package2 = new Package(10, 10, 10, 5, _sender, _receiver, _sentFrom, _sentTo, new List<Content>(), PackageType.Standard);
             await _repository.AddAsync(package1);
             await _repository.AddAsync(package2);
             
@@ -206,8 +206,8 @@ namespace OOP_CourseProject_TestProject.Class_tests
         public async Task ReadPackage_ShouldReturnPackagesByWeight()
         {
             // Arrange
-            var package1 = new Package(10, 10, 10, 5, _sender, _receiver, _sentFrom, _sentTo, _sentFrom, new List<Content>(), PackageType.Standard);
-            var package2 = new Package(10, 10, 10, 15, _sender, _receiver, _sentFrom, _sentTo, _sentFrom, new List<Content>(), PackageType.Standard);
+            var package1 = new Package(10, 10, 10, 5, _sender, _receiver, _sentFrom, _sentTo, new List<Content>(), PackageType.Standard);
+            var package2 = new Package(10, 10, 10, 15, _sender, _receiver, _sentFrom, _sentTo, new List<Content>(), PackageType.Standard);
             await _repository.AddAsync(package1);
             await _repository.AddAsync(package2);
 
@@ -223,8 +223,8 @@ namespace OOP_CourseProject_TestProject.Class_tests
         public async Task ReadPackage_ShouldReturnPackagesByWeightRange()
         {
             // Arrange
-            var package1 = new Package(10, 10, 10, 5, _sender, _receiver, _sentFrom, _sentTo, _sentFrom, new List<Content>(), PackageType.Standard);
-            var package2 = new Package(10, 10, 10, 15, _sender, _receiver, _sentFrom, _sentTo, _sentFrom, new List<Content>(), PackageType.Standard);
+            var package1 = new Package(10, 10, 10, 5, _sender, _receiver, _sentFrom, _sentTo, new List<Content>(), PackageType.Standard);
+            var package2 = new Package(10, 10, 10, 15, _sender, _receiver, _sentFrom, _sentTo, new List<Content>(), PackageType.Standard);
             await _repository.AddAsync(package1);
             await _repository.AddAsync(package2);
 
@@ -240,8 +240,8 @@ namespace OOP_CourseProject_TestProject.Class_tests
         public async Task ReadPackage_ShouldReturnPackagesByVolume()
         {
             // Arrange
-            var package1 = new Package(10, 5, 10, 15, _sender, _receiver, _sentFrom, _sentTo, _sentFrom, new List<Content>(), PackageType.Standard);
-            var package2 = new Package(10, 10, 10, 15, _sender, _receiver, _sentFrom, _sentTo, _sentFrom, new List<Content>(), PackageType.Standard);
+            var package1 = new Package(10, 5, 10, 15, _sender, _receiver, _sentFrom, _sentTo, new List<Content>(), PackageType.Standard);
+            var package2 = new Package(10, 10, 10, 15, _sender, _receiver, _sentFrom, _sentTo, new List<Content>(), PackageType.Standard);
             await _repository.AddAsync(package1);
             await _repository.AddAsync(package2);
 
@@ -257,8 +257,8 @@ namespace OOP_CourseProject_TestProject.Class_tests
         public async Task ReadPackage_ShouldReturnPackagesByVolumeRange()
         {
             // Arrange
-            var package1 = new Package(5, 5, 5, 15, _sender, _receiver, _sentFrom, _sentTo, _sentFrom, new List<Content>(), PackageType.Standard);
-            var package2 = new Package(10, 10, 10, 15, _sender, _receiver, _sentFrom, _sentTo, _sentFrom, new List<Content>(), PackageType.Standard);
+            var package1 = new Package(5, 5, 5, 15, _sender, _receiver, _sentFrom, _sentTo, new List<Content>(), PackageType.Standard);
+            var package2 = new Package(10, 10, 10, 15, _sender, _receiver, _sentFrom, _sentTo, new List<Content>(), PackageType.Standard);
             await _repository.AddAsync(package1);
             await _repository.AddAsync(package2);
 
@@ -274,8 +274,8 @@ namespace OOP_CourseProject_TestProject.Class_tests
         public async Task ReadPackage_ShouldReturnPackagesByCreationDate()
         {
             // Arrange
-            var package1 = new Package(10, 10, 10, 15, _sender, _receiver, _sentFrom, _sentTo, _sentFrom, new List<Content>(), PackageType.Standard);
-            var package2 = new Package(10, 10, 10, 15, _sender, _receiver, _sentFrom, _sentTo, _sentFrom, new List<Content>(), PackageType.Standard);
+            var package1 = new Package(10, 10, 10, 15, _sender, _receiver, _sentFrom, _sentTo, new List<Content>(), PackageType.Standard);
+            var package2 = new Package(10, 10, 10, 15, _sender, _receiver, _sentFrom, _sentTo, new List<Content>(), PackageType.Standard);
             await _repository.AddAsync(package1);
             await _repository.AddAsync(package2);
 
@@ -291,8 +291,8 @@ namespace OOP_CourseProject_TestProject.Class_tests
         public async Task ReadPackage_ShouldReturnPackagesByCreationDateRange()
         {
             // Arrange
-            var package1 = new Package(10, 10, 10, 15, _sender, _receiver, _sentFrom, _sentTo, _sentFrom, new List<Content>(), PackageType.Standard);
-            var package2 = new Package(10, 10, 10, 15, _sender, _receiver, _sentFrom, _sentTo, _sentFrom, new List<Content>(), PackageType.Standard);
+            var package1 = new Package(10, 10, 10, 15, _sender, _receiver, _sentFrom, _sentTo, new List<Content>(), PackageType.Standard);
+            var package2 = new Package(10, 10, 10, 15, _sender, _receiver, _sentFrom, _sentTo, new List<Content>(), PackageType.Standard);
             await _repository.AddAsync(package1);
             await _repository.AddAsync(package2);
 
@@ -312,7 +312,7 @@ namespace OOP_CourseProject_TestProject.Class_tests
         public async Task UpdatePackage_ShouldUpdateInDatabase()
         {
             // Arrange
-            var package = new Package(10, 10, 10, 5, _sender, _receiver, _sentFrom, _sentTo, _sentFrom, new List<Content>(), PackageType.Standard);
+            var package = new Package(10, 10, 10, 5, _sender, _receiver, _sentFrom, _sentTo, new List<Content>(), PackageType.Standard);
             await _repository.AddAsync(package);
 
             // Act
@@ -332,7 +332,7 @@ namespace OOP_CourseProject_TestProject.Class_tests
         public async Task DeletePackage_ShouldRemoveFromDatabase()
         {
             // Arrange
-            var package = new Package(10, 10, 10, 5, _sender, _receiver, _sentFrom, _sentTo, _sentFrom, new List<Content>(), PackageType.Standard);
+            var package = new Package(10, 10, 10, 5, _sender, _receiver, _sentFrom, _sentTo, new List<Content>(), PackageType.Standard);
             await _repository.AddAsync(package);
 
             // Act

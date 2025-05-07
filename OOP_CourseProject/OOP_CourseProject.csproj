@@ -10,6 +10,34 @@
   </PropertyGroup>
 
   <ItemGroup>
+    <None Remove="Assets\ButtonIcons\PackageInfo\Variant=FullInfo\Active.png" />
+    <None Remove="Assets\ButtonIcons\PackageInfo\Variant=FullInfo\Inactive.png" />
+    <None Remove="Assets\ButtonIcons\PackageInfo\Variant=Log\Active.png" />
+    <None Remove="Assets\ButtonIcons\PackageInfo\Variant=Log\Inactive.png" />
+    <None Remove="Assets\ButtonIcons\PackageInfo\Variant=Path\Active.png" />
+    <None Remove="Assets\ButtonIcons\PackageInfo\Variant=Path\Inactive.png" />
+    <None Remove="Assets\ButtonIcons\PackageInfo\Variant=Report\Active.png" />
+    <None Remove="Assets\ButtonIcons\PackageInfo\Variant=Report\Inactive.png" />
+    <None Remove="Assets\ButtonIcons\Variant=Add.png" />
+    <None Remove="Assets\ButtonIcons\Variant=Announcements.png" />
+    <None Remove="Assets\ButtonIcons\Variant=Barcode.png" />
+    <None Remove="Assets\ButtonIcons\Variant=Cancel.png" />
+    <None Remove="Assets\ButtonIcons\Variant=Copy.png" />
+    <None Remove="Assets\ButtonIcons\Variant=Download.png" />
+    <None Remove="Assets\ButtonIcons\Variant=Encyclopedia.png" />
+    <None Remove="Assets\ButtonIcons\Variant=Information.png" />
+    <None Remove="Assets\ButtonIcons\Variant=Log.png" />
+    <None Remove="Assets\ButtonIcons\Variant=Map.png" />
+    <None Remove="Assets\ButtonIcons\Variant=Options.png" />
+    <None Remove="Assets\ButtonIcons\Variant=Package.png" />
+    <None Remove="Assets\ButtonIcons\Variant=Refresh.png" />
+    <None Remove="Assets\ButtonIcons\Variant=Remove.png" />
+    <None Remove="Assets\ButtonIcons\Variant=Search.png" />
+    <None Remove="Assets\ButtonIcons\Variant=Staff.png" />
+    <None Remove="Assets\ButtonIcons\Variant=Stopwatch.png" />
+  </ItemGroup>
+
+  <ItemGroup>
 	  <PackageReference Include="Microsoft.EntityFrameworkCore" Version="9.0.4" />
 	  <PackageReference Include="Microsoft.EntityFrameworkCore.InMemory" Version="9.0.4" />
 	  <PackageReference Include="Microsoft.EntityFrameworkCore.Sqlite" Version="9.0.4" />
@@ -18,7 +46,6 @@
 	    <IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>
 	  </PackageReference>
 	  <PackageReference Include="Microsoft.Extensions.Hosting" Version="9.0.4" />
-	  <PackageReference Include="Moq" Version="4.20.72" />
 	  <PackageReference Include="MvvmLightLibs" Version="5.4.1.1" />
 	  <PackageReference Include="Newtonsoft.Json" Version="13.0.3" />
 	  <PackageReference Include="Refractored.MvvmHelpers" Version="1.6.2" />
@@ -26,6 +53,84 @@
 
   <ItemGroup>
     <ProjectReference Include="..\Class Lib\Class Lib.csproj" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <Resource Include="Assets\ButtonIcons\PackageInfo\Variant=FullInfo\Active.png">
+      <CopyToOutputDirectory>Never</CopyToOutputDirectory>
+    </Resource>
+    <Resource Include="Assets\ButtonIcons\PackageInfo\Variant=FullInfo\Inactive.png">
+      <CopyToOutputDirectory>Never</CopyToOutputDirectory>
+    </Resource>
+    <Resource Include="Assets\ButtonIcons\PackageInfo\Variant=Log\Active.png">
+      <CopyToOutputDirectory>Never</CopyToOutputDirectory>
+    </Resource>
+    <Resource Include="Assets\ButtonIcons\PackageInfo\Variant=Log\Inactive.png">
+      <CopyToOutputDirectory>Never</CopyToOutputDirectory>
+    </Resource>
+    <Resource Include="Assets\ButtonIcons\PackageInfo\Variant=Path\Active.png">
+      <CopyToOutputDirectory>Never</CopyToOutputDirectory>
+    </Resource>
+    <Resource Include="Assets\ButtonIcons\PackageInfo\Variant=Path\Inactive.png">
+      <CopyToOutputDirectory>Never</CopyToOutputDirectory>
+    </Resource>
+    <Resource Include="Assets\ButtonIcons\PackageInfo\Variant=Report\Active.png">
+      <CopyToOutputDirectory>Never</CopyToOutputDirectory>
+    </Resource>
+    <Resource Include="Assets\ButtonIcons\PackageInfo\Variant=Report\Inactive.png">
+      <CopyToOutputDirectory>Never</CopyToOutputDirectory>
+    </Resource>
+    <Resource Include="Assets\ButtonIcons\Variant=Add.png">
+      <CopyToOutputDirectory>Never</CopyToOutputDirectory>
+    </Resource>
+    <Resource Include="Assets\ButtonIcons\Variant=Announcements.png">
+      <CopyToOutputDirectory>Never</CopyToOutputDirectory>
+    </Resource>
+    <Resource Include="Assets\ButtonIcons\Variant=Barcode.png">
+      <CopyToOutputDirectory>Never</CopyToOutputDirectory>
+    </Resource>
+    <Resource Include="Assets\ButtonIcons\Variant=Cancel.png">
+      <CopyToOutputDirectory>Never</CopyToOutputDirectory>
+    </Resource>
+    <Resource Include="Assets\ButtonIcons\Variant=Copy.png">
+      <CopyToOutputDirectory>Never</CopyToOutputDirectory>
+    </Resource>
+    <Resource Include="Assets\ButtonIcons\Variant=Download.png">
+      <CopyToOutputDirectory>Never</CopyToOutputDirectory>
+    </Resource>
+    <Resource Include="Assets\ButtonIcons\Variant=Encyclopedia.png">
+      <CopyToOutputDirectory>Never</CopyToOutputDirectory>
+    </Resource>
+    <Resource Include="Assets\ButtonIcons\Variant=Information.png">
+      <CopyToOutputDirectory>Never</CopyToOutputDirectory>
+    </Resource>
+    <Resource Include="Assets\ButtonIcons\Variant=Log.png">
+      <CopyToOutputDirectory>Never</CopyToOutputDirectory>
+    </Resource>
+    <Resource Include="Assets\ButtonIcons\Variant=Map.png">
+      <CopyToOutputDirectory>Never</CopyToOutputDirectory>
+    </Resource>
+    <Resource Include="Assets\ButtonIcons\Variant=Options.png">
+      <CopyToOutputDirectory>Never</CopyToOutputDirectory>
+    </Resource>
+    <Resource Include="Assets\ButtonIcons\Variant=Package.png">
+      <CopyToOutputDirectory>Never</CopyToOutputDirectory>
+    </Resource>
+    <Resource Include="Assets\ButtonIcons\Variant=Refresh.png">
+      <CopyToOutputDirectory>Never</CopyToOutputDirectory>
+    </Resource>
+    <Resource Include="Assets\ButtonIcons\Variant=Remove.png">
+      <CopyToOutputDirectory>Never</CopyToOutputDirectory>
+    </Resource>
+    <Resource Include="Assets\ButtonIcons\Variant=Search.png">
+      <CopyToOutputDirectory>Never</CopyToOutputDirectory>
+    </Resource>
+    <Resource Include="Assets\ButtonIcons\Variant=Staff.png">
+      <CopyToOutputDirectory>Never</CopyToOutputDirectory>
+    </Resource>
+    <Resource Include="Assets\ButtonIcons\Variant=Stopwatch.png">
+      <CopyToOutputDirectory>Never</CopyToOutputDirectory>
+    </Resource>
   </ItemGroup>
 
   <ItemGroup>

@@ -45,6 +45,7 @@ namespace Class_Lib
 
 
             #region Role Permissions specifications
+
             modelBuilder.Entity<RolePermission>()
                 .HasKey(rp => new { rp.RoleID, rp.PermissionID });
 
@@ -85,6 +86,11 @@ namespace Class_Lib
             // since postal office is also a warehouse
             #region warehouse table specifications
             modelBuilder.Entity<Warehouse>()
+                .HasMany(po => po.StoredPackages)
+                .WithOne()
+                .HasForeignKey("StoredInWarehouseID")
+                .OnDelete(DeleteBehavior.NoAction);
+            modelBuilder.Entity<Warehouse>()
                 .HasMany(po => po.PackagesSentFromHere)
                 .WithOne(p => p.SentFrom)
                 .HasForeignKey(p => p.SentFromID)
@@ -117,11 +123,6 @@ namespace Class_Lib
                 .WithMany(c => c.PackagesReceived) // each Client can receive many Packages
                 .HasForeignKey(p => p.ReceiverID) // foreign key in the Package table
                 .OnDelete(DeleteBehavior.Restrict); // prevent cascade delete to avoid deleting clients when packages are deleted
-            modelBuilder.Entity<Package>()
-                .HasOne(p => p.CurrentLocation)
-                .WithMany()
-                .HasForeignKey(p => p.CurrentLocationID)
-                .OnDelete(DeleteBehavior.Restrict); // Prevent cascade delete
             modelBuilder.Entity<Package>()
                 .Property(p => p.RowVersion)
                 .IsRowVersion(); // marks it as a row version column for concurrency control

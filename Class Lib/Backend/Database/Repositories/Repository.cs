@@ -25,7 +25,7 @@ namespace Class_Lib
             return new QueryBuilderService<T>(_user, _context.Set<T>());
         }
 
-        public async Task<IEnumerable<T>> GetByCriteriaAsync(Expression<Func<T, bool>> predicate)
+        public virtual async Task<IEnumerable<T>> GetByCriteriaAsync(Expression<Func<T, bool>> predicate)
         {
             return await _context.Set<T>()
                 .Where(predicate)

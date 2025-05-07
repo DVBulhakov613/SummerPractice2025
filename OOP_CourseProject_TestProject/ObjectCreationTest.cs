@@ -44,7 +44,7 @@ namespace OOP_CourseProject_TestProject
             var sender = new Client("Name", "Surname", "+380955648027", "example@example.com");
             var receiver = new Client("Name", "Surname", "+380955748027", "example@example.com");
 
-            var package = new Package(10, 10, 10, 5, sender, receiver, warehouseSent, warehouseReceived, warehouseSent, new List<Content>(), PackageType.Standard);
+            var package = new Package(10, 10, 10, 5, sender, receiver, warehouseSent, warehouseReceived, new List<Content>(), PackageType.Standard);
             
             // act
             await _methods.AddPackageAsync(employee, package);
@@ -59,11 +59,11 @@ namespace OOP_CourseProject_TestProject
         public async Task GetPackagesByStatus_ShouldReturnCorrectPackages()
         {
             // Arrange
-            var package1 = new Package(10, 10, 10, 5, null, null, null, null, null, new List<Content>(), PackageType.Standard)
+            var package1 = new Package(10, 10, 10, 5, null, null, null, null, new List<Content>(), PackageType.Standard)
             {
                 PackageStatus = PackageStatus.IN_TRANSIT
             };
-            var package2 = new Package(15, 15, 15, 10, null, null, null, null, null, new List<Content>(), PackageType.Standard)
+            var package2 = new Package(15, 15, 15, 10, null, null, null, null, new List<Content>(), PackageType.Standard)
             {
                 PackageStatus = PackageStatus.DELIVERED
             };

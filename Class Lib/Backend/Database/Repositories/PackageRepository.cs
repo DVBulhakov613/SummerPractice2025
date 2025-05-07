@@ -17,6 +17,18 @@ namespace Class_Lib.Database.Repositories
 
         // searching criteria:
         // by status
+        public override async Task<IEnumerable<Package>> GetByCriteriaAsync(Expression<Func<Package, bool>> predicate)
+        {
+            return await Query()
+                .Include(p => p.Log)
+                .Include(p => p.DeclaredContent)
+                .Include(p => p.SentTo)
+                .Include(p => p.SentFrom)
+                .Include(p => p.Receiver)
+                .Include(p => p.Sender)
+                .Where(predicate)
+                .ExecuteAsync();
+        }
         public async Task<IEnumerable<Package>> GetByStatusAsync(PackageStatus status)
         {
             return await GetByCriteriaAsync(p => p.PackageStatus == status);
