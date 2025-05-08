@@ -5,14 +5,15 @@ using System.Collections.ObjectModel;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using Class_Lib;
 
-namespace Class_Lib.Backend.ViewModels
+namespace OOP_CourseProject.Controls.ViewModel
 {
-    public class PackageInfoViewModel : IInfoProviderViewModel
+    public class PackageViewModel : IInfoProviderViewModel
     {
         public ObservableCollection<InfoSection> InfoSections { get; } = new();
 
-        public PackageInfoViewModel(Package package)
+        public PackageViewModel(Package package)
         {
             InfoSections.Add(new InfoSection
             {

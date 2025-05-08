@@ -4,8 +4,9 @@ using System.Collections.ObjectModel;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using Class_Lib;
 
-namespace Class_Lib.Backend.ViewModels
+namespace OOP_CourseProject.Controls.ViewModel
 {
     public class PostalOfficeViewModel : IInfoProviderViewModel
     {
@@ -37,12 +38,24 @@ namespace Class_Lib.Backend.ViewModels
                     new() { Label = "Автоматизований?", Value = po.IsAutomated ? "Так" : "Ні" },
                     new() { Label = "Регіональний штаб?", Value = po.IsRegionalHQ ? "Так" : "Ні" },
                     new() { Label = "Повний?", Value = po.IsFull ? "Так" : "Ні" },
-                    new()
+                    //new()
+                    //{
+                    //    Label = "Працівники",
+                    //    Value = po.Staff != null && po.Staff.Any()
+                    //        ? string.Join(", ", po.Staff.Select(e => $"{e.FirstName} {e.Surname}"))
+                    //        : "Немає працівників"
+                    //}
+
+                    new InfoItem
                     {
                         Label = "Працівники",
-                        Value = po.Staff != null && po.Staff.Any()
-                            ? string.Join(", ", po.Staff.Select(e => $"{e.FirstName} {e.Surname}"))
-                            : "Немає працівників"
+                        Value = po.Staff == null || po.Staff.Count() == 0 ? "Відсутні" : "Список...",
+                        OnClick = po.Staff == null || po.Staff.Count() == 0 ? null : () =>
+                        {
+                            var staffViewModel = new StaffListViewModel(po.Staff); // must implement IInfoProviderViewModel
+                            var window = new InfoPopupWindow(staffViewModel);
+                            window.ShowDialog();
+                        }
                     }
                 }
             });

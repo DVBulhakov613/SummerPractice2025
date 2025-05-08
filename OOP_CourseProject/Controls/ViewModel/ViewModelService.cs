@@ -1,5 +1,4 @@
 ﻿using Class_Lib;
-using Class_Lib.Backend.ViewModels;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -19,8 +18,10 @@ namespace OOP_CourseProject.Controls.ViewModel
         {
             return model switch
             {
-                Package p => new PackageInfoViewModel(p),
-                //Employee e => new EmployeeInfoViewModel(e),
+                Package p => new PackageViewModel(p),
+                Employee e => new EmployeeViewModel(e),
+                PostalOffice po => new PostalOfficeViewModel(po),
+                Warehouse w => new WarehouseViewModel(w),
                 _ => throw new NotSupportedException($"Unsupported model type: {model.GetType().Name}")
             };
         }

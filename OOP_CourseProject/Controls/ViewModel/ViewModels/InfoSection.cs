@@ -4,7 +4,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace Class_Lib.Backend.ViewModels
+namespace OOP_CourseProject.Controls.ViewModel
 {
     public class InfoSection
     {

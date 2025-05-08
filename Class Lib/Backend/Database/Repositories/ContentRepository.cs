@@ -14,6 +14,17 @@ namespace Class_Lib.Backend.Database.Repositories
         public ContentRepository(AppDbContext context, Employee user) : base(context, user) { }
 
         // get all content by name
+        public override async Task<IEnumerable<Content>> GetByCriteriaAsync(Expression<Func<Content, bool>> predicate)
+        {
+            return await Query()
+                .Include(c => c.Package)
+                .Include(c => c.Package.Sender)
+                .Include(c => c.Package.Receiver)
+                .Include(c => c.Package.DeclaredContent)
+                .Where(predicate)
+                .ExecuteAsync();
+        }
+
         public async Task<IEnumerable<Content>> GetAllContentByNameAsync(string type)
         {
             return await GetByCriteriaAsync(c => c.GetType().Name == type);

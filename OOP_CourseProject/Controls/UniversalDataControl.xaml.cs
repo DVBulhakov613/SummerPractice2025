@@ -1,5 +1,4 @@
 ﻿using Class_Lib.Backend.Database;
-using Class_Lib.Backend.ViewModels;
 using GalaSoft.MvvmLight.Command;
 using System;
 using System.Collections.Generic;
@@ -15,6 +14,7 @@ using System.Windows.Media;
 using System.Windows.Media.Imaging;
 using System.Windows.Navigation;
 using System.Windows.Shapes;
+using OOP_CourseProject.Controls.ViewModel;
 
 namespace OOP_CourseProject.Controls
 {

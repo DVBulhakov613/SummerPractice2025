@@ -5,7 +5,7 @@ using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Input;
 
-namespace Class_Lib.Backend.ViewModels
+namespace OOP_CourseProject.Controls.ViewModel
 {
     /// <summary>
     /// Represents a single item in the info panel.

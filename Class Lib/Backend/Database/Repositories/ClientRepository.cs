@@ -14,6 +14,15 @@ namespace Class_Lib.Database.Repositories
     {
         public ClientRepository(AppDbContext context, Employee user) : base(context, user) { }
 
+        public override async Task<IEnumerable<Client>> GetByCriteriaAsync(Expression<Func<Client, bool>> predicate)
+        {
+            return await Query()
+                .Include(c => c.PackagesSent)
+                .Include(c => c.PackagesReceived)
+                .Where(predicate)
+                .ExecuteAsync();
+        }
+
         // by ID
         public async Task<IEnumerable<Client>> GetClientsByIDAsync(uint id)
         {

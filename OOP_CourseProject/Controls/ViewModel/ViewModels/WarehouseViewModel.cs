@@ -4,8 +4,9 @@ using System.Collections.ObjectModel;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using Class_Lib;
 
-namespace Class_Lib.Backend.ViewModels
+namespace OOP_CourseProject.Controls.ViewModel
 {
     public class WarehouseViewModel : IInfoProviderViewModel
     {

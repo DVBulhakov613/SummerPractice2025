@@ -4,8 +4,8 @@ using System.Linq.Expressions;
 using System.Windows;
 using System.Windows.Controls;
 using OOP_CourseProject.Controls.ViewModel;
-using Class_Lib.Backend.ViewModels;
 using Microsoft.Extensions.DependencyInjection;
+using Class_Lib.Backend.Database.Repositories;
 
 namespace OOP_CourseProject.Controls
 {
@@ -21,22 +21,21 @@ namespace OOP_CourseProject.Controls
 
         public async void GenerateViewModel()
         {
-            var repo = App.AppHost.Services.GetRequiredService<PackageRepository>();
-            var packages = await repo.GetByCriteriaAsync(p => p.Height > 0);
+            var repo = App.AppHost.Services.GetRequiredService<LocationRepository>();
+            var items = await repo.GetByCriteriaAsync(p => p.ID > 0);
 
-            ViewModel = new GenericInfoDisplayViewModel(packages, CreateViewModel);
-            DataContext = ViewModel;
+            DataContext = ViewModelService.CreateViewModel(items);
         }
 
-        private IInfoProviderViewModel CreateViewModel(object model)
-        {
-            return model switch
-            {
-                Package p => new PackageInfoViewModel(p),
-                //Employee e => new EmployeeInfoViewModel(e),
-                _ => throw new NotSupportedException($"Unsupported model type: {model.GetType().Name}")
-            };
-        }
+        //private IInfoProviderViewModel CreateViewModel(object model)
+        //{
+        //    return model switch
+        //    {
+        //        Package p => new PackageInfoViewModel(p),
+        //        //Employee e => new EmployeeInfoViewModel(e),
+        //        _ => throw new NotSupportedException($"Unsupported model type: {model.GetType().Name}")
+        //    };
+        //}
 
 
     }

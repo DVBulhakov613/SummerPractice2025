@@ -11,6 +11,15 @@ namespace Class_Lib.Backend.Database.Repositories
     {
         public PackageEventRepository(AppDbContext context, Employee user) : base(context, user) { }
 
+        public override async Task<IEnumerable<PackageEvent>> GetByCriteriaAsync(Expression<Func<PackageEvent, bool>> predicate)
+        {
+            return await Query()
+                .Include(pe => pe.Package)
+                .Include(pe => pe.Location)
+                .Where(predicate)
+                .ExecuteAsync();
+        }
+
         // generic query method
         public async Task<IEnumerable<PackageEvent>> GetPackageEventsByCriteriaAsync(Expression<Func<PackageEvent, bool>> predicate)
         {

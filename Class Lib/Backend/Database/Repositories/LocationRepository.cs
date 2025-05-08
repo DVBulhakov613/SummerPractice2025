@@ -13,6 +13,14 @@ namespace Class_Lib.Backend.Database.Repositories
     {
         public LocationRepository(AppDbContext context, Employee user) : base(context, user) { }
 
+        public override async Task<IEnumerable<BaseLocation>> GetByCriteriaAsync(Expression<Func<BaseLocation, bool>> predicate)
+        {
+            return await Query()
+                .Include(l => l.GeoData)
+                .Include(l => l.Staff)
+                .Where(predicate)
+                .ExecuteAsync();
+        }
         public async Task<IEnumerable<BaseLocation>> GetLocationsByTypeAsync(string type)
         {
             return await _context.Locations

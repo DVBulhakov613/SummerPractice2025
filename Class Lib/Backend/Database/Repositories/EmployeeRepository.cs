@@ -14,6 +14,17 @@ namespace Class_Lib.Database.Repositories
     {
         public EmployeeRepository(AppDbContext context, Employee user) : base(context, user) { }
 
+        public override async Task<IEnumerable<Employee>> GetByCriteriaAsync(Expression<Func<Employee, bool>> predicate)
+        {
+            return await Query()
+                .Include(e => e.Role)
+                .Include(e => e.Workplace)
+                .Include(e => e.User)
+                .Include(e => e.ManagedLocations)
+                .Where(predicate)
+                .ExecuteAsync();
+        }
+
         // by ID
         public async Task<IEnumerable<Employee>> GetByIDAsync(uint id)
         {
