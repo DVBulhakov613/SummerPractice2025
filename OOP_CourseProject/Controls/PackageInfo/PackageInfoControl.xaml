@@ -30,7 +30,7 @@
                 <ColumnDefinition Width="*" />
             </Grid.ColumnDefinitions>
 
-            <Button Grid.Column="0" Padding="0" Margin="0">
+            <!--<Button Grid.Column="0" Padding="0" Margin="0">
                 <Image Source="/Assets/ButtonIcons/PackageInfo/Variant=FullInfo/Active.png" Stretch="Uniform"/>
             </Button>
 
@@ -40,7 +40,19 @@
 
             <Button Grid.Column="2" Padding="0" Margin="0">
                 <Image Source="/Assets/ButtonIcons/PackageInfo/Variant=Log/Inactive.png" Stretch="Uniform"/>
-            </Button>
+            </Button>-->
+
+            <TabControl>
+                <TabItem Header="Info">
+                    <viewmodels:InfoControl InfoProvider="{Binding Package, RelativeSource={RelativeSource AncestorType=UserControl}}" />
+                </TabItem>
+                <TabItem Header="Route">
+                    <!--<local:PackageRouteControl Package="{Binding Package, RelativeSource={RelativeSource AncestorType=UserControl}}" />-->
+                </TabItem>
+                <TabItem Header="Log">
+                    <!--<local:PackageLogControl Package="{Binding Package, RelativeSource={RelativeSource AncestorType=UserControl}}" />-->
+                </TabItem>
+            </TabControl>
         </Grid>
 
         <!-- Detail Content -->

@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace Class_Lib.Backend.Package_related.enums
 {
-    public enum PackageStatus
+    public enum DeliveryStatus
     {
         STORED,
         IN_TRANSIT,

@@ -13,6 +13,7 @@
             <TextBox x:Name="UsernameTextBox" Width="200" Margin="5"/>
             <PasswordBox x:Name="PasswordBox" Width="200" Margin="5"/>
             <Button Content="Login" Width="200" Margin="5" Click="LoginButton_Click" Background="Gray"/>
+            <Button Content="[DEBUG] SysAdmin" Width="200" Click="DebugButton_Click" Background="Gray"/>
         </StackPanel>
     </Grid>
 </Window>

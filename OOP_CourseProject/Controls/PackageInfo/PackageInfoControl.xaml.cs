@@ -1,4 +1,9 @@
-﻿using System;
+﻿using Class_Lib;
+using Class_Lib.Backend.Location_related.Methods;
+using Class_Lib.Backend.Package_related.Methods;
+using Microsoft.Extensions.DependencyInjection;
+using OOP_CourseProject.Controls.ViewModel;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -18,30 +23,30 @@ namespace OOP_CourseProject.Controls.PackageInfo
     /// <summary>
     /// Interaction logic for PackageInfoControl.xaml
     /// </summary>
-    public partial class PackageDetailsControl : UserControl
+    public partial class PackageInfoControl : UserControl
     {
-        public PackageDetailsControl()
+        public GenericInfoDisplayViewModel ViewModel { get; set; }
+        public PackageInfoControl()
         {
             InitializeComponent();
-            DataContext = this; // Optional: if you want the bindings in the control to resolve to the control itself
+            
+
         }
 
-        public static readonly DependencyProperty SelectedPackageIDProperty =
-            DependencyProperty.Register(nameof(SelectedPackageID), typeof(string), typeof(PackageDetailsControl));
+        public static readonly DependencyProperty PackageProperty =
+            DependencyProperty.Register(nameof(Package), typeof(Package), typeof(PackageInfoControl));
 
-        public string SelectedPackageID
+        public Package Package
         {
-            get => (string)GetValue(SelectedPackageIDProperty);
-            set => SetValue(SelectedPackageIDProperty, value);
+            get => (Package)GetValue(PackageProperty);
+            set => SetValue(PackageProperty, value);
         }
 
-        public static readonly DependencyProperty SelectedInfoViewModelProperty =
-            DependencyProperty.Register(nameof(SelectedInfoViewModel), typeof(object), typeof(PackageDetailsControl));
-
-        public object SelectedInfoViewModel
+        public async void GenerateViewModel()
         {
-            get => GetValue(SelectedInfoViewModelProperty);
-            set => SetValue(SelectedInfoViewModelProperty, value);
+            var repo = App.AppHost.Services.GetRequiredService<PackageMethods>();
+
+            DataContext = ViewModelService.CreateViewModel(await repo.GetByCriteriaAsync(App.CurrentEmployee, p => p.ID > 0));
         }
     }
 }

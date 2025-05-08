@@ -110,7 +110,7 @@ namespace Class_Lib
                 .ValueGeneratedOnAdd();
             modelBuilder.Entity<Package>() // assigns a default value to the PackageStatus property
                 .Property(p => p.PackageStatus)
-                .HasDefaultValue(PackageStatus.STORED);
+                .HasDefaultValue(DeliveryStatus.STORED);
             // sender relationship
             modelBuilder.Entity<Package>()
                 .HasOne(p => p.Sender) // each Package has one Sender

@@ -47,5 +47,36 @@ namespace OOP_CourseProject
             DialogResult = true; // this is how App.xaml.cs will know login was successful
             Close();
         }
+
+        /// <summary>
+        /// Debug button for testing purposes. It bypasses the login process and sets a default user. Will be deleted when in prod.
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
+        private async void DebugButton_Click(object sender, RoutedEventArgs e)
+        {
+            var username = "d.v.bulhakov";
+
+            var employeeMethods = App.LoginHost.Services.GetRequiredService<EmployeeRepository>();
+            var userRepository = App.LoginHost.Services.GetRequiredService<UserRepository>();
+            var roleService = App.LoginHost.Services.GetRequiredService<RoleService>();
+
+            var user = await userRepository.GetByUsernameAsync(username);
+
+            await roleService.CachePermissionsAsync(user.Employee);
+
+            var result = await employeeMethods.Query()
+                .Include(e => e.User)
+                .Include(e => e.Role)
+                .Include(e => e.Role.RolePermissions)
+                .Include(e => e.Workplace)
+                .Where(e => e.ID == user.Employee.ID)
+                .ExecuteAsync();
+            App.CurrentEmployee = result[0];
+
+
+            DialogResult = true; // this is how App.xaml.cs will know login was successful
+            Close();
+        }
     }
 }

@@ -26,39 +26,5 @@ namespace OOP_CourseProject.Controls
 
             DataContext = ViewModelService.CreateViewModel(await repo.GetByCriteriaAsync(App.CurrentEmployee, p => p.ID > 0));
         }
-
-        //private IInfoProviderViewModel CreateViewModel(object model)
-        //{
-        //    return model switch
-        //    {
-        //        Package p => new PackageInfoViewModel(p),
-        //        //Employee e => new EmployeeInfoViewModel(e),
-        //        _ => throw new NotSupportedException($"Unsupported model type: {model.GetType().Name}")
-        //    };
-        //}
-
-
     }
 }
-
-
-//private async void OpenQueryBuilder_Click(object sender, RoutedEventArgs e)
-//{
-//    var queryBuilder = new QueryBuilder(typeof(Employee), async conditions =>
-//    {
-//        // Combine expressions into one
-//        Expression<Func<Employee, bool>> finalPredicate = conditions.Aggregate((current, next) =>
-//            System.Linq.Expressions.Expression.Lambda<Func<Employee, bool>>(
-//                System.Linq.Expressions.Expression.AndAlso(current.Body, System.Linq.Expressions.Expression.Invoke(next, current.Parameters)),
-//                current.Parameters));
-
-//        // Query repository
-//        var repo = new EmployeeRepository(); // or however you access it
-//        var results = await repo.GetByCriteriaAsync(finalPredicate);
-
-//        // Now show results in your main window
-//        EmployeeResultsDataGrid.ItemsSource = results;
-//    });
-
-//    queryBuilder.ShowDialog(); // or Show()
-//}

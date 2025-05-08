@@ -173,7 +173,7 @@
 
                         <!-- detail area -->
                         <StackPanel Grid.Row="2">
-                            <viewmodels:InfoControl InfoProvider="{Binding DataContext.SelectedInfoViewModel, RelativeSource={RelativeSource AncestorType=UserControl}}" />
+                            <viewmodels:InfoControl InfoProvider="{Binding SelectedInfoViewModel, RelativeSource={RelativeSource AncestorType=UserControl}}" />
                         </StackPanel>
                     </Grid>
                 </Border>

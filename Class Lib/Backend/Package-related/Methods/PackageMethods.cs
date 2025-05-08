@@ -30,7 +30,7 @@ namespace Class_Lib.Backend.Package_related.Methods
         }
 
         // Read
-        public async Task<IEnumerable<Package>> GetPackagesByCustomCriteriaAsync(Employee user, Expression<Func<Package, bool>> filter)
+        public async Task<IEnumerable<Package>> GetByCriteriaAsync(Employee user, Expression<Func<Package, bool>> filter)
         {
             if (!user.HasPermission(AccessService.PermissionKey.ReadPackage))
             {

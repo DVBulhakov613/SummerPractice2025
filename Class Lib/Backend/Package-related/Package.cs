@@ -8,12 +8,9 @@ using System.Xml.Linq;
 namespace Class_Lib
 {
     public class Package
-    {
-        // format of ID:
-        // [Postal Code, 5 numbers][Country, 2 letters]-[Day]-[Month]-[Year]-[4 random letters]
-        
+    {     
         public uint ID { get; private set; }
-        public PackageStatus PackageStatus { get; set; } = PackageStatus.STORED; // status of the package, set to Created by default
+        public DeliveryStatus PackageStatus { get; set; } = DeliveryStatus.STORED; // status of the package, set to Created by default
         public DateTime CreatedAt { get; private set; } // the date when the package was created, set at creation time and never changed
         #region Package Properties
         public uint Length { get; set; }

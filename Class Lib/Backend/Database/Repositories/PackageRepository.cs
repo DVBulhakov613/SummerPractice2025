@@ -29,7 +29,7 @@ namespace Class_Lib.Database.Repositories
                 .Where(predicate)
                 .ExecuteAsync();
         }
-        public async Task<IEnumerable<Package>> GetByStatusAsync(PackageStatus status)
+        public async Task<IEnumerable<Package>> GetByStatusAsync(DeliveryStatus status)
         {
             return await GetByCriteriaAsync(p => p.PackageStatus == status);
         }
