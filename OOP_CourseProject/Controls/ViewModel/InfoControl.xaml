@@ -15,11 +15,18 @@
                                 <DataTemplate>
                                     <StackPanel Orientation="Horizontal" Margin="0,0,0,5">
                                         <TextBlock Text="{Binding Label}" FontWeight="SemiBold" Width="120"/>
-                                        <TextBlock Text="{Binding Value}"
-                                            TextWrapping="Wrap"
-                                            Foreground="Blue"
-                                            Cursor="Hand"
-                                            MouseLeftButtonUp="InfoItem_Click"/>
+                                        <TextBlock Text="{Binding Value}" TextWrapping="Wrap" MouseLeftButtonUp="InfoItem_Click">
+                                            <TextBlock.Style>
+                                                <Style TargetType="TextBlock">
+                                                    <Style.Triggers>
+                                                        <DataTrigger Binding="{Binding IsClickable}" Value="True">
+                                                            <Setter Property="Foreground" Value="Blue"/>
+                                                            <Setter Property="Cursor" Value="Hand"/>
+                                                        </DataTrigger>
+                                                    </Style.Triggers>
+                                                </Style>
+                                            </TextBlock.Style>
+                                        </TextBlock>
                                     </StackPanel>
                                 </DataTemplate>
                             </ItemsControl.ItemTemplate>

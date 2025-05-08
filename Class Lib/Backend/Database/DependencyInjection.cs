@@ -21,98 +21,85 @@ namespace Class_Lib.Backend.Database
             // Repositories
             services.AddScoped<EmployeeRepository>(sp =>
             {
-                var db = sp.GetRequiredService<AppDbContext>();
-                return new EmployeeRepository(db, currentEmployee);
+                return new EmployeeRepository(sp.GetRequiredService<AppDbContext>(), currentEmployee);
             });
 
             services.AddScoped<ClientRepository>(sp =>
             {
-                var db = sp.GetRequiredService<AppDbContext>();
-                return new ClientRepository(db, currentEmployee);
+                return new ClientRepository(sp.GetRequiredService<AppDbContext>(), currentEmployee);
             });
 
             services.AddScoped<LocationRepository>(sp =>
             {
-                var db = sp.GetRequiredService<AppDbContext>();
-                return new LocationRepository(db, currentEmployee);
+                return new LocationRepository(sp.GetRequiredService<AppDbContext>(), currentEmployee);
             });
 
             services.AddScoped<PackageRepository>(sp =>
             {
-                var db = sp.GetRequiredService<AppDbContext>();
-                return new PackageRepository(db, currentEmployee);
+                return new PackageRepository(sp.GetRequiredService<AppDbContext>(), currentEmployee);
             });
 
             services.AddScoped<ContentRepository>(sp =>
             {
-                var db = sp.GetRequiredService<AppDbContext>();
-                return new ContentRepository(db, currentEmployee);
+                return new ContentRepository(sp.GetRequiredService<AppDbContext>(), currentEmployee);
             });
 
             services.AddScoped<PackageEventRepository>(sp =>
             {
-                var db = sp.GetRequiredService<AppDbContext>();
-                return new PackageEventRepository(db, currentEmployee);
+                return new PackageEventRepository(sp.GetRequiredService<AppDbContext>(), currentEmployee);
             });
 
             services.AddScoped<UserRepository>(sp =>
             {
-                var db = sp.GetRequiredService<AppDbContext>();
-                return new UserRepository(db);
+                return new UserRepository(sp.GetRequiredService<AppDbContext>());
             });
 
             services.AddScoped<RoleRepository>(sp =>
             {
-                var db = sp.GetRequiredService<AppDbContext>();
-                return new RoleRepository(db);
+                return new RoleRepository(sp.GetRequiredService<AppDbContext>());
             });
 
 
             // Services
             services.AddScoped<EmployeeMethods>(sp =>
             {
-                var employeeRepo = sp.GetRequiredService<EmployeeRepository>();
-                var roleRepo = sp.GetRequiredService<RoleRepository>();
-                var roleService = sp.GetRequiredService<RoleService>();
-                return new EmployeeMethods(employeeRepo,roleRepo,roleService);
+                return new EmployeeMethods(
+                    sp.GetRequiredService<EmployeeRepository>(),
+                    sp.GetRequiredService<RoleRepository>(),
+                    sp.GetRequiredService<RoleService>()
+                    );
             });
 
             services.AddScoped<ClientMethods>(sp =>
             {
-                var repo = sp.GetRequiredService<ClientRepository>();
-                return new ClientMethods(repo);
+                return new ClientMethods(sp.GetRequiredService<ClientRepository>());
             });
 
             services.AddScoped<LocationMethods>(sp =>
             {
-                var repo = sp.GetRequiredService<LocationRepository>();
-                return new LocationMethods(repo);
+                return new LocationMethods(sp.GetRequiredService<LocationRepository>(), sp.GetRequiredService<EmployeeMethods>());
             });
 
             services.AddScoped<PackageMethods>(sp =>
             {
-                var repo = sp.GetRequiredService<PackageRepository>();
-                return new PackageMethods(repo);
+                return new PackageMethods(sp.GetRequiredService<PackageRepository>());
             });
 
             services.AddScoped<ContentMethods>(sp =>
             {
-                var repo = sp.GetRequiredService<ContentRepository>();
-                return new ContentMethods(repo);
+                return new ContentMethods(sp.GetRequiredService<ContentRepository>());
             });
 
             services.AddScoped<UserMethods>(sp =>
             {
-                var repo = sp.GetRequiredService<UserRepository>();
-                return new UserMethods(repo);
+                return new UserMethods(sp.GetRequiredService<UserRepository>());
             });
 
             // services
             services.AddScoped(typeof(QueryBuilderService<>)); // generic
             services.AddScoped<RoleService>(sp =>
             {
-                var db = sp.GetRequiredService<AppDbContext>();
-                return new RoleService(db);
+                return new RoleService(sp.GetRequiredService<AppDbContext>());
             });
 
             return services;

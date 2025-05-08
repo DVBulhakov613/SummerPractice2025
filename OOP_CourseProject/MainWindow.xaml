@@ -1,7 +1,8 @@
 ﻿<Window x:Class="OOP_CourseProject.MainWindow"
         xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
         xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
-        Height="450" Width="800">
+        Height="1000" Width="1920"
+        Background="{StaticResource PrimaryBackgroundBrush}">
 
     <Grid>
         <Grid.ColumnDefinitions>
@@ -12,11 +13,11 @@
         </Grid.ColumnDefinitions>
 
         <!-- sidebar -->
-        <StackPanel Background="LightGray" Grid.Column="0">
+        <StackPanel Background="{StaticResource SecondaryBackgroundBrush}" Grid.Column="0">
             <!-- profile and navigation -->
             <Ellipse Width="100" Height="100" Fill="Red" Margin="20"/>
-            <Button Content="Home Page" Margin="10" Click="HomeButton_Click"/>
-            <Button Content="Send Package" Margin="10" Click="SendPackageButton_Click"/>
+            <Button Content="Home Page" Margin="10" Click="HomeButton_Click" Foreground="Black"/>
+            <Button Content="Send Package" Margin="10" Click="SendPackageButton_Click" Foreground="Black"/>
         </StackPanel>
 
         <!-- main content -->

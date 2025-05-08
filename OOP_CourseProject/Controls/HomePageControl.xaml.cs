@@ -6,6 +6,7 @@ using System.Windows.Controls;
 using OOP_CourseProject.Controls.ViewModel;
 using Microsoft.Extensions.DependencyInjection;
 using Class_Lib.Backend.Database.Repositories;
+using Class_Lib.Backend.Location_related.Methods;
 
 namespace OOP_CourseProject.Controls
 {
@@ -21,10 +22,9 @@ namespace OOP_CourseProject.Controls
 
         public async void GenerateViewModel()
         {
-            var repo = App.AppHost.Services.GetRequiredService<LocationRepository>();
-            var items = await repo.GetByCriteriaAsync(p => p.ID > 0);
+            var repo = App.AppHost.Services.GetRequiredService<LocationMethods>();
 
-            DataContext = ViewModelService.CreateViewModel(items);
+            DataContext = ViewModelService.CreateViewModel(await repo.GetByCriteriaAsync(App.CurrentEmployee, p => p.ID > 0));
         }
 
         //private IInfoProviderViewModel CreateViewModel(object model)

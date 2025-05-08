@@ -22,7 +22,7 @@ namespace OOP_CourseProject.Controls.ViewModel
                 Employee e => new EmployeeViewModel(e),
                 PostalOffice po => new PostalOfficeViewModel(po),
                 Warehouse w => new WarehouseViewModel(w),
-                _ => throw new NotSupportedException($"Unsupported model type: {model.GetType().Name}")
+                _ => throw new NotSupportedException($"Не підтримуємий тип: {model.GetType().Name}")
             };
         }
     }

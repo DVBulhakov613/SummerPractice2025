@@ -44,9 +44,7 @@ namespace Class_Lib.Backend.Person_related.Methods
                 throw new UnauthorizedAccessException("Немає доступу до перегляду працівників.");
             }
 
-            return await _employeeRepository.Query()
-                .Where(filter)
-                .ExecuteAsync();
+            return await _employeeRepository.GetByCriteriaAsync(filter);
         }
 
         // Update
