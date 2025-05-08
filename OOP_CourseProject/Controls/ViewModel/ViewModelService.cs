@@ -20,7 +20,7 @@ namespace OOP_CourseProject.Controls.ViewModel
             return model switch
             {
                 Package p => new PackageInfoViewModel(p),
-                Employee e => new EmployeeInfoViewModel(e),
+                //Employee e => new EmployeeInfoViewModel(e),
                 _ => throw new NotSupportedException($"Unsupported model type: {model.GetType().Name}")
             };
         }
