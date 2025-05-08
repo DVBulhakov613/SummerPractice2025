@@ -1,4 +1,5 @@
-﻿using Class_Lib.Location_related.Interfaces;
+﻿using Class_Lib.Backend.Package_related;
+using Class_Lib.Location_related.Interfaces;
 using System;
 using System.Collections;
 using System.Collections.Generic;
@@ -17,8 +18,8 @@ namespace Class_Lib
 
         public bool IsFull => StoredPackages.Count() == MaxStorageCapacity;
 
-        public List<Package> PackagesSentFromHere { get; set; } = new List<Package>();
-        public List<Package> PackagesSentToHere { get; set; } = new List<Package>();
+        public List<Delivery> DeliveriesSentFromHere { get; set; } = [];
+        public List<Delivery> DeliveriesSentHere { get; set; } = [];
 
         protected internal Warehouse() : base()
         {

@@ -6,6 +6,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using Class_Lib;
+using Class_Lib.Backend.Package_related;
 
 namespace OOP_CourseProject.Controls.ViewModel
 {
@@ -15,27 +16,27 @@ namespace OOP_CourseProject.Controls.ViewModel
 
         public PackageViewModel(Package package)
         {
-            InfoSections.Add(new InfoSection
-            {
-                SectionTitle = "Інформація відправника",
-                InfoItems = new List<InfoItem>
-                {
-                    new() { Label = "Ім'я", Value = $"{package.Sender.FirstName} {package.Sender.Surname}" },
-                    new() { Label = "Телефон", Value = package.Sender.PhoneNumber },
-                    new() { Label = "Email", Value = package.Sender.Email }
-                }
-            });
+            //InfoSections.Add(new InfoSection
+            //{
+            //    SectionTitle = "Інформація відправника",
+            //    InfoItems = new List<InfoItem>
+            //    {
+            //        new() { Label = "Ім'я", Value = $"{package.Sender.FirstName} {package.Sender.Surname}" },
+            //        new() { Label = "Телефон", Value = package.Sender.PhoneNumber },
+            //        new() { Label = "Email", Value = package.Sender.Email }
+            //    }
+            //});
 
-            InfoSections.Add(new InfoSection
-            {
-                SectionTitle = "Інформація отримувача",
-                InfoItems = new List<InfoItem>
-                {
-                    new() { Label = "Ім'я", Value = $"{package.Receiver.FirstName} {package.Receiver.Surname}" },
-                    new() { Label = "Телефон", Value = package.Receiver.PhoneNumber },
-                    new() { Label = "Email", Value = package.Receiver.Email }
-                }
-            });
+            //InfoSections.Add(new InfoSection
+            //{
+            //    SectionTitle = "Інформація отримувача",
+            //    InfoItems = new List<InfoItem>
+            //    {
+            //        new() { Label = "Ім'я", Value = $"{package.Receiver.FirstName} {package.Receiver.Surname}" },
+            //        new() { Label = "Телефон", Value = package.Receiver.PhoneNumber },
+            //        new() { Label = "Email", Value = package.Receiver.Email }
+            //    }
+            //});
 
             InfoSections.Add(new InfoSection
             {
@@ -49,16 +50,16 @@ namespace OOP_CourseProject.Controls.ViewModel
                 }
             });
 
-            InfoSections.Add(new InfoSection
-            {
-                SectionTitle = "Інформація доставки",
-                InfoItems = new List<InfoItem>
-                {
-                    new() { Label = "Пункт відправлення", Value = $"{package.SentFromID}" },
-                    new() { Label = "Пункт отримання", Value = $"{package.SentToID}" },
-                    //new() { Label = "Час доставки", Value = $"{}" } // need to figure out how to best include it first
-                }
-            });
+            //InfoSections.Add(new InfoSection
+            //{
+            //    SectionTitle = "Інформація доставки",
+            //    InfoItems = new List<InfoItem>
+            //    {
+            //        new() { Label = "Пункт відправлення", Value = $"{package.SentFromID}" },
+            //        new() { Label = "Пункт отримання", Value = $"{package.SentToID}" },
+            //        //new() { Label = "Час доставки", Value = $"{}" } // need to figure out how to best include it first
+            //    }
+            //});
         }
     }
 

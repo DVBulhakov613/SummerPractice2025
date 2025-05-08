@@ -13,35 +13,46 @@ namespace Class_Lib.Backend.Package_related
     {
         [Key]
         public uint ID { get; set; }
-        public DeliveryStatus DeliveryStatus { get; set; } = DeliveryStatus.STORED;
+        public DateTime Timestamp { get; set; } = DateTime.Now; // date and time of the delivery creation
 
-        public uint SenderID => Sender.ID;
-        public Client Sender { get; private set; }
+        public uint PackageID { get; set; }
+        public Package Package { get; set; }
 
-        public uint ReceiverID => Receiver.ID;
-        public Client Receiver { get; private set; }
+        public uint SenderID { get; set; }
+        public Client Sender { get; set; }
 
-        public uint SentFromID => SentFrom.ID;
-        public Warehouse SentFrom { get; private set; }
+        public uint ReceiverID { get; set; }
+        public Client Receiver { get; set; }
 
-        public uint SentToID => SentTo.ID;
+        public uint SentFromID { get; set; }
+        public Warehouse SentFrom { get; set; }
+
+        public uint SentToID { get; set; }
         public Warehouse SentTo { get; set; }
 
-        public List<PackageEvent> Log { get; private set; } = [];
+        public List<PackageEvent> Log { get; set; } = [];
 
-        public Delivery(Client sender, Client receiver, Warehouse sentFrom, Warehouse sentTo)
+        protected Delivery() { } // for EF Core
+
+        public Delivery(Package package, Client sender, Client receiver, Warehouse sentFrom, Warehouse sentTo)
         {
             Sender = sender;
             Receiver = receiver;
             SentFrom = sentFrom;
             SentTo = sentTo;
-            Log.Add(new PackageEvent(SentFrom, "Посилку створено", null)); // you'll assign Package later
+            Package = package;
+            Log.Add(new PackageEvent(SentFrom, "Посилку створено", package)); // package assigned later
+            
+            RowVersion = [];
         }
 
         public void AddLog(string message, BaseLocation location, Package package)
         {
             Log.Add(new PackageEvent(location, message, package));
         }
+
+        [Timestamp]
+        public byte[] RowVersion { get; set; }
     }
 
 }

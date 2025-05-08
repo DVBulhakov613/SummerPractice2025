@@ -2,6 +2,7 @@
 using Class_Lib.Backend.Package_related.enums;
 using Class_Lib.Backend.Person_related;
 using Class_Lib.Backend.Services;
+using Class_Lib.Backend.Package_related;
 
 namespace Class_Lib
 {
@@ -14,9 +15,10 @@ namespace Class_Lib
         public DbSet<BaseLocation> Locations { get; set; }
         public DbSet<Warehouse> Warehouses { get; set; }
         public DbSet<PostalOffice> PostalOffices { get; set; }
-        public DbSet<Package> Packages { get; set; }
-        public DbSet<Content> Contents { get; set; }
-        public DbSet<PackageEvent> PackageEvents { get; set; }
+        public DbSet<Delivery> Deliveries { get; set; }
+            public DbSet<Package> Packages { get; set; }
+                public DbSet<Content> Contents { get; set; }
+                public DbSet<PackageEvent> PackageEvents { get; set; }
         public DbSet<User> Users { get; set; }
         public DbSet<Role> Roles { get; set; }
         public DbSet<Permission> Permissions { get; set; }
@@ -90,16 +92,47 @@ namespace Class_Lib
                 .WithOne()
                 .HasForeignKey("StoredInWarehouseID")
                 .OnDelete(DeleteBehavior.NoAction);
-            modelBuilder.Entity<Warehouse>()
-                .HasMany(po => po.PackagesSentFromHere)
-                .WithOne(p => p.SentFrom)
-                .HasForeignKey(p => p.SentFromID)
+            #endregion
+
+            #region delivery table specifications
+
+            modelBuilder.Entity<Delivery>() // pk - ID field (uint)
+                .HasKey(d => d.ID);
+            modelBuilder.Entity<Delivery>() // auto increment for package ID
+                .Property(p => p.ID)
+                .ValueGeneratedOnAdd();
+
+            modelBuilder.Entity<Delivery>() // cascade delete when package is deleted
+                .HasOne(d => d.Package)
+                .WithOne(p => p.Delivery)
+                .HasForeignKey<Delivery>(d => d.PackageID)
+                .OnDelete(DeleteBehavior.Cascade);
+
+            // restrict deletion of a delivery when the sender or receiver or starting point or destination is deleted
+            modelBuilder.Entity<Delivery>()
+                .HasOne(d => d.Sender)
+                .WithMany(c => c.DeliveriesSent)
+                .HasForeignKey(d => d.SenderID)
                 .OnDelete(DeleteBehavior.Restrict);
-            modelBuilder.Entity<Warehouse>()
-                .HasMany(po => po.PackagesSentToHere)
-                .WithOne(p => p.SentTo)
-                .HasForeignKey(p => p.SentToID)
+
+            modelBuilder.Entity<Delivery>()
+                .HasOne(d => d.Receiver)
+                .WithMany(c => c.DeliveriesReceived)
+                .HasForeignKey(d => d.ReceiverID)
                 .OnDelete(DeleteBehavior.Restrict);
+
+            modelBuilder.Entity<Delivery>()
+                .HasOne(d => d.SentFrom)
+                .WithMany(w => w.DeliveriesSentFromHere)
+                .HasForeignKey(d => d.SentFromID)
+                .OnDelete(DeleteBehavior.Restrict);
+
+            modelBuilder.Entity<Delivery>()
+                .HasOne(d => d.SentTo)
+                .WithMany(w => w.DeliveriesSentHere)
+                .HasForeignKey(d => d.SentToID)
+                .OnDelete(DeleteBehavior.Restrict);
+
             #endregion
 
             #region package table specifications
@@ -110,19 +143,8 @@ namespace Class_Lib
                 .ValueGeneratedOnAdd();
             modelBuilder.Entity<Package>() // assigns a default value to the PackageStatus property
                 .Property(p => p.PackageStatus)
-                .HasDefaultValue(DeliveryStatus.STORED);
-            // sender relationship
-            modelBuilder.Entity<Package>()
-                .HasOne(p => p.Sender) // each Package has one Sender
-                .WithMany(c => c.PackagesSent) // each Client can send many Packages
-                .HasForeignKey(p => p.SenderID) // foreign key in the Package table
-                .OnDelete(DeleteBehavior.Restrict); // prevent cascade delete to avoid deleting clients when packages are deleted
-            // receiver relationship
-            modelBuilder.Entity<Package>()
-                .HasOne(p => p.Receiver) // each Package has one Receiver
-                .WithMany(c => c.PackagesReceived) // each Client can receive many Packages
-                .HasForeignKey(p => p.ReceiverID) // foreign key in the Package table
-                .OnDelete(DeleteBehavior.Restrict); // prevent cascade delete to avoid deleting clients when packages are deleted
+                .HasDefaultValue(PackageStatus.STORED);
+            
             modelBuilder.Entity<Package>()
                 .Property(p => p.RowVersion)
                 .IsRowVersion(); // marks it as a row version column for concurrency control
@@ -132,11 +154,11 @@ namespace Class_Lib
             #region packageEvent table specifications
             modelBuilder.Entity<PackageEvent>() // declares the PackageEvent key as a composite key between the Timestamp and PackageID
                 .HasKey(pe => new { pe.Timestamp, pe.PackageID });
-            modelBuilder.Entity<PackageEvent>() // cascade deletes associated package events if a package is deleted
-                .HasOne(pe => pe.Package) 
-                .WithMany(p => p.Log)
-                .HasForeignKey(pe => pe.PackageID)
-                .OnDelete(DeleteBehavior.Cascade); // if a package is deleted, all its events are deleted too
+            modelBuilder.Entity<PackageEvent>()
+                .HasOne(e => e.Package)
+                .WithMany()
+                .HasForeignKey(e => e.PackageID)
+                .OnDelete(DeleteBehavior.Cascade);
             #endregion
 
             #region content table specification

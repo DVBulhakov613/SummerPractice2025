@@ -8,6 +8,7 @@ using System.Threading.Tasks;
 using System.Linq.Expressions;
 using Class_Lib.Backend.Person_related;
 using Class_Lib.Backend.Database;
+using Class_Lib.Backend.Package_related;
 
 namespace Class_Lib.Database.Repositories
 {
@@ -20,42 +21,13 @@ namespace Class_Lib.Database.Repositories
         public override async Task<IEnumerable<Package>> GetByCriteriaAsync(Expression<Func<Package, bool>> predicate)
         {
             return await Query()
-                .Include(p => p.Log)
                 .Include(p => p.DeclaredContent)
-                .Include(p => p.SentTo)
-                .Include(p => p.SentFrom)
-                .Include(p => p.Receiver)
-                .Include(p => p.Sender)
                 .Where(predicate)
                 .ExecuteAsync();
         }
-        public async Task<IEnumerable<Package>> GetByStatusAsync(DeliveryStatus status)
+        public async Task<IEnumerable<Package>> GetByStatusAsync(PackageStatus status)
         {
             return await GetByCriteriaAsync(p => p.PackageStatus == status);
-        }
-
-        // by starting point
-        public async Task<IEnumerable<Package>> GetByStartingPointAsync(Warehouse startingPoint)
-        {
-            return await GetByCriteriaAsync(p => p.SentFrom == startingPoint);
-        }
-
-        // by destination
-        public async Task<IEnumerable<Package>> GetByDestinationAsync(Warehouse destination)
-        {
-            return await GetByCriteriaAsync(p => p.SentTo == destination);
-        }
-
-        // by sender
-        public async Task<IEnumerable<Package>> GetBySenderAsync(Client sender)
-        {
-            return await GetByCriteriaAsync(p => p.Sender == sender);
-        }
-
-        // by receiver
-        public async Task<IEnumerable<Package>> GetByReceiverAsync(Client receiver)
-        {
-            return await GetByCriteriaAsync(p => p.Receiver == receiver);
         }
 
         // by content (?)

@@ -1,4 +1,5 @@
-﻿using System;
+﻿using Class_Lib.Backend.Package_related;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -8,10 +9,13 @@ namespace Class_Lib
 {
     public class PackageEvent
     {
-        public uint PackageID { get => Package.ID; private set; }
+        public uint PackageID { get; private set; }
         public Package Package { get; private set; } // the package to which this event belongs
         public DateTime Timestamp { get; } = DateTime.Now; // logs are always created with the current time
+        
+        public uint LocationID { get; private set; } // location of the event
         public BaseLocation Location { get; private set; } // location of the event
+
         public string Description { get; private set; } // and description of the event
 
         protected internal PackageEvent()

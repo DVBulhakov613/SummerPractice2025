@@ -17,8 +17,8 @@ namespace Class_Lib.Database.Repositories
         public override async Task<IEnumerable<Client>> GetByCriteriaAsync(Expression<Func<Client, bool>> predicate)
         {
             return await Query()
-                .Include(c => c.PackagesSent)
-                .Include(c => c.PackagesReceived)
+                .Include(c => c.DeliveriesSent)
+                .Include(c => c.DeliveriesReceived)
                 .Where(predicate)
                 .ExecuteAsync();
         }

@@ -23,7 +23,7 @@ namespace Class_Lib.Services
         private static readonly string ApiKey = "5b3ce3597851110001cf6248cdc645bc4dad474ab7023cecf0a12b46";
         private static readonly HttpClient Client = new HttpClient();
 
-        public static async Task GetRouteInfoAsync(double fromLatitude, double fromLongitude, double toLatitude, double toLongitude)
+        public static async Task<string> GetRouteInfoAsync(double fromLatitude, double fromLongitude, double toLatitude, double toLongitude)
         {
             string url = "https://api.openrouteservice.org/v2/directions/driving-hgv/json";
 
@@ -62,11 +62,12 @@ namespace Class_Lib.Services
                         double distance = summary["distance"]?.Value<double>() ?? 0;
                         double duration = summary["duration"]?.Value<double>() ?? 0;
 
-                        Console.WriteLine($"Distance: {distance / 1000.0:F2} km");
-                        Console.WriteLine($"Estimated Time: {TimeSpan.FromSeconds(duration):hh\\:mm\\:ss}");
+                        return $"Відстань: {distance / 1000.0:F2} км | Розрахований час: {TimeSpan.FromSeconds(duration):hh\\:mm\\:ss}";
                     }
                 }
             }
+
+            return "Сервіс недоступний або помилка.";
         }
     }
 }

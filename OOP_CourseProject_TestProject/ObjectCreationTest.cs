@@ -61,17 +61,17 @@ namespace OOP_CourseProject_TestProject
             // Arrange
             var package1 = new Package(10, 10, 10, 5, null, null, null, null, new List<Content>(), PackageType.Standard)
             {
-                PackageStatus = DeliveryStatus.IN_TRANSIT
+                PackageStatus = PackageStatus.IN_TRANSIT
             };
             var package2 = new Package(15, 15, 15, 10, null, null, null, null, new List<Content>(), PackageType.Standard)
             {
-                PackageStatus = DeliveryStatus.DELIVERED
+                PackageStatus = PackageStatus.DELIVERED
             };
             await _repository.AddAsync(package1);
             await _repository.AddAsync(package2);
 
             // Act
-            var inTransitPackages = await _repository.GetByStatusAsync(DeliveryStatus.IN_TRANSIT);
+            var inTransitPackages = await _repository.GetByStatusAsync(PackageStatus.IN_TRANSIT);
 
             // Assert
             Assert.AreEqual(1, inTransitPackages.Count());

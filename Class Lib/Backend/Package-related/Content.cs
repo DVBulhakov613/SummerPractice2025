@@ -1,4 +1,5 @@
-﻿using System;
+﻿using Class_Lib.Backend.Package_related;
+using System;
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
 using System.Linq;
@@ -17,32 +18,16 @@ namespace Class_Lib
             private set
             {
                 if (string.IsNullOrWhiteSpace(value))
-                    throw new ArgumentException("Name cannot be null or empty");
+                    throw new ArgumentException("Назва не може бути пустою.");
                 else
                     _name = value.ToUpper();
             }
         } // name given to content (cup, phone, etc)
-        private ContentType _type;
-        public ContentType Type // type of content (electronics, clothing, etc)
-        {
-            get => _type;
-            private set => _type = value;
-        }
-        private uint _amount;
-        public uint Amount // number of items
-        {
-            get => _amount;
-            private set
-            {
-                if (value < 0)
-                    throw new ArgumentOutOfRangeException("Amount cannot be negative");
-                else
-                    _amount = value;
-            }
-        }
-        public uint PackageID { get => Package.ID; private set; }
+        public ContentType Type { get; set; }// type of content (electronics, clothing, etc)
+        public uint Amount { get; set; }
+        public uint PackageID { get; private set; }
         public Package Package { get; set; } // the package that this content belongs to
-        private Content()
+        protected Content()
         {
         }
         public Content(string name, ContentType type, uint amount, Package package)

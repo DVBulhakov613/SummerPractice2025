@@ -1,4 +1,5 @@
-﻿using System;
+﻿using Class_Lib.Backend.Package_related;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -8,8 +9,8 @@ namespace Class_Lib.Backend.Person_related
 {
     public class Client : Person
     {
-        public List<Package> PackagesSent { get; set; } = new List<Package>(); // list of packages associated with the client (sender)
-        public List<Package> PackagesReceived { get; set; } = new List<Package>(); // list of packages associated with the client (receiver)
+        public List<Delivery> DeliveriesSent { get; set; } = new List<Delivery>(); // list of packages associated with the client (sender)
+        public List<Delivery> DeliveriesReceived { get; set; } = new List<Delivery>(); // list of packages associated with the client (receiver)
         protected internal Client() // empty constructor for EF core
         { }
 
