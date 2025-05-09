@@ -117,10 +117,10 @@
                             IsReadOnly="True">
                             <DataGrid.Columns>
                                 <DataGridTextColumn Header="ID" Binding="{Binding ID}" Width="*" />
-                                <DataGridTextColumn Header="Відправник" Binding="{Binding Direction}" Width="*" />
-                                <DataGridTextColumn Header="Отримувач" Binding="{Binding PackageStatus}" Width="*" />
-                                <DataGridTextColumn Header="Пункт відправлення" Binding="{Binding CreationDate}" Width="*" />
-                                <DataGridTextColumn Header="Пункт отримання" Binding="{Binding Volume}" Width="*" />
+                                <DataGridTextColumn Header="Відправник" Binding="{Binding Sender.ID}" Width="*" />
+                                <DataGridTextColumn Header="Отримувач" Binding="{Binding Receiver.ID}" Width="*" />
+                                <DataGridTextColumn Header="Пункт відправлення" Binding="{Binding SentFrom.ID}" Width="*" />
+                                <DataGridTextColumn Header="Пункт отримання" Binding="{Binding SentTo.ID}" Width="*" />
                                 <DataGridTextColumn Header="Вага" Binding="{Binding Package.Weight}" Width="*" />
                                 <DataGridTextColumn Header="Ціна" Binding="{Binding Price}" Width="*" />
                                 <DataGridTextColumn Header="Оплачено?" Binding="{Binding Paid}" Width="*" />
@@ -134,23 +134,23 @@
                         Background="White" BorderBrush="LightGray" BorderThickness="1" CornerRadius="10"
                         Padding="10">
                     
-                    <Grid>
+                    <!--<Grid>
                         <Grid.RowDefinitions>
                             <RowDefinition Height="Auto"/>
-                            <!-- info header -->
+                            --><!-- info header --><!--
                             <RowDefinition Height="Auto"/>
-                            <!-- button row -->
+                            --><!-- button row --><!--
                             <RowDefinition Height="*"/>
-                            <!-- details/info -->
-                        </Grid.RowDefinitions>
+                            --><!-- details/info --><!--
+                        </Grid.RowDefinitions>-->
 
-                        <!-- top header  -->
+                        <!-- top header  --><!--
                         <StackPanel Grid.Row="0" Margin="0,0,0,10">
                             <TextBlock Text="Інформація про посилку" FontWeight="Bold" FontSize="16"/>
                             <TextBlock Text="Обраний ID: 1234" Foreground="Gray"/>
                         </StackPanel>
 
-                        <!-- button set -->
+                        --><!-- button set --><!--
                         <Grid Grid.Row="1" HorizontalAlignment="Stretch" MaxWidth="500">
                             <Grid.ColumnDefinitions>
                                 <ColumnDefinition Width="*" />
@@ -171,11 +171,11 @@
                             </Button>
                         </Grid>
 
-                        <!-- detail area -->
-                        <StackPanel Grid.Row="2">
-                            <viewmodels:InfoControl InfoProvider="{Binding DataContext.SelectedInfoViewModel, RelativeSource={RelativeSource AncestorType=UserControl}}" />
-                        </StackPanel>
-                    </Grid>
+                        --><!-- detail area --><!--
+                        <StackPanel Grid.Row="2">-->
+                            <packages:DeliveryInfoControl Delivery="{Binding SelectedItem}" />
+                        <!--</StackPanel>
+                    </Grid>-->
                 </Border>
             </Grid>
 

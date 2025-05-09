@@ -45,7 +45,7 @@ namespace OOP_CourseProject.Controls.ViewModel
                 {
                     new() { Label = "Дата оформлення", Value = package.CreatedAt.ToString("HH:mm, dd-MM-yyyy") },
                     new() { Label = "Розмір", Value = $"{package.Length} x {package.Width} x {package.Height} см" },
-                    new() { Label = "Вага", Value = $"{double.Floor(package.Weight)} кг {package.Weight % 1} г" },
+                    new() { Label = "Вага", Value = $"{package.Weight:C2} кг" },
                     new() { Label = "Тип", Value = $"{package.Type}" }
                 }
             });

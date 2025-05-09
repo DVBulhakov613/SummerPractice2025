@@ -1,4 +1,4 @@
-﻿<UserControl x:Class="OOP_CourseProject.Controls.PackageInfo.PackageInfoControl"
+﻿<UserControl x:Class="OOP_CourseProject.Controls.PackageInfo.DeliveryInfoControl"
              xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
              xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
              xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
@@ -17,7 +17,7 @@
         <!-- Header -->
         <StackPanel Grid.Row="0" Margin="0,0,0,10">
             <TextBlock Text="Інформація про посилку" FontWeight="Bold" FontSize="16"/>
-            <TextBlock Text="{Binding SelectedPackageID}" Foreground="Gray"/>
+            <TextBlock Text="{Binding SelectedItem.PackageID}" Foreground="Gray"/>
         </StackPanel>
 
         <!-- Buttons -->
@@ -38,7 +38,7 @@
             <!-- Tabs -->
             <TabControl Grid.Row="1">
                 <TabItem Header="Info">
-                    <viewmodels:InfoControl InfoProvider="{Binding PackageViewModel}" />
+                    <viewmodels:InfoControl InfoProvider="{Binding DataContext.SelectedInfoViewModel, RelativeSource={RelativeSource AncestorType=UserControl}}" />
                 </TabItem>
                 <TabItem Header="Route">
                     <!--<local:PackageRouteControl Package="{Binding Package}" />-->

@@ -22,8 +22,8 @@ namespace Class_Lib
             : base(name, surname, phoneNumber, email)
         {
             Workplace = workplace;
-            //Position = position;
-            if(workplace != null)
+
+            if (workplace != null)
                 WorkplaceID = workplace.ID; // set the workplace ID for db purposes
             else
                 WorkplaceID = null; // set to null if no workplace is assigned
