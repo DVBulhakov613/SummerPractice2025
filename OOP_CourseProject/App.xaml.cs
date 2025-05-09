@@ -1,5 +1,6 @@
 ﻿using Class_Lib;
 using Class_Lib.Backend.Database;
+using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
 using OOP_CourseProject.Controls;
@@ -37,12 +38,15 @@ namespace OOP_CourseProject
             LoginHost = Host.CreateDefaultBuilder()
                 .ConfigureServices((context, services) =>
                 {
-                    services.AddBackendServices(
-                        "Server=localhost\\SQLEXPRESS;Database=PackageDb;Trusted_Connection=True;MultipleActiveResultSets=true;TrustServerCertificate=True",
-                        null // no user context yet
-                    );
+                    var connectionString = "Server=localhost\\SQLEXPRESS;Database=PackageDb;Trusted_Connection=True;MultipleActiveResultSets=true;TrustServerCertificate=True";
+
+                    services.AddDbContext<AppDbContext>(options =>
+                        options.UseSqlServer(connectionString));
+
+                    services.AddBackendServices(null); // no user context yet
                 })
                 .Build();
+
 
             await LoginHost.StartAsync();
 
@@ -76,12 +80,13 @@ namespace OOP_CourseProject
 
         private static void ConfigureAppServices(IServiceCollection services, Employee? employee)
         {
-            services.AddBackendServices(
-                "Server=localhost\\SQLEXPRESS;Database=PackageDb;Trusted_Connection=True;MultipleActiveResultSets=true;TrustServerCertificate=True",
-                employee
-            );
+            var connectionString = "Server=localhost\\SQLEXPRESS;Database=PackageDb;Trusted_Connection=True;MultipleActiveResultSets=true;TrustServerCertificate=True";
 
-            // Register UI components
+            services.AddDbContext<AppDbContext>(options =>
+                options.UseSqlServer(connectionString));
+
+            services.AddBackendServices(employee);
+
             services.AddSingleton<MainWindow>();
             services.AddTransient<HomePageControl>();
             services.AddTransient<PackageControl>();
@@ -89,6 +94,7 @@ namespace OOP_CourseProject
             services.AddTransient<QueryBuilder>();
             services.AddTransient<SendPackageControl>();
         }
+
 
 
         protected override async void OnExit(ExitEventArgs e)

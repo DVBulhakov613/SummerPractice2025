@@ -25,7 +25,7 @@ namespace Class_Lib
 
             var employee = new Employee("dummy", "dummy", "+380955548027", "dummy@dummy.com", 1, null);
 
-            services.AddBackendServices(connectionString, employee);
+            services.AddBackendServices(employee);
 
             var provider = services.BuildServiceProvider();
 

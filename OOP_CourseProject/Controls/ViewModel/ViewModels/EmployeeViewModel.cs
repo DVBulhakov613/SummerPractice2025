@@ -19,6 +19,7 @@ namespace OOP_CourseProject.Controls.ViewModel
                 SectionTitle = "Загальна інформація",
                 InfoItems = new List<InfoItem>
                 {
+                    new() { Label = "Ідентефікаційний код", Value = $"{employee.ID}" },
                     new() { Label = "Повне ім'я", Value = $"{employee.FullName}" },
                     new() { Label = "Телефон", Value = employee.PhoneNumber },
                     new() { Label = "Email", Value = employee.Email },
@@ -34,7 +35,25 @@ namespace OOP_CourseProject.Controls.ViewModel
                     new() { Label = "Посада", Value = $"{employee.FullName}" },
                     new() { 
                         Label = "Місце працевлаштування", 
-                        Value = employee.WorkplaceID != null ? employee.WorkplaceID.ToString() : "Невідомо" 
+                        Value = employee.WorkplaceID != null ? employee.WorkplaceID.ToString() : "Невідомо",
+                        OnClick = employee.Workplace == null ? null : () =>
+                        {
+                            switch(employee.Workplace)
+                            {
+                                case PostalOffice po:
+                                    var postalOfficeViewModel = new PostalOfficeViewModel(po);
+                                    var window = new InfoPopupWindow(postalOfficeViewModel);
+                                    window.ShowDialog();
+                                    break;
+                                case Warehouse wh:
+                                    var warehouseViewModel = new WarehouseViewModel(wh);
+                                    var window2 = new InfoPopupWindow(warehouseViewModel);
+                                    window2.ShowDialog();
+                                    break;
+                                default:
+                                    break;
+                            }
+                        }
                     }
                 }
             });

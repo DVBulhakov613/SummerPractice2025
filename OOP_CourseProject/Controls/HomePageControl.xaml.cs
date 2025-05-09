@@ -8,6 +8,7 @@ using Microsoft.Extensions.DependencyInjection;
 using Class_Lib.Backend.Database.Repositories;
 using Class_Lib.Backend.Location_related.Methods;
 using Class_Lib.Backend.Package_related.Methods;
+using Class_Lib.Backend.Person_related.Methods;
 
 namespace OOP_CourseProject.Controls
 {
@@ -23,7 +24,7 @@ namespace OOP_CourseProject.Controls
 
         public async void GenerateViewModel()
         {
-            var repo = App.AppHost.Services.GetRequiredService<DeliveryMethods>();
+            var repo = App.AppHost.Services.GetRequiredService<EmployeeMethods>();
 
             DataContext = ViewModelService.CreateViewModel(await repo.GetByCriteriaAsync(App.CurrentEmployee, p => p.ID > 0));
         }

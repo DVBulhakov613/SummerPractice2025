@@ -11,11 +11,11 @@ namespace Class_Lib.Backend.Database
 {
     public static class DependencyInjection
     {
-        public static IServiceCollection AddBackendServices(this IServiceCollection services, string connectionString, Employee currentEmployee)
+        public static IServiceCollection AddBackendServices(this IServiceCollection services, Employee currentEmployee)
         {
-            // Register DbContext
-            services.AddDbContext<AppDbContext>(options =>
-                options.UseSqlServer(connectionString));
+            //// Register DbContext
+            //services.AddDbContext<AppDbContext>(options =>
+            //    options.UseSqlServer(connectionString));
 
 
             // Repositories

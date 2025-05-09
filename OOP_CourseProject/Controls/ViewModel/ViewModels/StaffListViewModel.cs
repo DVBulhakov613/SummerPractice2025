@@ -18,9 +18,10 @@ namespace OOP_CourseProject.Controls.ViewModel
             {
                 InfoSections.Add(new InfoSection
                 {
-                    SectionTitle = $"Працівник #{emp.ID}",
+                    SectionTitle = $"{emp.FullName} #{emp.ID}",
                     InfoItems = new List<InfoItem>
                     {
+                        new() { Label = "Ідентефікаційний код", Value = $"{emp.ID}" },
                         new() { Label = "Ім’я", Value = emp.FullName },
                         new() { Label = "Телефон", Value = emp.PhoneNumber },
                         new() { Label = "Email", Value = emp.Email },

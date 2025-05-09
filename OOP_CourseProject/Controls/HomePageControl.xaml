@@ -133,49 +133,8 @@
                 <Border Grid.Column="1" Grid.RowSpan="2" Grid.Row="0"
                         Background="White" BorderBrush="LightGray" BorderThickness="1" CornerRadius="10"
                         Padding="10">
-                    
-                    <!--<Grid>
-                        <Grid.RowDefinitions>
-                            <RowDefinition Height="Auto"/>
-                            --><!-- info header --><!--
-                            <RowDefinition Height="Auto"/>
-                            --><!-- button row --><!--
-                            <RowDefinition Height="*"/>
-                            --><!-- details/info --><!--
-                        </Grid.RowDefinitions>-->
-
-                        <!-- top header  --><!--
-                        <StackPanel Grid.Row="0" Margin="0,0,0,10">
-                            <TextBlock Text="Інформація про посилку" FontWeight="Bold" FontSize="16"/>
-                            <TextBlock Text="Обраний ID: 1234" Foreground="Gray"/>
-                        </StackPanel>
-
-                        --><!-- button set --><!--
-                        <Grid Grid.Row="1" HorizontalAlignment="Stretch" MaxWidth="500">
-                            <Grid.ColumnDefinitions>
-                                <ColumnDefinition Width="*" />
-                                <ColumnDefinition Width="*" />
-                                <ColumnDefinition Width="*" />
-                            </Grid.ColumnDefinitions>
-
-                            <Button Name="PackageInfo" Grid.Column="0" Padding="0" Margin="0">
-                                <Image Source="/Assets/ButtonIcons/PackageInfo/Variant=FullInfo/Active.png" Stretch="Uniform" />
-                            </Button>
-
-                            <Button Name="PackageRoute" Grid.Column="1" Padding="0" Margin="0">
-                                <Image Source="/Assets/ButtonIcons/PackageInfo/Variant=Path/Inactive.png" Stretch="Uniform" />
-                            </Button>
-
-                            <Button Name="PackageLog" Grid.Column="2" Padding="0" Margin="0">
-                                <Image Source="/Assets/ButtonIcons/PackageInfo/Variant=Log/Inactive.png" Stretch="Uniform" />
-                            </Button>
-                        </Grid>
-
-                        --><!-- detail area --><!--
-                        <StackPanel Grid.Row="2">-->
-                            <packages:DeliveryInfoControl Delivery="{Binding SelectedItem}" />
-                        <!--</StackPanel>
-                    </Grid>-->
+                    <packages:DeliveryInfoControl Delivery="{Binding SelectedItem}" />
+                    <!--<viewmodels:InfoControl InfoProvider="{Binding DataContext.SelectedInfoViewModel, RelativeSource={RelativeSource AncestorType=UserControl}}" />-->
                 </Border>
             </Grid>
 
