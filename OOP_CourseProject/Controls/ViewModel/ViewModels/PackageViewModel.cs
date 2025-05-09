@@ -12,7 +12,7 @@ namespace OOP_CourseProject.Controls.ViewModel
 {
     public class PackageViewModel : IInfoProviderViewModel
     {
-        public ObservableCollection<InfoSection> InfoSections { get; } = new();
+        public ObservableCollection<InfoSection> InfoSections { get; } = [];
 
         public PackageViewModel(Package package)
         {
@@ -40,7 +40,7 @@ namespace OOP_CourseProject.Controls.ViewModel
 
             InfoSections.Add(new InfoSection
             {
-                SectionTitle = "Інформація посилки",
+                SectionTitle = $"Інформація посилки {package.ID}",
                 InfoItems = new List<InfoItem>
                 {
                     new() { Label = "Дата оформлення", Value = package.CreatedAt.ToString("HH:mm, dd-MM-yyyy") },

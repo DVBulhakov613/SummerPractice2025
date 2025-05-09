@@ -40,7 +40,7 @@ namespace Class_Lib.Backend.Location_related.Methods
             {
                 var locationIds = locations.Select(l => l.ID).ToList();
 
-                var allEmployees = await _employeeMethods.GetEmployeesByCriteriaAsync(
+                var allEmployees = await _employeeMethods.GetByCriteriaAsync(
                     user, e => locationIds.Contains(e.Workplace.ID)
                 );
 

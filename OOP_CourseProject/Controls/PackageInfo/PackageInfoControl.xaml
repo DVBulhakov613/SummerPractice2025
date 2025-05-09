@@ -6,9 +6,7 @@
              xmlns:local="clr-namespace:OOP_CourseProject.Controls.PackageInfo"
              xmlns:viewmodels="clr-namespace:OOP_CourseProject.Controls.ViewModel"
              mc:Ignorable="d" 
-             d:DesignHeight="600" d:DesignWidth="500"
-             x:Name="PackageInfoControl">
-
+             d:DesignHeight="600" d:DesignWidth="500">
     <Grid>
         <Grid.RowDefinitions>
             <RowDefinition Height="Auto"/>
@@ -24,11 +22,6 @@
 
         <!-- Buttons -->
         <Grid Grid.Row="1" HorizontalAlignment="Stretch" MaxWidth="500">
-            <Grid.ColumnDefinitions>
-                <ColumnDefinition Width="*" />
-                <ColumnDefinition Width="*" />
-                <ColumnDefinition Width="*" />
-            </Grid.ColumnDefinitions>
 
             <!--<Button Grid.Column="0" Padding="0" Margin="0">
                 <Image Source="/Assets/ButtonIcons/PackageInfo/Variant=FullInfo/Active.png" Stretch="Uniform"/>
@@ -42,22 +35,19 @@
                 <Image Source="/Assets/ButtonIcons/PackageInfo/Variant=Log/Inactive.png" Stretch="Uniform"/>
             </Button>-->
 
-            <TabControl>
+            <!-- Tabs -->
+            <TabControl Grid.Row="1">
                 <TabItem Header="Info">
-                    <viewmodels:InfoControl InfoProvider="{Binding Package, RelativeSource={RelativeSource AncestorType=UserControl}}" />
+                    <viewmodels:InfoControl InfoProvider="{Binding PackageViewModel}" />
                 </TabItem>
                 <TabItem Header="Route">
-                    <!--<local:PackageRouteControl Package="{Binding Package, RelativeSource={RelativeSource AncestorType=UserControl}}" />-->
+                    <!--<local:PackageRouteControl Package="{Binding Package}" />-->
                 </TabItem>
                 <TabItem Header="Log">
-                    <!--<local:PackageLogControl Package="{Binding Package, RelativeSource={RelativeSource AncestorType=UserControl}}" />-->
+                    <!--<local:PackageLogControl Package="{Binding Package}" />-->
                 </TabItem>
             </TabControl>
-        </Grid>
 
-        <!-- Detail Content -->
-        <StackPanel Grid.Row="2">
-            <viewmodels:InfoControl InfoProvider="{Binding SelectedInfoViewModel}" />
-        </StackPanel>
+        </Grid>
     </Grid>
 </UserControl>

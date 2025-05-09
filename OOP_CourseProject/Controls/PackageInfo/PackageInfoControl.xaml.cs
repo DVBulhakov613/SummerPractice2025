@@ -26,16 +26,13 @@ namespace OOP_CourseProject.Controls.PackageInfo
     /// </summary>
     public partial class PackageInfoControl : UserControl
     {
-        public GenericInfoDisplayViewModel ViewModel { get; set; }
         public PackageInfoControl()
         {
             InitializeComponent();
-            
-
         }
 
         public static readonly DependencyProperty PackageProperty =
-            DependencyProperty.Register(nameof(Package), typeof(Package), typeof(PackageInfoControl));
+            DependencyProperty.Register(nameof(Package), typeof(Package), typeof(PackageInfoControl), new PropertyMetadata(null, OnPackageChanged));
 
         public Package Package
         {
@@ -43,11 +40,16 @@ namespace OOP_CourseProject.Controls.PackageInfo
             set => SetValue(PackageProperty, value);
         }
 
-        public async void GenerateViewModel()
-        {
-            var repo = App.AppHost.Services.GetRequiredService<PackageMethods>();
+        public IInfoProviderViewModel PackageViewModel { get; private set; }
 
-            DataContext = ViewModelService.CreateViewModel(await repo.GetByCriteriaAsync(App.CurrentEmployee, p => p.ID > 0));
+        private static void OnPackageChanged(DependencyObject d, DependencyPropertyChangedEventArgs e)
+        {
+            if (d is PackageInfoControl control && e.NewValue is Package newPackage)
+            {
+                control.PackageViewModel = new PackageViewModel(newPackage);
+                control.DataContext = control; // Ensure XAML bindings work properly
+            }
         }
     }
+
 }

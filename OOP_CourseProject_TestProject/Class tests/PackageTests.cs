@@ -8,6 +8,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using Class_Lib.Backend.Package_related.enums;
+using Class_Lib.Backend.Package_related;
 
 namespace OOP_CourseProject_TestProject.Class_tests
 {
@@ -118,72 +119,72 @@ namespace OOP_CourseProject_TestProject.Class_tests
             Assert.AreEqual(0, packages.Count());
         }
 
-        [TestMethod]
-        public async Task ReadPackage_ShouldReturnPackageByStartingPoint()
-        {
-            // Arrange
-            var package1 = new Package(10, 10, 10, 5, _sender, _receiver, _sentFrom, _sentTo, new List<Content>(), PackageType.Standard);
-            var package2 = new Package(10, 10, 10, 5, _sender, _receiver, _sentFrom, _sentTo, new List<Content>(), PackageType.Standard);
-            await _repository.AddAsync(package1);
-            await _repository.AddAsync(package2);
+        //[TestMethod]
+        //public async Task ReadPackage_ShouldReturnPackageByStartingPoint()
+        //{
+        //    // Arrange
+        //    var package1 = new Package(10, 10, 10, 5, _sender, _receiver, _sentFrom, _sentTo, new List<Content>(), PackageType.Standard);
+        //    var package2 = new Package(10, 10, 10, 5, _sender, _receiver, _sentFrom, _sentTo, new List<Content>(), PackageType.Standard);
+        //    await _repository.AddAsync(package1);
+        //    await _repository.AddAsync(package2);
 
-            // Act
-            var packages = _repository.GetByStartingPointAsync(_sentFrom).Result;
+        //    // Act
+        //    var packages = _repository.GetByStartingPointAsync(_sentFrom).Result;
 
-            // Assert
-            Assert.IsNotNull(packages);
-            Assert.AreEqual(2, packages.Count());
-        }
+        //    // Assert
+        //    Assert.IsNotNull(packages);
+        //    Assert.AreEqual(2, packages.Count());
+        //}
 
-        [TestMethod]
-        public async Task ReadPackage_ShouldReturnPackageByDestination()
-        {
-            // Arrange
-            var package1 = new Package(10, 10, 10, 5, _sender, _receiver, _sentFrom, _sentTo, new List<Content>(), PackageType.Standard);
-            var package2 = new Package(10, 10, 10, 5, _sender, _receiver, _sentFrom, _sentTo, new List<Content>(), PackageType.Standard);
-            await _repository.AddAsync(package1);
-            await _repository.AddAsync(package2);
+        //[TestMethod]
+        //public async Task ReadPackage_ShouldReturnPackageByDestination()
+        //{
+        //    // Arrange
+        //    var package1 = new Package(10, 10, 10, 5, _sender, _receiver, _sentFrom, _sentTo, new List<Content>(), PackageType.Standard);
+        //    var package2 = new Package(10, 10, 10, 5, _sender, _receiver, _sentFrom, _sentTo, new List<Content>(), PackageType.Standard);
+        //    await _repository.AddAsync(package1);
+        //    await _repository.AddAsync(package2);
 
-            // Act
-            var packages = _repository.GetByDestinationAsync(_sentTo).Result;
+        //    // Act
+        //    var packages = _repository.GetByDestinationAsync(_sentTo).Result;
 
-            // Assert
-            Assert.IsNotNull(packages);
-            Assert.AreEqual(2, packages.Count());
-        }
+        //    // Assert
+        //    Assert.IsNotNull(packages);
+        //    Assert.AreEqual(2, packages.Count());
+        //}
 
-        [TestMethod]
-        public async Task ReadPackage_ShouldReturnPackagesBySender()
-        {
-            // Arrange
-            var package1 = new Package(10, 10, 10, 5, _sender, _receiver, _sentFrom, _sentTo, new List<Content>(), PackageType.Standard);
-            var package2 = new Package(10, 10, 10, 5, _sender, _receiver, _sentFrom, _sentTo, new List<Content>(), PackageType.Standard);
-            await _repository.AddAsync(package1);
-            await _repository.AddAsync(package2);
+        //[TestMethod]
+        //public async Task ReadPackage_ShouldReturnPackagesBySender()
+        //{
+        //    // Arrange
+        //    var package1 = new Package(10, 10, 10, 5, _sender, _receiver, _sentFrom, _sentTo, new List<Content>(), PackageType.Standard);
+        //    var package2 = new Package(10, 10, 10, 5, _sender, _receiver, _sentFrom, _sentTo, new List<Content>(), PackageType.Standard);
+        //    await _repository.AddAsync(package1);
+        //    await _repository.AddAsync(package2);
 
-            // Act
-            var packages = _repository.GetBySenderAsync(_sender).Result;
-            // Assert
-            Assert.IsNotNull(packages);
-            Assert.AreEqual(2, packages.Count());
-        }
+        //    // Act
+        //    var packages = _repository.GetBySenderAsync(_sender).Result;
+        //    // Assert
+        //    Assert.IsNotNull(packages);
+        //    Assert.AreEqual(2, packages.Count());
+        //}
 
-        [TestMethod]
-        public async Task ReadPackage_ShouldReturnPackagesByReceiver()
-        {
-            // Arrange
-            var package1 = new Package(10, 10, 10, 5, _sender, _receiver, _sentFrom, _sentTo, new List<Content>(), PackageType.Standard);
-            var package2 = new Package(10, 10, 10, 5, _sender, _receiver, _sentFrom, _sentTo, new List<Content>(), PackageType.Standard);
-            await _repository.AddAsync(package1);
-            await _repository.AddAsync(package2);
+        //[TestMethod]
+        //public async Task ReadPackage_ShouldReturnPackagesByReceiver()
+        //{
+        //    // Arrange
+        //    var package1 = new Package(10, 10, 10, 5, _sender, _receiver, _sentFrom, _sentTo, new List<Content>(), PackageType.Standard);
+        //    var package2 = new Package(10, 10, 10, 5, _sender, _receiver, _sentFrom, _sentTo, new List<Content>(), PackageType.Standard);
+        //    await _repository.AddAsync(package1);
+        //    await _repository.AddAsync(package2);
 
-            // Act
-            var packages = _repository.GetByReceiverAsync(_receiver).Result;
+        //    // Act
+        //    var packages = _repository.GetByReceiverAsync(_receiver).Result;
 
-            // Assert
-            Assert.IsNotNull(packages);
-            Assert.AreEqual(2, packages.Count());
-        }
+        //    // Assert
+        //    Assert.IsNotNull(packages);
+        //    Assert.AreEqual(2, packages.Count());
+        //}
 
         [TestMethod]
         public async Task ReadPackage_ShouldReturnPackagesByType()

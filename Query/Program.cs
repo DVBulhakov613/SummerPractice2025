@@ -14,7 +14,7 @@ namespace Class_Lib
         {
             // Console.WriteLine(PasswordHelper.HashPassword("admin"));
 
-            // await InsertPostalOffice();
+            await InsertPostalOffice();
         }
 
         public static async Task InsertPostalOffice()
@@ -32,7 +32,7 @@ namespace Class_Lib
             var context = provider.GetRequiredService<AppDbContext>();
 
             PostalOffice po = new PostalOffice(
-                new Coordinates(49.963099, 36.287241, "вул. Мухачова", "Харківська область, Слобідский район, Артема"),
+                new Coordinates(49.807647, 36.053660, "вул. Дніпропетровська", "Харківська область, Мерефа"),
                 1000, false, true, false);
 
             await context.PostalOffices.AddAsync(po);

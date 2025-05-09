@@ -37,7 +37,7 @@ namespace Class_Lib.Backend.Person_related.Methods
 
 
         // Read
-        public async Task<IEnumerable<Employee>> GetEmployeesByCriteriaAsync(Employee user, Expression<Func<Employee, bool>> filter)
+        public async Task<IEnumerable<Employee>> GetByCriteriaAsync(Employee user, Expression<Func<Employee, bool>> filter)
         {
             if (!user.HasPermission(AccessService.PermissionKey.ReadPerson))
             {

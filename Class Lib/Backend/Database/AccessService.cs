@@ -1,4 +1,5 @@
-﻿using Microsoft.EntityFrameworkCore;
+﻿using Class_Lib.Backend.Package_related;
+using Microsoft.EntityFrameworkCore;
 using System;
 using System.Collections.Generic;
 using System.Data;
@@ -83,7 +84,12 @@ namespace Class_Lib.Backend.Services
             ReadUser = 120,
             CreateUser = 121,
             UpdateUser = 122,
-            DeleteUser = 123
+            DeleteUser = 123,
+
+            ReadDelivery = 130,
+            CreateDelivery = 131,
+            UpdateDelivery = 132,
+            DeleteDelivery = 133
         }
 
         public static bool CanPerformAction(Employee employee, int permissionKey)
@@ -134,6 +140,7 @@ namespace Class_Lib.Backend.Services
                 nameof(PackageType) => PermissionKey.ReadPackageType,
                 //nameof(Country) => PermissionKey.ReadCountry,
                 nameof(User) => PermissionKey.ReadUser,
+                nameof(Delivery) => PermissionKey.ReadDelivery,
 
                 _ => null
             };

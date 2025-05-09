@@ -26,7 +26,7 @@ namespace OOP_CourseProject.Controls
         {
             try
             {
-                var employees = await _employeeMethods.GetEmployeesByCriteriaAsync(null, e => true); // Load all employees
+                var employees = await _employeeMethods.GetByCriteriaAsync(null, e => true); // Load all employees
                 EmployeeTable.ItemsSource = employees;
             }
             catch (Exception ex)

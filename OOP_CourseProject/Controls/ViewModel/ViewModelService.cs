@@ -23,6 +23,7 @@ namespace OOP_CourseProject.Controls.ViewModel
                 Employee e => new EmployeeViewModel(e),
                 PostalOffice po => new PostalOfficeViewModel(po),
                 Warehouse w => new WarehouseViewModel(w),
+                Delivery d => new DeliveryViewModel(d),
                 _ => throw new NotSupportedException($"Не підтримуємий тип: {model.GetType().Name}")
             };
         }

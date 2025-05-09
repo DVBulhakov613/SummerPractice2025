@@ -19,8 +19,6 @@ namespace Class_Lib.Backend.Database.Repositories
         {
             return await Query()
                 .Include(c => c.Package)
-                .Include(c => c.Package.Sender)
-                .Include(c => c.Package.Receiver)
                 .Include(c => c.Package.DeclaredContent)
                 .Where(predicate)
                 .ExecuteAsync();
@@ -41,18 +39,6 @@ namespace Class_Lib.Backend.Database.Repositories
         public async Task<IEnumerable<Content>> GetAllContentByPackageAsync(Package package)
         {
             return await GetByCriteriaAsync(c => c.Package == package);
-        }
-
-        // get all content by sender
-        public async Task<IEnumerable<Content>> GetAllContentBySenderAsync(Client sender)
-        {
-            return await GetByCriteriaAsync(c => c.Package.Sender == sender);
-        }
-
-        // get all content by receiver
-        public async Task<IEnumerable<Content>> GetAllContentByReceiverAsync(Client receiver)
-        {
-            return await GetByCriteriaAsync(c => c.Package.Receiver == receiver);
         }
     }
 }

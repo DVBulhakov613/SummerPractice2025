@@ -10,19 +10,19 @@ namespace OOP_CourseProject.Controls.ViewModel
 {
     public class WarehouseViewModel : IInfoProviderViewModel
     {
-        public ObservableCollection<InfoSection> InfoSections { get; } = new();
+        public ObservableCollection<InfoSection> InfoSections { get; } = [];
 
-        public WarehouseViewModel(Warehouse wareh)
+        public WarehouseViewModel(Warehouse wh)
         {
             InfoSections.Add(new InfoSection
             {
                 SectionTitle = "Загальна інформація",
                 InfoItems = new List<InfoItem>
                 {
-                    new() { Label = "Ідентефікаційний код", Value = $"{wareh.ID}" },
-                    new() { Label = "Адреса", Value = wareh.GeoData.Address != null ? wareh.GeoData.Address : "Невідома"},
-                    new() { Label = "Регіон", Value = wareh.GeoData.Region != null ? wareh.GeoData.Region : "Невідомий" },
-                    new() { Label = "Тип", Value = wareh.LocationType },
+                    new() { Label = "Ідентефікаційний код", Value = $"{wh.ID}" },
+                    new() { Label = "Адреса", Value = wh.GeoData.Address != null ? wh.GeoData.Address : "Невідома"},
+                    new() { Label = "Регіон", Value = wh.GeoData.Region != null ? wh.GeoData.Region : "Невідомий" },
+                    new() { Label = "Тип", Value = wh.LocationType },
                     //new() { Label = "Працівники: ", Value = po.Staff },
                     //new() { Label = "Посада", Value = po.Role.Name },
                 }
@@ -33,9 +33,9 @@ namespace OOP_CourseProject.Controls.ViewModel
                 SectionTitle = "Специфічна інформація",
                 InfoItems = new List<InfoItem>
                 {
-                    new() { Label = "Тип", Value = wareh.LocationType },
-                    new() { Label = "Автоматизований?", Value = wareh.IsAutomated ? "Так" : "Ні" },
-                    new() { Label = "Повний?", Value = wareh.IsFull ? "Так" : "Ні" }
+                    new() { Label = "Тип", Value = wh.LocationType },
+                    new() { Label = "Автоматизований?", Value = wh.IsAutomated ? "Так" : "Ні" },
+                    new() { Label = "Повний?", Value = wh.IsFull ? "Так" : "Ні" }
                     //new() { Label = "Працівники: ", Value = po.Staff },
                     //new() { Label = "Посада", Value = po.Role.Name },
                 }

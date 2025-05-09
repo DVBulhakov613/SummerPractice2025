@@ -30,6 +30,9 @@ namespace Class_Lib.Backend.Package_related
         public uint SentToID { get; set; }
         public Warehouse SentTo { get; set; }
 
+        public uint Price { get; set; } // price of the delivery
+        public bool IsPaid { get; set; } = false; // is the delivery paid?
+
         public List<PackageEvent> Log { get; set; } = [];
 
         protected Delivery() { } // for EF Core

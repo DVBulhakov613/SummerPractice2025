@@ -34,6 +34,11 @@ namespace Class_Lib.Backend.Database
                 return new LocationRepository(sp.GetRequiredService<AppDbContext>(), currentEmployee);
             });
 
+            services.AddScoped<DeliveryRepository>(sp =>
+            {
+                return new DeliveryRepository(sp.GetRequiredService<AppDbContext>(), currentEmployee);
+            });
+
             services.AddScoped<PackageRepository>(sp =>
             {
                 return new PackageRepository(sp.GetRequiredService<AppDbContext>(), currentEmployee);
@@ -60,6 +65,8 @@ namespace Class_Lib.Backend.Database
             });
 
 
+
+
             // Services
             services.AddScoped<EmployeeMethods>(sp =>
             {
@@ -78,6 +85,11 @@ namespace Class_Lib.Backend.Database
             services.AddScoped<LocationMethods>(sp =>
             {
                 return new LocationMethods(sp.GetRequiredService<LocationRepository>(), sp.GetRequiredService<EmployeeMethods>());
+            });
+
+            services.AddScoped<DeliveryMethods>(sp =>
+            {
+                return new DeliveryMethods(sp.GetRequiredService<DeliveryRepository>());
             });
 
             services.AddScoped<PackageMethods>(sp =>

@@ -117,11 +117,11 @@
                             IsReadOnly="True">
                             <DataGrid.Columns>
                                 <DataGridTextColumn Header="ID" Binding="{Binding ID}" Width="*" />
-                                <DataGridTextColumn Header="Напрямок" Binding="{Binding Direction}" Width="*" />
-                                <DataGridTextColumn Header="Статус" Binding="{Binding PackageStatus}" Width="*" />
-                                <DataGridTextColumn Header="Час оформлення" Binding="{Binding CreationDate}" Width="*" />
-                                <DataGridTextColumn Header="Розмір" Binding="{Binding Volume}" Width="*" />
-                                <DataGridTextColumn Header="Вага" Binding="{Binding Weight}" Width="*" />
+                                <DataGridTextColumn Header="Відправник" Binding="{Binding Direction}" Width="*" />
+                                <DataGridTextColumn Header="Отримувач" Binding="{Binding PackageStatus}" Width="*" />
+                                <DataGridTextColumn Header="Пункт відправлення" Binding="{Binding CreationDate}" Width="*" />
+                                <DataGridTextColumn Header="Пункт отримання" Binding="{Binding Volume}" Width="*" />
+                                <DataGridTextColumn Header="Вага" Binding="{Binding Package.Weight}" Width="*" />
                                 <DataGridTextColumn Header="Ціна" Binding="{Binding Price}" Width="*" />
                                 <DataGridTextColumn Header="Оплачено?" Binding="{Binding Paid}" Width="*" />
                             </DataGrid.Columns>
@@ -173,7 +173,7 @@
 
                         <!-- detail area -->
                         <StackPanel Grid.Row="2">
-                            <viewmodels:InfoControl InfoProvider="{Binding SelectedInfoViewModel, RelativeSource={RelativeSource AncestorType=UserControl}}" />
+                            <viewmodels:InfoControl InfoProvider="{Binding DataContext.SelectedInfoViewModel, RelativeSource={RelativeSource AncestorType=UserControl}}" />
                         </StackPanel>
                     </Grid>
                 </Border>

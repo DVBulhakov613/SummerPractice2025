@@ -10,7 +10,7 @@ namespace OOP_CourseProject.Controls.ViewModel
 {
     public class EmployeeViewModel : IInfoProviderViewModel
     {
-        public ObservableCollection<InfoSection> InfoSections { get; } = new();
+        public ObservableCollection<InfoSection> InfoSections { get; } = [];
 
         public EmployeeViewModel(Employee employee)
         {

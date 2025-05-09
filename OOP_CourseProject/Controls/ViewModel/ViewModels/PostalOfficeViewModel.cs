@@ -10,7 +10,7 @@ namespace OOP_CourseProject.Controls.ViewModel
 {
     public class PostalOfficeViewModel : IInfoProviderViewModel
     {
-        public ObservableCollection<InfoSection> InfoSections { get; } = new();
+        public ObservableCollection<InfoSection> InfoSections { get; } = [];
 
         public PostalOfficeViewModel(PostalOffice po)
         {

@@ -10,7 +10,7 @@ namespace OOP_CourseProject.Controls.ViewModel
 {
     public class StaffListViewModel : IInfoProviderViewModel
     {
-        public ObservableCollection<InfoSection> InfoSections { get; } = new();
+        public ObservableCollection<InfoSection> InfoSections { get; } = [];
 
         public StaffListViewModel(IEnumerable<Employee> staff)
         {

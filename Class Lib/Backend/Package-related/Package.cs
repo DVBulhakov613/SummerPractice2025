@@ -23,7 +23,6 @@ namespace Class_Lib.Backend.Package_related
         public List<Content> DeclaredContent { get; private set; } = [];
         public PackageType Type { get; private set; }
 
-        public uint DeliveryID { get; set; } // foreign key for Delivery
         public Delivery Delivery { get; set; }
 
         protected Package() => RowVersion = Array.Empty<byte>();
