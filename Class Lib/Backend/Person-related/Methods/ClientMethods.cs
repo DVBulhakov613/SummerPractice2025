@@ -17,7 +17,7 @@ namespace Class_Lib.Backend.Person_related.Methods
         }
 
         // Create
-        public async Task AddClientAsync(Employee user, Client client)
+        public async Task AddAsync(Employee user, Client client)
         {
             if (!user.HasPermission(AccessService.PermissionKey.CreatePerson))
             {
@@ -28,7 +28,7 @@ namespace Class_Lib.Backend.Person_related.Methods
         }
 
         // Read
-        public async Task<IEnumerable<Client>> GetClientsByCriteriaAsync(Employee user, Expression<Func<Client, bool>> filter)
+        public async Task<IEnumerable<Client>> GetByCriteriaAsync(Employee user, Expression<Func<Client, bool>> filter)
         {
             if (!user.HasPermission(AccessService.PermissionKey.ReadPerson))
             {
@@ -40,8 +40,23 @@ namespace Class_Lib.Backend.Person_related.Methods
                 .ExecuteAsync();
         }
 
+        // Update
+        public async Task UpdateAsync(Employee user, Client updatedClient)
+        {
+            if (!user.HasPermission(AccessService.PermissionKey.UpdatePerson))
+            {
+                throw new UnauthorizedAccessException("Немає доступу до оновлення клієнта.");
+            }
+            var existingClient = await _clientRepository.GetByIdAsync(updatedClient.ID);
+            if (existingClient == null)
+            {
+                throw new KeyNotFoundException("Клієнт не знайдений.");
+            }
+            await _clientRepository.UpdateAsync(updatedClient);
+        }
+
         // Delete
-        public async Task DeleteClientAsync(Employee user, Client client)
+        public async Task DeleteAsync(Employee user, Client client)
         {
             if (!user.HasPermission(AccessService.PermissionKey.DeletePerson))
             {

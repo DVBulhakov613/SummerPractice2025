@@ -18,7 +18,7 @@ namespace Class_Lib.Backend.Package_related.Methods
         }
 
         // Create
-        public async Task AddContentAsync(Employee user, Content content)
+        public async Task AddAsync(Employee user, Content content)
         {
             if (!user.HasPermission(AccessService.PermissionKey.CreateContent))
             {
@@ -29,7 +29,7 @@ namespace Class_Lib.Backend.Package_related.Methods
         }
 
         // Read
-        public async Task<IEnumerable<Content>> GetContentsByCustomCriteriaAsync(Employee user, Expression<Func<Content, bool>> filter)
+        public async Task<IEnumerable<Content>> GetByCustomCriteriaAsync(Employee user, Expression<Func<Content, bool>> filter)
         {
             if (!user.HasPermission(AccessService.PermissionKey.ReadContent))
             {
@@ -42,7 +42,7 @@ namespace Class_Lib.Backend.Package_related.Methods
         }
 
         // Update
-        public async Task UpdateContentAsync(Employee user, Content content)
+        public async Task UpdateAsync(Employee user, Content content)
         {
             if (!user.HasPermission(AccessService.PermissionKey.UpdateContent))
             {
@@ -53,7 +53,7 @@ namespace Class_Lib.Backend.Package_related.Methods
         }
 
         // Delete
-        public async Task DeleteContentAsync(Employee user, Content content)
+        public async Task DeleteAsync(Employee user, Content content)
         {
             if (!user.HasPermission(AccessService.PermissionKey.DeleteContent))
             {

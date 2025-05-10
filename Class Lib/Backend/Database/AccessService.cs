@@ -195,7 +195,7 @@ namespace Class_Lib.Backend.Services
 
         public async Task CachePermissionsAsync(Employee employee)
         {
-            if (employee.RoleID == 0)
+            if (employee.Role == null || employee.RoleID == 0)
                 throw new InvalidOperationException("Працівник не має ролі.");
 
             var permissions = await _context.RolePermissions

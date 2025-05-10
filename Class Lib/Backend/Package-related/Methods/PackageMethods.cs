@@ -19,7 +19,7 @@ namespace Class_Lib.Backend.Package_related.Methods
         }
 
         // Create
-        public async Task AddPackageAsync(Employee user, Package package)
+        public async Task AddAsync(Employee user, Package package)
         {
             if (!user.HasPermission(AccessService.PermissionKey.CreatePackage))
             {
@@ -43,7 +43,7 @@ namespace Class_Lib.Backend.Package_related.Methods
         }
 
         // Update
-        public async Task UpdatePackageAsync(Employee user, Package package)
+        public async Task UpdateAsync(Employee user, Package package)
         {
             if (!user.HasPermission(AccessService.PermissionKey.UpdatePackage))
             {
@@ -54,7 +54,7 @@ namespace Class_Lib.Backend.Package_related.Methods
         }
 
         // Delete
-        public async Task DeletePackageAsync(Employee user, Package package)
+        public async Task DeleteAsync(Employee user, Package package)
         {
             if (!user.HasPermission(AccessService.PermissionKey.DeletePackage))
             {

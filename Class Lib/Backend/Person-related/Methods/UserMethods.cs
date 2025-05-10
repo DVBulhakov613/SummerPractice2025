@@ -17,7 +17,7 @@ namespace Class_Lib.Backend.Person_related.Methods
         }
 
         // Create
-        public async Task AddUserAsync(Employee user, User newUser)
+        public async Task AddAsync(Employee user, User newUser)
         {
             if (!user.HasPermission(AccessService.PermissionKey.CreateUser))
             {
@@ -28,7 +28,7 @@ namespace Class_Lib.Backend.Person_related.Methods
         }
 
         // Read
-        public async Task<IEnumerable<User>> GetUsersByCustomCriteriaAsync(Employee user, Expression<Func<User, bool>> filter)
+        public async Task<IEnumerable<User>> GetByCustomCriteriaAsync(Employee user, Expression<Func<User, bool>> filter)
         {
             if (!user.HasPermission(AccessService.PermissionKey.ReadPerson))
             {
@@ -41,7 +41,7 @@ namespace Class_Lib.Backend.Person_related.Methods
         }
 
         // Update
-        public async Task UpdateUserAsync(Employee user, User updatedUser)
+        public async Task UpdateAsync(Employee user, User updatedUser)
         {
             if (!user.HasPermission(AccessService.PermissionKey.CreateUser))
             {
@@ -52,7 +52,7 @@ namespace Class_Lib.Backend.Person_related.Methods
         }
 
         // Delete
-        public async Task DeleteUserAsync(Employee user, User targetUser)
+        public async Task DeleteAsync(Employee user, User targetUser)
         {
             if (!user.HasPermission(AccessService.PermissionKey.DeleteUser))
             {

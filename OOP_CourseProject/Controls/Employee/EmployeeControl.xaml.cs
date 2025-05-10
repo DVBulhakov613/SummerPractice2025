@@ -59,7 +59,7 @@ namespace OOP_CourseProject.Controls
                 {
                     try
                     {
-                        await _employeeMethods.DeleteEmployeeAsync(App.CurrentEmployee, selectedEmployee);
+                        await _employeeMethods.DeleteAsync(App.CurrentEmployee, selectedEmployee);
                     }
                     catch (Exception ex)
                     {

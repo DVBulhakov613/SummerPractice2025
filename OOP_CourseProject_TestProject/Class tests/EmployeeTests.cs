@@ -11,17 +11,16 @@ using Class_Lib.Database.Repositories;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Options;
+using OOP_CourseProject_TestProject.Class_tests;
 using System.Diagnostics;
 namespace OOP_CourseProject_TestProject
 {
     [TestClass]
-    public class EmployeeTests
+    public class EmployeeTests : TestTemplate
     {
-        private AppDbContext _context;
         private EmployeeRepository _repository;
         private EmployeeMethods _employeeMethods;
 
-        private Employee _adminUser = new("admin", "dummy", "+000000000000", "dummy@dummy.com", 1, null);
         //private Employee _managerUser = new("manager", "dummy", "+000000000000", "dummy@dummy.com", 2, null);
         //private Employee _workerUser = new("worker", "dummy", "+000000000000", "dummy@dummy.com", 3, null);
         private Employee _employee1;
@@ -30,31 +29,18 @@ namespace OOP_CourseProject_TestProject
 
 
         [TestInitialize]
-        public async Task Setup()
+        public void Initialize()
         {
-            var services = new ServiceCollection();
-
-            services.AddDbContext<AppDbContext>(options =>
-                options.UseInMemoryDatabase($"TestDatabase_{Guid.NewGuid()}"));
-
-            services.AddBackendServices(_adminUser); // connection string ignored
-
-            var provider = services.BuildServiceProvider();
-            _context = provider.GetRequiredService<AppDbContext>();
-            _repository = provider.GetRequiredService<EmployeeRepository>();
-            _employeeMethods = provider.GetRequiredService<EmployeeMethods>();
+            base.Setup();
+            _repository = _provider.GetRequiredService<EmployeeRepository>();
+            _employeeMethods = _provider.GetRequiredService<EmployeeMethods>();
 
             _employee1 = new("John", "Doe", "+000000000000", "example@example.com", "Працівник", _workplace);
             _employee2 = new("Jane", "Boe", "+000000000000", "example@example.com", "Працівник", _workplace);
         }
 
-
         [TestCleanup]
-        public void Cleanup()
-        {
-            _context.Database.EnsureDeleted();
-            _context.Dispose();
-        }
+        public void Clear() => base.Cleanup();
 
         [TestMethod]
         public async Task GetEmployeesByIdAsync()
@@ -138,6 +124,7 @@ namespace OOP_CourseProject_TestProject
             Assert.AreEqual("John Doe", employees.First().FullName);
         }
 
+        // Create / With permission
         [TestMethod]
         public async Task AddEmployeeAsync_ShouldAddEmployee_WhenUserHasPermission()
         {
@@ -146,7 +133,7 @@ namespace OOP_CourseProject_TestProject
             var newEmployee = new Employee("New", "Працівник", "+987654321", "example@email.com", "Працівник", _workplace);
 
             // Act
-            await _employeeMethods.AddEmployeeAsync(_adminUser, newEmployee);
+            await _employeeMethods.AddAsync(_adminUser, newEmployee);
             var employees = await _repository.GetAllAsync();
 
             // Assert
@@ -154,6 +141,7 @@ namespace OOP_CourseProject_TestProject
             Assert.AreEqual("New", employees.First().FirstName);
         }
 
+        // Create / Without permission
         [TestMethod]
         [ExpectedException(typeof(UnauthorizedAccessException))]
         public async Task AddEmployeeAsync_ShouldThrowException_WhenUserLacksPermission()
@@ -163,19 +151,19 @@ namespace OOP_CourseProject_TestProject
             var newEmployee = new Employee("New", "Працівник", "+987654321", "example@email.com", "Працівник", _workplace);
 
             // Act
-            await _employeeMethods.AddEmployeeAsync(user, newEmployee);
+            await _employeeMethods.AddAsync(user, newEmployee);
         }
 
         [TestMethod]
-        [Ignore]
         public async Task DeleteEmployeeAsync_ShouldDeleteEmployee_WhenUserHasPermission()
         {
             // Arrange
             _adminUser.CachedPermissions.Add((int)AccessService.PermissionKey.DeletePerson);
+            _employee1.Role = new Role { ID = 999999, Name = "TestRole" };
             await _repository.AddAsync(_employee1);
 
             // Act
-            await _employeeMethods.DeleteEmployeeAsync(_adminUser, _employee1);
+            await _employeeMethods.DeleteAsync(_adminUser, _employee1);
             var employees = await _repository.GetAllAsync();
 
             // Assert
@@ -183,26 +171,30 @@ namespace OOP_CourseProject_TestProject
         }
 
         [TestMethod]
-        [Ignore]
         [ExpectedException(typeof(InvalidOperationException))]
         public async Task DeleteEmployeeAsync_ShouldThrowException_WhenDeletingLastAdministrator()
         {
             // Arrange
             var admin = new Employee("Admin", "User", "+123456789", "admin@example.com", "Системний Адміністратор", _workplace);
+            admin.Role = new Role { ID = 1, Name = "Системний Адміністратор" };
             _adminUser.CachedPermissions.Add((int)AccessService.PermissionKey.DeletePerson);
             await _repository.AddAsync(admin);
 
             // Act
-            await _employeeMethods.DeleteEmployeeAsync(_adminUser, admin);
+            await _employeeMethods.DeleteAsync(_adminUser, admin);
         }
 
         [TestMethod]
-        [Ignore]
         public async Task PromoteEmployeeToManager_ShouldPromoteToManager()
         {
             // Arrange
+            var rolerepo = _provider.GetRequiredService<RoleRepository>();
+            await rolerepo.AddAsync(new Role { ID = 2, Name = "Менеджер" });
+
             _adminUser.CachedPermissions.Add((int)AccessService.PermissionKey.UpdatePerson);
             var employee = new Employee("Name", "Surname", "+123456789", "example@example.com", "Працівник", _workplace);
+            employee.Role = new Role { ID = 999999, Name = "TestRole" };
+
             await _repository.AddAsync(_adminUser);
             await _repository.AddAsync(employee);
 
@@ -233,11 +225,14 @@ namespace OOP_CourseProject_TestProject
         }
 
         [TestMethod]
-        [Ignore]
         public async Task PromoteToAdministratorAsync_ShouldPromoteEmployeeToAdministrator()
         {
             // Arrange
+            var rolerepo = _provider.GetRequiredService<RoleRepository>();
+            await rolerepo.AddAsync(new Role { ID = 1, Name = "Системний Адміністратор" });
+
             _adminUser.CachedPermissions.Add((int)AccessService.PermissionKey.UpdatePerson);
+            _employee1.Role = new Role { ID = 999999, Name = "TestRole" };
             await _repository.AddAsync(_employee1);
 
             // Act
@@ -249,11 +244,14 @@ namespace OOP_CourseProject_TestProject
         }
 
         [TestMethod]
-        [Ignore]
         public async Task PromoteEmployeeToAdministrator_ShouldUpdateRoleCorrectly()
         {
             // Arrange
+            var rolerepo = _provider.GetRequiredService<RoleRepository>();
+            await rolerepo.AddAsync(new Role { ID = 1, Name = "Системний Адміністратор" });
+
             _adminUser.CachedPermissions.Add((int)AccessService.PermissionKey.UpdatePerson);
+            _employee1.Role = new Role { ID = 999999, Name = "TestRole" };
             await _repository.AddAsync(_employee1);
 
             // Act
@@ -268,12 +266,12 @@ namespace OOP_CourseProject_TestProject
 
 
         [TestMethod]
-        [Ignore]
         public async Task ManagerData_ShouldPersistCorrectly()
         {
             // Arrange
             var workplace = new Warehouse(new Coordinates(50.45, 30.52, "Kyiv", "Ukraine"), 0, false);
             var manager = new Employee("Manager", "NotUser", "+123456789", "manager@example.com", "Менеджер", _workplace);
+            manager.Role = new Role { ID = 2, Name = "Менеджер" };
 
             manager.ManagedLocations = new List<BaseLocation>
                     {

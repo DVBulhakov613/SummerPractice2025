@@ -16,7 +16,8 @@ namespace Class_Lib.Backend.Database.Repositories
         public async Task<User?> GetByUsernameAsync(string username)
         {
             return await _context.Users
-                .Include(u => u.Employee) // include related Person data
+                .Include(u => u.Employee)
+                .ThenInclude(u => u.Role) // include related Employee data
                 .FirstOrDefaultAsync(u => u.Username == username);
         }
     }

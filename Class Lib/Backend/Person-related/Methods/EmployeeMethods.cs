@@ -25,7 +25,7 @@ namespace Class_Lib.Backend.Person_related.Methods
 
 
         // Create
-        public async Task AddEmployeeAsync(Employee user, Employee employee)
+        public async Task AddAsync(Employee user, Employee employee)
         {
             if (!user.HasPermission(AccessService.PermissionKey.CreatePerson))
             {
@@ -48,7 +48,7 @@ namespace Class_Lib.Backend.Person_related.Methods
         }
 
         // Update
-        public async Task UpdateEmployeeAsync(Employee user, Employee updatedEmployee)
+        public async Task UpdateAsync(Employee user, Employee updatedEmployee)
         {
             if (!user.HasPermission(AccessService.PermissionKey.UpdatePerson))
             {
@@ -69,11 +69,16 @@ namespace Class_Lib.Backend.Person_related.Methods
         }
 
         // Delete
-        public async Task DeleteEmployeeAsync(Employee user, Employee employeeToDelete)
+        public async Task DeleteAsync(Employee user, Employee employeeToDelete)
         {
             if (!user.HasPermission(AccessService.PermissionKey.DeletePerson))
             {
                 throw new UnauthorizedAccessException("Немає доступу до видалення працівника.");
+            }
+
+            if(employeeToDelete.Role == null)
+            {
+                throw new ArgumentNullException("Роль працівника не знайдена.");
             }
 
             if (employeeToDelete.Role.Name == "Системний Адміністратор")

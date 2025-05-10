@@ -1,31 +1,48 @@
 ﻿tests needed for:
 Person
     Employee
-        GetEmployeesByWorkplaceIdAsync          (done)
-        GetEmployeesByFirstNameAsync            (done)
-        GetEmployeesByLastNameAsync             (done)
-        GetEmployeesByFullNameAsync             (done)
-        EmployeeRepository
-            GetEmployeesByCriteria              
-                GetEmployeesByIDAsync           
-                GetEmployeesByWorkplaceIdAsync  (done)
-                GetEmployeesByFirstNameAsync    (done)
-                GetEmployeesByLastNameAsync     (done)
-                GetEmployeesByFullNameAsync     (done)
+        AddAsync
+        GetByCriteriaAsync
+        UpdateAsync
+        DeleteAsync
+        PromoteToManagerAsync
+        PromoteToAdministratorAsync
+
     Client
-        GetClientsByFirstNameAsync
-        GetClientsByLastNameAsync
-        GetClientsByFullNameAsync
-        ClientRepository
-            GetClientsByCriteria
-                GetClientsByIDAsync
-                GetClientsByFirstNameAsync
-                GetClientsByLastNameAsync
-                GetClientsByFullNameAsync
-    PersonMethods
-        AddEmployeeAsync
-        AddClientAsync
-        DeleteAdministratorAsync
+        AddAsync
+        GetByCriteriaAsync
+        UpdateAsync
+        DeleteAsync
+
+    User
+        AddAsync
+        GetByCriteriaAsync
+        UpdateAsync
+        DeleteAsync
+
+    Content
+        AddAsync
+        GetByCriteriaAsync
+        UpdateAsync
+        DeleteAsync
+
+    Delivery
+        AddAsync
+        GetByCriteriaAsync
+        UpdateAsync
+        DeleteAsync
+
+    Package
+        AddAsync
+        GetByCriteriaAsync
+        UpdateAsync
+        DeleteAsync
+
+    Location
+        AddAsync
+        GetByCriteriaAsync
+        UpdateAsync
+        DeleteAsync
 
 Package
     Package

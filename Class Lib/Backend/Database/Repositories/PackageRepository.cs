@@ -52,12 +52,6 @@ namespace Class_Lib.Database.Repositories
             return await GetByCriteriaAsync(p => p.Weight >= minWeight && p.Weight <= maxWeight);
         }
 
-        // by package volume
-        public async Task<IEnumerable<Package>> GetByVolumeAsync(uint volume)
-        {
-            return await GetByCriteriaAsync(p => p.Volume == volume);
-        }
-
         public async Task<IEnumerable<Package>> GetByVolumeRangeAsync(uint minVolume, uint maxVolume)
         {
             return await GetByCriteriaAsync(p => p.Volume >= minVolume && p.Volume <= maxVolume);
