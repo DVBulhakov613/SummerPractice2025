@@ -1,0 +1,68 @@
+﻿using Class_Lib;
+using Class_Lib.Backend.Package_related;
+using Class_Lib.Backend.Package_related.Methods;
+using Class_Lib.Backend.Person_related;
+using Microsoft.Extensions.DependencyInjection;
+using System;
+using System.Collections.Generic;
+using System.Linq;
+using System.Text;
+using System.Threading.Tasks;
+
+namespace OOP_CourseProject_TestProject.Class_tests
+{
+    [TestClass]
+    public class ContentTests : TestTemplate
+    {
+        private ContentMethods _contentMethods;
+        private Package _package;
+
+        [TestInitialize]
+        public void Initialize()
+        {
+            base.Setup();
+            _contentMethods = _provider.GetRequiredService<ContentMethods>();
+            Warehouse _sentTo = new Warehouse(new Coordinates(55, 5, "Address", "Region"), 50, false);
+            Warehouse _sentFrom = new Warehouse(new Coordinates(50, 50, "Address", "Region"), 50, false);
+
+            Client _receiver = new Client("First", "Last", "+123456789", "example@example.com");
+            Client _sender = new Client("First", "Last", "+123456789", "example@example.com");
+
+            _package = new Package(10, 10, 10, 5, _sender, _receiver, _sentFrom, _sentTo, new List<Content>(), PackageType.Standard);
+        }
+
+        [TestCleanup]
+        public void Clear() => base.Cleanup();
+
+
+        #region Create
+        [TestMethod]
+        public async Task AddAsync_ShouldAddContent_WhenUserHasPermission() // also checks GetByCriteriaAsync by proxy
+        {
+            // Arrange
+            Content content = new Content("dummy", ContentType.Miscellaneous, 1, _package);
+            // Act
+            await _contentMethods.AddAsync(_adminUser, content);
+            // Assert
+            var contents = await _contentMethods.GetByCriteriaAsync(_adminUser, c => c.Name == "TestContent" && c.Description == "TestDescription");
+            Assert.IsTrue(contents.Any());
+            Assert.AreEqual(content.Name, contents.First().Name);
+            Assert.AreEqual(content.ID, contents.First().ID);
+            Assert.AreEqual(1, contents.Count());
+        }
+
+        [TestMethod]
+        [ExpectedException(typeof(UnauthorizedAccessException))]
+        public async Task AddAsync_ShouldThrowException_WhenUserHasNoPermission()
+        {
+            // Arrange
+            Content content = new("TestContent", "TestDescription", 1);
+            Employee dummy = new()
+            {
+                Role = new Role { ID = 999999, Name = "TestRole" }
+            };
+            // Act
+            await _contentMethods.AddAsync(dummy, content);
+        }
+    }
+}

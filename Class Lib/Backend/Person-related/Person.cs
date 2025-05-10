@@ -23,11 +23,32 @@ namespace Class_Lib
 
         public Person(string name, string surname, string phoneNumber, string email)
         {
+            var exceptions = new List<Exception>();
+
+            if (string.IsNullOrWhiteSpace(name))
+                exceptions.Add(new ArgumentException("Поле \"Ім'я\" не може бути пустим."));
+
+            if (string.IsNullOrWhiteSpace(surname))
+                exceptions.Add(new ArgumentException("Поле \"Прізвище\" не може бути пустим."));
+
+            if (string.IsNullOrWhiteSpace(phoneNumber))
+                exceptions.Add(new ArgumentException("Поле \"Телефон\" не може бути пустим."));
+
+            if (string.IsNullOrWhiteSpace(email))
+                exceptions.Add(new ArgumentException("Поле \"Електронна пошта\" не може бути пустим."));
+
+            if(!Regex.IsMatch(phoneNumber, @"^\+?\d{1,3}?[-.\s]?\(?\d{1,4}?\)?[-.\s]?\d{1,4}[-.\s]?\d{1,9}$"))
+                exceptions.Add(new ArgumentException("Поле \"Телефон\" повинно містити лише цифри та дозволені спеціальні символи."));
+            if (!Regex.IsMatch(email, @"^[^@\s]+@[^@\s]+\.[^@\s]+$"))
+                exceptions.Add(new ArgumentException("Поле \"Електронна пошта\" повинна бути в форматі \"[текст]@[текст].[текст]\" ."));
+            
+            if (exceptions.Count > 0)
+                throw new AggregateException("Помилки при створенні особи.", exceptions);
+
             FirstName = name;
             Surname = surname;
             PhoneNumber = phoneNumber;
-            if(Regex.IsMatch(email, @"^[^@\s]+@[^@\s]+\.[^@\s]+$"))
-                Email = email;
+            Email = email;
 
             RowVersion = Array.Empty<byte>();
         }

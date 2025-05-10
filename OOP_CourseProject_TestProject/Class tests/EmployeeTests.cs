@@ -10,10 +10,9 @@ using Class_Lib.Backend.Services;
 using Class_Lib.Database.Repositories;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.DependencyInjection;
-using Microsoft.Extensions.Options;
-using OOP_CourseProject_TestProject.Class_tests;
-using System.Diagnostics;
-namespace OOP_CourseProject_TestProject
+
+
+namespace OOP_CourseProject_TestProject.Class_tests
 {
     [TestClass]
     public class EmployeeTests : TestTemplate

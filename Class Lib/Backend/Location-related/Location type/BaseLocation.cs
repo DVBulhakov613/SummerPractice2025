@@ -16,8 +16,16 @@ namespace Class_Lib
         }
         public BaseLocation(Coordinates geoData, List<Employee>? staff = null)
         {
-            GeoData = geoData;
-            if(staff != null)
+            var exceptions = new List<Exception>();
+
+            if (geoData == null)
+                exceptions.Add(new ArgumentNullException(nameof(geoData), "Локація повинна мати геологічні дані."));
+            else
+                GeoData = geoData;
+            if (exceptions.Count > 0)
+                throw new AggregateException("Помилки при створенні локації.", exceptions);
+
+            if (staff != null)
                 Staff = staff;
 
             RowVersion = Array.Empty<byte>();
@@ -25,22 +33,18 @@ namespace Class_Lib
 
         public void AddEmployee(Employee employee)
         {
-            if (!Staff.Contains(employee))
+            if (Staff.Contains(employee))
             {
-                Staff.Add(employee);
+                throw new ArgumentException("Працівник вже існує в списку.");
             }
             else
             {
-                throw new ArgumentException("Працівник вже існує в списку.");
+                Staff.Add(employee);
             }
         }
         public void RemoveEmployee(Employee employee)
         {
-            if (Staff.Contains(employee))
-            {
-                Staff.Remove(employee);
-            }
-            else
+            if (!Staff.Remove(employee))
             {
                 throw new ArgumentException("Вказаного працівника не знайдено в списку.");
             }

@@ -5,7 +5,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace OOP_CourseProject_TestProject
+namespace OOP_CourseProject_TestProject.Class_tests
 {
     [TestClass]
     public class CoordinatesTests
@@ -28,7 +28,7 @@ namespace OOP_CourseProject_TestProject
         public void Coordinates_InvalidCoordinates_ShouldThrowException(double latitude, double longitude, string address, string region)
         {
             // arrange & act & assert
-            Assert.ThrowsException<ArgumentException>(() => new Coordinates(latitude, longitude, address, region));
+            Assert.ThrowsException<AggregateException>(() => new Coordinates(latitude, longitude, address, region));
         }
     }
 }

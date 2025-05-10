@@ -19,6 +19,7 @@ namespace Class_Lib.Backend.Person_related.Methods
         // Create
         public async Task AddAsync(Employee user, Client client)
         {
+            if(client == null) { throw new ArgumentNullException("Не можна додати нічого."); };
             if (!user.HasPermission(AccessService.PermissionKey.CreatePerson))
             {
                 throw new UnauthorizedAccessException("Немає доступу до створення клієнта.");
@@ -30,6 +31,7 @@ namespace Class_Lib.Backend.Person_related.Methods
         // Read
         public async Task<IEnumerable<Client>> GetByCriteriaAsync(Employee user, Expression<Func<Client, bool>> filter)
         {
+            if(filter == null) { throw new ArgumentNullException("Пустий фільтр пошуку."); };
             if (!user.HasPermission(AccessService.PermissionKey.ReadPerson))
             {
                 throw new UnauthorizedAccessException("Немає доступу до перегляду клієнтів.");
@@ -43,6 +45,7 @@ namespace Class_Lib.Backend.Person_related.Methods
         // Update
         public async Task UpdateAsync(Employee user, Client updatedClient)
         {
+            if(updatedClient == null) { throw new ArgumentNullException("Шаблон оновлених даних відсутній."); };
             if (!user.HasPermission(AccessService.PermissionKey.UpdatePerson))
             {
                 throw new UnauthorizedAccessException("Немає доступу до оновлення клієнта.");
@@ -58,6 +61,7 @@ namespace Class_Lib.Backend.Person_related.Methods
         // Delete
         public async Task DeleteAsync(Employee user, Client client)
         {
+            if(client == null) { throw new ArgumentNullException("Не можна видалити нічого."); };
             if (!user.HasPermission(AccessService.PermissionKey.DeletePerson))
             {
                 throw new UnauthorizedAccessException("Немає доступу до видалення клієнта.");

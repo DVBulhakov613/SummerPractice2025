@@ -218,12 +218,12 @@ namespace OOP_CourseProject_TestProject
             _context.PostalOffices.Add(_workplace);
 
             _context.Employees.AddRange(
-                new Employee("Joe", "Jones", "+123456789", "example@example.com", "Менеджер", _workplace),
-                new Employee("Joe", "Smith", "+123456789", "example@example.com", "Працівник", _workplace),
-                new Employee("Jane", "White", "+123456789", "example@example.com", "Працівник", _workplace),
-                new Employee("John", "Jones", "+123456789", "example@example.com", "Працівник", _workplace),
-                new Employee("Alice", "Jenkins", "+123456789", "example@example.com", "Працівник", _workplace),
-                new Employee("Peter", "Brown", "+123456789", "example@example.com", "Працівник", _workplace)
+                new Employee("Joe", "Jones", "+123456789012", "example@example.com", "Менеджер", _workplace),
+                new Employee("Joe", "Smith", "+123456789012", "example@example.com", "Працівник", _workplace),
+                new Employee("Jane", "White", "+123456789012", "example@example.com", "Працівник", _workplace),
+                new Employee("John", "Jones", "+123456789012", "example@example.com", "Працівник", _workplace),
+                new Employee("Alice", "Jenkins", "+123456789012", "example@example.com", "Працівник", _workplace),
+                new Employee("Peter", "Brown", "+123456789012", "example@example.com", "Працівник", _workplace)
             );
 
             _repository = new EmployeeRepository(_context, _user);

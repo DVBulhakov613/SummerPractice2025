@@ -9,21 +9,71 @@ namespace Class_Lib.Backend.Package_related
 {
     public class Package
     {
+        private uint length;
+        private uint width;
+        private uint height;
+        private double weight;
+
         public uint ID { get; private set; }
         public PackageStatus PackageStatus { get; set; } = PackageStatus.STORED;
         public DateTime CreatedAt { get; private set; }
 
-        public uint Length { get; set; }
-        public uint Width { get; set; }
-        public uint Height { get; set; }
-        [NotMapped] public string Dimensions => $"{Length}x{Width}x{Height}"; // string representation of dimensions
-        public double Weight { get; set; }
-        [NotMapped] public double Volume { get => Length * Width * Height; }
+        public uint Length
+        {
+            get => length;
+            set
+            {
+                if (value == 0)
+                    throw new ArgumentOutOfRangeException(nameof(Length), "Довжина повинна бути більше 0.");
+                length = value;
+            }
+        }
+
+        public uint Width
+        {
+            get => width;
+            set
+            {
+                if (value == 0)
+                    throw new ArgumentOutOfRangeException(nameof(Width), "Ширина повинна бути більше 0.");
+                width = value;
+            }
+        }
+
+        public uint Height
+        {
+            get => height;
+            set
+            {
+                if (value == 0)
+                    throw new ArgumentOutOfRangeException(nameof(Height), "Висота повинна бути більше 0.");
+                height = value;
+            }
+        }
+
+        [NotMapped]
+        public string Dimensions => $"{Length}x{Width}x{Height}";
+
+        public double Weight
+        {
+            get => weight;
+            set
+            {
+                if (value <= 0)
+                    throw new ArgumentOutOfRangeException(nameof(Weight), "Вага повинна бути більше 0.");
+                weight = value;
+            }
+        }
+
+        [NotMapped]
+        public double Volume => Length * Width * Height;
 
         public List<Content> DeclaredContent { get; private set; } = [];
+
         public PackageType Type { get; private set; }
 
         public Delivery Delivery { get; set; }
+
 
         protected Package() => RowVersion = Array.Empty<byte>();
 
@@ -31,10 +81,31 @@ namespace Class_Lib.Backend.Package_related
             Client sender, Client receiver, Warehouse sentFrom, Warehouse sentTo, 
             List<Content> declaredContent, PackageType type)
         {
-            Length = length;
-            Width = width;
-            Height = height;
-            Weight = weight;
+            var exceptions = new List<Exception>();
+
+            try
+            { Length = length; }
+            catch (Exception ex)
+            { exceptions.Add(ex); }
+            
+            try
+            { Width = width; }
+            catch (Exception ex)
+            { exceptions.Add(ex); }
+
+            try
+            { Height = height; }
+            catch (Exception ex)
+            { exceptions.Add(ex); }
+
+            try
+            { Weight = weight; }
+            catch (Exception ex)
+            { exceptions.Add(ex); }
+
+            if (exceptions.Count > 0)
+                throw new AggregateException("Помилки при створенні посилки.", exceptions);
+
             DeclaredContent = declaredContent;
             Type = type;
 

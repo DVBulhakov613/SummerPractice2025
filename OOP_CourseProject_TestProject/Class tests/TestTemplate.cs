@@ -12,6 +12,7 @@ namespace OOP_CourseProject_TestProject.Class_tests
         protected RoleService _roleService;
         protected IServiceProvider _provider;
         protected Employee _adminUser = new("Admin", "Admin", "+000000000", "admin@domain.com", 0, null);
+        protected Employee _unauth = new("unauth", "unauth", "+000000000", "unauth@unauth.uat", 0, null);
 
         protected virtual void Setup()
         {

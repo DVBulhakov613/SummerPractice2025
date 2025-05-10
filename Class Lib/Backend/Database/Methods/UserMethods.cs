@@ -19,6 +19,8 @@ namespace Class_Lib.Backend.Person_related.Methods
         // Create
         public async Task AddAsync(Employee user, User newUser)
         {
+            if(newUser == null) { throw new ArgumentNullException(""); }
+
             if (!user.HasPermission(AccessService.PermissionKey.CreateUser))
             {
                 throw new UnauthorizedAccessException("Немає дозволу створювати користувачів.");
@@ -30,6 +32,8 @@ namespace Class_Lib.Backend.Person_related.Methods
         // Read
         public async Task<IEnumerable<User>> GetByCustomCriteriaAsync(Employee user, Expression<Func<User, bool>> filter)
         {
+            if(filter == null) { throw new ArgumentNullException(""); }
+
             if (!user.HasPermission(AccessService.PermissionKey.ReadPerson))
             {
                 throw new UnauthorizedAccessException("Немає доступу до перегляду користувачів.");
@@ -43,6 +47,8 @@ namespace Class_Lib.Backend.Person_related.Methods
         // Update
         public async Task UpdateAsync(Employee user, User updatedUser)
         {
+            if(updatedUser == null) { throw new ArgumentNullException(""); }
+
             if (!user.HasPermission(AccessService.PermissionKey.CreateUser))
             {
                 throw new UnauthorizedAccessException("Немає дозволу змінювати користувачів.");
@@ -54,12 +60,35 @@ namespace Class_Lib.Backend.Person_related.Methods
         // Delete
         public async Task DeleteAsync(Employee user, User targetUser)
         {
+            if(targetUser == null) { throw new ArgumentNullException(""); }
+
             if (!user.HasPermission(AccessService.PermissionKey.DeleteUser))
             {
                 throw new UnauthorizedAccessException("Немає дозволу видаляти користувачів.");
             }
 
             await _userRepository.DeleteAsync(targetUser);
+        }
+
+
+        // Delete by ID
+        public async Task DeleteAsync(Employee user, string targetUser)
+        {
+            if (targetUser == null) { throw new ArgumentNullException(""); }
+
+            if (!user.HasPermission(AccessService.PermissionKey.DeleteUser))
+            {
+                throw new UnauthorizedAccessException("Немає дозволу видаляти користувачів.");
+            }
+
+            var users = await _userRepository.Query()
+                .Where(x => x.Username == targetUser)
+                .ExecuteAsync();
+            User target = users.FirstOrDefault();
+            if(target == null)
+            { throw new ArgumentNullException("Користувача не знайдено."); }
+
+            await _userRepository.DeleteAsync(target);
         }
     }
 }

@@ -71,10 +71,22 @@ namespace Class_Lib
         }
         public Coordinates(double? latitude, double? longitude, string? address, string region)
         {
-            Latitude = latitude;
-            Longitude = longitude;
-            Address = address;
-            Region = region;
+            var exceptions = new List<Exception>();
+
+            try { Latitude = latitude; }
+            catch (Exception ex) { exceptions.Add(ex); }
+            
+            try { Longitude = longitude; }
+            catch (Exception ex) { exceptions.Add(ex); }
+            
+            try { Address = address; }
+            catch (Exception ex) { exceptions.Add(ex); }
+            
+            try { Region = region; }
+            catch (Exception ex) { exceptions.Add(ex); }
+
+            if (exceptions.Count > 0)
+                throw new AggregateException("Помилки при створенні координат.", exceptions);           
         }
 
         //[Timestamp] // concurrency token property

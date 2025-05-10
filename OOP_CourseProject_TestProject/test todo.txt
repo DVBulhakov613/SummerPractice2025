@@ -1,24 +1,24 @@
 ﻿tests needed for:
 Person
     Employee
-        AddAsync
-        GetByCriteriaAsync
-        UpdateAsync
-        DeleteAsync
-        PromoteToManagerAsync
-        PromoteToAdministratorAsync
+        AddAsync                    (done)
+        GetByCriteriaAsync          (done)
+        UpdateAsync                 (done)
+        DeleteAsync                 (done)
+        PromoteToManagerAsync       (done)
+        PromoteToAdministratorAsync (done)
 
     Client
-        AddAsync
-        GetByCriteriaAsync
-        UpdateAsync
-        DeleteAsync
+        AddAsync                    (done)
+        GetByCriteriaAsync          (done)
+        UpdateAsync                 (done)
+        DeleteAsync                 (done)
 
     User
-        AddAsync
-        GetByCriteriaAsync
-        UpdateAsync
-        DeleteAsync
+        AddAsync                    (done)
+        GetByCriteriaAsync          (done)
+        UpdateAsync                 (done)
+        DeleteAsync                 (done)
 
     Content
         AddAsync
@@ -33,6 +33,12 @@ Person
         DeleteAsync
 
     Package
+        AddAsync
+        GetByCriteriaAsync
+        UpdateAsync
+        DeleteAsync
+
+    PackageEvent
         AddAsync
         GetByCriteriaAsync
         UpdateAsync

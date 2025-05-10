@@ -19,6 +19,15 @@ namespace Class_Lib
 
         public User(string username, string passwordHash, string role, Employee employee)
         {
+            var exceptions = new List<Exception>();
+            if (string.IsNullOrWhiteSpace(username))
+                exceptions.Add(new ArgumentNullException(nameof(username), "Username cannot be null or empty."));
+            if (string.IsNullOrWhiteSpace(passwordHash))
+                exceptions.Add(new ArgumentNullException(nameof(passwordHash), "Password hash cannot be null or empty."));
+
+            if (exceptions.Count > 0)
+                throw new AggregateException("Errors while creating user.", exceptions);
+
             Username = username;
             PasswordHash = passwordHash;
             Role = role;

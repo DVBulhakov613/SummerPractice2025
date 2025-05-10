@@ -12,6 +12,8 @@ namespace Class_Lib
     public class Content
     {
         private string _name;
+        private Package package;
+
         public string Name
         {
             get => _name;
@@ -26,16 +28,40 @@ namespace Class_Lib
         public ContentType Type { get; set; }// type of content (electronics, clothing, etc)
         public uint Amount { get; set; }
         public uint PackageID { get; private set; }
-        public Package Package { get; set; } // the package that this content belongs to
+        public Package Package
+        {
+            get => package;
+            private set => package = value
+                ?? throw new ArgumentNullException(nameof(Package), "Зміст посилки має мати посилку, до якої вона належить.");
+        } // the package that this content belongs to
+
+        public string Description { get; set; } = string.Empty; // description of the content (if any)
         protected Content()
         {
         }
         public Content(string name, ContentType type, uint amount, Package package)
         {
+            var exceptions = new List<Exception>();
+
             Name = name.ToUpper();
             Type = type;
-            Amount = amount;
-            Package = package;
+            if (amount == 0)
+            { exceptions.Add(new ArgumentOutOfRangeException(nameof(Amount), "Існуючий зміст не може мати кількість 0.")); }
+            else
+            { Amount = amount; }
+            
+            try
+            { Package = package; }
+            catch(Exception ex)
+            { exceptions.Add(ex); }
+
+            if (exceptions.Count > 0)
+                throw new AggregateException("Помилки при створенні посилки.", exceptions);
+        }
+
+        public Content(string name, string description, ContentType type, uint amount, Package package) : this(name, type, amount, package)
+        {
+            Description = description;
         }
 
         [Timestamp] // concurrency token property
