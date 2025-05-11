@@ -20,7 +20,6 @@ namespace OOP_CourseProject
             var username = UsernameTextBox.Text;
             var password = PasswordBox.Password;
 
-            var employeeRepository = App.LoginHost.Services.GetRequiredService<EmployeeRepository>();
             var userRepository = App.LoginHost.Services.GetRequiredService<UserRepository>();
             var roleService = App.LoginHost.Services.GetRequiredService<RoleService>();
 
@@ -32,20 +31,23 @@ namespace OOP_CourseProject
                 return;
             }
 
-            await roleService.CachePermissionsAsync(user.Employee);
+            await roleService.CachePermissionsAsync(user);
 
-            var result = await employeeRepository.Query()
-                .Include(e => e.User)
-                .Include(e => e.Role)
-                .Include(e => e.Role.RolePermissions)
-                .Include(e => e.Workplace)
-                .Where(e => e.ID == user.Employee.ID)
-                .ExecuteAsync();
-            App.CurrentEmployee = result[0];
+            var result = await userRepository.GetByCriteriaAsync(e => e.PersonID == user.Employee.ID);
+
+            App.CurrentEmployee = result.First();
             
 
             DialogResult = true; // this is how App.xaml.cs will know login was successful
             Close();
+
+            //var result = await employeeRepository.Query()
+            //    .Include(e => e.User)
+            //    .Include(e => e.Role)
+            //    .Include(e => e.Role.RolePermissions)
+            //    .Include(e => e.Workplace)
+            //    .Where(e => e.ID == user.Employee.ID)
+            //    .ExecuteAsync();
         }
 
         /// <summary>
@@ -57,22 +59,16 @@ namespace OOP_CourseProject
         {
             var username = "d.v.bulhakov";
 
-            var employeeMethods = App.LoginHost.Services.GetRequiredService<EmployeeRepository>();
             var userRepository = App.LoginHost.Services.GetRequiredService<UserRepository>();
             var roleService = App.LoginHost.Services.GetRequiredService<RoleService>();
 
             var user = await userRepository.GetByUsernameAsync(username);
 
-            await roleService.CachePermissionsAsync(user.Employee);
+            await roleService.CachePermissionsAsync(user);
 
-            var result = await employeeMethods.Query()
-                .Include(e => e.User)
-                .Include(e => e.Role)
-                .Include(e => e.Role.RolePermissions)
-                .Include(e => e.Workplace)
-                .Where(e => e.ID == user.Employee.ID)
-                .ExecuteAsync();
-            App.CurrentEmployee = result[0];
+            var result = await userRepository.GetByCriteriaAsync(e => e.PersonID == user.Employee.ID);
+
+            App.CurrentEmployee = result.First();
 
 
             DialogResult = true; // this is how App.xaml.cs will know login was successful

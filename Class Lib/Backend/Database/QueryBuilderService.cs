@@ -1,6 +1,7 @@
 ﻿using Class_Lib.Backend.Package_related;
 using Class_Lib.Backend.Services;
 using Microsoft.EntityFrameworkCore;
+using Microsoft.EntityFrameworkCore.Query;
 using Microsoft.EntityFrameworkCore.Query.SqlExpressions;
 using System;
 using System.Collections.Generic;
@@ -18,152 +19,36 @@ namespace Class_Lib.Backend.Database
     public class QueryBuilderService<T> where T : class
     {
         private IQueryable<T> _query;
-        private Employee? _user;
+        private User? _user;
         private readonly List<Expression<Func<T, bool>>> _filters = new();
-
-        private int? _skip;
-        private int? _take;
-        private Expression<Func<T, object>>? _orderBy;
-        private bool _orderDescending;
-        private readonly List<string> _includes = new();
+        private readonly List<QueryCondition> _conditions = new();
 
 
-        public QueryBuilderService(Employee? user, IQueryable<T> source)
+        public QueryBuilderService(User? user, IQueryable<T> source)
         {
             _query = source;
             _user = user;
         }
 
-        public void AddCondition(QueryCondition condition)
+        public QueryBuilderService<T> AddCondition(QueryCondition condition)
         {
-            var filter = BuildFilter<T>(condition.Field, condition.Operator, condition.Value);
-            _filters.Add(filter);
-        }
-
-        public void AddConditions(List<QueryCondition> conditions)
-        {
-            foreach (var c in conditions)
-                _filters.Add(BuildFilter<T>(c.Field, c.Operator, c.Value));
-        }
-
-        public QueryBuilderService<T> Skip(int count)
-        {
-            _skip = count;
+            _conditions.Add(condition);
             return this;
         }
 
-        public QueryBuilderService<T> Take(int count)
+        public QueryBuilderService<T> AddConditions(IEnumerable<QueryCondition> conditions)
         {
-            _take = count;
+            _conditions.AddRange(conditions);
             return this;
         }
 
-        /// <summary>
-        /// Adds an include expression directly to the query.
-        /// </summary>
-        /// <param name="includeExpression"></param>
-        /// <returns></returns>
-        public QueryBuilderService<T> Include<TProperty>(Expression<Func<T, TProperty>> includeExpression)
+        public Expression<Func<T, bool>> GetPredicate()
         {
-            _query = _query.Include(includeExpression);
-            return this;
+            var param = Expression.Parameter(typeof(T), "x");
+            var body = BuildExpressionRecursive<T>(_conditions, param);
+            return Expression.Lambda<Func<T, bool>>(body ?? Expression.Constant(true), param);
         }
 
-
-
-        public QueryBuilderService<T> OrderBy(Expression<Func<T, object>> keySelector)
-        {
-            _orderBy = keySelector;
-            _orderDescending = false;
-            return this;
-        }
-
-        public QueryBuilderService<T> OrderByDescending(Expression<Func<T, object>> keySelector)
-        {
-            _orderBy = keySelector;
-            _orderDescending = true;
-            return this;
-        }
-
-        /// <summary>
-        /// Adds a Where clause to the query.
-        /// </summary>
-        /// <param name="predicate"></param>
-        /// <returns></returns>
-        public QueryBuilderService<T> Where(Expression<Func<T, bool>> predicate)
-        {
-            _query = _query.Where(predicate);
-            return this;
-        }
-
-        /// <summary>
-        /// Executes the query and returns the results as a list.
-        /// </summary>
-        /// <returns></returns>
-        /// <exception cref="UnauthorizedAccessException"></exception>
-        /// <exception cref="InvalidOperationException"></exception>
-        public async Task<List<T>> ExecuteAsync()
-        {
-            var permission = AccessService.GetReadPermissionForType(typeof(T));
-            if (_user != null && permission.HasValue && !AccessService.CanPerformAction(_user, (int)permission.Value))
-            {
-                throw new UnauthorizedAccessException($"Немає доступу до {typeof(T).Name}.");
-            }
-
-            foreach (var include in _includes)
-                _query = _query.Include(include);
-
-            foreach (var filter in _filters)
-                _query = _query.Where(filter);
-
-            if (_orderBy != null)
-                _query = _orderDescending ? _query.OrderByDescending(_orderBy) : _query.OrderBy(_orderBy);
-
-            if (_skip.HasValue)
-                _query = _query.Skip(_skip.Value);
-
-            if (_take.HasValue)
-                _query = _query.Take(_take.Value);
-
-            try
-            {
-                return await _query.ToListAsync();
-            }
-            catch (Exception ex)
-            {
-                throw new InvalidOperationException($"Не вдалося виконати запит для типу {typeof(T).Name}", ex);
-            }
-        }
-
-
-        //public async Task<List<TResult>> ExecuteAsync<TResult>(Expression<Func<T, TResult>> selector)
-        //{
-        //    var permission = AccessService.GetReadPermissionForType(typeof(T));
-
-        //    if (permission.HasValue && !AccessService.CanPerformAction(_user, (int)permission.Value))
-        //    {
-        //        throw new UnauthorizedAccessException($"You do not have permission to read {typeof(T).Name} data.");
-        //    }
-
-        //    foreach (var filter in _filters)
-        //        _query = _query.Where(filter);
-
-        //    return await _query.Select(selector).ToListAsync();
-        //}
-
-
-        //public List<Expression<Func<T, bool>>> BuildConditions<T>(List<QueryCondition> conditions)
-        //{
-        //    var expressions = new List<Expression<Func<T, bool>>>();
-
-        //    foreach (var condition in conditions)
-        //    {
-        //        var expression = BuildFilter<T>(condition.Field, condition.Operator, condition.Value);
-        //        expressions.Add(expression);
-        //    }
-
-        //    return expressions;
-        //}
 
         public static Expression<Func<T, bool>> BuildFilter<T>(string propertyPath, string operation, object value)
         {
@@ -172,14 +57,13 @@ namespace Class_Lib.Backend.Database
 
             foreach (var member in propertyPath.Split('.'))
             {
-                var propInfo = property.Type.GetProperty(member);
-                if (propInfo == null)
-                    throw new ArgumentException($"'{member}' не знайдено в '{property.Type.Name}'.");
-
+                var propInfo = property.Type.GetProperty(member) ?? throw new ArgumentException($"'{member}' не знайдено в '{property.Type.Name}'.");
                 property = Expression.Property(property, member);
             }
 
-            var constant = Expression.Constant(Convert.ChangeType(value, property.Type));
+            var targetType = Nullable.GetUnderlyingType(property.Type) ?? property.Type;
+            var convertedValue = Convert.ChangeType(value, targetType);
+            var constant = Expression.Constant(convertedValue, property.Type);
 
             Expression comparison = operation switch
             {
@@ -198,19 +82,56 @@ namespace Class_Lib.Backend.Database
             return Expression.Lambda<Func<T, bool>>(comparison, parameter);
         }
 
+        private static Expression? BuildExpressionRecursive<T>(IEnumerable<QueryCondition> conditions, ParameterExpression parameter)
+        {
+            Expression? combined = null;
+
+            foreach (var condition in conditions)
+            {
+                Expression next;
+
+                if (condition.IsGroup)
+                {
+                    var groupExpr = BuildExpressionRecursive<T>(condition.Conditions!, parameter);
+                    if (groupExpr == null) continue;
+                    next = groupExpr;
+                }
+                else
+                {
+                    var filter = BuildFilter<T>(condition.Field!, condition.Operator!, condition.Value!);
+                    next = Expression.Invoke(filter, parameter);
+                }
+
+                if (combined == null)
+                {
+                    combined = next;
+                }
+                else
+                {
+                    combined = condition.Logic.ToUpper() switch
+                    {
+                        "AND" => Expression.AndAlso(combined, next),
+                        "OR" => Expression.OrElse(combined, next),
+                        _ => throw new NotSupportedException($"Логічний оператор '{condition.Logic}' не підтримується.")
+                    };
+                }
+            }
+
+            return combined;
+        }
+
     }
 
     public class QueryCondition
     {
-        public string Field { get; set; }
-        public string Operator { get; set; }
-        public object Value { get; set; }
+        public string? Field { get; set; }
+        public string? Operator { get; set; }
+        public string? Value { get; set; }
 
-        public QueryCondition(string field, string op, object value)
-        {
-            Field = field;
-            Operator = op;
-            Value = value;
-        }
+        public string Logic { get; set; } = "AND"; // "AND" or "OR"
+        public List<QueryCondition>? Conditions { get; set; } // For grouping
+
+        public bool IsGroup => Conditions != null && Conditions.Count > 0;
     }
+
 }

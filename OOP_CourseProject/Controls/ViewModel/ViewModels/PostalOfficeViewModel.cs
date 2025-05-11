@@ -20,8 +20,8 @@ namespace OOP_CourseProject.Controls.ViewModel
                 InfoItems = new List<InfoItem>
                 {
                     new() { Label = "Ідентефікаційний код", Value = $"{po.ID}" },
-                    new() { Label = "Адреса", Value = po.GeoData.Address != null ? po.GeoData.Address : "Невідома"},
-                    new() { Label = "Регіон", Value = po.GeoData.Region != null ? po.GeoData.Region : "Невідомий" },
+                    new() { Label = "Адреса", Value = po.GeoData.Address ?? "Невідома"},
+                    new() { Label = "Регіон", Value = po.GeoData.Region ?? "Невідомий" },
                     new() { Label = "Тип", Value = po.LocationType },
                     //new() { Label = "Працівники: ", Value = po.Staff },
                     //new() { Label = "Посада", Value = po.Role.Name },
@@ -49,8 +49,8 @@ namespace OOP_CourseProject.Controls.ViewModel
                     new InfoItem
                     {
                         Label = "Працівники",
-                        Value = po.Staff == null || po.Staff.Count() == 0 ? "Відсутні" : "Список...",
-                        OnClick = po.Staff == null || po.Staff.Count() == 0 ? null : () =>
+                        Value = po.Staff == null || po.Staff.Count == 0 ? "Відсутні" : "Список...",
+                        OnClick = po.Staff == null || po.Staff.Count == 0 ? null : () =>
                         {
                             var staffViewModel = new StaffListViewModel(po.Staff); // must implement IInfoProviderViewModel
                             var window = new InfoPopupWindow(staffViewModel);

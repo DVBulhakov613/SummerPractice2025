@@ -18,7 +18,7 @@ namespace Class_Lib.Backend.Package_related.Methods
             _deliveryRepository = deliveryRepository;
         }
 
-        public async Task<IEnumerable<Delivery>> GetByCriteriaAsync(Employee user, Expression<Func<Delivery, bool>> predicate)
+        public async Task<IEnumerable<Delivery>> GetByCriteriaAsync(User user, Expression<Func<Delivery, bool>> predicate)
         {
             if (predicate == null) { throw new ArgumentNullException(nameof(predicate), "Пустий фільтр пошуку."); }
             if (!user.HasPermission(AccessService.PermissionKey.ReadDelivery))

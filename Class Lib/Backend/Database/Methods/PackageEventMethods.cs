@@ -12,18 +12,15 @@ namespace Class_Lib.Backend.Database.Methods
             _packageEventRepository = packageEventRepository;
         }
 
-        public async Task<IEnumerable<PackageEvent>> GetAllAsync(Employee user)
+        public async Task<IEnumerable<PackageEvent>> GetAllAsync(User user)
         {
             if(!user.HasPermission(Services.AccessService.PermissionKey.ReadEvent))
                 throw new UnauthorizedAccessException("Немає дозволу до журналу подій.");
 
-            return await _packageEventRepository.Query()
-                .Include(e => e.Package)
-                .Include(e => e.Location)
-                .ExecuteAsync();
+            return await _packageEventRepository.GetByCriteriaAsync(e => true);
         }
 
-        public async Task<IEnumerable<PackageEvent>> GetAllFromDeliveryAsync(Employee user, Delivery delivery)
+        public async Task<IEnumerable<PackageEvent>> GetAllFromDeliveryAsync(User user, Delivery delivery)
         {
             if(delivery == null) { throw new ArgumentNullException(""); };
             if (!user.HasPermission(Services.AccessService.PermissionKey.ReadEvent))
@@ -31,7 +28,7 @@ namespace Class_Lib.Backend.Database.Methods
             return await _packageEventRepository.GetByCriteriaAsync(e => e.Package.Delivery.ID == delivery.ID);
         }
 
-        public async Task<IEnumerable<PackageEvent>> GetAllFromPackageAsync(Employee user, Package package)
+        public async Task<IEnumerable<PackageEvent>> GetAllFromPackageAsync(User user, Package package)
         {
             if(package == null) { throw new ArgumentNullException(""); };
             if (!user.HasPermission(Services.AccessService.PermissionKey.ReadEvent))

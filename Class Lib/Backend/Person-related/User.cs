@@ -1,5 +1,7 @@
-﻿using System;
+﻿using Class_Lib.Backend.Services;
+using System;
 using System.Collections.Generic;
+using System.ComponentModel.DataAnnotations.Schema;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -10,14 +12,16 @@ namespace Class_Lib
     {
         public string Username { get; set; } // username, UNIQUE
         public string PasswordHash { get; set; } // hashed password
-        public string Role { get; set; } // "Administrator", "Manager", "Employee", NOT client; wait do we even need this? no prob not
+        public uint RoleID { get; set; } // role ID (for db purposes)
+        public Role Role { get; set; } // "Administrator", "Manager", "Employee", NOT client; wait do we even need this? no prob not
         public uint? PersonID { get; set; } // Foreign key to Person table
         public Employee Employee { get; set; } // Navigation property
+        [NotMapped] public List<int> CachedPermissions { get; set; } = new();
 
 
         private User() { } // just for EFC
 
-        public User(string username, string passwordHash, string role, Employee employee)
+        public User(string username, string passwordHash, Role role, Employee employee)
         {
             var exceptions = new List<Exception>();
             if (string.IsNullOrWhiteSpace(username))
@@ -33,6 +37,21 @@ namespace Class_Lib
             Role = role;
             Employee = employee;
             PersonID = employee.ID; // set the PersonID to the ID of the employee
+        }
+
+        public bool HasPermission(AccessService.PermissionKey permissionKey)
+        {
+            return CachedPermissions.Contains((int)permissionKey);
+        }
+
+        public bool HasPermissions(List<AccessService.PermissionKey> permissionKeys)
+        {
+            foreach (var permissionKey in permissionKeys)
+            {
+                if (!HasPermission(permissionKey))
+                    return false;
+            }
+            return true;
         }
     }
 

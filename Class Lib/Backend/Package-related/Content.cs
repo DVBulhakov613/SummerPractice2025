@@ -38,6 +38,7 @@ namespace Class_Lib
         public string Description { get; set; } = string.Empty; // description of the content (if any)
         protected Content()
         {
+            RowVersion = new byte[8]; // initialize the RowVersion property
         }
         public Content(string name, ContentType type, uint amount, Package package)
         {
@@ -57,6 +58,8 @@ namespace Class_Lib
 
             if (exceptions.Count > 0)
                 throw new AggregateException("Помилки при створенні посилки.", exceptions);
+
+            RowVersion = new byte[8]; // initialize the RowVersion property
         }
 
         public Content(string name, string description, ContentType type, uint amount, Package package) : this(name, type, amount, package)

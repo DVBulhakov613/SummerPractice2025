@@ -2,6 +2,7 @@
 using Class_Lib.Backend.Package_related.enums;
 using Class_Lib.Backend.Person_related;
 using Class_Lib.Backend.Services;
+using Microsoft.EntityFrameworkCore;
 using System;
 using System.Collections.Generic;
 using System.Linq.Expressions;
@@ -20,7 +21,7 @@ namespace Class_Lib.Backend.Package_related.Methods
         }
 
         // Create
-        public async Task AddAsync(Employee user, Content content)
+        public async Task AddAsync(User user, Content content)
         {
             if(content == null) { throw new ArgumentNullException("Не можна додати нічого"); }
             if (!user.HasPermission(AccessService.PermissionKey.CreateContent))
@@ -32,7 +33,7 @@ namespace Class_Lib.Backend.Package_related.Methods
         }
 
         // Read
-        public async Task<IEnumerable<Content>> GetByCriteriaAsync(Employee user, Expression<Func<Content, bool>> filter)
+        public async Task<IEnumerable<Content>> GetByCriteriaAsync(User user, Expression<Func<Content, bool>> filter)
         {
             if (filter == null) { throw new ArgumentNullException("Пустий фільтр пошуку."); }
             if (!user.HasPermission(AccessService.PermissionKey.ReadContent))
@@ -40,13 +41,11 @@ namespace Class_Lib.Backend.Package_related.Methods
                 throw new UnauthorizedAccessException("Немає доступу до перегляду вмісту посилки.");
             }
 
-            return await _contentRepository.Query()
-                .Where(filter)
-                .ExecuteAsync();
+            return await _contentRepository.GetByCriteriaAsync(filter);
         }
 
         // Update
-        public async Task UpdateAsync(Employee user, Content content)
+        public async Task UpdateAsync(User user, Content content)
         {
             if (content == null) { throw new ArgumentNullException("Шаблон оновлених даних відсутній."); }
             if (!user.HasPermission(AccessService.PermissionKey.UpdateContent))
@@ -58,7 +57,7 @@ namespace Class_Lib.Backend.Package_related.Methods
         }
 
         // Delete
-        public async Task DeleteAsync(Employee user, Content content)
+        public async Task DeleteAsync(User user, Content content)
         {
             if (content == null) { throw new ArgumentNullException("Не можна видалити нічого."); }
             ;

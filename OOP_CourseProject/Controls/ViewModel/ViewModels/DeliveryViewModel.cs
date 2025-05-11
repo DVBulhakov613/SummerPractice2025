@@ -23,7 +23,7 @@ namespace OOP_CourseProject.Controls.ViewModel
                 {
                     new() { Label = "Дата оформлення", Value = delivery.Package.CreatedAt.ToString("HH:mm, dd-MM-yyyy") },
                     new() { Label = "Розмір", Value = $"{delivery.Package.Length} x {delivery.Package.Width} x {delivery.Package.Height} см" },
-                    new() { Label = "Вага", Value = $"{delivery.Package.Weight:C2} кг" },
+                    new() { Label = "Вага", Value = $"{delivery.Package.Weight:F2} кг" },
                     new() { Label = "Тип", Value = $"{delivery.Package.Type}" }
                 }
             });

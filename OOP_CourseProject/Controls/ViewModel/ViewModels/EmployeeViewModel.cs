@@ -23,7 +23,7 @@ namespace OOP_CourseProject.Controls.ViewModel
                     new() { Label = "Повне ім'я", Value = $"{employee.FullName}" },
                     new() { Label = "Телефон", Value = employee.PhoneNumber },
                     new() { Label = "Email", Value = employee.Email },
-                    new() { Label = "Посада", Value = employee.Role.Name },
+                    new() { Label = "Посада", Value = employee.User != null ? employee.User.Role.Name : "Невідомо" },
                 }
             });
 
@@ -35,7 +35,7 @@ namespace OOP_CourseProject.Controls.ViewModel
                     new() { Label = "Посада", Value = $"{employee.FullName}" },
                     new() { 
                         Label = "Місце працевлаштування", 
-                        Value = employee.WorkplaceID != null ? employee.WorkplaceID.ToString() : "Невідомо",
+                        Value = employee.WorkplaceID?.ToString() ?? "Невідомо",
                         OnClick = employee.Workplace == null ? null : () =>
                         {
                             switch(employee.Workplace)

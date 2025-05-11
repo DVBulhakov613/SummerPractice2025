@@ -1,5 +1,6 @@
 ﻿using Class_Lib.Backend.Package_related;
 using Class_Lib.Backend.Person_related;
+using Class_Lib.Backend.Services;
 using Microsoft.EntityFrameworkCore;
 using System;
 using System.Collections.Generic;
@@ -12,16 +13,22 @@ namespace Class_Lib.Backend.Database.Repositories
 {
     public class ContentRepository : Repository<Content>
     {
-        public ContentRepository(AppDbContext context, Employee user) : base(context, user) { }
+        public ContentRepository(AppDbContext context, User user) : base(context, user) { }
 
-        // get all content by name
         public override async Task<IEnumerable<Content>> GetByCriteriaAsync(Expression<Func<Content, bool>> predicate)
         {
-            return await Query()
-                .Include(c => c.Package)
-                .Include(c => c.Package.DeclaredContent)
+            if (_user == null)
+                throw new UnauthorizedAccessException("Користувач не авторизований.");
+
+            // Always fetch contents first
+            if (!_user.HasPermission(AccessService.PermissionKey.ReadContent))
+                throw new UnauthorizedAccessException("Немає дозволу читати зміст посилок.");
+
+            var contents = await _context.Contents
                 .Where(predicate)
-                .ExecuteAsync();
+                .ToListAsync();
+
+            return contents;
         }
 
         public async Task<IEnumerable<Content>> GetAllContentByNameAsync(string type)

@@ -24,7 +24,7 @@ namespace OOP_CourseProject.Controls
 
         public async void GenerateViewModel()
         {
-            var repo = App.AppHost.Services.GetRequiredService<EmployeeMethods>();
+            var repo = App.AppHost.Services.GetRequiredService<DeliveryMethods>();
 
             DataContext = ViewModelService.CreateViewModel(await repo.GetByCriteriaAsync(App.CurrentEmployee, p => p.ID > 0));
         }

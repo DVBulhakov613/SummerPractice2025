@@ -8,17 +8,16 @@ namespace Class_Lib
 {
     public class Employee : Person
     {
-        public uint? RoleID { get; set; } // role ID (for db purposes)
-        public Role Role { get; set; } // role of the employee (whatever)
+        //public uint? RoleID { get; set; } // role ID (for db purposes)
+        //public Role Role { get; set; } // role of the employee (whatever)
         public uint? WorkplaceID { get; private set; } // workplace ID (for db purposes)
         public BaseLocation? Workplace { get; set; } // current workplace of the employee
         public User? User { get; set; } // user account of the employee (if any)
-        [NotMapped] public List<int> CachedPermissions { get; set; } = new();
         public List<BaseLocation>? ManagedLocations { get; set; } = new();
 
         protected internal Employee() : base() { }
 
-        public Employee(string name, string surname, string phoneNumber, string email, uint roleId, BaseLocation? workplace, List<BaseLocation>? managedLocations = null)
+        public Employee(string name, string surname, string phoneNumber, string email, BaseLocation? workplace, List<BaseLocation>? managedLocations = null)
             : base(name, surname, phoneNumber, email)
         {
             Workplace = workplace;
@@ -30,8 +29,6 @@ namespace Class_Lib
 
             if(managedLocations != null)
                 ManagedLocations = managedLocations;
-
-            RoleID = roleId; // set the role ID for db purposes
         }
 
         public Employee(string name, string surname, string phoneNumber, string email, string position, BaseLocation? workplace, List<BaseLocation>? managedLocations = null)
@@ -46,36 +43,29 @@ namespace Class_Lib
 
             if (managedLocations != null)
                 ManagedLocations = managedLocations;
-
-            RoleID = TextToRoleId(position); // set the role ID for db purposes
         }
 
-        public bool HasPermission(AccessService.PermissionKey permissionKey)
-        {
-            return CachedPermissions.Contains((int)permissionKey);
-        }
+        //static private string RoleIdToText(uint roleId)
+        //{
+        //    return roleId switch
+        //    {
+        //        1 => "Системний Адміністратор",
+        //        2 => "Менеджер",
+        //        3 => "Працівник",
+        //        _ => "Невідома роль"
+        //    };
+        //}
 
-        static private string RoleIdToText(uint roleId)
-        {
-            return roleId switch
-            {
-                1 => "Системний Адміністратор",
-                2 => "Менеджер",
-                3 => "Працівник",
-                _ => "Невідома роль"
-            };
-        }
-
-        static private uint TextToRoleId(string position)
-        {
-            return position switch
-            {
-                "Системний Адміністратор" => 1,
-                "Менеджер" => 2,
-                "Працівник" => 3,
-                _ => 0
-            };
-        }
+        //static private uint TextToRoleId(string position)
+        //{
+        //    return position switch
+        //    {
+        //        "Системний Адміністратор" => 1,
+        //        "Менеджер" => 2,
+        //        "Працівник" => 3,
+        //        _ => 0
+        //    };
+        //}
 
     }
 }

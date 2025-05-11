@@ -11,7 +11,7 @@ namespace Class_Lib.Backend.Database
 {
     public static class DependencyInjection
     {
-        public static IServiceCollection AddBackendServices(this IServiceCollection services, Employee currentEmployee)
+        public static IServiceCollection AddBackendServices(this IServiceCollection services, User currentEmployee)
         {
             //// Register DbContext
             //services.AddDbContext<AppDbContext>(options =>

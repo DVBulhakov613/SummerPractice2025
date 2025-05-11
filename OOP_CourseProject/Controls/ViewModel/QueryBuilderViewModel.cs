@@ -49,7 +49,7 @@ namespace OOP_CourseProject.Controls
                 && !string.IsNullOrWhiteSpace(SelectedOperator)
                 && !string.IsNullOrWhiteSpace(ValueInput))
             {
-                var condition = new QueryCondition (SelectedField, SelectedOperator, ValueInput);
+                var condition = new QueryCondition { Field = SelectedField, Operator = SelectedOperator, Value = ValueInput };
                 Conditions.Add(condition);
             }
         }

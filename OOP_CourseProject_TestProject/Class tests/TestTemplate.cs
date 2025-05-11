@@ -11,8 +11,8 @@ namespace OOP_CourseProject_TestProject.Class_tests
         protected AppDbContext _context;
         protected RoleService _roleService;
         protected IServiceProvider _provider;
-        protected Employee _adminUser = new("Admin", "Admin", "+000000000", "admin@domain.com", 0, null);
-        protected Employee _unauth = new("unauth", "unauth", "+000000000", "unauth@unauth.uat", 0, null);
+        protected User _adminUser = new("adminUser", PasswordHelper.HashPassword("defaultpassword"), new Role { Name = "Admin", ID = 1 }, new("Admin", "Admin", "+000000000", "admin@domain.com", null));
+        protected User _unauth = new("unauth", PasswordHelper.HashPassword("defaultpassword"), new Role { Name = "unauth", ID = 999999 }, new("unauth", "unauth", "+000000000", "unauth@unauth.uat", null));
 
         protected virtual void Setup()
         {

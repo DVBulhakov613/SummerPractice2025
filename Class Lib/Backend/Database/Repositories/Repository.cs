@@ -13,9 +13,9 @@ namespace Class_Lib
     public class Repository<T> where T : class
     {
         protected internal readonly AppDbContext _context;
-        protected internal readonly Employee? _user;
+        protected internal readonly User? _user;
 
-        public Repository(AppDbContext context, Employee? user = null)
+        public Repository(AppDbContext context, User? user = null)
         {
             _context = context;
             _user = user;

@@ -19,7 +19,7 @@ namespace Class_Lib.Backend.Package_related.Methods
         }
 
         // Create
-        public async Task AddAsync(Employee user, Package package)
+        public async Task AddAsync(User user, Package package)
         {
             if (!user.HasPermission(AccessService.PermissionKey.CreatePackage))
             {
@@ -30,20 +30,18 @@ namespace Class_Lib.Backend.Package_related.Methods
         }
 
         // Read
-        public async Task<IEnumerable<Package>> GetByCriteriaAsync(Employee user, Expression<Func<Package, bool>> filter)
+        public async Task<IEnumerable<Package>> GetByCriteriaAsync(User user, Expression<Func<Package, bool>> filter)
         {
             if (!user.HasPermission(AccessService.PermissionKey.ReadPackage))
             {
                 throw new UnauthorizedAccessException("Немає доступу до перегляду посилок.");
             }
 
-            return await _packageRepository.Query()
-                .Where(filter)
-                .ExecuteAsync();
+            return await _packageRepository.GetByCriteriaAsync(filter);
         }
 
         // Update
-        public async Task UpdateAsync(Employee user, Package package)
+        public async Task UpdateAsync(User user, Package package)
         {
             if (!user.HasPermission(AccessService.PermissionKey.UpdatePackage))
             {
@@ -54,7 +52,7 @@ namespace Class_Lib.Backend.Package_related.Methods
         }
 
         // Delete
-        public async Task DeleteAsync(Employee user, Package package)
+        public async Task DeleteAsync(User user, Package package)
         {
             if (!user.HasPermission(AccessService.PermissionKey.DeletePackage))
             {

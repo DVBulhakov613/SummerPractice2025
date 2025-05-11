@@ -25,7 +25,7 @@ namespace Class_Lib.Backend.Person_related.Methods
 
 
         // Create
-        public async Task AddAsync(Employee user, Employee employee)
+        public async Task AddAsync(User user, Employee employee)
         {
             if (!user.HasPermission(AccessService.PermissionKey.CreatePerson))
             {
@@ -37,7 +37,7 @@ namespace Class_Lib.Backend.Person_related.Methods
 
 
         // Read
-        public async Task<IEnumerable<Employee>> GetByCriteriaAsync(Employee user, Expression<Func<Employee, bool>> filter)
+        public async Task<IEnumerable<Employee>> GetByCriteriaAsync(User user, Expression<Func<Employee, bool>> filter)
         {
             if (!user.HasPermission(AccessService.PermissionKey.ReadPerson))
             {
@@ -48,7 +48,7 @@ namespace Class_Lib.Backend.Person_related.Methods
         }
 
         // Update
-        public async Task UpdateAsync(Employee user, Employee updatedEmployee)
+        public async Task UpdateAsync(User user, Employee updatedEmployee)
         {
             if (!user.HasPermission(AccessService.PermissionKey.UpdatePerson))
             {
@@ -69,19 +69,19 @@ namespace Class_Lib.Backend.Person_related.Methods
         }
 
         // Delete
-        public async Task DeleteAsync(Employee user, Employee employeeToDelete)
+        public async Task DeleteAsync(User user, Employee employeeToDelete)
         {
             if (!user.HasPermission(AccessService.PermissionKey.DeletePerson))
             {
                 throw new UnauthorizedAccessException("Немає доступу до видалення працівника.");
             }
 
-            if(employeeToDelete.Role == null)
+            if(employeeToDelete.User == null || employeeToDelete.User.Role == null)
             {
                 throw new ArgumentNullException("Роль працівника не знайдена.");
             }
 
-            if (employeeToDelete.Role.Name == "Системний Адміністратор")
+            if (employeeToDelete.User.Role.Name == "Системний Адміністратор")
             {
                 // use the repository to count administrators
                 var adminCount = await _employeeRepository.GetAdministratorCountAsync();
@@ -97,7 +97,7 @@ namespace Class_Lib.Backend.Person_related.Methods
         // Employee-Specific Methods
 
         // switches out permission list to manager's
-        public async Task PromoteToManagerAsync(Employee user, Employee employeeToUpdate, List<BaseLocation> managedLocations)
+        public async Task PromoteToManagerAsync(User user, Employee employeeToUpdate, List<BaseLocation> managedLocations)
         {
             if (!user.HasPermission(AccessService.PermissionKey.UpdatePerson))
                 throw new UnauthorizedAccessException("Немає доступу до підвищення працівника.");
@@ -110,20 +110,22 @@ namespace Class_Lib.Backend.Person_related.Methods
             if (managerRole == null)
                 throw new KeyNotFoundException("Роль менеджера не знайдена.");
 
-            if (existingEmployee.RoleID == managerRole.ID)
+            if (existingEmployee.User != null && existingEmployee.User.RoleID == managerRole.ID)
                 throw new ArgumentException("Працівник вже є менеджером.");
 
-            existingEmployee.RoleID = managerRole.ID;
+            if (existingEmployee.User == null)
+                existingEmployee.User = new User($"{existingEmployee.FirstName}.{existingEmployee.Surname}", PasswordHelper.HashPassword("defaultpassword"), managerRole, existingEmployee);
+
             existingEmployee.ManagedLocations = managedLocations;
 
-            await _roleService.CachePermissionsAsync(existingEmployee); // Optionally rework to inject
+            await _roleService.CachePermissionsAsync(existingEmployee.User);
 
             await _employeeRepository.UpdateAsync(existingEmployee);
         }
 
 
         // switches out permission list to administrator's
-        public async Task PromoteToAdministratorAsync(Employee user, Employee employeeToUpdate)
+        public async Task PromoteToAdministratorAsync(User user, Employee employeeToUpdate)
         {
             if (!user.HasPermission(AccessService.PermissionKey.UpdatePerson))
                 throw new UnauthorizedAccessException("Немає доступу до підвищення працівника.");
@@ -136,18 +138,17 @@ namespace Class_Lib.Backend.Person_related.Methods
             if (adminRole == null)
                 throw new KeyNotFoundException("Роль адміністратора не знайдена.");
 
-            if (existingEmployee.RoleID == adminRole.ID)
+            if (existingEmployee.User != null && existingEmployee.User.RoleID == adminRole.ID)
                 throw new ArgumentException("Працівник вже є адміністратором.");
 
-            existingEmployee.RoleID = adminRole.ID;
+            if (existingEmployee.User == null)
+                existingEmployee.User = new User($"{existingEmployee.FirstName}.{existingEmployee.Surname}", PasswordHelper.HashPassword("defaultpassword"), adminRole, existingEmployee);
 
-            await _roleService.CachePermissionsAsync(existingEmployee); // Same note
+            existingEmployee.User.RoleID = adminRole.ID;
+
+            await _roleService.CachePermissionsAsync(existingEmployee.User);
 
             await _employeeRepository.UpdateAsync(existingEmployee);
         }
-
-
-
-
     }
 }

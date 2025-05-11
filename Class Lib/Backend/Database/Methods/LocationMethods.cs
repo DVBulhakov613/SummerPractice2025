@@ -22,7 +22,7 @@ namespace Class_Lib.Backend.Location_related.Methods
         }
 
         // Create
-        public async Task AddAsync(Employee user, BaseLocation location)
+        public async Task AddAsync(User user, BaseLocation location)
         {
             if (!user.HasPermission(AccessService.PermissionKey.CreateLocation)) throw new UnauthorizedAccessException("Немає дозволу створювати локації.");
 
@@ -30,7 +30,7 @@ namespace Class_Lib.Backend.Location_related.Methods
         }
 
         // Read
-        public async Task<IEnumerable<BaseLocation>> GetByCriteriaAsync(Employee user, Expression<Func<BaseLocation, bool>> filter)
+        public async Task<IEnumerable<BaseLocation>> GetByCriteriaAsync(User user, Expression<Func<BaseLocation, bool>> filter)
         {
             if (!user.HasPermission(AccessService.PermissionKey.ReadLocation)) throw new UnauthorizedAccessException("Немає доступу до перегляду локацій.");
 
@@ -63,7 +63,7 @@ namespace Class_Lib.Backend.Location_related.Methods
 
 
         // Update
-        public async Task UpdateAsync(Employee user, BaseLocation location)
+        public async Task UpdateAsync(User user, BaseLocation location)
         {
             if (!user.HasPermission(AccessService.PermissionKey.UpdateLocation))
             {
@@ -74,7 +74,7 @@ namespace Class_Lib.Backend.Location_related.Methods
         }
 
         // Delete
-        public async Task DeleteAsync(Employee user, BaseLocation location)
+        public async Task DeleteAsync(User user, BaseLocation location)
         {
             if (!user.HasPermission(AccessService.PermissionKey.DeleteLocation))
             {

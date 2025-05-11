@@ -14,7 +14,7 @@ namespace OOP_CourseProject
         public static AppDbContextFactory DbContextFactory { get; private set; }
 
         // used to store the currently logged-in employee
-        public static Employee CurrentEmployee { get; internal set; }
+        public static User CurrentEmployee { get; internal set; }
 
         public static IHost AppHost { get; private set; }
         public static IHost LoginHost { get; private set; } // temp for login
@@ -78,7 +78,7 @@ namespace OOP_CourseProject
         }
 
 
-        private static void ConfigureAppServices(IServiceCollection services, Employee? employee)
+        private static void ConfigureAppServices(IServiceCollection services, User? employee)
         {
             var connectionString = "Server=localhost\\SQLEXPRESS;Database=PackageDb;Trusted_Connection=True;MultipleActiveResultSets=true;TrustServerCertificate=True";
 

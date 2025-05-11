@@ -89,10 +89,15 @@ namespace Class_Lib.Backend.Services
             ReadDelivery = 130,
             CreateDelivery = 131,
             UpdateDelivery = 132,
-            DeleteDelivery = 133
+            DeleteDelivery = 133,
+
+            ReadRole = 140,
+            CreateRole = 141,
+            UpdateRole = 142,
+            DeleteRole = 143
         }
 
-        public static bool CanPerformAction(Employee employee, int permissionKey)
+        public static bool CanPerformAction(User employee, int permissionKey)
         {
             return employee.CachedPermissions.Contains(permissionKey);
         }
@@ -156,7 +161,7 @@ namespace Class_Lib.Backend.Services
         public string Name { get; set; }
 
         public ICollection<RolePermission> RolePermissions { get; set; }
-        public ICollection<Employee> Employees { get; set; }
+        public ICollection<User> Users { get; set; }
     }
 
     /// <summary>
@@ -193,7 +198,7 @@ namespace Class_Lib.Backend.Services
             _context = context;
         }
 
-        public async Task CachePermissionsAsync(Employee employee)
+        public async Task CachePermissionsAsync(User employee)
         {
             if (employee.Role == null || employee.RoleID == 0)
                 throw new InvalidOperationException("Працівник не має ролі.");

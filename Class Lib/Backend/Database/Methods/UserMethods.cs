@@ -17,7 +17,7 @@ namespace Class_Lib.Backend.Person_related.Methods
         }
 
         // Create
-        public async Task AddAsync(Employee user, User newUser)
+        public async Task AddAsync(User user, User newUser)
         {
             if(newUser == null) { throw new ArgumentNullException(""); }
 
@@ -30,7 +30,7 @@ namespace Class_Lib.Backend.Person_related.Methods
         }
 
         // Read
-        public async Task<IEnumerable<User>> GetByCustomCriteriaAsync(Employee user, Expression<Func<User, bool>> filter)
+        public async Task<IEnumerable<User>> GetByCustomCriteriaAsync(User user, Expression<Func<User, bool>> filter)
         {
             if(filter == null) { throw new ArgumentNullException(""); }
 
@@ -39,13 +39,11 @@ namespace Class_Lib.Backend.Person_related.Methods
                 throw new UnauthorizedAccessException("Немає доступу до перегляду користувачів.");
             }
 
-            return await _userRepository.Query()
-                .Where(filter)
-                .ExecuteAsync();
+            return await _userRepository.GetByCriteriaAsync(filter);
         }
 
         // Update
-        public async Task UpdateAsync(Employee user, User updatedUser)
+        public async Task UpdateAsync(User user, User updatedUser)
         {
             if(updatedUser == null) { throw new ArgumentNullException(""); }
 
@@ -58,7 +56,7 @@ namespace Class_Lib.Backend.Person_related.Methods
         }
 
         // Delete
-        public async Task DeleteAsync(Employee user, User targetUser)
+        public async Task DeleteAsync(User user, User targetUser)
         {
             if(targetUser == null) { throw new ArgumentNullException(""); }
 
@@ -72,7 +70,7 @@ namespace Class_Lib.Backend.Person_related.Methods
 
 
         // Delete by ID
-        public async Task DeleteAsync(Employee user, string targetUser)
+        public async Task DeleteAsync(User user, string targetUser)
         {
             if (targetUser == null) { throw new ArgumentNullException(""); }
 
@@ -81,12 +79,10 @@ namespace Class_Lib.Backend.Person_related.Methods
                 throw new UnauthorizedAccessException("Немає дозволу видаляти користувачів.");
             }
 
-            var users = await _userRepository.Query()
-                .Where(x => x.Username == targetUser)
-                .ExecuteAsync();
-            User target = users.FirstOrDefault();
+            var target = await _userRepository.GetByUsernameAsync(targetUser);
+
             if(target == null)
-            { throw new ArgumentNullException("Користувача не знайдено."); }
+            { throw new ArgumentNullException(nameof(User), "Користувача не знайдено."); }
 
             await _userRepository.DeleteAsync(target);
         }

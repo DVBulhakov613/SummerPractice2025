@@ -2,6 +2,7 @@
 using Class_Lib.Backend.Package_related;
 using Class_Lib.Backend.Package_related.Methods;
 using Class_Lib.Backend.Person_related;
+using Class_Lib.Backend.Services;
 using Microsoft.Extensions.DependencyInjection;
 using System;
 using System.Collections.Generic;
@@ -44,10 +45,11 @@ namespace OOP_CourseProject_TestProject.Class_tests
             // Act
             await _contentMethods.AddAsync(_adminUser, content);
             // Assert
-            var contents = await _contentMethods.GetByCriteriaAsync(_adminUser, c => c.Name == "TestContent" && c.Description == "TestDescription");
+            var contents = await _contentMethods.GetByCriteriaAsync(_adminUser, c => c.Name == "DUMMY");
+
             Assert.IsTrue(contents.Any());
             Assert.AreEqual(content.Name, contents.First().Name);
-            Assert.AreEqual(content.ID, contents.First().ID);
+            Assert.AreEqual(content.PackageID, contents.First().PackageID);
             Assert.AreEqual(1, contents.Count());
         }
 
@@ -56,13 +58,13 @@ namespace OOP_CourseProject_TestProject.Class_tests
         public async Task AddAsync_ShouldThrowException_WhenUserHasNoPermission()
         {
             // Arrange
-            Content content = new("TestContent", "TestDescription", 1);
+            Content content = new Content("dummy", ContentType.Miscellaneous, 1, _package);
             Employee dummy = new()
             {
-                Role = new Role { ID = 999999, Name = "TestRole" }
             };
             // Act
-            await _contentMethods.AddAsync(dummy, content);
+            await _contentMethods.AddAsync(_unauth, content);
         }
+        #endregion
     }
 }

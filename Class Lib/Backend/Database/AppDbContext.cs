@@ -199,11 +199,6 @@ namespace Class_Lib
                 .HasOne(e => e.User)
                 .WithOne(u => u.Employee)
                 .HasForeignKey<User>(u => u.PersonID);
-            modelBuilder.Entity<Employee>()
-                .HasOne(e => e.Role)
-                .WithMany(r => r.Employees)
-                .HasForeignKey(e => e.RoleID)
-                .OnDelete(DeleteBehavior.SetNull);
             #endregion
 
             //// manager table specifications
@@ -218,6 +213,11 @@ namespace Class_Lib
             modelBuilder.Entity<User>()
                 .HasIndex(u => u.Username) // unique index for username
                 .IsUnique();
+            modelBuilder.Entity<User>()
+                .HasOne(e => e.Role)
+                .WithMany(r => r.Users)
+                .HasForeignKey(e => e.RoleID)
+                .OnDelete(DeleteBehavior.Restrict);
             #endregion
 
             #region client table specifications

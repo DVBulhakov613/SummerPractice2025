@@ -25,7 +25,7 @@ namespace OOP_CourseProject.Controls.ViewModel
                         new() { Label = "Ім’я", Value = emp.FullName },
                         new() { Label = "Телефон", Value = emp.PhoneNumber },
                         new() { Label = "Email", Value = emp.Email },
-                        new() { Label = "Посада", Value = emp.Role?.Name ?? "Невідомо" }
+                        new() { Label = "Посада", Value = emp.User?.Role.Name ?? "Невідомо" }
                     }
                 });
             }

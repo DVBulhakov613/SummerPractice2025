@@ -17,7 +17,7 @@ namespace Class_Lib.Backend.Person_related.Methods
         }
 
         // Create
-        public async Task AddAsync(Employee user, Client client)
+        public async Task AddAsync(User user, Client client)
         {
             if(client == null) { throw new ArgumentNullException("Не можна додати нічого."); };
             if (!user.HasPermission(AccessService.PermissionKey.CreatePerson))
@@ -29,7 +29,7 @@ namespace Class_Lib.Backend.Person_related.Methods
         }
 
         // Read
-        public async Task<IEnumerable<Client>> GetByCriteriaAsync(Employee user, Expression<Func<Client, bool>> filter)
+        public async Task<IEnumerable<Client>> GetByCriteriaAsync(User user, Expression<Func<Client, bool>> filter)
         {
             if(filter == null) { throw new ArgumentNullException("Пустий фільтр пошуку."); };
             if (!user.HasPermission(AccessService.PermissionKey.ReadPerson))
@@ -37,13 +37,11 @@ namespace Class_Lib.Backend.Person_related.Methods
                 throw new UnauthorizedAccessException("Немає доступу до перегляду клієнтів.");
             }
 
-            return await _clientRepository.Query()
-                .Where(filter)
-                .ExecuteAsync();
+            return await _clientRepository.GetByCriteriaAsync(filter);
         }
 
         // Update
-        public async Task UpdateAsync(Employee user, Client updatedClient)
+        public async Task UpdateAsync(User user, Client updatedClient)
         {
             if(updatedClient == null) { throw new ArgumentNullException("Шаблон оновлених даних відсутній."); };
             if (!user.HasPermission(AccessService.PermissionKey.UpdatePerson))
@@ -59,7 +57,7 @@ namespace Class_Lib.Backend.Person_related.Methods
         }
 
         // Delete
-        public async Task DeleteAsync(Employee user, Client client)
+        public async Task DeleteAsync(User user, Client client)
         {
             if(client == null) { throw new ArgumentNullException("Не можна видалити нічого."); };
             if (!user.HasPermission(AccessService.PermissionKey.DeletePerson))

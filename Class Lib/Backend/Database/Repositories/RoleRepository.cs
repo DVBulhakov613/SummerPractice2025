@@ -10,12 +10,8 @@ namespace Class_Lib.Backend.Database.Repositories
 {
     public class RoleRepository : Repository<Role>
     {
-        private readonly AppDbContext _context;
-
         public RoleRepository(AppDbContext context) : base(context)
-        {
-            _context = context;
-        }
+        { }
 
         public Task<Role> GetRoleByIdAsync(uint roleId)
         {

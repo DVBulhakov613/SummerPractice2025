@@ -1,4 +1,5 @@
 ﻿using Class_Lib.Backend.Person_related;
+using Class_Lib.Backend.Services;
 using Microsoft.EntityFrameworkCore;
 using System;
 using System.Collections.Generic;
@@ -11,15 +12,54 @@ namespace Class_Lib.Backend.Database.Repositories
 {
     public class LocationRepository : Repository<BaseLocation>
     {
-        public LocationRepository(AppDbContext context, Employee user) : base(context, user) { }
+        public LocationRepository(AppDbContext context, User user) : base(context, user) { }
 
         public override async Task<IEnumerable<BaseLocation>> GetByCriteriaAsync(Expression<Func<BaseLocation, bool>> predicate)
         {
-            return await Query()
-                .Include(l => l.GeoData)
-                .Include(l => l.Staff)
+            //return await _context.Locations.Where(predicate).ToListAsync();
+            //return await Query()
+            //    .Include(l => l.GeoData)
+            //    .Include(l => l.Staff)
+            //    .Where(predicate)
+            //    .ExecuteAsync();
+
+            if (_user == null)
+                throw new UnauthorizedAccessException("Користувач не авторизований.");
+
+            if (!_user.HasPermission(AccessService.PermissionKey.ReadLocation))
+                throw new UnauthorizedAccessException("Немає дозволу читати локації.");
+
+            var locations = await _context.Locations
                 .Where(predicate)
-                .ExecuteAsync();
+                .ToListAsync();
+
+            if (!locations.Any())
+                return locations;
+
+            var locationIds = locations.Select(e => e.ID).ToList();
+
+            // Load related entities only if the user has permission
+
+            if (_user.HasPermission(AccessService.PermissionKey.ReadPerson))
+            {
+                var employeesWithWorkplaces = await _context.Employees
+                    .Where(e => e.Workplace != null)
+                    .Select(e => (uint?)e.ID)
+                    .ToListAsync();
+
+                await _context.Employees
+                    .Where(e => employeesWithWorkplaces.Contains(e.WorkplaceID))
+                    .LoadAsync();
+            }
+
+            if (_user.HasPermission(AccessService.PermissionKey.ReadDelivery))
+            {
+                await _context.Deliveries
+                    .Where(d => locationIds.Contains(d.SentFromID) || locationIds.Contains(d.SentToID))
+                    .LoadAsync();
+            }
+
+            return locations;
         }
         public async Task<IEnumerable<BaseLocation>> GetLocationsByTypeAsync(string type)
         {

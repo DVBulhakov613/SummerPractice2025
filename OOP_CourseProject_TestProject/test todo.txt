@@ -21,34 +21,34 @@ Person
         DeleteAsync                 (done)
 
     Content
-        AddAsync
-        GetByCriteriaAsync
-        UpdateAsync
-        DeleteAsync
+        AddAsync                    (done)
+        GetByCriteriaAsync          
+        UpdateAsync                 
+        DeleteAsync                 
 
     Delivery
-        AddAsync
-        GetByCriteriaAsync
-        UpdateAsync
-        DeleteAsync
+        AddAsync                    
+        GetByCriteriaAsync          
+        UpdateAsync                 
+        DeleteAsync                 
 
     Package
-        AddAsync
-        GetByCriteriaAsync
-        UpdateAsync
-        DeleteAsync
+        AddAsync                    
+        GetByCriteriaAsync          
+        UpdateAsync                 
+        DeleteAsync                 
 
     PackageEvent
-        AddAsync
-        GetByCriteriaAsync
-        UpdateAsync
-        DeleteAsync
+        AddAsync                    
+        GetByCriteriaAsync          
+        UpdateAsync                 
+        DeleteAsync                 
 
     Location
-        AddAsync
-        GetByCriteriaAsync
-        UpdateAsync
-        DeleteAsync
+        AddAsync                    
+        GetByCriteriaAsync          
+        UpdateAsync                 
+        DeleteAsync                 
 
 Package
     Package

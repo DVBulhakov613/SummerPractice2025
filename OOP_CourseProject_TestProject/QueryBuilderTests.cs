@@ -196,23 +196,18 @@ namespace OOP_CourseProject_TestProject
     using System;
     using GalaSoft.MvvmLight.Command;
     using System.Diagnostics;
+    using OOP_CourseProject_TestProject.Class_tests;
 
     [TestClass]
-    public class QueryBuilderTests
+    public class QueryBuilderTests : TestTemplate
     {
-        private AppDbContext _context;
         private EmployeeRepository _repository;
         private PostalOffice _workplace;
-        private Employee _user = TestUtilities.CorrectEmployees.ElementAt(2)[0] as Employee;
 
         [TestInitialize]
         public void Setup()
         {
-            var options = new DbContextOptionsBuilder<AppDbContext>()
-                .UseInMemoryDatabase(databaseName: $"TestDb_{Guid.NewGuid()}")
-                .Options;
-
-            _context = new AppDbContext(options);
+            base.Setup();
 
             _workplace = new PostalOffice(new Coordinates(50, 50, "address", "region"), 50, false, false, false);
             _context.PostalOffices.Add(_workplace);
@@ -226,10 +221,13 @@ namespace OOP_CourseProject_TestProject
                 new Employee("Peter", "Brown", "+123456789012", "example@example.com", "Працівник", _workplace)
             );
 
-            _repository = new EmployeeRepository(_context, _user);
+            _repository = new EmployeeRepository(_context, _adminUser);
 
             _context.SaveChanges();
         }
+
+        [TestCleanup]
+        public void Clear() => base.Cleanup();
 
         [TestMethod]
         public async Task QueryBuilder_EqualAndStartsWithFilters_ReturnsCorrectEmployees()
@@ -255,30 +253,30 @@ namespace OOP_CourseProject_TestProject
             // Act
             queryBuilderVM.SubmitQueryCommand.Execute(null);
 
-            var service = new QueryBuilderService<Employee>(_user, _context.Employees); // .AsQueryable()
+            var service = new QueryBuilderService<Employee>(_adminUser, _context.Employees); // .AsQueryable()
             service.AddConditions(queryBuilderVM.Conditions.ToList());
 
-            var results = await service.ExecuteAsync();
+            var results = await _repository.GetByCriteriaAsync(service.GetPredicate());
 
             // Assert
-            Assert.AreEqual(1, results.Count);
-            Assert.AreEqual("Joe", results[0].FirstName);
-            Assert.AreEqual("Jones", results[0].Surname);
+            Assert.AreEqual(1, results.Count());
+            Assert.AreEqual("Joe", results.First().FirstName);
+            Assert.AreEqual("Jones", results.First().Surname);
         }
 
         [TestMethod]
         public async Task QueryBuilder_OnlyFirstNameJoe_ReturnsTwoEmployees()
         {
             // Arrange
-            var condition = new QueryCondition("FirstName", "==", "Joe");
-            var service = new QueryBuilderService<Employee>(_user, _context.Employees); // AsQueryable()
+            var condition = new QueryCondition { Field = "FirstName", Operator = "==", Value = "Joe" };
+            var service = new QueryBuilderService<Employee>(_adminUser, _context.Employees); // AsQueryable()
             service.AddCondition(condition);
 
             // Act
-            var results = await service.ExecuteAsync();
+            var results = await _repository.GetByCriteriaAsync(service.GetPredicate());
 
             // Assert
-            Assert.AreEqual(2, results.Count);
+            Assert.AreEqual(2, results.Count());
             Assert.IsTrue(results.All(e => e.FirstName == "Joe"));
         }
 
@@ -286,11 +284,11 @@ namespace OOP_CourseProject_TestProject
         public async Task QueryBuilder_SurnameStartsWithJ_ReturnsThreeEmployees()
         {
             // Arrange
-            var service = new QueryBuilderService<Employee>(_user, _context.Employees); // AsQueryable()
-            service.AddCondition(new QueryCondition("Surname", "StartsWith", "J"));
+            var service = new QueryBuilderService<Employee>(_adminUser, _context.Employees); // AsQueryable()
+            service.AddCondition(new QueryCondition{ Field = "Surname", Operator = "StartsWith", Value = "J" });
 
             // Act
-            var results = await service.ExecuteAsync();
+            var results = await _repository.GetByCriteriaAsync(service.GetPredicate());
 
             // Assert
             Assert.AreEqual(3, results.Count());
@@ -311,17 +309,15 @@ namespace OOP_CourseProject_TestProject
             );
             await _context.SaveChangesAsync();
 
-            var queryBuilder = new QueryBuilderService<Employee>(_user, _context.Employees);
+            var queryBuilder = new QueryBuilderService<Employee>(_adminUser, _context.Employees);
 
             var filter = QueryBuilderService<Employee>.BuildFilter<Employee>("Workplace.ID", "==", "2");
 
-            var result = await queryBuilder
-                .Where(filter)
-                .ExecuteAsync();
+            var results = await _repository.GetByCriteriaAsync(filter);
 
             // Assert
-            Assert.AreEqual(1, result.Count());
-            Assert.AreEqual("John", result[0].FirstName);
+            Assert.AreEqual(1, results.Count());
+            Assert.AreEqual("John", results.First().FirstName);
         }
     }
 }

@@ -17,7 +17,8 @@ namespace Class_Lib.Backend.Database.Repositories
         {
             return await _context.Users
                 .Include(u => u.Employee)
-                .ThenInclude(u => u.Role) // include related Employee data
+                .Include(u => u.Role)
+                    .ThenInclude(r => r.RolePermissions)
                 .FirstOrDefaultAsync(u => u.Username == username);
         }
     }
