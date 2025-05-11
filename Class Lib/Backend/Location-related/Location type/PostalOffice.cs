@@ -25,9 +25,9 @@ namespace Class_Lib
         }
 
         public Package CreatePackage(uint length, uint width, uint height, uint weight, 
-            Client sender, Client receiver, PostalOffice sentFrom, PostalOffice sentTo, List<Content> declaredContent, PackageType type)
+            Client sender, Client receiver, PostalOffice sentFrom, PostalOffice sentTo, PackageType type)
         {
-            return new Package(length, width, height, weight, sender, receiver, sentFrom, sentTo, declaredContent, type);
+            return new Package(length, width, height, weight, sender, receiver, sentFrom, sentTo, type);
         }
     }
 }

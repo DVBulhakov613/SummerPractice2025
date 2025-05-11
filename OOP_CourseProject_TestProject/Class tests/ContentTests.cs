@@ -29,7 +29,7 @@ namespace OOP_CourseProject_TestProject.Class_tests
             Client _receiver = new Client("First", "Last", "+123456789", "example@example.com");
             Client _sender = new Client("First", "Last", "+123456789", "example@example.com");
 
-            _package = new Package(10, 10, 10, 5, _sender, _receiver, _sentFrom, _sentTo, new List<Content>(), PackageType.Standard);
+            _package = new Package(10, 10, 10, 5, _sender, _receiver, _sentFrom, _sentTo, PackageType.Standard);
         }
 
         [TestCleanup]
@@ -65,6 +65,67 @@ namespace OOP_CourseProject_TestProject.Class_tests
             // Act
             await _contentMethods.AddAsync(_unauth, content);
         }
+        #endregion
+
+        #region Update
+        [TestMethod]
+        public async Task UpdateAsync_ShouldUpdateCorrectly()
+        {
+            // Arrange
+            Content content = new Content("dummy", ContentType.Miscellaneous, 1, _package);
+            await _contentMethods.AddAsync(_adminUser, content);
+            var contents = await _contentMethods.GetByCriteriaAsync(_adminUser, c => c.Name == "DUMMY");
+
+            // Act
+            var contentToUpdate = contents.First();
+            contentToUpdate.Amount = 2;
+            await _contentMethods.UpdateAsync(_adminUser, contentToUpdate);
+
+            // Assert
+            var updatedContents = await _contentMethods.GetByCriteriaAsync(_adminUser, c => c.Name == "DUMMY");
+
+            Assert.IsTrue(updatedContents.Any());
+            Assert.AreEqual(contentToUpdate.Amount, updatedContents.First().Amount);
+        }
+
+        [TestMethod]
+        [ExpectedException(typeof(UnauthorizedAccessException))]
+        public async Task UpdateAsync_ShouldThrowException_WhenNoAuth()
+        {
+            // Arrange
+            Content content = new Content("dummy", ContentType.Miscellaneous, 1, _package);
+            await _contentMethods.AddAsync(_adminUser, content);
+            var contents = await _contentMethods.GetByCriteriaAsync(_adminUser, c => c.Name == "DUMMY");
+            var contentToUpdate = contents.First();
+            contentToUpdate.Name = "UpdatedName";
+
+            // Act
+            await _contentMethods.UpdateAsync(_unauth, contentToUpdate);
+
+            // Assert
+            var updatedContents = await _contentMethods.GetByCriteriaAsync(_unauth, c => c.Name == "UPDATEDNAME");
+            Assert.IsFalse(updatedContents.Any());
+        }
+        #endregion
+
+        #region Delete
+        [TestMethod]
+        public async Task DeleteAsync_ShouldDeleteCorrectly()
+        {
+            // Arrange
+            Content content = new Content("dummy", ContentType.Miscellaneous, 1, _package);
+            await _contentMethods.AddAsync(_adminUser, content);
+            var contents = await _contentMethods.GetByCriteriaAsync(_adminUser, c => c.Name == "DUMMY");
+
+            // Act
+            var contentToDelete = contents.First();
+            await _contentMethods.DeleteAsync(_adminUser, contentToDelete);
+
+            // Assert
+            var deletedContents = await _contentMethods.GetByCriteriaAsync(_adminUser, c => c.Name == "DUMMY");
+            Assert.IsFalse(deletedContents.Any());
+        }
+
         #endregion
     }
 }

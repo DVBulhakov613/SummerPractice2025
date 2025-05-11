@@ -22,21 +22,21 @@ Person
 
     Content
         AddAsync                    (done)
-        GetByCriteriaAsync          
-        UpdateAsync                 
-        DeleteAsync                 
+        GetByCriteriaAsync          (done by proxy)
+        UpdateAsync                 (done)
+        DeleteAsync                 (done)
 
     Delivery
-        AddAsync                    
-        GetByCriteriaAsync          
-        UpdateAsync                 
-        DeleteAsync                 
+        AddAsync                    (done)
+        GetByCriteriaAsync          (done by proxy)
+        UpdateAsync                 (done)
+        DeleteAsync                 (done)
 
     Package
-        AddAsync                    
-        GetByCriteriaAsync          
-        UpdateAsync                 
-        DeleteAsync                 
+        AddAsync                    (done)
+        GetByCriteriaAsync          (done)
+        UpdateAsync                 (done)
+        DeleteAsync                 (done)
 
     PackageEvent
         AddAsync                    
@@ -49,75 +49,6 @@ Person
         GetByCriteriaAsync          
         UpdateAsync                 
         DeleteAsync                 
-
-Package
-    Package
-        CRUD operations
-        GetPackagesByStatusAsync
-        GetPackagesBySenderAsync
-        GetPackagesByReceiverAsync
-        GetPackagesByWeightRangeAsync
-        GetPackagesByVolumeAsync
-        GetPackagesByCreationDateRangeAsync
-PackageRepository
-    GetPackagesByCriteria
-        GetPackagesByStatusAsync
-        GetPackagesByStartingPointAsync
-        GetPackagesByDestinationAsync
-        GetPackagesBySenderAsync
-        GetPackagesByReceiverAsync
-        GetPackagesByPackageTypeAsync
-        GetPackagesByWeightAsync
-        GetPackagesByWeightRangeAsync
-        GetPackagesByVolumeAsync
-        GetPackagesByVolumeRangeAsync
-        GetPackagesByCreationDateAsync
-        GetPackagesByCreationDateRangeAsync
-    Content
-        Retrieving contents for a specific package
-    PackageEvent
-        Logging
-        Retrieving events for a specific package
-    PackageMethods
-        AddPackageAsync
-        DeletePackageAsync
-        GetAllPackagesAsync
-
-BaseLocation
-    PostalOffice
-        Assignment of employees
-    Warehouse
-        Assignment of employees
-        Storage and retrieval of packages
-        Capacity limits
-User
-    GetByUsernameAsync
-    PasswordHelper
-Coordinates
-    Data validation (latitude, longitude, address) (done)
-AccessService (done)
-AuthService
-
-
-
-        Read / ID (done)
-        Read / All (done)
-        Read / Multiple
-
-        GetByCriteriaAsync
-        GetByStatusAsync (done)
-        GetByStartingPointAsync
-        GetByDestinationAsync
-        GetBySenderAsync (done)
-        GetByReceiverAsync (done)
-        GetByTypeAsync (done)
-        GetByWeightAsync (done)
-        GetByWeightRangeAsync (done)
-        GetByVolumeAsync (done)
-        GetByVolumeRangeAsync (done)
-        GetByCreationDateAsync (done)
-        GetByCreationDateRangeAsync (done)
-
 
 
         GENERIC TESTING SUITE:

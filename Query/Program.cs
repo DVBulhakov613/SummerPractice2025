@@ -12,7 +12,7 @@ namespace Class_Lib
     {
         static async Task Main()
         {
-            // Console.WriteLine(PasswordHelper.HashPassword("admin"));
+            Console.WriteLine(PasswordHelper.HashPassword("anatoliy.mikhailov"));
 
             // await InsertPostalOffice();
         }

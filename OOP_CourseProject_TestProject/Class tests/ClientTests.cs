@@ -55,13 +55,9 @@ namespace OOP_CourseProject_TestProject.Class_tests
         {
             // Arrange
             Client client = new("John", "Doe", "+000000000000", "example@example.com");
-            Employee dummy = new()
-            {
-                Role = new Role { ID = 999999, Name = "TestRole" }
-            };
 
             // Act + Assert
-            await _clientMethods.AddAsync(dummy, client);
+            await _clientMethods.AddAsync(_unauth, client);
         }
 
         [TestMethod]
@@ -160,15 +156,11 @@ namespace OOP_CourseProject_TestProject.Class_tests
         {
             // Arrange
             Client client = new("John", "Doe", "+000000000000", "example@example.com");
-            Employee dummy = new()
-            {
-                Role = new Role { ID = 999999, Name = "TestRole" }
-            };
 
             await _clientMethods.AddAsync(_adminUser, client);
 
             // Act
-            await _clientMethods.DeleteAsync(dummy, client);
+            await _clientMethods.DeleteAsync(_unauth, client);
 
             // Assert
             var deletedClient = await _clientMethods.GetByCriteriaAsync(_adminUser, c => c.ID == client.ID);

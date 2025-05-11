@@ -102,19 +102,16 @@ namespace Class_Lib.Backend.Person_related.Methods
             if (!user.HasPermission(AccessService.PermissionKey.UpdatePerson))
                 throw new UnauthorizedAccessException("Немає доступу до підвищення працівника.");
 
-            var existingEmployee = await _employeeRepository.GetByIdAsync(employeeToUpdate.ID);
-            if (existingEmployee == null)
-                throw new KeyNotFoundException("Працівника не знайдено.");
-
-            var managerRole = await _roleRepository.GetRoleByNameAsync("Менеджер");
-            if (managerRole == null)
-                throw new KeyNotFoundException("Роль менеджера не знайдена.");
-
+            var existingEmployee = await _employeeRepository.GetByIdAsync(employeeToUpdate.ID) ?? throw new KeyNotFoundException("Працівника не знайдено.");
+            var managerRole = await _roleRepository.GetRoleByNameAsync("Менеджер") ?? throw new KeyNotFoundException("Роль менеджера не знайдена.");
+            
             if (existingEmployee.User != null && existingEmployee.User.RoleID == managerRole.ID)
                 throw new ArgumentException("Працівник вже є менеджером.");
 
-            if (existingEmployee.User == null)
-                existingEmployee.User = new User($"{existingEmployee.FirstName}.{existingEmployee.Surname}", PasswordHelper.HashPassword("defaultpassword"), managerRole, existingEmployee);
+            existingEmployee.User ??= new User($"{existingEmployee.FirstName}.{existingEmployee.Surname}", PasswordHelper.HashPassword("defaultpassword"), managerRole, existingEmployee);
+
+            existingEmployee.User.RoleID = managerRole.ID;
+            existingEmployee.User.Role = managerRole;
 
             existingEmployee.ManagedLocations = managedLocations;
 

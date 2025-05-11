@@ -17,7 +17,7 @@ namespace Class_Lib
         public string Name
         {
             get => _name;
-            private set
+            set
             {
                 if (string.IsNullOrWhiteSpace(value))
                     throw new ArgumentException("Назва не може бути пустою.");
@@ -50,11 +50,8 @@ namespace Class_Lib
             { exceptions.Add(new ArgumentOutOfRangeException(nameof(Amount), "Існуючий зміст не може мати кількість 0.")); }
             else
             { Amount = amount; }
-            
-            try
-            { Package = package; }
-            catch(Exception ex)
-            { exceptions.Add(ex); }
+
+            Package = package;
 
             if (exceptions.Count > 0)
                 throw new AggregateException("Помилки при створенні посилки.", exceptions);

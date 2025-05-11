@@ -18,6 +18,7 @@ namespace OOP_CourseProject_TestProject.Class_tests
     public class EmployeeTests : TestTemplate
     {
         private EmployeeRepository _repository;
+        private UserRepository _userRepository;
         private EmployeeMethods _employeeMethods;
 
         //private Employee _managerUser = new("manager", "dummy", "+000000000000", "dummy@dummy.com", 2, null);
@@ -33,6 +34,7 @@ namespace OOP_CourseProject_TestProject.Class_tests
             base.Setup();
             _repository = _provider.GetRequiredService<EmployeeRepository>();
             _employeeMethods = _provider.GetRequiredService<EmployeeMethods>();
+            _userRepository = _provider.GetRequiredService<UserRepository>();
 
             _employee1 = new("John", "Doe", "+000000000000", "example@example.com", "Працівник", _workplace);
             _employee2 = new("Jane", "Boe", "+000000000000", "example@example.com", "Працівник", _workplace);
@@ -146,7 +148,7 @@ namespace OOP_CourseProject_TestProject.Class_tests
         public async Task AddEmployeeAsync_ShouldThrowException_WhenUserLacksPermission()
         {
             // Arrange
-            var user = new Employee("Regular", "User", "+123456789", "example@email.com", "Працівник", _workplace);
+            User user = new User("dummy", PasswordHelper.HashPassword("dummypassword"), new Role { Name = "TestRole" }, new Employee("Новий", "Працівник", "+987654321", "example@email.com", "Працівник", _workplace));
             var newEmployee = new Employee("New", "Працівник", "+987654321", "example@email.com", "Працівник", _workplace);
 
             // Act
@@ -157,12 +159,13 @@ namespace OOP_CourseProject_TestProject.Class_tests
         public async Task DeleteEmployeeAsync_ShouldDeleteEmployee_WhenUserHasPermission()
         {
             // Arrange
-            _adminUser.CachedPermissions.Add((int)AccessService.PermissionKey.DeletePerson);
-            _employee1.Role = new Role { ID = 999999, Name = "TestRole" };
-            await _repository.AddAsync(_employee1);
+            User user = new User("dummy", PasswordHelper.HashPassword("dummypassword"), new Role { Name = "TestRole" }, new Employee("Новий", "Працівник", "+987654321", "example@email.com", "Працівник", _workplace));
+            var newEmployee = new Employee("New", "Працівник", "+987654321", "example@email.com", "Працівник", _workplace);
+            newEmployee.User = user;
+            await _repository.AddAsync(newEmployee);
 
             // Act
-            await _employeeMethods.DeleteAsync(_adminUser, _employee1);
+            await _employeeMethods.DeleteAsync(_adminUser, newEmployee);
             var employees = await _repository.GetAllAsync();
 
             // Assert
@@ -174,12 +177,19 @@ namespace OOP_CourseProject_TestProject.Class_tests
         public async Task DeleteEmployeeAsync_ShouldThrowException_WhenDeletingLastAdministrator()
         {
             // Arrange
-            var admin = new Employee("Admin", "User", "+123456789", "admin@example.com", "Системний Адміністратор", _workplace);
-            admin.Role = new Role { ID = 1, Name = "Системний Адміністратор" };
-            _adminUser.CachedPermissions.Add((int)AccessService.PermissionKey.DeletePerson);
-            await _repository.AddAsync(admin);
+            var roleRepo = _provider.GetRequiredService<RoleRepository>();
+            await roleRepo.AddAsync(new Role { ID = 1, Name = "Системний Адміністратор" });
 
-            // Act
+            var admin = new Employee("Admin", "User", "+123456789", "admin@example.com", "Системний Адміністратор", _workplace);
+            var adminRole = new User("dummy", PasswordHelper.HashPassword("dummypassword"), new Role { }, admin)
+            {
+                Role = await roleRepo.GetByIdAsync(1)
+            };
+            admin.User = adminRole;
+
+            await _employeeMethods.AddAsync(_adminUser, admin);
+
+            // Act + Assert
             await _employeeMethods.DeleteAsync(_adminUser, admin);
         }
 
@@ -188,13 +198,14 @@ namespace OOP_CourseProject_TestProject.Class_tests
         {
             // Arrange
             var rolerepo = _provider.GetRequiredService<RoleRepository>();
+            await rolerepo.AddAsync(new Role { ID = 999999, Name = "TestRole" });
             await rolerepo.AddAsync(new Role { ID = 2, Name = "Менеджер" });
 
-            _adminUser.CachedPermissions.Add((int)AccessService.PermissionKey.UpdatePerson);
             var employee = new Employee("Name", "Surname", "+123456789", "example@example.com", "Працівник", _workplace);
-            employee.Role = new Role { ID = 999999, Name = "TestRole" };
+            User newUser = new User("dummy", PasswordHelper.HashPassword("dummypassword"), new Role { }, employee);
+            newUser.Role = await rolerepo.GetByIdAsync(999999);
+            employee.User = newUser;
 
-            await _repository.AddAsync(_adminUser);
             await _repository.AddAsync(employee);
 
             var managedLocations = new List<BaseLocation> { _workplace };
@@ -206,8 +217,10 @@ namespace OOP_CourseProject_TestProject.Class_tests
             // Assert
             Assert.IsNotNull(manager);
             Assert.AreEqual(employee.FirstName, manager.FirstName);
+            Assert.IsNotNull(manager.ManagedLocations);
+            Assert.IsNotNull(manager.User);
             Assert.AreEqual(managedLocations.Count, manager.ManagedLocations.Count);
-            Assert.AreEqual("Менеджер", manager.Role.Name);
+            Assert.AreEqual("Менеджер", manager.User.Role.Name);
             Assert.IsInstanceOfType(manager, typeof(Employee));
         }
 
@@ -230,37 +243,16 @@ namespace OOP_CourseProject_TestProject.Class_tests
             var rolerepo = _provider.GetRequiredService<RoleRepository>();
             await rolerepo.AddAsync(new Role { ID = 1, Name = "Системний Адміністратор" });
 
-            _adminUser.CachedPermissions.Add((int)AccessService.PermissionKey.UpdatePerson);
-            _employee1.Role = new Role { ID = 999999, Name = "TestRole" };
-            await _repository.AddAsync(_employee1);
+            var newEmployee = new Employee("Non", "Existent", "+000000000", "thisdoesnotexist@not.real", "Працівник", _workplace);
+            var newUser = new User("dummy", PasswordHelper.HashPassword("dummypassword"), new Role { ID = 9999, Name = "Працівник" }, newEmployee);
+            await _repository.AddAsync(newEmployee);
 
             // Act
-            await _employeeMethods.PromoteToAdministratorAsync(_adminUser, _employee1);
-            var administrators = await _repository.GetByCriteriaAsync(e => e.Role.Name == "Системний Адміністратор");
+            await _employeeMethods.PromoteToAdministratorAsync(_adminUser, newEmployee);
+            var administrators = await _repository.GetByCriteriaAsync(e => e.User.Role.Name == "Системний Адміністратор");
 
             // Assert
             Assert.AreEqual(1, administrators.Count());
-        }
-
-        [TestMethod]
-        public async Task PromoteEmployeeToAdministrator_ShouldUpdateRoleCorrectly()
-        {
-            // Arrange
-            var rolerepo = _provider.GetRequiredService<RoleRepository>();
-            await rolerepo.AddAsync(new Role { ID = 1, Name = "Системний Адміністратор" });
-
-            _adminUser.CachedPermissions.Add((int)AccessService.PermissionKey.UpdatePerson);
-            _employee1.Role = new Role { ID = 999999, Name = "TestRole" };
-            await _repository.AddAsync(_employee1);
-
-            // Act
-            await _employeeMethods.PromoteToAdministratorAsync(_adminUser, _employee1);
-            var administrator = await _repository.GetByIdAsync(_employee1.ID);
-
-            // Assert
-            Assert.IsNotNull(administrator);
-            Assert.AreEqual(_employee1.FirstName, administrator.FirstName);
-            Assert.AreEqual("Системний Адміністратор", administrator.Role.Name);
         }
 
 
@@ -269,9 +261,10 @@ namespace OOP_CourseProject_TestProject.Class_tests
         {
             // Arrange
             var workplace = new Warehouse(new Coordinates(50.45, 30.52, "Kyiv", "Ukraine"), 0, false);
-            var manager = new Employee("Manager", "NotUser", "+123456789", "manager@example.com", "Менеджер", _workplace);
-            manager.Role = new Role { ID = 2, Name = "Менеджер" };
-
+            var manager = new Employee("Manager", "NotUser", "+123456789", "manager@example.com", "Менеджер", workplace);
+            var newUser = new User("dummy", PasswordHelper.HashPassword("dummypassword"), new Role { }, manager);
+            newUser.Role = new Role { ID = 2, Name = "Менеджер" };
+            manager.User = newUser;
             manager.ManagedLocations = new List<BaseLocation>
                     {
                     workplace,
@@ -288,9 +281,9 @@ namespace OOP_CourseProject_TestProject.Class_tests
             // Assert
             Assert.IsNotNull(retrievedManager);
             Assert.AreEqual(manager.FirstName, retrievedManager.FirstName);
-            Assert.AreEqual(manager.Role.Name, retrievedManager.Role.Name);
+            Assert.AreEqual(manager.User.Role.Name, retrievedManager.User.Role.Name);
             Assert.AreEqual(manager.ManagedLocations.Count, retrievedManager.ManagedLocations.Count);
-            Assert.AreEqual("Менеджер", retrievedManager.Role.Name);
+            Assert.AreEqual("Менеджер", retrievedManager.User.Role.Name);
         }
 
         //[TestMethod]

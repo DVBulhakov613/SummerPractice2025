@@ -1,4 +1,5 @@
-﻿using Class_Lib.Backend.Services;
+﻿using Class_Lib.Backend.Database.Repositories;
+using Class_Lib.Backend.Services;
 using System;
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations.Schema;
@@ -13,7 +14,7 @@ namespace Class_Lib
         public string Username { get; set; } // username, UNIQUE
         public string PasswordHash { get; set; } // hashed password
         public uint RoleID { get; set; } // role ID (for db purposes)
-        public Role Role { get; set; } // "Administrator", "Manager", "Employee", NOT client; wait do we even need this? no prob not
+        public Role Role { get; set; } // "Administrator", "Manager", "Employee", NOT client;
         public uint? PersonID { get; set; } // Foreign key to Person table
         public Employee Employee { get; set; } // Navigation property
         [NotMapped] public List<int> CachedPermissions { get; set; } = new();
@@ -54,5 +55,4 @@ namespace Class_Lib
             return true;
         }
     }
-
 }

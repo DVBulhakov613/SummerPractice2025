@@ -18,6 +18,16 @@ namespace Class_Lib.Backend.Package_related.Methods
             _deliveryRepository = deliveryRepository;
         }
 
+        public async Task AddAsync(User user, Delivery delivery)
+        {
+            if (delivery == null) { throw new ArgumentNullException(nameof(delivery), "Параметр доставки не може бути пустим."); }
+            if (!user.HasPermission(AccessService.PermissionKey.CreateDelivery))
+            {
+                throw new UnauthorizedAccessException("Немає дозволу створювати доставки.");
+            }
+            await _deliveryRepository.AddAsync(delivery);
+        }
+
         public async Task<IEnumerable<Delivery>> GetByCriteriaAsync(User user, Expression<Func<Delivery, bool>> predicate)
         {
             if (predicate == null) { throw new ArgumentNullException(nameof(predicate), "Пустий фільтр пошуку."); }
@@ -27,6 +37,26 @@ namespace Class_Lib.Backend.Package_related.Methods
             }
 
             return await _deliveryRepository.GetByCriteriaAsync(predicate);
+        }
+
+        public async Task UpdateAsync(User user, Delivery delivery)
+        {
+            if (delivery == null) { throw new ArgumentNullException(nameof(delivery), "Параметр доставки не може бути пустим."); }
+            if (!user.HasPermission(AccessService.PermissionKey.UpdateDelivery))
+            {
+                throw new UnauthorizedAccessException("Немає дозволу змінювати доставки.");
+            }
+            await _deliveryRepository.UpdateAsync(delivery);
+        }
+
+        public async Task DeleteAsync(User user, Delivery delivery)
+        {
+            if (delivery == null) { throw new ArgumentNullException(nameof(delivery), "Параметр доставки не може бути пустим."); }
+            if (!user.HasPermission(AccessService.PermissionKey.DeleteDelivery))
+            {
+                throw new UnauthorizedAccessException("Немає дозволу видаляти доставки.");
+            }
+            await _deliveryRepository.DeleteAsync(delivery);
         }
     }
 }

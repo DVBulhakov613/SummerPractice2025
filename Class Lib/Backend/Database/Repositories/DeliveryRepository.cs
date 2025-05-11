@@ -8,6 +8,7 @@ using System.Linq;
 using System.Linq.Expressions;
 using System.Text;
 using System.Threading.Tasks;
+using static Class_Lib.Backend.Services.AccessService;
 
 namespace Class_Lib.Backend.Database.Repositories
 {
@@ -23,7 +24,7 @@ namespace Class_Lib.Backend.Database.Repositories
                 throw new UnauthorizedAccessException("Користувач не авторизований.");
 
             // Always fetch deliveries first
-            if(!_user.HasPermission(AccessService.PermissionKey.ReadDelivery))
+            if(!_user.HasPermission(PermissionKey.ReadDelivery))
                 throw new UnauthorizedAccessException("Немає дозволу читати доставки.");
 
             var deliveries = await _context.Deliveries
@@ -37,14 +38,14 @@ namespace Class_Lib.Backend.Database.Repositories
 
             // Load related entities only if the user has permission
 
-            if (_user.HasPermission(AccessService.PermissionKey.ReadPackage))
+            if (_user.HasPermission(PermissionKey.ReadPackage))
             {
                 await _context.Packages
                     .Where(p => deliveryIds.Contains(p.Delivery.ID))
                     .LoadAsync();
             }
 
-            if (_user.HasPermission(AccessService.PermissionKey.ReadPerson))
+            if (_user.HasPermission(PermissionKey.ReadPerson))
             {
                 var senderIds = deliveries.Select(d => d.SenderID).Distinct().ToList();
                 var receiverIds = deliveries.Select(d => d.ReceiverID).Distinct().ToList();
@@ -54,15 +55,30 @@ namespace Class_Lib.Backend.Database.Repositories
                     .LoadAsync();
             }
 
-            if (_user.HasPermission(AccessService.PermissionKey.ReadLocation))
+            if (_user.HasPermission(PermissionKey.ReadLocation))
             {
                 var fromIds = deliveries.Select(d => d.SentFromID).Distinct().ToList();
                 var toIds = deliveries.Select(d => d.SentToID).Distinct().ToList();
 
-                await _context.Locations
-                    .Where(l => fromIds.Contains(l.ID) || toIds.Contains(l.ID))
-                    .Include(l => l.Staff)
-                    .LoadAsync();
+                var locationQuery = _context.Locations
+                    .Where(l => fromIds.Contains(l.ID) || toIds.Contains(l.ID));
+
+                if (_user.HasPermission(PermissionKey.ReadPerson))
+                {
+                    locationQuery = locationQuery.Include(l => l.Staff);
+
+                    if (_user.HasPermission(PermissionKey.ReadUser))
+                    {
+                        locationQuery = locationQuery.Include("Staff.User");
+
+                        if (_user.HasPermission(PermissionKey.ReadRole))
+                        {
+                            locationQuery = locationQuery.Include("Staff.User.Role");
+                        }
+                    }
+                }
+
+                await locationQuery.LoadAsync();
             }
 
             return deliveries;
@@ -70,3 +86,51 @@ namespace Class_Lib.Backend.Database.Repositories
 
     }
 }
+
+//if (_user.HasPermission(PermissionKey.ReadLocation))
+//{
+//    var fromIds = deliveries.Select(d => d.SentFromID).Distinct().ToList();
+//    var toIds = deliveries.Select(d => d.SentToID).Distinct().ToList();
+
+//    var canSeeStaff = _user.HasPermission(PermissionKey.ReadPerson);
+//    var canSeeUser = _user.HasPermission(PermissionKey.ReadUser);
+//    var canSeeRole = _user.HasPermission(PermissionKey.ReadRole);
+
+//    //await _context.Locations
+//    //    .Where(l => fromIds.Contains(l.ID) || toIds.Contains(l.ID))
+//    //    .Include(l => l.Staff)
+//    //    .LoadAsync();
+//    // good on paper but doesnt load properly in practice due to AsNoTracking, cannot be used without it either
+//    //var data = await _context.Locations
+//    //    .Where(l => fromIds.Contains(l.ID) || toIds.Contains(l.ID))
+//    //    .AsNoTracking()     // do not track changes to the entities
+//    //    .Select(l => new {      // select
+//    //        l.ID,               // id, geodata, loc type
+//    //        l.GeoData,
+//    //        l.LocationType,
+//    //        Staff = (canSeeStaff && l.Staff != null)    // if can see staff,
+//    //        ? l.Staff.Select(e => new {                 // select the following:
+//    //            e.ID,                                   // ID, first name, surname
+//    //            e.FirstName,
+//    //            e.Surname,
+
+//    //            User = (canSeeUser && e.User != null) ? new // if can see users, select the following:
+//    //                {
+//    //                    e.User.PersonID,                    // person ID (FK), username
+//    //                    e.User.Username,                    // NOT PASSWORD
+
+//    //                    Role = (canSeeRole && e.User.Role != null) ? new    // if can see role,
+//    //                        {                                               // select the following:
+//    //                            e.User.Role.ID,                             // role ID, role name
+//    //                            e.User.Role.Name
+//    //                        }
+//    //                        : null          // cant see role, set to null
+//    //                }
+//    //                : null  // cant see user, set to null
+//    //            }).ToList() // and drop into a list
+//    //            : null // cant see staff, set to null
+//    //        })
+//    //    .ToListAsync();     // and drop into a list (asynchronously)
+
+
+//}

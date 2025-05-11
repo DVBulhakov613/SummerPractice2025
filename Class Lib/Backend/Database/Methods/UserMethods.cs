@@ -19,7 +19,7 @@ namespace Class_Lib.Backend.Person_related.Methods
         // Create
         public async Task AddAsync(User user, User newUser)
         {
-            if(newUser == null) { throw new ArgumentNullException(""); }
+            ArgumentNullException.ThrowIfNull(newUser);
 
             if (!user.HasPermission(AccessService.PermissionKey.CreateUser))
             {
@@ -32,7 +32,7 @@ namespace Class_Lib.Backend.Person_related.Methods
         // Read
         public async Task<IEnumerable<User>> GetByCustomCriteriaAsync(User user, Expression<Func<User, bool>> filter)
         {
-            if(filter == null) { throw new ArgumentNullException(""); }
+            ArgumentNullException.ThrowIfNull(filter);
 
             if (!user.HasPermission(AccessService.PermissionKey.ReadPerson))
             {
@@ -45,7 +45,7 @@ namespace Class_Lib.Backend.Person_related.Methods
         // Update
         public async Task UpdateAsync(User user, User updatedUser)
         {
-            if(updatedUser == null) { throw new ArgumentNullException(""); }
+            ArgumentNullException.ThrowIfNull(updatedUser);
 
             if (!user.HasPermission(AccessService.PermissionKey.CreateUser))
             {
@@ -58,7 +58,7 @@ namespace Class_Lib.Backend.Person_related.Methods
         // Delete
         public async Task DeleteAsync(User user, User targetUser)
         {
-            if(targetUser == null) { throw new ArgumentNullException(""); }
+            ArgumentNullException.ThrowIfNull(targetUser);
 
             if (!user.HasPermission(AccessService.PermissionKey.DeleteUser))
             {
@@ -72,19 +72,31 @@ namespace Class_Lib.Backend.Person_related.Methods
         // Delete by ID
         public async Task DeleteAsync(User user, string targetUser)
         {
-            if (targetUser == null) { throw new ArgumentNullException(""); }
+            ArgumentNullException.ThrowIfNull(targetUser);
 
             if (!user.HasPermission(AccessService.PermissionKey.DeleteUser))
             {
                 throw new UnauthorizedAccessException("Немає дозволу видаляти користувачів.");
             }
 
-            var target = await _userRepository.GetByUsernameAsync(targetUser);
-
-            if(target == null)
-            { throw new ArgumentNullException(nameof(User), "Користувача не знайдено."); }
-
+            var target = await _userRepository.GetByUsernameAsync(targetUser) 
+                ?? throw new ArgumentNullException(nameof(User), "Користувача не знайдено.");
             await _userRepository.DeleteAsync(target);
         }
+
+        public async Task ChangePasswordAsync(User user, uint userId, string newPassword)
+        {
+            ArgumentNullException.ThrowIfNull(user);
+
+            if (!user.HasPermission(AccessService.PermissionKey.UpdateUser))
+                throw new UnauthorizedAccessException("Немає дозволу змінювати паролі користувачів.");
+
+            var target = await _userRepository.GetByIdAsync(userId) 
+                ?? throw new InvalidOperationException("Користувача не знайдено");
+
+            target.PasswordHash = PasswordHelper.HashPassword(newPassword);
+            await _userRepository.UpdateAsync(target);
+        }
+
     }
 }

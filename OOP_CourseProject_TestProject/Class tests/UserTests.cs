@@ -36,7 +36,7 @@ namespace OOP_CourseProject_TestProject.Class_tests
             // Arrange
             Employee dummy = new Employee("dummy", "dummy", "+000000000000", "example@example.com", "Працівник", null);
 
-            User newUser = new("username", PasswordHelper.HashPassword("password"), new Role { }, dummy);
+            User newUser = new("username", PasswordHelper.HashPassword("password"), new Role { Name="TestRole" }, dummy);
 
             // Act
             await _userMethods.AddAsync(_adminUser, newUser);
@@ -53,7 +53,7 @@ namespace OOP_CourseProject_TestProject.Class_tests
             // Arrange
             string username = "user";
             string password = PasswordHelper.HashPassword("password");
-            User user = new(username, password, new Role { }, new Employee("dummy", "dummy", "+000000000000", "example@example.com", "Працівник", null) );
+            User user = new(username, password, new Role {Name = "TestRole" }, new Employee("dummy", "dummy", "+000000000000", "example@example.com", "Працівник", null) );
             await _userMethods.AddAsync(_adminUser, user);
 
             // Act
@@ -70,32 +70,47 @@ namespace OOP_CourseProject_TestProject.Class_tests
 
         #region Update
         [TestMethod]
-        public async Task UpdateUserAsync() // i should really make a function to change the password in User
+        public async Task ChangePasswordAndRoleAsync()
         {
             // Arrange
+            var _roleRepository = _provider.GetRequiredService<RoleRepository>();
+            Role role = new Role { Name = "Role1" };
+            await _roleRepository.AddAsync(role);
+            role = new Role { Name = "Role2" };
+            await _roleRepository.AddAsync(role);
             string username = "user";
-            string password = PasswordHelper.HashPassword("password");
-            string newPassword = PasswordHelper.HashPassword("newPassword");
-            await _userMethods.AddAsync(_adminUser, new(username, password, new Role { ID = 1, Name = "Role1" }, new Employee("dummy", "dummy", "+000000000000", "example@example.com", "Працівник", null)));
+            string oldPassword = PasswordHelper.HashPassword("password");
+            string newPassword = "newPassword"; // un-hashed here
+            int newRoleId = 2;
 
-            // Act
-            var retreivedUsers = await _userRepository.GetByCriteriaAsync(u => u.Username == username);
-            var retreivedUser = retreivedUsers.First();
-            retreivedUser.PasswordHash = newPassword;
-            retreivedUser.Role = new Role { ID = 2, Name = "Role2" };
-            retreivedUser.Employee.FirstName = "mega";
-            await _userRepository.UpdateAsync(retreivedUser);
+            // Create role and user
+            var initialRole = await _roleRepository.GetByIdAsync(1);
+            var employee = new Employee("mega", "dummy", "+000000000000", "example@example.com", "Працівник", null);
+            var user = new User(username, oldPassword, initialRole, employee);
 
+            await _userMethods.AddAsync(_adminUser, user);
+
+            var retrieved = await _userRepository.GetByCriteriaAsync(u => u.Username == username);
+            var existingUser = retrieved.First();
+
+            // Act: change password
+            await _userMethods.ChangePasswordAsync(_adminUser, (uint)existingUser.PersonID, newPassword);
+
+            // Act: change role
+            var newRole = await _roleRepository.GetByIdAsync((uint)newRoleId);
+            existingUser.Role = newRole;
+            await _userMethods.UpdateAsync(_adminUser, existingUser);
 
             // Assert
-            retreivedUsers = await _userRepository.GetByCriteriaAsync(u => u.Username == username);
-            retreivedUser = retreivedUsers.First();
+            retrieved = await _userRepository.GetByCriteriaAsync(u => u.Username == username);
+            var updatedUser = retrieved.First();
 
-            Assert.AreEqual(newPassword, retreivedUser.PasswordHash);
-            Assert.AreEqual("Role2", retreivedUser.Role.Name);
-            Assert.AreEqual("mega", retreivedUser.Employee.FirstName);
-            Assert.AreEqual(1, retreivedUsers.Count());
+            Assert.IsTrue(PasswordHelper.VerifyPassword(newPassword, updatedUser.PasswordHash));
+            Assert.AreEqual("Role2", updatedUser.Role.Name);
+            Assert.AreEqual("mega", updatedUser.Employee.FirstName);
+            Assert.AreEqual(1, retrieved.Count());
         }
+
 
         #endregion
 
@@ -107,7 +122,7 @@ namespace OOP_CourseProject_TestProject.Class_tests
             // Arrange
             string username = "user";
             string password = PasswordHelper.HashPassword("password");
-            await _userMethods.AddAsync(_adminUser, new(username, password, new Role { }, new Employee("dummy", "dummy", "+000000000000", "example@example.com", "Працівник", null)));
+            await _userMethods.AddAsync(_adminUser, new(username, password, new Role { Name = "TestRole" }, new Employee("dummy", "dummy", "+000000000000", "example@example.com", "Працівник", null)));
 
             // Act
             await _userMethods.DeleteAsync(_adminUser, "user");
@@ -123,7 +138,7 @@ namespace OOP_CourseProject_TestProject.Class_tests
             // Arrange
             string username = "user";
             string password = PasswordHelper.HashPassword("password");
-            await _userMethods.AddAsync(_adminUser, new(username, password, new Role { }, new Employee("dummy", "dummy", "+000000000000", "example@example.com", "Працівник", null)));
+            await _userMethods.AddAsync(_adminUser, new(username, password, new Role {Name = "TestRole" }, new Employee("dummy", "dummy", "+000000000000", "example@example.com", "Працівник", null)));
 
             // Act + Assert
             await Assert.ThrowsExceptionAsync<UnauthorizedAccessException>(async () => await _userMethods.DeleteAsync(_unauth, "user"));

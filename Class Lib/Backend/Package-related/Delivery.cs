@@ -43,7 +43,7 @@ namespace Class_Lib.Backend.Package_related
 
         protected Delivery() { } // for EF Core
 
-        public Delivery(Package package, Client sender, Client receiver, Warehouse sentFrom, Warehouse sentTo)
+        public Delivery(Package package, Client sender, Client receiver, Warehouse sentFrom, Warehouse sentTo, uint price, bool paid)
         {
             var exceptions = new List<Exception>();
             try { Sender = sender; }
@@ -63,7 +63,11 @@ namespace Class_Lib.Backend.Package_related
 
             if (exceptions.Count > 0)
                 throw new AggregateException("Помилки при створенні доставки.", exceptions);
-            
+
+            Package.Delivery = this;
+            Price = price;
+            IsPaid = paid;
+
             Log.Add(new PackageEvent(SentFrom, "Посилку створено", package)); // package assigned later
             
             RowVersion = [];
