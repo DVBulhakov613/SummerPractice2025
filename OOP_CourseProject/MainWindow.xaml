@@ -3,7 +3,9 @@
         xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
         Height="1000" Width="1920"
         Background="{StaticResource PrimaryBackgroundBrush}">
-
+    <Window.Resources>
+        <BooleanToVisibilityConverter x:Key="BoolToVis"/>
+    </Window.Resources>
     <Grid>
         <Grid.ColumnDefinitions>
             <ColumnDefinition Width="200"/>
@@ -16,8 +18,10 @@
         <StackPanel Background="{StaticResource SecondaryBackgroundBrush}" Grid.Column="0">
             <!-- profile and navigation -->
             <Ellipse Width="100" Height="100" Fill="Red" Margin="20"/>
-            <Button Content="Home Page" Margin="10" Click="HomeButton_Click" Foreground="Black"/>
-            <Button Content="Send Package" Margin="10" Click="SendPackageButton_Click" Foreground="Black"/>
+            <Button Content="Home Page" Click="HomeButton_Click" Foreground="Black" Visibility="Visible"/>
+            <Button Content="Send Package" Click="SendPackageButton_Click" Foreground="Black" Visibility="{Binding Converter={StaticResource PermissionConverter}, ConverterParameter=40}"/>
+            <Button Content="Receive Package" Click="ReceivePackageButton_Click" Foreground="Black" Visibility="{Binding Converter={StaticResource PermissionConverter}, ConverterParameter=40}"/>
+            <Button Content="Test Button" Click="Test_Click" Foreground="Black" Visibility="{Binding Converter={StaticResource PermissionConverter}, ConverterParameter=999999}"/>
         </StackPanel>
 
         <!-- main content -->

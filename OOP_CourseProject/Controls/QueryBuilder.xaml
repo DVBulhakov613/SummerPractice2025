@@ -2,7 +2,7 @@
         xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
         xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
         Title="Query Builder" Height="450" Width="800"
-        Background="{StaticResource PrimaryBackgroundBrush}">
+        Background="{StaticResource SecondaryBackgroundBrush}">
     <Grid>
         <Grid.RowDefinitions>
             <RowDefinition Height="Auto"/>
@@ -10,12 +10,12 @@
         </Grid.RowDefinitions>
 
         <!-- query builder controls -->
-        <StackPanel Orientation="Horizontal" Grid.Row="0" Margin="10">
+        <UniformGrid Grid.Row="0" Rows="1" Columns="5" Margin="0,0,0,0">
             <ComboBox Foreground="Black" x:Name="FieldSelector" Width="150" Margin="5" ItemsSource="{Binding Fields}" SelectedItem="{Binding SelectedField}"/>
             <ComboBox Foreground="Black" x:Name="OperatorSelector" Width="150" Margin="5" ItemsSource="{Binding Operators}" SelectedItem="{Binding SelectedOperator}"/>
             <TextBox Foreground="Black" x:Name="ValueInput" Width="150" Margin="5" Text="{Binding ValueInput}"/>
-            <Button Foreground="Black" Content="Додати запит" Width="150" Margin="5" Command="{Binding AddConditionCommand}"/>
-            <Button Foreground="Black"  Content="Завершити побудову" Width="150" Margin="5" Command="{Binding SubmitCommand}"/>
-        </StackPanel>
+            <Button Foreground="Black" Content="Додати запит" Width="150" Margin="5" Command="{Binding AddConditionCommand}" Visibility="Visible"/>
+            <Button Foreground="Black"  Content="Завершити побудову" Width="150" Margin="5" Command="{Binding SubmitQueryCommand}" Visibility="Visible"/>
+        </UniformGrid>
     </Grid>
 </Window>

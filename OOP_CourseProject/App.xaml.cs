@@ -4,6 +4,7 @@ using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
 using OOP_CourseProject.Controls;
+using OOP_CourseProject.Controls.SendPackageControls; // REMOVE LATER
 using System.Windows;
 
 namespace OOP_CourseProject
@@ -93,6 +94,8 @@ namespace OOP_CourseProject
             services.AddTransient<EmployeeControl>();
             services.AddTransient<QueryBuilder>();
             services.AddTransient<SendPackageControl>();
+            services.AddTransient<PackageConfigurations>();// DEBUG LINE
+            //services.AddTransient<ReceivePackageControl>();
         }
 
 

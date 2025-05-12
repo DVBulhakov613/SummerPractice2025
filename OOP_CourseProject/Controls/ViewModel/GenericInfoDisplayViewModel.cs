@@ -34,6 +34,13 @@ namespace OOP_CourseProject.Controls.ViewModel
             _viewModelFactory = viewModelFactory;
         }
 
+        public void UpdateItems(IEnumerable<object> items)
+        {
+            Items.Clear();
+            foreach (var item in items)
+                Items.Add(item);
+        }
+
         public override IInfoProviderViewModel SelectedInfoViewModel =>
             SelectedItem != null ? _viewModelFactory(SelectedItem) : null;
     }

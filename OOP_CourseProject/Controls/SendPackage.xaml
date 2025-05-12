@@ -1,0 +1,93 @@
+﻿<UserControl x:Class="OOP_CourseProject.Controls.SendPackage"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        Height="945" Width="1600"
+        Background="#f0f4fa">
+    
+    <Grid Margin="0">
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition Width="2*" />
+            <ColumnDefinition Width="3*" />
+        </Grid.ColumnDefinitions>
+        <Grid.RowDefinitions>
+            <RowDefinition Height="*" />
+            <RowDefinition Height="Auto" />
+        </Grid.RowDefinitions>
+
+        <!-- Left Side: Scrollable Input Form -->
+        <ScrollViewer Grid.Row="0" Grid.Column="0" VerticalScrollBarVisibility="Auto" Margin="0,0,10,0">
+            <StackPanel Margin="10" VerticalAlignment="Top">
+                <!-- Sender/Receiver Info -->
+                <GroupBox Header="Інформація відправника та отримувача" Margin="0,0,0,10">
+                    <StackPanel>
+                        <TextBox Text="Ім’я відправника" />
+                        <TextBox Text="Фамілія відправника" />
+                        <TextBox Text="Номер телефону відправника" />
+                        <TextBox Text="Ім’я отримувача" />
+                        <TextBox Text="Фамілія отримувача" />
+                        <TextBox Text="Номер телефону отримувача" />
+                    </StackPanel>
+                </GroupBox>
+
+                <!-- Route Info -->
+                <GroupBox Header="Маршрут" Margin="0,0,0,10">
+                    <StackPanel>
+                        <TextBox Text="Адреса / номер відділення (Звідки)" />
+                        <TextBox Text="Адреса / номер відділення (Куди)" />
+                        <ComboBox Text="Спосіб відправлення"/>
+                        <ComboBox Text="Спосіб отримання"/>
+                    </StackPanel>
+                </GroupBox>
+
+                <!-- Weight and Size -->
+                <GroupBox Header="Вага та розмір">
+                    <StackPanel>
+                        <TextBox Text="Габарити" />
+                        <TextBox Text="Вага" />
+                    </StackPanel>
+                </GroupBox>
+            </StackPanel>
+        </ScrollViewer>
+
+        <!-- Right Side: Summary -->
+        <Border Grid.Row="0" Grid.Column="1" Padding="10" Background="White" CornerRadius="8" >
+            <StackPanel>
+                <TextBlock FontWeight="Bold" FontSize="14" Text="Краткий опис посилки" Margin="0,0,0,10"/>
+                <TextBox Text="Повне ім’я відправника"/>
+                <TextBox Text="Контактна інформація відправника"/>
+                <TextBox Text="Повне ім’я отримувача"/>
+                <TextBox Text="Контактна інформація отримувача"/>
+                <TextBox Text="Точка відправлення"/>
+                <TextBox Text="Точка призначення"/>
+                <TextBox Text="Спосіб відправлення"/>
+                <TextBox Text="Спосіб отримання"/>
+                <TextBox Text="Габарити"/>
+                <TextBox Text="Вага"/>
+                <TextBox Text="Тип вантажу"/>
+                <TextBox Text="Тип посилки"/>
+            </StackPanel>
+        </Border>
+
+        <!-- Bottom Info Bar -->
+        <Grid Grid.Row="1" Grid.ColumnSpan="2" Margin="0,10,0,0" Background="{StaticResource SecondaryBackgroundBrush}">
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="2*" />
+                <ColumnDefinition Width="2*" />
+                <ColumnDefinition Width="2*" />
+                <ColumnDefinition Width="Auto" />
+                <ColumnDefinition Width="Auto" />
+            </Grid.ColumnDefinitions>
+
+            <!-- Delivery Cost -->
+            <TextBlock Grid.Column="0" Text="{Binding DeliveryCost}" FontWeight="Bold" FontSize="20" VerticalAlignment="Center"/>
+            <!-- Delivery Time -->
+            <TextBlock Grid.Column="1" Text="{Binding DeliveryTime}" FontWeight="Bold" FontSize="20" VerticalAlignment="Center"/>
+            <!-- ID -->
+            <TextBlock Grid.Column="2" Text="{Binding PackageId}" FontWeight="Bold" FontSize="20" VerticalAlignment="Center"/>
+
+            <!-- Buttons -->
+            <Button Grid.Column="3" Content="Очистити" Background="Red" Foreground="White" Margin="10,0"/>
+            <Button Grid.Column="4" Content="Підтвердити" Background="Green" Foreground="White" Margin="10,0"/>
+        </Grid>
+    </Grid>
+</UserControl>

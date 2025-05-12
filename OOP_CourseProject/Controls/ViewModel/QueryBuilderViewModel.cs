@@ -14,6 +14,9 @@ namespace OOP_CourseProject.Controls
 {
     public class QueryBuilderViewModel<T> : BaseViewModel where T : class
     {
+        // Event for notifying when conditions are submitted
+        public event Action<List<QueryCondition>>? ConditionsSubmitted;
+
         // Available fields and operators for query building
         public ObservableCollection<string> Fields { get; set; } = new();
         public ObservableCollection<string> Operators { get; set; } = new() { "==", "StartsWith", "Contains" };

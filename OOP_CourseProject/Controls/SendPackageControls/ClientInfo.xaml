@@ -1,0 +1,106 @@
+﻿<UserControl x:Class="OOP_CourseProject.Controls.SendPackageControls.ClientInfo"
+             xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
+             xmlns:helpers="clr-namespace:OOP_CourseProject.Controls.Helpers"
+             mc:Ignorable="d" 
+             d:DesignHeight="230" d:DesignWidth="620">
+
+
+    <Border CornerRadius="20" Background="{StaticResource SecondaryBackgroundBrush}">
+        <Grid Margin="20">
+            <Grid.RowDefinitions>
+                <RowDefinition Height="Auto"/>
+                <RowDefinition Height="*"/>
+            </Grid.RowDefinitions>
+
+            <!-- Header -->
+            <StackPanel Grid.Row="0" Margin="0,0,0,15">
+                <TextBlock Text="Інформація про відправника та отримувача"
+                       FontSize="20"
+                       FontWeight="Bold"
+                       Foreground="Black"/>
+                <TextBlock Text="Всі поля обов'язкові."
+                       FontSize="13"
+                       FontWeight="Medium"
+                       Foreground="Black"
+                       Opacity="0.4"
+                       Margin="0,2,0,0"/>
+            </StackPanel>
+
+            <!-- Input Fields -->
+            <Grid Grid.Row="1">
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="*"/>
+                    <ColumnDefinition Width="*"/>
+                </Grid.ColumnDefinitions>
+
+                <!-- Sender Info -->
+                <StackPanel Grid.Column="0" Orientation="Vertical" VerticalAlignment="Top" Margin="0,0,10,0">
+                    <TextBox x:Name="SenderName"
+                         Style="{StaticResource PlaceholderTextBox}"
+                         FontSize="16"
+                         Height="30"
+                         helpers:TextBoxHelper.Placeholder="Ім'я відправника"
+                         Background="{StaticResource SecondaryBackgroundBrush}"
+                         VerticalContentAlignment="Center"/>
+                    <TextBox x:Name="SenderSurname"
+                         Style="{StaticResource PlaceholderTextBox}"
+                         FontSize="16"
+                         Height="30"
+                         helpers:TextBoxHelper.Placeholder="Фамілія відправника"
+                         Background="{StaticResource SecondaryBackgroundBrush}"
+                         VerticalContentAlignment="Center"/>
+                    <TextBox x:Name="SenderPhoneNumber"
+                        Style="{StaticResource PlaceholderTextBox}"
+                         FontSize="16"
+                         Height="30"
+                         helpers:TextBoxHelper.Placeholder="Номер телефону відправника"
+                         Background="{StaticResource SecondaryBackgroundBrush}"
+                         VerticalContentAlignment="Center"/>
+                    <TextBox x:Name="SenderEmail"
+                         Style="{StaticResource PlaceholderTextBox}"
+                         FontSize="16"
+                         Height="30"
+                         helpers:TextBoxHelper.Placeholder="Електронна пошта відправника"
+                         Background="{StaticResource SecondaryBackgroundBrush}"
+                         VerticalContentAlignment="Center"/>
+                </StackPanel>
+
+                <!-- Recipient Info -->
+                <StackPanel Grid.Column="1" Orientation="Vertical" VerticalAlignment="Top">
+                    <TextBox x:Name="ReceiverName"
+                         Style="{StaticResource PlaceholderTextBox}"
+                         FontSize="16"
+                         Height="30"
+                         helpers:TextBoxHelper.Placeholder="Ім'я отримувача"
+                         Background="{StaticResource SecondaryBackgroundBrush}"
+                         VerticalContentAlignment="Center"/>
+                    <TextBox x:Name="ReceiverSurname"
+                         Style="{StaticResource PlaceholderTextBox}"
+                         FontSize="16"
+                         Height="30"
+                         helpers:TextBoxHelper.Placeholder="Фамілія отримувача"
+                         Background="{StaticResource SecondaryBackgroundBrush}"
+                         VerticalContentAlignment="Center"/>
+                    <TextBox x:Name="ReceiverPhoneNumber"
+                         Style="{StaticResource PlaceholderTextBox}"
+                         FontSize="16"
+                         Height="30"
+                         helpers:TextBoxHelper.Placeholder="Номер телефону отримувача"
+                         Background="{StaticResource SecondaryBackgroundBrush}"
+                         VerticalContentAlignment="Center"/>
+                    <TextBox x:Name="ReceiverEmail"
+                         Style="{StaticResource PlaceholderTextBox}"
+                         FontSize="16"
+                         Height="30"
+                         helpers:TextBoxHelper.Placeholder="Електронна пошта отримувача"
+                         Background="{StaticResource SecondaryBackgroundBrush}"
+                         VerticalContentAlignment="Center"/>
+                </StackPanel>
+            </Grid>
+        </Grid>
+    </Border>
+
+</UserControl>

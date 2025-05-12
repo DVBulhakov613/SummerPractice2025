@@ -45,6 +45,11 @@ namespace Class_Lib
             return CachedPermissions.Contains((int)permissionKey);
         }
 
+        public bool HasPermission(int permissionKey)
+        {
+            return CachedPermissions.Contains(permissionKey);
+        }
+
         public bool HasPermissions(List<AccessService.PermissionKey> permissionKeys)
         {
             foreach (var permissionKey in permissionKeys)
