@@ -4,6 +4,7 @@ using System;
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
 using System.Linq;
+using System.Runtime.CompilerServices;
 using System.Text;
 using System.Threading.Tasks;
 
@@ -18,8 +19,8 @@ namespace Class_Lib.Backend.Package_related
         private Warehouse sentTo;
 
         [Key]
-        public uint ID { get; set; }
-        public DateTime Timestamp { get; set; } = DateTime.Now; // date and time of the delivery creation
+        public uint ID { get; internal set; }
+        public DateTime Timestamp { get; internal set; } = DateTime.Now; // date and time of the delivery creation
 
         public uint PackageID { get; set; }
         public Package Package { get => package; set => package = value ?? throw new ArgumentNullException(nameof(Sender), "Доставка має мати посилку."); }
@@ -41,7 +42,7 @@ namespace Class_Lib.Backend.Package_related
 
         public List<PackageEvent> Log { get; set; } = [];
 
-        protected Delivery() { } // for EF Core
+        internal Delivery() { } // for EF Core
 
         public Delivery(Package package, Client sender, Client receiver, Warehouse sentFrom, Warehouse sentTo, uint price, bool paid)
         {

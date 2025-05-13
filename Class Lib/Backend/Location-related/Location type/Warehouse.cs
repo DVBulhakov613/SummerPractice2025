@@ -21,7 +21,7 @@ namespace Class_Lib
         public List<Delivery> DeliveriesSentFromHere { get; set; } = [];
         public List<Delivery> DeliveriesSentHere { get; set; } = [];
 
-        protected internal Warehouse() : base()
+        internal Warehouse() : base()
         {
         }
 

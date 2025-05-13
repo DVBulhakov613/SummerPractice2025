@@ -8,7 +8,8 @@
 //{
 //    public class DeliveryVehicle : IHasIdentification, IStorage
 //    {
-//        public uint ID { get; private set; } // unique identifier for the object
+//        public uint ID { get;
+//        ; } // unique identifier for the object
 //        public uint MaxStorageCapacity { get; set; } // maximum storage capacity of the vehicle (in this case, weight)
 //        public uint MaxVolume { get; set; } // maximum volume of the vehicle (in this case, volume)
 //        public List<Package> Packages { get; set; } = []; // list of packages in the vehicle

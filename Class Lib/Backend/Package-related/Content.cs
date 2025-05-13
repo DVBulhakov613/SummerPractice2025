@@ -27,19 +27,17 @@ namespace Class_Lib
         } // name given to content (cup, phone, etc)
         public ContentType Type { get; set; }// type of content (electronics, clothing, etc)
         public uint Amount { get; set; }
-        public uint PackageID { get; private set; }
+        public uint PackageID { get; internal set; }
         public Package Package
         {
             get => package;
-            private set => package = value
+            internal set => package = value
                 ?? throw new ArgumentNullException(nameof(Package), "Зміст посилки має мати посилку, до якої вона належить.");
         } // the package that this content belongs to
 
         public string Description { get; set; } = string.Empty; // description of the content (if any)
-        protected Content()
-        {
-            RowVersion = new byte[8]; // initialize the RowVersion property
-        }
+        
+        internal Content() => RowVersion = []; // initialize the RowVersion property
         public Content(string name, ContentType type, uint amount, Package package)
         {
             var exceptions = new List<Exception>();

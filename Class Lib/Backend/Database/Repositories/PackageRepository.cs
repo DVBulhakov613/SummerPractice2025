@@ -51,6 +51,13 @@ namespace Class_Lib.Database.Repositories
                     .LoadAsync();
             }
 
+            if(_user.HasPermission(AccessService.PermissionKey.ReadDelivery))
+            {
+                await _context.Deliveries
+                    .Where(d => packageIds.Contains(d.Package.ID))
+                    .LoadAsync();
+            }
+
             return packages;
         }
         public async Task<IEnumerable<Package>> GetByStatusAsync(PackageStatus status)

@@ -10,13 +10,13 @@ namespace Class_Lib
 {
     public class Person : IHasIdentification
     {
-        public uint ID { get; private set; }
+        public uint ID { get; internal set; }
         public string FirstName { get; set; }
         public string Surname { get; set; }
         public string FullName { get => FirstName + " " + Surname; }
         public string PhoneNumber { get; set; }
         public string Email { get; set; }
-        protected internal Person()
+        internal Person()
         {
             RowVersion = Array.Empty<byte>();
         }

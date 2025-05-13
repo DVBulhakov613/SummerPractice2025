@@ -15,9 +15,9 @@ namespace Class_Lib.Backend.Package_related
         private uint height;
         private double weight;
 
-        public uint ID { get; private set; }
+        public uint ID { get; set; }
         public PackageStatus PackageStatus { get; set; } = PackageStatus.STORED;
-        public DateTime CreatedAt { get; private set; }
+        public DateTime CreatedAt { get; set; }
 
         public uint Length
         {
@@ -69,14 +69,14 @@ namespace Class_Lib.Backend.Package_related
         [NotMapped]
         public double Volume => Length * Width * Height;
 
-        public List<Content> DeclaredContent { get; private set; } = [];
+        public List<Content> DeclaredContent { get; set; } = [];
 
-        public PackageType Type { get; private set; }
+        public PackageType Type { get; internal set; }
 
         public Delivery Delivery { get; set; }
 
 
-        protected Package() => RowVersion = Array.Empty<byte>();
+        internal Package() => RowVersion = [];
 
         public Package(uint length, uint width, uint height, double weight, 
             Client sender, Client receiver, Warehouse sentFrom, Warehouse sentTo, PackageType type)

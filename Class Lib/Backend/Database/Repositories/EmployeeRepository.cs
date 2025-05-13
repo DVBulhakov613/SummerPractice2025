@@ -57,7 +57,9 @@ namespace Class_Lib.Database.Repositories
             //if (_user.HasPermission(AccessService.PermissionKey.ReadRole))
             //{
             //    await _context.Roles
-            //        .Where(r => employees.Select(e => e.User.RoleID).Contains(r.ID))
+            //        .Where(r => employees
+            //        .Select(e => e.User.RoleID)
+            //        .Contains(r.ID))
             //        .LoadAsync();
             //}
 

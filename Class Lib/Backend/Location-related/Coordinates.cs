@@ -66,7 +66,7 @@ namespace Class_Lib
                 _region = value;
             }
         }
-        protected Coordinates()
+        internal Coordinates()
         {
         }
         public Coordinates(double? latitude, double? longitude, string? address, string region)

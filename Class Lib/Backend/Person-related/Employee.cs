@@ -8,14 +8,12 @@ namespace Class_Lib
 {
     public class Employee : Person
     {
-        //public uint? RoleID { get; set; } // role ID (for db purposes)
-        //public Role Role { get; set; } // role of the employee (whatever)
-        public uint? WorkplaceID { get; private set; } // workplace ID (for db purposes)
+        public uint? WorkplaceID { get; internal set; } // workplace ID (for db purposes)
         public BaseLocation? Workplace { get; set; } // current workplace of the employee
         public User? User { get; set; } // user account of the employee (if any)
         public List<BaseLocation>? ManagedLocations { get; set; } = new();
 
-        protected internal Employee() : base() { }
+        internal Employee() : base() { }
 
         public Employee(string name, string surname, string phoneNumber, string email, BaseLocation? workplace, List<BaseLocation>? managedLocations = null)
             : base(name, surname, phoneNumber, email)

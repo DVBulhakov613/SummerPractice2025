@@ -13,26 +13,26 @@ namespace Class_Lib
         private Package package;
         private BaseLocation location;
 
-        public uint PackageID { get; private set; }
+        public uint PackageID { get; internal set; }
         public Package Package 
         { 
             get => package; 
-            private set => package = value 
+            internal set => package = value 
                 ?? throw new ArgumentNullException(nameof(Package), "Подія має мати посилку, до якої вона належить."); 
         } // the package to which this event belongs
         public DateTime Timestamp { get; } = DateTime.Now; // logs are always created with the current time
         
-        public uint LocationID { get; private set; } // location of the event
+        public uint LocationID { get; internal set; } // location of the event
         public BaseLocation Location
         {
             get => location;
-            private set => location = value
+            internal set => location = value
                 ?? throw new ArgumentNullException(nameof(Package), "Подія має мати локацію, в якій вона сталась.");
         } // location of the event
 
-        public string Description { get; private set; } // and description of the event
+        public string Description { get; internal set; } // and description of the event
 
-        protected internal PackageEvent()
+        internal PackageEvent()
         {
         }
 
