@@ -93,7 +93,7 @@ namespace OOP_CourseProject
             services.AddTransient<PackageControl>();
             services.AddTransient<EmployeeControl>();
             services.AddTransient<QueryBuilder>();
-            services.AddTransient<SendPackageControl>();
+            services.AddTransient<SendPackage>();
             services.AddTransient<PackageConfigurations>();// DEBUG LINE
             //services.AddTransient<ReceivePackageControl>();
         }

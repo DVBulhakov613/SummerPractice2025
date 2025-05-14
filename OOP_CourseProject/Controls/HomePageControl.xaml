@@ -22,7 +22,7 @@
             <UniformGrid Grid.Row="0" Rows="1" Columns="4" Margin="0,0,0,20">
                 
                 <Border Background="White" CornerRadius="10" Margin="5" Padding="5" BorderBrush="LightGray" BorderThickness="1">
-                    <Button Background="Transparent" Visibility="{Binding Converter={StaticResource PermissionConverter}, ConverterParameter=40}" Click="DelayedPackages_Click">
+                    <Button Background="Transparent" Visibility="{Binding ., Converter={StaticResource PermissionConverter}, ConverterParameter=40}" Click="DelayedPackages_Click">
                         <StackPanel>
                             <TextBlock Text="Затримані посилки" Foreground="Black" FontFamily="{StaticResource PrimaryFont}" FontWeight="Bold"/>
                             <TextBlock Text="Кількість: 10" Foreground="Gray" FontFamily="{StaticResource PrimaryFont}"/>
@@ -31,7 +31,7 @@
                 </Border>
                 
                 <Border Background="White" CornerRadius="10" Margin="5" Padding="5" BorderBrush="LightGray" BorderThickness="1">
-                    <Button Background="Transparent" Visibility="{Binding Converter={StaticResource PermissionConverter}, ConverterParameter=40}" Click="FindPackage_Click">
+                    <Button Background="Transparent" Visibility="{Binding ., Converter={StaticResource PermissionConverter}, ConverterParameter=40}" Click="FindPackage_Click">
                         <StackPanel>
                             <TextBlock Text="Знайти посилку" FontFamily="{StaticResource PrimaryFont}" FontWeight="Bold" Foreground="Black"/>
                             <TextBlock Text="Будь-де, по ID" FontFamily="{StaticResource PrimaryFont}" Foreground="Gray"/>
@@ -88,14 +88,14 @@
 
                         <!-- toolbar panel -->
                         <StackPanel Grid.Row="0" Orientation="Horizontal" Margin="0,0,0,10">
-                            <Button Background="Transparent" Visibility="{Binding Converter={StaticResource PermissionConverter}, ConverterParameter=41}" Click="Add_Click">
+                            <Button Background="Transparent" Visibility="{Binding ., Converter={StaticResource PermissionConverter}, ConverterParameter=41}" Click="Add_Click">
                                 <StackPanel Orientation="Horizontal" VerticalAlignment="Center">
                                     <Image Source="/Assets/ButtonIcons/Variant=Add.png" Width="20" Height="20" Margin="0,0,5,0"/>
                                     <TextBlock Text="Додати" VerticalAlignment="Center" Foreground="Black"/>
                                 </StackPanel>
                             </Button>
                             <Button Background="Transparent" 
-                                    Visibility="{Binding Converter={StaticResource PermissionConverter}, ConverterParameter=130}" 
+                                    Visibility="{Binding ., Converter={StaticResource PermissionConverter}, ConverterParameter=130}" 
                                     Click="Download_Click">
                                 <StackPanel Orientation="Horizontal" VerticalAlignment="Center">
                                     <Image Source="/Assets/ButtonIcons/Variant=Download.png" Width="20" Height="20" Margin="0,0,5,0"/>
@@ -103,7 +103,7 @@
                                 </StackPanel>
                             </Button>
                             <Button Background="Transparent"
-                                    Visibility="{Binding Converter={StaticResource PermissionConverter}, ConverterParameter=40}"
+                                    Visibility="{Binding ., Converter={StaticResource PermissionConverter}, ConverterParameter=40}"
                                     Click="SearchSpecific_Click">
                                 <StackPanel Orientation="Horizontal" VerticalAlignment="Center">
                                     <Image Source="/Assets/ButtonIcons/Variant=Search.png" Width="16" Height="16" Margin="0,0,5,0"/>

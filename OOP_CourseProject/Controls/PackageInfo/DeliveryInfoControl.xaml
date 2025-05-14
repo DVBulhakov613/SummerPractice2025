@@ -5,6 +5,7 @@
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
              xmlns:local="clr-namespace:OOP_CourseProject.Controls.PackageInfo"
              xmlns:viewmodels="clr-namespace:OOP_CourseProject.Controls.ViewModel"
+             xmlns:controls="clr-namespace:OOP_CourseProject.Controls"
              mc:Ignorable="d" 
              d:DesignHeight="600" d:DesignWidth="500">
     <Grid>
@@ -15,9 +16,9 @@
         </Grid.RowDefinitions>
 
         <!-- Header -->
-        <StackPanel Grid.Row="0" Margin="0,0,0,10">
-            <TextBlock Text="Інформація про посилку" FontWeight="Bold" FontSize="16"/>
-            <TextBlock Text="{Binding SelectedItem.PackageID}" Foreground="Gray"/>
+        <StackPanel Grid.Row="0" Margin="0,0,0,10" Orientation="Horizontal">
+            <TextBlock Text="Інформація про Доставку" FontWeight="Bold" FontSize="16"/>
+            <TextBlock Text="{Binding SelectedItem.ID}" FontWeight="Bold" Margin="4,0,0,0" FontSize="16"/>
         </StackPanel>
 
         <!-- Buttons -->
@@ -36,14 +37,29 @@
             </Button>-->
 
             <!-- Tabs -->
-            <TabControl Grid.Row="1">
-                <TabItem Header="Info">
-                    <viewmodels:InfoControl InfoProvider="{Binding DataContext.SelectedInfoViewModel, RelativeSource={RelativeSource AncestorType=UserControl}}" />
+            <TabControl Grid.Row="1" Style="{StaticResource UniformTabControlStyle}">
+                <TabItem  Style="{StaticResource ImageTabItemStyle}">
+                    <TabItem.Tag>
+                        <controls:TabImageSet 
+                            ActiveImage="/Assets/ButtonIcons/PackageInfo/Variant=FullInfo/Active.png"
+                            InactiveImage="/Assets/ButtonIcons/PackageInfo/Variant=FullInfo/Inactive.png" />
+                    </TabItem.Tag>
+                    <viewmodels:InfoControl InfoProvider="{Binding DataContext.SelectedInfoViewModel, RelativeSource={RelativeSource AncestorType=UserControl}}" BorderBrush="Black" BorderThickness="0.5" />
                 </TabItem>
-                <TabItem Header="Route">
+                <TabItem Style="{StaticResource ImageTabItemStyle}">
+                    <TabItem.Tag>
+                        <controls:TabImageSet 
+                            ActiveImage="/Assets/ButtonIcons/PackageInfo/Variant=Path/Active.png"
+                            InactiveImage="/Assets/ButtonIcons/PackageInfo/Variant=Path/Inactive.png" />
+                    </TabItem.Tag>
                     <!--<local:PackageRouteControl Package="{Binding Package}" />-->
                 </TabItem>
-                <TabItem Header="Log">
+                <TabItem Style="{StaticResource ImageTabItemStyle}">
+                    <TabItem.Tag>
+                        <controls:TabImageSet 
+                            ActiveImage="/Assets/ButtonIcons/PackageInfo/Variant=Log/Active.png"
+                            InactiveImage="/Assets/ButtonIcons/PackageInfo/Variant=Log/Inactive.png" />
+                        </TabItem.Tag>
                     <!--<local:PackageLogControl Package="{Binding Package}" />-->
                 </TabItem>
             </TabControl>

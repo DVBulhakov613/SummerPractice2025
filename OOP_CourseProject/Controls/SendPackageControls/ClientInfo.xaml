@@ -5,7 +5,7 @@
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
              xmlns:helpers="clr-namespace:OOP_CourseProject.Controls.Helpers"
              mc:Ignorable="d" 
-             d:DesignHeight="230" d:DesignWidth="620">
+             d:DesignHeight="240" d:DesignWidth="620">
 
 
     <Border CornerRadius="20" Background="{StaticResource SecondaryBackgroundBrush}">

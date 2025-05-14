@@ -11,12 +11,11 @@ namespace OOP_CourseProject
 {
     public class PermissionToVisibilityConverter : IValueConverter
     {
-        public PermissionToVisibilityConverter() { }
         public object Convert(object value, Type targetType, object parameter, CultureInfo culture)
         {
-            if (value is int userPermission && parameter is string requiredPermission)
+            if (parameter is string permissionIdStr && int.TryParse(permissionIdStr, out var permissionId))
             {
-                return userPermission >= int.Parse(requiredPermission) ? Visibility.Visible : Visibility.Collapsed;
+                return App.CurrentEmployee.HasPermission(permissionId) ? Visibility.Visible : Visibility.Collapsed;
             }
 
             return Visibility.Collapsed;
@@ -24,12 +23,5 @@ namespace OOP_CourseProject
 
         public object ConvertBack(object value, Type targetType, object parameter, CultureInfo culture)
             => throw new NotImplementedException();
-    }
-
-    public static class PermissionService
-    {
-        public static List<int> CurrentPermissions => App.CurrentEmployee?.CachedPermissions ?? new();
-
-        public static bool Has(int permissionId) => CurrentPermissions.Contains(permissionId);
     }
 }

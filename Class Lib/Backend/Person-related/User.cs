@@ -17,7 +17,7 @@ namespace Class_Lib
         public Role Role { get; set; } // "Administrator", "Manager", "Employee", NOT client;
         public uint? PersonID { get; set; } // Foreign key to Person table
         public Employee Employee { get; set; } // Navigation property
-        [NotMapped] public List<int> CachedPermissions { get; set; } = new();
+        [NotMapped] public List<int> CachedPermissions { get; set; } = [];
 
 
         private User() { } // just for EFC

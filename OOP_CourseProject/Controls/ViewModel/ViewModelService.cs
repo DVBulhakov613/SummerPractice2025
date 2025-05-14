@@ -24,6 +24,7 @@ namespace OOP_CourseProject.Controls.ViewModel
                 PostalOffice po => new PostalOfficeViewModel(po),
                 Warehouse w => new WarehouseViewModel(w),
                 Delivery d => new DeliveryViewModel(d),
+                Content c => new ContentViewModel(c),
                 _ => throw new NotSupportedException($"Не підтримуємий тип: {model.GetType().Name}")
             };
         }

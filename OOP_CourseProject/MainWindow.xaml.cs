@@ -16,7 +16,7 @@ namespace OOP_CourseProject
             InitializeComponent();
 
             MainContent.Content = App.AppHost.Services.GetRequiredService<HomePageControl>();
-            MainContent.Content = App.AppHost.Services.GetRequiredService<PackageConfigurations>(); // DEBUG LINE
+            //MainContent.Content = App.AppHost.Services.GetRequiredService<PackageConfigurations>(); // DEBUG LINE
         }
 
         private void HomeButton_Click(object sender, RoutedEventArgs e)
@@ -26,7 +26,7 @@ namespace OOP_CourseProject
 
         private void SendPackageButton_Click(object sender, RoutedEventArgs e)
         {
-            MainContent.Content = App.AppHost.Services.GetRequiredService<SendPackageControl>();
+            MainContent.Content = App.AppHost.Services.GetRequiredService<SendPackage>();
         }
 
         private void EmployeeButton_Click(object sender, RoutedEventArgs e)

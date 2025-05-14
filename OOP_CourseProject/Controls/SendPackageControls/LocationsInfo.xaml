@@ -6,7 +6,7 @@
              xmlns:local="clr-namespace:OOP_CourseProject.Controls.SendPackageControls"
              xmlns:helpers="clr-namespace:OOP_CourseProject.Controls.Helpers"
              mc:Ignorable="d" 
-             d:DesignHeight="200" d:DesignWidth="550">
+             d:DesignHeight="210" d:DesignWidth="550">
     <Border CornerRadius="20" Background="{StaticResource SecondaryBackgroundBrush}">
         <Grid Margin="20">
             <Grid.RowDefinitions>

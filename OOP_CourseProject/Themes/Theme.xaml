@@ -20,6 +20,7 @@
     <Color x:Key="Logtextcolor">#FF383838</Color>
     <Color x:Key="WarningColor">#FFFFC107</Color>
     <Color x:Key="ErrorColor">#FFB4463C</Color>
+    <Color x:Key="SuccessColor">#FF4EC011</Color>
 
     <!-- brushes -->
     <SolidColorBrush x:Key="PrimaryBackgroundBrush" Color="{StaticResource Background}"/>
@@ -31,6 +32,7 @@
     <SolidColorBrush x:Key="AccentBrush5" Color="{StaticResource AccentColor5}"/>
     <SolidColorBrush x:Key="WarningBrush" Color="{StaticResource WarningColor}"/>
     <SolidColorBrush x:Key="ErrorBrush" Color="{StaticResource ErrorColor}"/>
+    <SolidColorBrush x:Key="SuccessBrush" Color="{StaticResource SuccessColor}"/>
 
     <!-- fonts -->
     <FontFamily x:Key="PrimaryFont">Segoe UI</FontFamily>
@@ -162,9 +164,59 @@
             </Setter.Value>
         </Setter>
     </Style>
-    
-    
 
+
+    <!-- Custom TabControl Style -->
+    <Style x:Key="UniformTabControlStyle" TargetType="TabControl">
+        <Setter Property="Template">
+            <Setter.Value>
+                <ControlTemplate TargetType="TabControl">
+                    <Grid KeyboardNavigation.TabNavigation="Local">
+                        <Grid.RowDefinitions>
+                            <RowDefinition Height="Auto"/>
+                            <RowDefinition Height="*"/>
+                        </Grid.RowDefinitions>
+                        <UniformGrid Grid.Row="0" Name="HeaderPanel" Rows="1" IsItemsHost="True"/>
+                        <ContentPresenter Grid.Row="1" ContentSource="SelectedContent"/>
+                    </Grid>
+                </ControlTemplate>
+            </Setter.Value>
+        </Setter>
+    </Style>
+
+    <!-- Custom TabItem Style -->
+    <Style x:Key="ImageTabItemStyle" TargetType="TabItem">
+        <Setter Property="Template">
+            <Setter.Value>
+                <ControlTemplate TargetType="TabItem">
+                    <Border Background="Transparent">
+                        <Viewbox Stretch="Uniform">
+                            <StackPanel Orientation="Vertical" HorizontalAlignment="Center">
+                                <Image x:Name="Icon"
+                                       Stretch="Uniform"
+                                       HorizontalAlignment="Stretch"
+                                       VerticalAlignment="Stretch"/>
+                                <TextBlock Text="{TemplateBinding Header}" 
+                                           Margin="0,4,0,0"
+                                           HorizontalAlignment="Center"/>
+                            </StackPanel>
+                        </Viewbox>
+                        
+                    </Border>
+                    <ControlTemplate.Triggers>
+                        <Trigger Property="IsSelected" Value="True">
+                            <Setter TargetName="Icon" Property="Source"
+                                    Value="{Binding RelativeSource={RelativeSource TemplatedParent}, Path=Tag.ActiveImage}" />
+                        </Trigger>
+                        <Trigger Property="IsSelected" Value="False">
+                            <Setter TargetName="Icon" Property="Source"
+                                    Value="{Binding RelativeSource={RelativeSource TemplatedParent}, Path=Tag.InactiveImage}" />
+                        </Trigger>
+                    </ControlTemplate.Triggers>
+                </ControlTemplate>
+            </Setter.Value>
+        </Setter>
+    </Style>
 
 
     <!-- style for combo box items -->

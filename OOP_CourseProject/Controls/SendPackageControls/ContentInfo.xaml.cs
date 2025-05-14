@@ -1,4 +1,5 @@
-﻿using System;
+﻿using OOP_CourseProject.Controls.ViewModel.ViewModels;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -13,16 +14,17 @@ using System.Windows.Media.Imaging;
 using System.Windows.Navigation;
 using System.Windows.Shapes;
 
-namespace OOP_CourseProject.Controls
+namespace OOP_CourseProject.Controls.SendPackageControls
 {
     /// <summary>
-    /// Interaction logic for SendPackageControl.xaml
+    /// Interaction logic for ContentInfo.xaml
     /// </summary>
-    public partial class SendPackageControl : UserControl
+    public partial class ContentInfo : UserControl
     {
-        public SendPackageControl()
+        public ContentInfo()
         {
             InitializeComponent();
+            DataContext = new ContentInfoViewModel();
         }
     }
 }

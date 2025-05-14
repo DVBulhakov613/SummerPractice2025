@@ -8,8 +8,8 @@ namespace Class_Lib
 {
     public enum PackageType
     {
-        Standard,
+        Standard = 1,
         File,
-        Pallette
+        Palette
     }
 }

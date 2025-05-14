@@ -34,9 +34,10 @@ namespace Class_Lib
             internal set => package = value
                 ?? throw new ArgumentNullException(nameof(Package), "Зміст посилки має мати посилку, до якої вона належить.");
         } // the package that this content belongs to
-
         public string Description { get; set; } = string.Empty; // description of the content (if any)
         
+
+
         internal Content() => RowVersion = []; // initialize the RowVersion property
         public Content(string name, ContentType type, uint amount, Package package)
         {
