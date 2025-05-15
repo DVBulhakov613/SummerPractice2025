@@ -1,4 +1,5 @@
 ﻿using GalaSoft.MvvmLight.Command;
+using OOP_CourseProject.Controls.PackageInfo;
 using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
@@ -7,6 +8,7 @@ using System.Linq;
 using System.Runtime.CompilerServices;
 using System.Text;
 using System.Threading.Tasks;
+using System.Windows;
 using System.Windows.Input;
 
 namespace OOP_CourseProject.Controls.ViewModel.ViewModels
@@ -24,48 +26,91 @@ namespace OOP_CourseProject.Controls.ViewModel.ViewModels
         private string _selectedContentType;
         public string SelectedContentType { get => _selectedContentType; set { _selectedContentType = value; OnPropertyChanged(); } }
 
-        private int _amount;
-        public int Amount { get => _amount; set { _amount = value; OnPropertyChanged(); } }
+        private string _amount;
+        public string Amount { get => _amount; set { _amount = value; OnPropertyChanged(); } }
 
-        public ObservableCollection<string> ContentTypes { get; } = new() { "Документи", "Електроніка", "Одяг" }; // example
+        public ObservableCollection<string> ContentTypes { get; } = new() { "Документи", "Електроніка", "Одяг" };
 
         public ICommand AddItemCommand { get; }
         public ICommand ShowSummaryCommand { get; }
+        public ICommand RemoveItemCommand { get; }
+        public ICommand EditItemCommand { get; }
 
         public ContentInfoViewModel()
         {
             AddItemCommand = new RelayCommand(AddItem);
             ShowSummaryCommand = new RelayCommand(ShowSummary);
+            RemoveItemCommand = new RelayCommand<ContentItem>(RemoveItem);
+            EditItemCommand = new RelayCommand<ContentItem>(EditItem);
         }
 
         private void AddItem()
         {
-            Items.Add(new ContentItem
+            if (string.IsNullOrWhiteSpace(this.Name) || string.IsNullOrWhiteSpace(this.SelectedContentType) || string.IsNullOrWhiteSpace(this.Amount))
             {
-                Name = this.Name,
-                Description = this.Description,
-                ContentType = this.SelectedContentType,
-                Amount = this.Amount
-            });
+                MessageBox.Show("Не всі обов'язкові поля заповнені.", "Увага!", MessageBoxButton.OK, MessageBoxImage.Information);
+                return;
+            }
+            try
+            {
+                Items.Add(new ContentItem
+                    {
+                        Name = this.Name,
+                        Description = this.Description,
+                        ContentType = this.SelectedContentType,
+                        Amount = int.TryParse(this.Amount, out _) 
+                            ? int.Parse(this.Amount) > 0 
+                                ? int.Parse(this.Amount) 
+                                : throw new ArgumentException("Не можна назначити від'ємне число.")
+                            : throw new ArgumentException("Не можна назначити числу текст.")
+                    });
+            }
+            catch (Exception ex) 
+            { 
+                MessageBox.Show(ex.Message, "Увага!", MessageBoxButton.OK, MessageBoxImage.Error);
+                return;
+            }
 
-            // Optionally clear fields
+
             Name = string.Empty;
             Description = string.Empty;
             SelectedContentType = null;
-            Amount = 0;
+            Amount = string.Empty;
         }
 
         private void ShowSummary()
         {
-            var viewModel = new InfoSectionList("Вміст посилки", Items.Select((item, i) => new InfoItem
-            {
-                Label = $"{i + 1}. {item.Name} ({item.Amount} шт)",
-                Value = string.IsNullOrWhiteSpace(item.Description) ? "Без опису" : item.Description
-            }));
-
-            var window = new InfoPopupWindow(viewModel);
+            var window = new ContentItemListWindow(this);
             window.ShowDialog();
         }
+
+        private void RemoveItem(ContentItem item)
+        {
+            if (item != null)
+                Items.Remove(item);
+        }
+
+        private void EditItem(ContentItem item)
+        {
+            if (item == null) return;
+
+            Name = item.Name;
+            Description = item.Description;
+            SelectedContentType = item.ContentType;
+            Amount = item.Amount.ToString();
+
+            Items.Remove(item);
+
+            foreach (Window window in Application.Current.Windows)
+            {
+                if (window is ContentItemListWindow)
+                {
+                    window.Close();
+                    break;
+                }
+            }
+        }
+
 
 
         public event PropertyChangedEventHandler? PropertyChanged;

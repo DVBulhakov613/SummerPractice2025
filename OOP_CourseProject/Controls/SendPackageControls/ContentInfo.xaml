@@ -17,7 +17,7 @@
 
             <!-- Title + Description -->
             <StackPanel Grid.Row="0">
-                <TextBlock Text="Інформація про посилку" FontSize="24" FontWeight="Bold" Margin="0,0,0,10"/>
+                <TextBlock Text="Інформація про зміст посилки" FontSize="24" FontWeight="Bold" Margin="0,0,0,10"/>
                 <TextBlock Text="Список змісту. Зміст складається з назви, опису, типу та кількості. Опис не обов’язковий." 
                            FontSize="13" FontWeight="Medium" Margin="5,-5,0,0" Opacity="0.4" />
             </StackPanel>
@@ -78,15 +78,17 @@
                 </UniformGrid>
             </StackPanel>
 
-            <Button Grid.Row="2"
+            <Border Grid.Row="2" Background="{StaticResource SuccessBrush}" CornerRadius="10" Margin="10">
+                <Button
                     Content="Додати"
                     FontSize="16"
                     Command="{Binding AddItemCommand}"
-                    Background="{StaticResource SuccessBrush}"
                     Foreground="White"
-                    Margin="0,0,0,0"
+                    Margin="8"
                     Visibility="Visible"/>
-
+            </Border>
+            
+            
         </Grid>
     </Border>
     

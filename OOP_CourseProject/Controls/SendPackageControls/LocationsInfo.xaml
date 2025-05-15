@@ -7,6 +7,7 @@
              xmlns:helpers="clr-namespace:OOP_CourseProject.Controls.Helpers"
              mc:Ignorable="d" 
              d:DesignHeight="210" d:DesignWidth="550">
+    <!-- ideally i should also add a button to paste the current employee's workplace, but they can also not have one so thats for later -->
     <Border CornerRadius="20" Background="{StaticResource SecondaryBackgroundBrush}">
         <Grid Margin="20">
             <Grid.RowDefinitions>
@@ -19,45 +20,68 @@
                 <TextBlock Text="Маршрут" FontSize="24" FontWeight="Bold" Margin="0,0,0,0"/>
             </StackPanel>
 
-            <!-- ComboBoxes --><!--
-            <StackPanel Grid.Row="2" Orientation="Horizontal">
-                <StackPanel Width="Auto" Margin="0,0,10,0">
-                    <TextBlock Text="Тип вантажу" FontWeight="SemiBold" FontSize="14" Margin="0,0,0,5"/>
-                    <ComboBox Style="{StaticResource ModernComboBox}"
-                          HorizontalContentAlignment="Stretch"
-                          Width="250"
-                          Height="40"
-                          SelectedItem="{Binding SelectedContentType, RelativeSource={RelativeSource AncestorType=UserControl}, Mode=TwoWay}"
-                          ItemsSource="{Binding ContentTypes, RelativeSource={RelativeSource AncestorType=UserControl}}" />
-                </StackPanel>
-
-                <StackPanel Width="Auto">
-                    <TextBlock Text="Тип посилки" FontWeight="SemiBold" FontSize="14" Margin="0,0,0,5"/>
-                    <ComboBox Style="{StaticResource ModernComboBox}"
-                          HorizontalContentAlignment="Stretch"
-                          Width="250"
-                          Height="40"
-                          ItemsSource="{Binding PackageTypes, RelativeSource={RelativeSource AncestorType=UserControl}}"
-                          SelectedItem="{Binding SelectedPackageType, RelativeSource={RelativeSource AncestorType=UserControl}, Mode=TwoWay}" />
-                </StackPanel>
-            </StackPanel>-->
-
             <!-- Dimensions -->
             <StackPanel Grid.Row="1" Margin="0,5,0,0">
                 <TextBlock FontSize="12" Foreground="Black" Opacity="0.4" Text="Звідки"/>
-                <TextBox x:Name="SentFrom"
-                     Style="{StaticResource PlaceholderTextBox}"
-                     FontSize="16"
-                     VerticalAlignment="Center"
-                     Margin="0,5,0,10" Height="30"
-                     helpers:TextBoxHelper.Placeholder="* Адреса / Номер відділення"/>
+                <Grid Margin="0,5,0,10" Height="30">
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition Width="*" />
+                        <ColumnDefinition Width="30" />
+                    </Grid.ColumnDefinitions>
+
+                    <TextBox Grid.Column="0" x:Name="SentFrom" Text="{Binding SentFrom, Mode=OneWay}" IsReadOnly="True"
+                             Style="{StaticResource PlaceholderTextBox}"
+                             FontSize="16"
+                             VerticalAlignment="Center"
+                             helpers:TextBoxHelper.Placeholder="* Адреса / Номер відділення"/>
+
+                    <Button Grid.Column="1"
+                            Command="{Binding SearchFromLocationCommand}"
+                            Background="Transparent"
+                            Padding="0"
+                            HorizontalAlignment="Stretch"
+                            VerticalAlignment="Stretch"
+                            Visibility="Visible">
+                        <Image Source="/Assets/ButtonIcons/Variant=Search.png" Width="20" Height="20" HorizontalAlignment="Center" VerticalAlignment="Center"/>
+                    </Button>
+                </Grid>
+
+
                 <TextBlock FontSize="12" Foreground="Black" Opacity="0.4" Text="Куди"/>
-                <TextBox x:Name="SentTo"
-                     Style="{StaticResource PlaceholderTextBox}"
-                     FontSize="16"
-                     VerticalAlignment="Center"
-                     Margin="0,5,0,10" Height="30"
-                     helpers:TextBoxHelper.Placeholder="* Адреса / Номер відділення"/>
+
+                <Grid Margin="0,5,0,10" Height="30">
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition Width="*" />
+                        <ColumnDefinition Width="30" />
+                    </Grid.ColumnDefinitions>
+
+                    <TextBox Grid.Column="0" x:Name="SentTo" Text="{Binding SentTo, Mode=OneWay}" IsReadOnly="True"
+                             Style="{StaticResource PlaceholderTextBox}"
+                             FontSize="16"
+                             VerticalAlignment="Center"
+                             helpers:TextBoxHelper.Placeholder="* Адреса / Номер відділення"/>
+
+                    <Button Grid.Column="1"
+                            Command="{Binding SearchToLocationCommand}"
+                            Background="Transparent"
+                            Padding="0"
+                            HorizontalAlignment="Stretch"
+                            VerticalAlignment="Stretch"
+                            Visibility="Visible">
+                        <Image Source="/Assets/ButtonIcons/Variant=Search.png" Width="20" Height="20" HorizontalAlignment="Center" VerticalAlignment="Center"/>
+                    </Button>
+                </Grid>
+
+
+                <!--<StackPanel>
+                    <TextBox x:Name="SentTo"
+                        Style="{StaticResource PlaceholderTextBox}"
+                        FontSize="16"
+                        VerticalAlignment="Center"
+                        Margin="0,5,0,10" Height="30"
+                        helpers:TextBoxHelper.Placeholder="* Адреса / Номер відділення"/>
+                </StackPanel>-->
+
             </StackPanel>
         </Grid>
     </Border>

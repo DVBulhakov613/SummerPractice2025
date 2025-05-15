@@ -22,24 +22,6 @@ namespace OOP_CourseProject.Controls.SendPackageControls
     /// </summary>
     public partial class PackageConfigurations : UserControl
     {
-        public ObservableCollection<ContentType> ContentTypes
-        {
-            get => (ObservableCollection<ContentType>)GetValue(ContentTypesProperty);
-            set => SetValue(ContentTypesProperty, value);
-        }
-
-        public static readonly DependencyProperty ContentTypesProperty =
-            DependencyProperty.Register(nameof(ContentTypes), typeof(ObservableCollection<ContentType>), typeof(PackageConfigurations));
-
-        public ContentType SelectedContentType
-        {
-            get => (ContentType)GetValue(SelectedContentTypeProperty);
-            set => SetValue(SelectedContentTypeProperty, value);
-        }
-
-        public static readonly DependencyProperty SelectedContentTypeProperty =
-            DependencyProperty.Register(nameof(SelectedContentType), typeof(ContentType), typeof(PackageConfigurations));
-
         public ObservableCollection<PackageType> PackageTypes
         {
             get => (ObservableCollection<PackageType>)GetValue(PackageTypesProperty);
@@ -67,14 +49,6 @@ namespace OOP_CourseProject.Controls.SendPackageControls
 
         public void LoadEnums()
         {
-            if (ContentTypes == null)
-                ContentTypes = new ObservableCollection<ContentType>();
-            else
-                ContentTypes.Clear();
-
-            foreach (ContentType value in Enum.GetValues(typeof(ContentType)))
-                ContentTypes.Add(value);
-
             if (PackageTypes == null)
                 PackageTypes = new ObservableCollection<PackageType>();
             else

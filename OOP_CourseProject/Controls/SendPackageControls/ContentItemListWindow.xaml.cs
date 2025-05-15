@@ -11,20 +11,19 @@ using System.Windows.Documents;
 using System.Windows.Input;
 using System.Windows.Media;
 using System.Windows.Media.Imaging;
-using System.Windows.Navigation;
 using System.Windows.Shapes;
 
-namespace OOP_CourseProject.Controls.SendPackageControls
+namespace OOP_CourseProject.Controls.PackageInfo
 {
     /// <summary>
-    /// Interaction logic for ContentInfo.xaml
+    /// Interaction logic for ContentItemListWindow.xaml
     /// </summary>
-    public partial class ContentInfo : UserControl
+    public partial class ContentItemListWindow : Window
     {
-        public ContentInfo()
+        public ContentItemListWindow(ContentInfoViewModel viewModel)
         {
             InitializeComponent();
-            //DataContext = new ContentInfoViewModel();
+            DataContext = viewModel;
         }
     }
 }

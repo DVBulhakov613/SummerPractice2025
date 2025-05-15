@@ -1,4 +1,5 @@
-﻿using System;
+﻿using OOP_CourseProject.Controls.ViewModel.ViewModels;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -23,6 +24,7 @@ namespace OOP_CourseProject.Controls.SendPackageControls
         public ClientInfo()
         {
             InitializeComponent();
+            //DataContext = new ClientInfoViewModel();
         }
     }
 }

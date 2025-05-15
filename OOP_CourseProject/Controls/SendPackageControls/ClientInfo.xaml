@@ -33,34 +33,40 @@
             <Grid Grid.Row="1">
                 <Grid.ColumnDefinitions>
                     <ColumnDefinition Width="*"/>
+                    <ColumnDefinition Width="30"/>
                     <ColumnDefinition Width="*"/>
+                    <ColumnDefinition Width="30"/>
                 </Grid.ColumnDefinitions>
 
                 <!-- Sender Info -->
-                <StackPanel Grid.Column="0" Orientation="Vertical" VerticalAlignment="Top" Margin="0,0,10,0">
-                    <TextBox x:Name="SenderName"
+                <StackPanel Grid.Column="0" Orientation="Vertical" VerticalAlignment="Top">
+                    <TextBox x:Name="SenderName" IsReadOnly="True"
                          Style="{StaticResource PlaceholderTextBox}"
+                         Text="{Binding SenderName, Mode=OneWay}"
                          FontSize="16"
                          Height="30"
                          helpers:TextBoxHelper.Placeholder="Ім'я відправника"
                          Background="{StaticResource SecondaryBackgroundBrush}"
                          VerticalContentAlignment="Center"/>
-                    <TextBox x:Name="SenderSurname"
+                    <TextBox x:Name="SenderSurname" IsReadOnly="True"
                          Style="{StaticResource PlaceholderTextBox}"
+                         Text="{Binding SenderSurname, Mode=OneWay}"
                          FontSize="16"
                          Height="30"
                          helpers:TextBoxHelper.Placeholder="Фамілія відправника"
                          Background="{StaticResource SecondaryBackgroundBrush}"
                          VerticalContentAlignment="Center"/>
-                    <TextBox x:Name="SenderPhoneNumber"
-                        Style="{StaticResource PlaceholderTextBox}"
+                    <TextBox x:Name="SenderPhoneNumber" IsReadOnly="True"
+                         Style="{StaticResource PlaceholderTextBox}"
+                         Text="{Binding SenderPhoneNumber, Mode=OneWay}"
                          FontSize="16"
                          Height="30"
                          helpers:TextBoxHelper.Placeholder="Номер телефону відправника"
                          Background="{StaticResource SecondaryBackgroundBrush}"
                          VerticalContentAlignment="Center"/>
-                    <TextBox x:Name="SenderEmail"
+                    <TextBox x:Name="SenderEmail" IsReadOnly="True"
                          Style="{StaticResource PlaceholderTextBox}"
+                         Text="{Binding SenderEmail, Mode=OneWay}"
                          FontSize="16"
                          Height="30"
                          helpers:TextBoxHelper.Placeholder="Електронна пошта відправника"
@@ -68,37 +74,61 @@
                          VerticalContentAlignment="Center"/>
                 </StackPanel>
 
+                <Button Grid.Column="1" Margin="0,0,10,0"
+                        Command="{Binding SearchSenderCommand}"
+                        Background="Transparent"
+                        Padding="0"
+                        HorizontalAlignment="Center"
+                        VerticalAlignment="Top"
+                        Visibility="Visible">
+                    <Image Source="/Assets/ButtonIcons/Variant=Search.png" Width="20" Height="20" HorizontalAlignment="Center" VerticalAlignment="Center"/>
+                </Button>
+
                 <!-- Recipient Info -->
-                <StackPanel Grid.Column="1" Orientation="Vertical" VerticalAlignment="Top">
-                    <TextBox x:Name="ReceiverName"
+                <StackPanel Grid.Column="2" Orientation="Vertical" VerticalAlignment="Top">
+                    <TextBox x:Name="ReceiverName" IsReadOnly="True"
                          Style="{StaticResource PlaceholderTextBox}"
+                         Text="{Binding ReceiverName, Mode=OneWay}"
                          FontSize="16"
                          Height="30"
                          helpers:TextBoxHelper.Placeholder="Ім'я отримувача"
                          Background="{StaticResource SecondaryBackgroundBrush}"
                          VerticalContentAlignment="Center"/>
-                    <TextBox x:Name="ReceiverSurname"
+                    <TextBox x:Name="ReceiverSurname" IsReadOnly="True"
                          Style="{StaticResource PlaceholderTextBox}"
+                         Text="{Binding ReceiverSurname, Mode=OneWay}"
                          FontSize="16"
                          Height="30"
                          helpers:TextBoxHelper.Placeholder="Фамілія отримувача"
                          Background="{StaticResource SecondaryBackgroundBrush}"
                          VerticalContentAlignment="Center"/>
-                    <TextBox x:Name="ReceiverPhoneNumber"
+                    <TextBox x:Name="ReceiverPhoneNumber" IsReadOnly="True"
                          Style="{StaticResource PlaceholderTextBox}"
+                         Text="{Binding ReceiverPhoneNumber, Mode=OneWay}"
                          FontSize="16"
                          Height="30"
                          helpers:TextBoxHelper.Placeholder="Номер телефону отримувача"
                          Background="{StaticResource SecondaryBackgroundBrush}"
                          VerticalContentAlignment="Center"/>
-                    <TextBox x:Name="ReceiverEmail"
+                    <TextBox x:Name="ReceiverEmail" IsReadOnly="True"
                          Style="{StaticResource PlaceholderTextBox}"
+                         Text="{Binding ReceiverEmail, Mode=OneWay}"
                          FontSize="16"
                          Height="30"
                          helpers:TextBoxHelper.Placeholder="Електронна пошта отримувача"
                          Background="{StaticResource SecondaryBackgroundBrush}"
                          VerticalContentAlignment="Center"/>
                 </StackPanel>
+
+                <Button Grid.Column="3" Margin="0,0,10,0"
+                        Command="{Binding SearchReceiverCommand}"
+                        Background="Transparent"
+                        Padding="0"
+                        HorizontalAlignment="Center"
+                        VerticalAlignment="Top"
+                        Visibility="Visible">
+                    <Image Source="/Assets/ButtonIcons/Variant=Search.png" Width="20" Height="20" HorizontalAlignment="Center" VerticalAlignment="Center"/>
+                </Button>
             </Grid>
         </Grid>
     </Border>

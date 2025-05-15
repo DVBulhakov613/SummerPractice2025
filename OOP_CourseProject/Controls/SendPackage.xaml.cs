@@ -1,4 +1,5 @@
-﻿using System;
+﻿using OOP_CourseProject.Controls.ViewModel.ViewModels;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -20,9 +21,16 @@ namespace OOP_CourseProject.Controls
     /// </summary>
     public partial class SendPackage : UserControl
     {
+        public ClientInfoViewModel ClientInfo { get; } = new();
+        public LocationInfoViewModel LocationsInfo { get; } = new();
+        public PackageInfoViewModel PackageInfo { get; } = new();
+        public ContentInfoViewModel ContentInfo { get; } = new();
+
         public SendPackage()
         {
             InitializeComponent();
+
+            DataContext = this;
         }
     }
 }
