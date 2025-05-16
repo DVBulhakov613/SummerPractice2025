@@ -43,9 +43,15 @@ namespace Class_Lib.Backend.Database.Repositories
                 await _context.Packages
                     .Where(p => deliveryIds.Contains(p.Delivery.ID))
                     .LoadAsync();
+                if(_user.HasPermission(PermissionKey.ReadContent))
+                {
+                    await _context.Contents
+                        .Where(c => deliveryIds.Contains(c.Package.Delivery.ID))
+                        .LoadAsync();
+                }
             }
 
-            if (_user.HasPermission(PermissionKey.ReadPerson))
+            if (_user.HasPermission(PermissionKey.ReadEmployee))
             {
                 var senderIds = deliveries.Select(d => d.SenderID).Distinct().ToList();
                 var receiverIds = deliveries.Select(d => d.ReceiverID).Distinct().ToList();
@@ -63,7 +69,7 @@ namespace Class_Lib.Backend.Database.Repositories
                 var locationQuery = _context.Locations
                     .Where(l => fromIds.Contains(l.ID) || toIds.Contains(l.ID));
 
-                if (_user.HasPermission(PermissionKey.ReadPerson))
+                if (_user.HasPermission(PermissionKey.ReadEmployee))
                 {
                     locationQuery = locationQuery.Include(l => l.Staff);
 

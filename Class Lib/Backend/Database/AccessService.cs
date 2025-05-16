@@ -36,10 +36,10 @@ namespace Class_Lib.Backend.Services
             DeleteContent = 33,
 
             // person permissions
-            ReadPerson = 40,
-            CreatePerson = 41,
-            UpdatePerson = 42,
-            DeletePerson = 43,
+            ReadEmployee = 40,
+            CreateEmployee = 41,
+            UpdateEmployee = 42,
+            DeleteEmployee = 43,
 
             // location permissions
             ReadLocation = 50,
@@ -94,7 +94,12 @@ namespace Class_Lib.Backend.Services
             ReadRole = 140,
             CreateRole = 141,
             UpdateRole = 142,
-            DeleteRole = 143
+            DeleteRole = 143,
+
+            ReadClient = 150,
+            CreateClient = 151,
+            UpdateClient = 152,
+            DeleteClient = 153
         }
 
         public static bool CanPerformAction(User employee, int permissionKey)
@@ -136,7 +141,7 @@ namespace Class_Lib.Backend.Services
                 nameof(Package) => PermissionKey.ReadPackage,
                 nameof(PackageEvent) => PermissionKey.ReadEvent,
                 nameof(Content) => PermissionKey.ReadContent,
-                nameof(Person) => PermissionKey.ReadPerson,
+                nameof(Person) => PermissionKey.ReadEmployee,
                 nameof(BaseLocation) => PermissionKey.ReadLocation,
                 //nameof(Report) => PermissionKey.ReadReport,
                 //nameof(DeliveryVehicle) => PermissionKey.ReadDeliveryVehicle,

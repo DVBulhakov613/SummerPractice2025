@@ -122,7 +122,7 @@ namespace Class_Lib.Backend.Package_related
             if (amount == 0)
                 throw new ArgumentOutOfRangeException(nameof(amount), "Кількість змісту не може бути 0.");
 
-            DeclaredContent.Add(new Content(contentName, contentType, amount, this));
+            DeclaredContent.Add(new Content(contentName, description, contentType, amount,this));
         }
     }
 

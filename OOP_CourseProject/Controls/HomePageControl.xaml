@@ -5,7 +5,7 @@
              xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
              xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
-             Height="945" Width="1600"
+             Height="Auto" Width="Auto"
              Background="{StaticResource PrimaryBackgroundBrush}">
 
     <Grid>
@@ -22,7 +22,7 @@
             <UniformGrid Grid.Row="0" Rows="1" Columns="4" Margin="0,0,0,20">
                 
                 <Border Background="White" CornerRadius="10" Margin="5" Padding="5" BorderBrush="LightGray" BorderThickness="1">
-                    <Button Background="Transparent" Visibility="{Binding ., Converter={StaticResource PermissionConverter}, ConverterParameter=40}" Click="DelayedPackages_Click">
+                    <Button IsEnabled="False" Background="Transparent" Visibility="{Binding ., Converter={StaticResource PermissionConverter}, ConverterParameter=40}" Click="DelayedPackages_Click">
                         <StackPanel>
                             <TextBlock Text="Затримані посилки" Foreground="Black" FontFamily="{StaticResource PrimaryFont}" FontWeight="Bold"/>
                             <TextBlock Text="Кількість: 10" Foreground="Gray" FontFamily="{StaticResource PrimaryFont}"/>
@@ -31,7 +31,7 @@
                 </Border>
                 
                 <Border Background="White" CornerRadius="10" Margin="5" Padding="5" BorderBrush="LightGray" BorderThickness="1">
-                    <Button Background="Transparent" Visibility="{Binding ., Converter={StaticResource PermissionConverter}, ConverterParameter=40}" Click="FindPackage_Click">
+                    <Button IsEnabled="False" Background="Transparent" Visibility="{Binding ., Converter={StaticResource PermissionConverter}, ConverterParameter=40}" Click="FindPackage_Click">
                         <StackPanel>
                             <TextBlock Text="Знайти посилку" FontFamily="{StaticResource PrimaryFont}" FontWeight="Bold" Foreground="Black"/>
                             <TextBlock Text="Будь-де, по ID" FontFamily="{StaticResource PrimaryFont}" Foreground="Gray"/>
@@ -40,7 +40,7 @@
                 </Border>
                 
                 <Border Background="White" CornerRadius="10" Margin="5" Padding="5" BorderBrush="LightGray" BorderThickness="1">
-                    <Button Background="Transparent" Visibility="Visible" Click="Information_Click">
+                    <Button IsEnabled="False" Background="Transparent" Visibility="Visible" Click="Information_Click">
                         <StackPanel>
                             <TextBlock Text="Інформація" FontFamily="{StaticResource PrimaryFont}" FontWeight="Bold" Foreground="Black"/>
                             <TextBlock Text="Для клієнтів або нових працівників" FontFamily="{StaticResource PrimaryFont}" Foreground="Gray"/>
@@ -49,7 +49,7 @@
                 </Border>
                 
                 <Border Background="White" CornerRadius="10" Margin="5" Padding="5" BorderBrush="LightGray" BorderThickness="1">
-                    <Button Background="Transparent" Visibility="Visible" Click="Announcements_Click">
+                    <Button IsEnabled="False" Background="Transparent" Visibility="Visible" Click="Announcements_Click">
                         <StackPanel>
                             <TextBlock Text="Оголошення" FontFamily="{StaticResource PrimaryFont}" FontWeight="Bold" Foreground="Black"/>
                             <TextBlock Text="Важливі повідомлення" FontFamily="{StaticResource PrimaryFont}" FontWeight="Medium" Foreground="Gray"/>
@@ -88,13 +88,21 @@
 
                         <!-- toolbar panel -->
                         <StackPanel Grid.Row="0" Orientation="Horizontal" Margin="0,0,0,10">
-                            <Button Background="Transparent" Visibility="{Binding ., Converter={StaticResource PermissionConverter}, ConverterParameter=41}" Click="Add_Click">
+                            <Button IsEnabled="False" Background="Transparent" Visibility="{Binding ., Converter={StaticResource PermissionConverter}, ConverterParameter=131}" Click="Add_Click">
                                 <StackPanel Orientation="Horizontal" VerticalAlignment="Center">
                                     <Image Source="/Assets/ButtonIcons/Variant=Add.png" Width="20" Height="20" Margin="0,0,5,0"/>
                                     <TextBlock Text="Додати" VerticalAlignment="Center" Foreground="Black"/>
                                 </StackPanel>
                             </Button>
                             <Button Background="Transparent" 
+                                Visibility="{Binding ., Converter={StaticResource PermissionConverter}, ConverterParameter=133}" 
+                                Click="Remove_Click">
+                                <StackPanel Orientation="Horizontal" VerticalAlignment="Center">
+                                    <Image Source="/Assets/ButtonIcons/Variant=Remove.png" Width="20" Height="20" Margin="0,0,5,0"/>
+                                    <TextBlock Text="Видалити" VerticalAlignment="Center" Foreground="Black"/>
+                                </StackPanel>
+                            </Button>
+                            <Button IsEnabled="False" Background="Transparent" 
                                     Visibility="{Binding ., Converter={StaticResource PermissionConverter}, ConverterParameter=130}" 
                                     Click="Download_Click">
                                 <StackPanel Orientation="Horizontal" VerticalAlignment="Center">
@@ -102,8 +110,8 @@
                                     <TextBlock Text="Серіалізувати" VerticalAlignment="Center" Foreground="Black"/>
                                 </StackPanel>
                             </Button>
-                            <Button Background="Transparent"
-                                    Visibility="{Binding ., Converter={StaticResource PermissionConverter}, ConverterParameter=40}"
+                            <Button IsEnabled="False" Background="Transparent"
+                                    Visibility="{Binding ., Converter={StaticResource PermissionConverter}, ConverterParameter=130}"
                                     Click="SearchSpecific_Click">
                                 <StackPanel Orientation="Horizontal" VerticalAlignment="Center">
                                     <Image Source="/Assets/ButtonIcons/Variant=Search.png" Width="16" Height="16" Margin="0,0,5,0"/>
@@ -129,10 +137,10 @@
                             IsReadOnly="True">
                             <DataGrid.Columns>
                                 <DataGridTextColumn Header="ID" Binding="{Binding ID}" Width="*" />
-                                <DataGridTextColumn Header="Відправник" Binding="{Binding Sender.ID}" Width="*" />
-                                <DataGridTextColumn Header="Отримувач" Binding="{Binding Receiver.ID}" Width="*" />
-                                <DataGridTextColumn Header="Пункт відправлення" Binding="{Binding SentFrom.ID}" Width="*" />
-                                <DataGridTextColumn Header="Пункт отримання" Binding="{Binding SentTo.ID}" Width="*" />
+                                <DataGridTextColumn Header="Відправник" Binding="{Binding Sender.FullName}" Width="*" />
+                                <DataGridTextColumn Header="Отримувач" Binding="{Binding Receiver.FullName}" Width="*" />
+                                <DataGridTextColumn Header="Пункт відправлення" Binding="{Binding SentFrom.GeoData.Region}" Width="*" />
+                                <DataGridTextColumn Header="Пункт отримання" Binding="{Binding SentTo.GeoData.Region}" Width="*" />
                                 <DataGridTextColumn Header="Вага" Binding="{Binding Package.Weight}" Width="*" />
                                 <DataGridTextColumn Header="Ціна" Binding="{Binding Price}" Width="*" />
                                 <DataGridTextColumn Header="Оплачено?" Binding="{Binding Paid}" Width="*" />

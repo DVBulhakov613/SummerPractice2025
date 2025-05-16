@@ -27,7 +27,7 @@ namespace Class_Lib.Backend.Person_related.Methods
         // Create
         public async Task AddAsync(User user, Employee employee)
         {
-            if (!user.HasPermission(AccessService.PermissionKey.CreatePerson))
+            if (!user.HasPermission(AccessService.PermissionKey.CreateEmployee))
             {
                 throw new UnauthorizedAccessException("Немає доступу до створення працівника.");
             }
@@ -39,7 +39,7 @@ namespace Class_Lib.Backend.Person_related.Methods
         // Read
         public async Task<IEnumerable<Employee>> GetByCriteriaAsync(User user, Expression<Func<Employee, bool>> filter)
         {
-            if (!user.HasPermission(AccessService.PermissionKey.ReadPerson))
+            if (!user.HasPermission(AccessService.PermissionKey.ReadEmployee))
             {
                 throw new UnauthorizedAccessException("Немає доступу до перегляду працівників.");
             }
@@ -50,7 +50,7 @@ namespace Class_Lib.Backend.Person_related.Methods
         // Update
         public async Task UpdateAsync(User user, Employee updatedEmployee)
         {
-            if (!user.HasPermission(AccessService.PermissionKey.UpdatePerson))
+            if (!user.HasPermission(AccessService.PermissionKey.UpdateEmployee))
             {
                 throw new UnauthorizedAccessException("Немає доступу до оновлення працівника.");
             }
@@ -71,7 +71,7 @@ namespace Class_Lib.Backend.Person_related.Methods
         // Delete
         public async Task DeleteAsync(User user, Employee employeeToDelete)
         {
-            if (!user.HasPermission(AccessService.PermissionKey.DeletePerson))
+            if (!user.HasPermission(AccessService.PermissionKey.DeleteEmployee))
             {
                 throw new UnauthorizedAccessException("Немає доступу до видалення працівника.");
             }
@@ -99,7 +99,7 @@ namespace Class_Lib.Backend.Person_related.Methods
         // switches out permission list to manager's
         public async Task PromoteToManagerAsync(User user, Employee employeeToUpdate, List<BaseLocation> managedLocations)
         {
-            if (!user.HasPermission(AccessService.PermissionKey.UpdatePerson))
+            if (!user.HasPermission(AccessService.PermissionKey.UpdateEmployee))
                 throw new UnauthorizedAccessException("Немає доступу до підвищення працівника.");
 
             var existingEmployee = await _employeeRepository.GetByIdAsync(employeeToUpdate.ID) ?? throw new KeyNotFoundException("Працівника не знайдено.");
@@ -124,7 +124,7 @@ namespace Class_Lib.Backend.Person_related.Methods
         // switches out permission list to administrator's
         public async Task PromoteToAdministratorAsync(User user, Employee employeeToUpdate)
         {
-            if (!user.HasPermission(AccessService.PermissionKey.UpdatePerson))
+            if (!user.HasPermission(AccessService.PermissionKey.UpdateEmployee))
                 throw new UnauthorizedAccessException("Немає доступу до підвищення працівника.");
 
             var existingEmployee = await _employeeRepository.GetByIdAsync(employeeToUpdate.ID);

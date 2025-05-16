@@ -14,7 +14,7 @@ namespace OOP_CourseProject.Controls.ViewModel
 
         public StaffListViewModel(IEnumerable<Employee> staff)
         {
-            foreach (var emp in staff)
+            foreach (Employee emp in staff)
             {
                 InfoSections.Add(new InfoSection
                 {

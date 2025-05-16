@@ -20,7 +20,7 @@ namespace Class_Lib.Database.Repositories
             if (_user == null)
                 throw new UnauthorizedAccessException("Користувач не авторизований.");
 
-            if (!_user.HasPermission(AccessService.PermissionKey.ReadPerson))
+            if (!_user.HasPermission(AccessService.PermissionKey.ReadEmployee))
                 throw new UnauthorizedAccessException("Немає дозволу читати клієнтів.");
 
             var clients = await _context.Clients

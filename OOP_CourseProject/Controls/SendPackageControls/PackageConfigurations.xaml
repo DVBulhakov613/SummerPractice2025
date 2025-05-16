@@ -15,17 +15,22 @@
                 <RowDefinition Height="Auto" />
                 <RowDefinition Height="*" />
             </Grid.RowDefinitions>
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="*" />
+                <ColumnDefinition Width="Auto" />
+            </Grid.ColumnDefinitions>
 
             <!-- Title + Description -->
-            <StackPanel Grid.Row="0">
+            <StackPanel Grid.Row="0" Grid.ColumnSpan="2">
                 <TextBlock Text="Інформація про посилку" FontSize="24" FontWeight="Bold" Margin="0,0,0,10"/>
             </StackPanel>
 
             <!-- ComboBoxes -->
-            <StackPanel Grid.Row="1" Orientation="Horizontal">
+            <StackPanel Grid.Row="1" Grid.Column="1" Orientation="Horizontal" Margin="20,8,20,20">
                 <StackPanel Width="Auto">
                     <TextBlock Text="Тип посилки" FontWeight="SemiBold" FontSize="14" Margin="0,0,0,5"/>
                     <ComboBox Style="{StaticResource ModernComboBox}"
+                              ItemTemplate="{StaticResource EnumItemTemplate}"
                               HorizontalContentAlignment="Stretch"
                               Width="250"
                               Height="40"
@@ -36,7 +41,7 @@
             </StackPanel>
 
             <!-- Dimensions -->
-            <StackPanel Grid.Row="2" Margin="0,20,0,0">
+            <StackPanel Grid.Row="1" Grid.Column="0" Margin="0,20,0,0">
                 <StackPanel Orientation="Horizontal">
                     <TextBlock Text="Максимально допустимі габарити посилки:" FontSize="13" FontWeight="Medium" Margin="5,-5,0,0" Opacity="0.4" />
                     <TextBlock Text="100х100х100 см," FontSize="13" FontWeight="Medium" Margin="5,-5,0,0" Opacity="0.8" />
@@ -48,7 +53,7 @@
                          FontSize="16"
                          VerticalAlignment="Center"
                          Margin="0,5,0,10" Height="30"
-                         helpers:TextBoxHelper.Placeholder="* Вага, г"
+                         helpers:TextBoxHelper.Placeholder="* Вага, кг"
                          Text="{Binding Weight, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"/>
                 <TextBox x:Name="Length"
                          Style="{StaticResource PlaceholderTextBox}"

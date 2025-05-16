@@ -20,7 +20,7 @@ namespace Class_Lib
             internal set => package = value 
                 ?? throw new ArgumentNullException(nameof(Package), "Подія має мати посилку, до якої вона належить."); 
         } // the package to which this event belongs
-        public DateTime Timestamp { get; } = DateTime.Now; // logs are always created with the current time
+        public DateTime Timestamp { get; } // logs are always created with the current time
         
         public uint LocationID { get; internal set; } // location of the event
         public BaseLocation Location
@@ -50,7 +50,8 @@ namespace Class_Lib
                 throw new AggregateException("Помилки при створенні події.", exceptions);
 
             Description = description;
-            
+            Timestamp = DateTime.Now;
+
         }
     }
 }

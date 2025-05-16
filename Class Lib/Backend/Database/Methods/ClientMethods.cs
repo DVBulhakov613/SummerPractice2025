@@ -20,7 +20,7 @@ namespace Class_Lib.Backend.Person_related.Methods
         public async Task AddAsync(User user, Client client)
         {
             if(client == null) { throw new ArgumentNullException("Не можна додати нічого."); };
-            if (!user.HasPermission(AccessService.PermissionKey.CreatePerson))
+            if (!user.HasPermission(AccessService.PermissionKey.CreateEmployee))
             {
                 throw new UnauthorizedAccessException("Немає доступу до створення клієнта.");
             }
@@ -32,7 +32,7 @@ namespace Class_Lib.Backend.Person_related.Methods
         public async Task<IEnumerable<Client>> GetByCriteriaAsync(User user, Expression<Func<Client, bool>> filter)
         {
             if(filter == null) { throw new ArgumentNullException("Пустий фільтр пошуку."); };
-            if (!user.HasPermission(AccessService.PermissionKey.ReadPerson))
+            if (!user.HasPermission(AccessService.PermissionKey.ReadEmployee))
             {
                 throw new UnauthorizedAccessException("Немає доступу до перегляду клієнтів.");
             }
@@ -44,7 +44,7 @@ namespace Class_Lib.Backend.Person_related.Methods
         public async Task UpdateAsync(User user, Client updatedClient)
         {
             if(updatedClient == null) { throw new ArgumentNullException("Шаблон оновлених даних відсутній."); };
-            if (!user.HasPermission(AccessService.PermissionKey.UpdatePerson))
+            if (!user.HasPermission(AccessService.PermissionKey.UpdateEmployee))
             {
                 throw new UnauthorizedAccessException("Немає доступу до оновлення клієнта.");
             }
@@ -60,7 +60,7 @@ namespace Class_Lib.Backend.Person_related.Methods
         public async Task DeleteAsync(User user, Client client)
         {
             if(client == null) { throw new ArgumentNullException("Не можна видалити нічого."); };
-            if (!user.HasPermission(AccessService.PermissionKey.DeletePerson))
+            if (!user.HasPermission(AccessService.PermissionKey.DeleteEmployee))
             {
                 throw new UnauthorizedAccessException("Немає доступу до видалення клієнта.");
             }

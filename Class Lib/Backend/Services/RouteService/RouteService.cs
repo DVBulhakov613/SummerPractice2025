@@ -87,7 +87,7 @@ namespace Class_Lib.Services
             }
         }
 
-        public static double CostEstimate(double distance)
+        public static double CostEstimate(double distance, double weight)
         {
             double minCost = 20;
             double maxCost = 300;
@@ -95,8 +95,14 @@ namespace Class_Lib.Services
             double x0 = 75;  // midpoint of the curve
 
             double logistic = 1 / (1 + Math.Exp(-k * (distance - x0)));
-            return minCost + (maxCost - minCost) * logistic;
+
+            double weightFactor = 1 + (weight / 10); // 10% increase per kg
+
+            double cost = (minCost + (maxCost - minCost) * logistic) * weightFactor;
+
+            return Math.Round(cost, 2); // ex. 50,10 = 164.71 ; 1,2 = 32.11 ; 1,0.1 = 27.82 ; etc
         }
+
     }
     public class RouteInfo
     {

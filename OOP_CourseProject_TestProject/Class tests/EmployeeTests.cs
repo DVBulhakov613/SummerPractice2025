@@ -130,7 +130,7 @@ namespace OOP_CourseProject_TestProject.Class_tests
         public async Task AddEmployeeAsync_ShouldAddEmployee_WhenUserHasPermission()
         {
             // Arrange string name, string surname, string phoneNumber, string? email, string position, BaseLocation workplace
-            _adminUser.CachedPermissions.Add((int)AccessService.PermissionKey.CreatePerson);
+            _adminUser.CachedPermissions.Add((int)AccessService.PermissionKey.CreateEmployee);
             var newEmployee = new Employee("New", "Працівник", "+987654321", "example@email.com", "Працівник", _workplace);
 
             // Act
@@ -229,7 +229,7 @@ namespace OOP_CourseProject_TestProject.Class_tests
         public async Task PromoteToManagerAsync_ShouldThrowException_WhenEmployeeNotFound()
         {
             // Arrange
-            _adminUser.CachedPermissions.Add((int)AccessService.PermissionKey.UpdatePerson);
+            _adminUser.CachedPermissions.Add((int)AccessService.PermissionKey.UpdateEmployee);
             var nonExistentEmployee = new Employee("Non", "Existent", "+000000000", "thisdoesnotexist@not.real", "Працівник", _workplace);
 
             // Act

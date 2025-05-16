@@ -1,6 +1,8 @@
 ﻿using Class_Lib.Backend.Package_related;
 using Class_Lib.Backend.Package_related.enums;
+using Class_Lib.Backend.Package_related.Methods;
 using Class_Lib.Services;
+using Microsoft.Extensions.DependencyInjection;
 using OOP_CourseProject.Controls.SendPackageControls;
 using OOP_CourseProject.Controls.ViewModel.ViewModels;
 using System;
@@ -43,17 +45,19 @@ namespace OOP_CourseProject.Controls
 
             DataContext = this;
             LocationsInfo.PropertyChanged += OnLocationsChanged;
+            PackageInfo.PropertyChanged += OnLocationsChanged;
         }
 
         private async void OnLocationsChanged(object? sender, PropertyChangedEventArgs e)
         {
             if (e.PropertyName == nameof(LocationInfoViewModel.FromLocation) ||
-                e.PropertyName == nameof(LocationInfoViewModel.ToLocation))
+                e.PropertyName == nameof(LocationInfoViewModel.ToLocation) || 
+                e.PropertyName == nameof(PackageInfoViewModel.Weight))
             {
                 var from = LocationsInfo.FromLocation as Class_Lib.Warehouse;
                 var to = LocationsInfo.ToLocation as Class_Lib.Warehouse;
 
-                if (from != null && to != null && from.ID != to.ID)
+                if (from != null && to != null && from.ID != to.ID && double.TryParse(PackageInfo.Weight, out _))
                 {
                     var route = await RouteService.GetRouteInfoAsync(
                         from.GeoData.Latitude, from.GeoData.Longitude,
@@ -61,7 +65,7 @@ namespace OOP_CourseProject.Controls
 
                     if (route.IsSuccess)
                     {
-                        DeliveryCost = RouteService.CostEstimate(route.DistanceKm).ToString("F2") + " грн";
+                        DeliveryCost = RouteService.CostEstimate(route.DistanceKm, double.Parse(PackageInfo.Weight)).ToString("F2") + " грн";
                         DeliveryTime = $"{route.Duration:hh\\:mm} год";
                     }
                     else
@@ -95,11 +99,11 @@ namespace OOP_CourseProject.Controls
                         ? width
                         : throw new ArgumentException("Ширина повинна бути числом."),
                     uint.TryParse(PackageInfo.Height, out uint height)
-                        ? width
-                        : throw new ArgumentException("Ширина повинна бути числом."),
+                        ? height
+                        : throw new ArgumentException("Висота повинна бути числом."),
                     double.TryParse(PackageInfo.Weight, out double weight)
                         ? weight
-                        : throw new ArgumentException("Ширина повинна бути числом."),
+                        : throw new ArgumentException("Вага повинна бути числом."),
                     ClientInfo.Sender,
                     ClientInfo.Receiver,
                     (Class_Lib.Warehouse)LocationsInfo.FromLocation,
@@ -130,13 +134,24 @@ namespace OOP_CourseProject.Controls
                 ((Class_Lib.Warehouse)LocationsInfo.ToLocation).GeoData.Latitude,
                 ((Class_Lib.Warehouse)LocationsInfo.ToLocation).GeoData.Longitude);
 
-            if (route.IsSuccess) return RouteService.CostEstimate(route.DistanceKm);
+            if (route.IsSuccess) return RouteService.CostEstimate(route.DistanceKm, double.Parse(PackageInfo.Weight));
             else throw new Exception(route.ErrorMessage);
         }
 
-        private void ConfirmButton_Click(object sender, RoutedEventArgs e)
+        private async void ConfirmButton_Click(object sender, RoutedEventArgs e)
         {
-            
+            try 
+            {
+                var repo = App.AppHost.Services.GetRequiredService<DeliveryMethods>();
+                Delivery delivery = await CreateDelivery();
+                await repo.AddAsync(App.CurrentEmployee, delivery);
+                MessageBox.Show($"Номер доставки: {delivery.ID}\nНомер посилки: {delivery.PackageID}", "Доставку створено!", MessageBoxButton.OK, MessageBoxImage.Information);
+            }
+            catch(Exception ex)
+            {
+                MessageBox.Show(ex.Message, "Помилка при створенні доставки!", MessageBoxButton.OK, MessageBoxImage.Error);
+                return;
+            }
         }
 
         private void ClearButton_Click(object sender, RoutedEventArgs e)

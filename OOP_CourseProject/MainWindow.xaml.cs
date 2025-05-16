@@ -43,5 +43,20 @@ namespace OOP_CourseProject
         {
             MessageBox.Show("Test button clicked!");
         }
+
+        private void ClientsButton_Click(object sender, RoutedEventArgs e)
+        {
+
+        }
+
+        private void EmployeesButton_Click(object sender, RoutedEventArgs e)
+        {
+
+        }
+
+        private void LocationsButton_Click(object sender, RoutedEventArgs e)
+        {
+
+        }
     }
 }

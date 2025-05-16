@@ -18,10 +18,12 @@
         <StackPanel Background="{StaticResource SecondaryBackgroundBrush}" Grid.Column="0">
             <!-- profile and navigation -->
             <Ellipse Width="100" Height="100" Fill="Red" Margin="20"/>
-            <Button Content="Home Page" Click="HomeButton_Click" Foreground="Black" Visibility="Visible"/>
-            <Button Content="Send Package" Click="SendPackageButton_Click" Foreground="Black" Visibility="{Binding Converter={StaticResource PermissionConverter}, ConverterParameter=40}"/>
-            <Button Content="Receive Package" Click="ReceivePackageButton_Click" Foreground="Black" Visibility="{Binding Converter={StaticResource PermissionConverter}, ConverterParameter=40}"/>
-            <Button Content="Test Button" Click="Test_Click" Foreground="Black" Visibility="{Binding Converter={StaticResource PermissionConverter}, ConverterParameter=999999}"/>
+            <Button Content="Домашня сторінка" Click="HomeButton_Click" Foreground="Black" Visibility="Visible" HorizontalContentAlignment="Left"/>
+            <Button Content="Відправити посилку" Click="SendPackageButton_Click" Foreground="Black" HorizontalContentAlignment="Left" Visibility="{Binding Converter={StaticResource PermissionConverter}, ConverterParameter=11}"/>
+            <Button Content="Отримати посилку" Click="ReceivePackageButton_Click" Foreground="Black" HorizontalContentAlignment="Left" Visibility="{Binding Converter={StaticResource PermissionConverter}, ConverterParameter=10}"/>
+            <Button Content="Клієнти" Click="ClientsButton_Click" Foreground="Black" HorizontalContentAlignment="Left" Visibility="{Binding Converter={StaticResource PermissionConverter}, ConverterParameter=150}"/>
+            <Button Content="Працівники" Click="EmployeesButton_Click" Foreground="Black" HorizontalContentAlignment="Left" Visibility="{Binding Converter={StaticResource PermissionConverter}, ConverterParameter=41}"/>
+            <Button Content="Локації" Click="LocationsButton_Click" Foreground="Black" HorizontalContentAlignment="Left" Visibility="{Binding Converter={StaticResource PermissionConverter}, ConverterParameter=51}"/>
         </StackPanel>
 
         <!-- main content -->

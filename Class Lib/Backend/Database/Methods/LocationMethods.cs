@@ -36,7 +36,7 @@ namespace Class_Lib.Backend.Location_related.Methods
 
             var locations = (await _locationRepository.GetByCriteriaAsync(filter)).ToList();
 
-            if (user.HasPermission(AccessService.PermissionKey.ReadPerson))
+            if (user.HasPermission(AccessService.PermissionKey.ReadEmployee))
             {
                 var locationIds = locations.Select(l => l.ID).ToList();
 

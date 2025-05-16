@@ -40,7 +40,7 @@ namespace Class_Lib.Backend.Database.Repositories
 
             // Load related entities only if the user has permission
 
-            if (_user.HasPermission(AccessService.PermissionKey.ReadPerson))
+            if (_user.HasPermission(AccessService.PermissionKey.ReadEmployee))
             {
                 var employeesWithWorkplaces = await _context.Employees
                     .Where(e => e.Workplace != null)

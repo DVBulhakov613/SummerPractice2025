@@ -29,7 +29,9 @@ namespace OOP_CourseProject.Controls
 
         public async void GenerateViewModel()
         {
-            DataContext = ViewModelService.CreateViewModel(await DeliveryMethods.GetByCriteriaAsync(App.CurrentEmployee, p => p.ID > 0));
+            var vm = ViewModelService.CreateViewModel(await DeliveryMethods.GetByCriteriaAsync(App.CurrentEmployee, p => p.ID > 0));
+            ViewModel = vm;
+            DataContext = vm;
         }
 
         private void DelayedPackages_Click(object sender, RoutedEventArgs e)
@@ -70,6 +72,22 @@ namespace OOP_CourseProject.Controls
         private async void Refresh_Click(object sender, RoutedEventArgs e)
         {
             ViewModel.UpdateItems(await DeliveryMethods.GetByCriteriaAsync(App.CurrentEmployee, p => p.ID > 0));
+        }
+
+        private async void Remove_Click(object sender, RoutedEventArgs e)
+        {
+            var delivery = ViewModel.SelectedItem as Delivery;
+            if (delivery is null)
+            {
+                MessageBox.Show("Обраний об'єкт не знайдено.", "Помилка!", MessageBoxButton.OK, MessageBoxImage.Warning);
+                return;
+            }
+
+            var db = App.AppHost.Services.GetRequiredService<DeliveryMethods>();
+
+            await db.DeleteAsync(App.CurrentEmployee, delivery);
+
+            Refresh_Click(sender, e);
         }
     }
 }

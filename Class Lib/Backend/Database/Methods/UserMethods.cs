@@ -34,7 +34,7 @@ namespace Class_Lib.Backend.Person_related.Methods
         {
             ArgumentNullException.ThrowIfNull(filter);
 
-            if (!user.HasPermission(AccessService.PermissionKey.ReadPerson))
+            if (!user.HasPermission(AccessService.PermissionKey.ReadEmployee))
             {
                 throw new UnauthorizedAccessException("Немає доступу до перегляду користувачів.");
             }
