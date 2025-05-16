@@ -3,6 +3,7 @@ using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.ComponentModel;
+using System.Diagnostics;
 using System.Linq;
 using System.Runtime.CompilerServices;
 using System.Text;
@@ -40,24 +41,19 @@ namespace OOP_CourseProject.Controls.ViewModel.ViewModels
             set { _height = value; OnPropertyChanged(); }
         }
 
-        public ObservableCollection<PackageType> PackageTypes { get; set; } = [];
-
-        public void LoadEnums()
-        {
-            if (PackageTypes == null)
-                PackageTypes = new ObservableCollection<PackageType>();
-            else
-                PackageTypes.Clear();
-
-            foreach (PackageType value in Enum.GetValues(typeof(PackageType)))
-                PackageTypes.Add(value);
-        }
+        public ObservableCollection<PackageType> PackageTypes { get; set; } = new((PackageType[])Enum.GetValues(typeof(PackageType)));
 
         private PackageType _selectedPackageType;
         public PackageType SelectedPackageType
         {
             get => _selectedPackageType;
             set { _selectedPackageType = value; OnPropertyChanged(); }
+        }
+
+        public PackageInfoViewModel()
+        {
+            // Debug.WriteLine moved to constructor to avoid invalid placement in class body
+            Debug.WriteLine("PackageTypes: " + PackageTypes.Count);
         }
 
         public event PropertyChangedEventHandler PropertyChanged;

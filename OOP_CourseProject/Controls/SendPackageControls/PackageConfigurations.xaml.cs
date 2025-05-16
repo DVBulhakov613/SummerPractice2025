@@ -22,41 +22,41 @@ namespace OOP_CourseProject.Controls.SendPackageControls
     /// </summary>
     public partial class PackageConfigurations : UserControl
     {
-        public ObservableCollection<PackageType> PackageTypes
-        {
-            get => (ObservableCollection<PackageType>)GetValue(PackageTypesProperty);
-            set => SetValue(PackageTypesProperty, value);
-        }
+        //public ObservableCollection<PackageType> PackageTypes
+        //{
+        //    get => (ObservableCollection<PackageType>)GetValue(PackageTypesProperty);
+        //    set => SetValue(PackageTypesProperty, value);
+        //}
 
-        public static readonly DependencyProperty PackageTypesProperty =
-            DependencyProperty.Register(nameof(PackageTypes), typeof(ObservableCollection<PackageType>), typeof(PackageConfigurations));
+        //public static readonly DependencyProperty PackageTypesProperty =
+        //    DependencyProperty.Register(nameof(PackageTypes), typeof(ObservableCollection<PackageType>), typeof(PackageConfigurations));
 
-        public PackageType SelectedPackageType
-        {
-            get => (PackageType)GetValue(SelectedPackageTypeProperty);
-            set => SetValue(SelectedPackageTypeProperty, value);
-        }
+        //public PackageType SelectedPackageType
+        //{
+        //    get => (PackageType)GetValue(SelectedPackageTypeProperty);
+        //    set => SetValue(SelectedPackageTypeProperty, value);
+        //}
 
-        public static readonly DependencyProperty SelectedPackageTypeProperty =
-            DependencyProperty.Register(nameof(SelectedPackageType), typeof(PackageType), typeof(PackageConfigurations));
+        //public static readonly DependencyProperty SelectedPackageTypeProperty =
+        //    DependencyProperty.Register(nameof(SelectedPackageType), typeof(PackageType), typeof(PackageConfigurations));
 
         public PackageConfigurations()
         {
             InitializeComponent();
 
-            LoadEnums();
+            //LoadEnums();
         }
 
-        public void LoadEnums()
-        {
-            if (PackageTypes == null)
-                PackageTypes = new ObservableCollection<PackageType>();
-            else
-                PackageTypes.Clear();
+        //public void LoadEnums()
+        //{
+        //    if (PackageTypes == null)
+        //        PackageTypes = new ObservableCollection<PackageType>();
+        //    else
+        //        PackageTypes.Clear();
 
-            foreach (PackageType value in Enum.GetValues(typeof(PackageType)))
-                PackageTypes.Add(value);
-        }
+        //    foreach (PackageType value in Enum.GetValues(typeof(PackageType)))
+        //        PackageTypes.Add(value);
+        //}
 
     }
 }

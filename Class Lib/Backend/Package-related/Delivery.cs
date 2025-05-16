@@ -37,14 +37,14 @@ namespace Class_Lib.Backend.Package_related
         public uint SentToID { get; set; }
         public Warehouse SentTo { get => sentTo; set => sentTo = value ?? throw new ArgumentNullException(nameof(Sender), "Доставка має мати пункт, до якого вона буде доставлена."); }
 
-        public uint Price { get; set; } // price of the delivery
+        public double Price { get; set; } // price of the delivery
         public bool IsPaid { get; set; } = false; // is the delivery paid?
 
         public List<PackageEvent> Log { get; set; } = [];
 
         internal Delivery() { } // for EF Core
 
-        public Delivery(Package package, Client sender, Client receiver, Warehouse sentFrom, Warehouse sentTo, uint price, bool paid)
+        public Delivery(Package package, Client sender, Client receiver, Warehouse sentFrom, Warehouse sentTo, double price, bool paid)
         {
             var exceptions = new List<Exception>();
             try { Sender = sender; }

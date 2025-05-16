@@ -30,7 +30,7 @@ namespace OOP_CourseProject.Controls
         {
             InitializeComponent();
 
-            DataContext = this;
+            DataContext = this; //new SendPackageViewModel();
         }
     }
 }

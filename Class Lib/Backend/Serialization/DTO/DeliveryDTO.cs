@@ -15,7 +15,7 @@ namespace Class_Lib.Backend.Serialization.DTO
         public uint ReceiverID { get; set; }
         public uint SentFromID { get; set; }
         public uint SentToID { get; set; }
-        public uint Price { get; set; }
+        public double Price { get; set; }
         public bool IsPaid { get; set; }
     }
 }

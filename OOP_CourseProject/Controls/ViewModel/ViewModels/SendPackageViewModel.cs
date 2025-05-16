@@ -14,7 +14,7 @@ namespace OOP_CourseProject.Controls.ViewModel.ViewModels
     public class SendPackageViewModel : INotifyPropertyChanged
     {
         public ClientInfoViewModel ClientInfo { get; } = new();
-        public LocationInfoViewModel LocationInfo { get; } = new();
+        public LocationInfoViewModel LocationsInfo { get; } = new();
         public PackageInfoViewModel PackageConfigurations { get; } = new();
         public ContentInfoViewModel ContentInfo { get; } = new();
 
@@ -42,17 +42,27 @@ namespace OOP_CourseProject.Controls.ViewModel.ViewModels
             // TODO: Save delivery or proceed to next step
             Delivery delivery = new(
                 new Package(
-                    uint.TryParse(PackageConfigurations.Length, out _)
-                        ? uint.Parse(PackageConfigurations.Length)
-                        : throw new ArgumentException(""),
-                    uint.TryParse(PackageConfigurations.Width),
-                    uint.TryParse(PackageConfigurations.Height),
-                    double.TryParse(PackageConfigurations.Weight),
+                    PackageConfigurations.Length,
+                    PackageConfigurations.Width,
+                    PackageConfigurations.Height,
+                    PackageConfigurations.Weight,
                     ClientInfo.Sender,
                     ClientInfo.Receiver,
-                    LocationInfo.FromLocation,
-                    LocationInfo.ToLocation,
-                    PackageConfigurations.SelectedPackageType), ClientInfo.Sender, ClientInfo.Receiver, LocationInfo.FromLocation, LocationInfo.ToLocation, ContentInfo.Contents.ToList());
+                    (Class_Lib.Warehouse)LocationsInfo.FromLocation,
+                    (Class_Lib.Warehouse)LocationsInfo.ToLocation,
+                    PackageConfigurations.SelectedPackageType
+                    ),
+                ClientInfo.Sender,
+                ClientInfo.Receiver,
+                (Class_Lib.Warehouse)LocationsInfo.FromLocation,
+                (Class_Lib.Warehouse)LocationsInfo.ToLocation,
+                CostEstimate(),
+                false);
+        }
+
+        public double CostEstimate()
+        {
+            throw new NotImplementedException();
         }
 
         public event PropertyChangedEventHandler? PropertyChanged;
