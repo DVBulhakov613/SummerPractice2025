@@ -25,6 +25,6 @@
         </StackPanel>
 
         <!-- main content -->
-        <ContentControl x:Name="MainContent" Grid.Column="1" />
+        <ContentControl x:Name="MainContent" Grid.Column="1" Padding="0" />
     </Grid>
 </Window>

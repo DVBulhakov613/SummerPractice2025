@@ -5,6 +5,10 @@
     <Application.Resources>
         <ResourceDictionary>
             <local:PermissionToVisibilityConverter x:Key="PermissionConverter"/>
+            <local:EnumDescriptionConverter x:Key="EnumDescriptionConverter"/>
+            <DataTemplate x:Key="EnumItemTemplate">
+                <TextBlock Text="{Binding Converter={StaticResource EnumDescriptionConverter}}"/>
+            </DataTemplate>
             <ResourceDictionary.MergedDictionaries>
                 <ResourceDictionary Source="/Themes/Theme.xaml"/>
             </ResourceDictionary.MergedDictionaries>

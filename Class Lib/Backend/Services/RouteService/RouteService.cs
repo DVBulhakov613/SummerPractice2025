@@ -5,6 +5,7 @@ using System.Text;
 using System.Threading.Tasks;
 using System.Net.Http;
 using Newtonsoft.Json.Linq;
+using Newtonsoft.Json;
 
 namespace Class_Lib.Services
 {
@@ -23,51 +24,85 @@ namespace Class_Lib.Services
         private static readonly string ApiKey = "5b3ce3597851110001cf6248cdc645bc4dad474ab7023cecf0a12b46";
         private static readonly HttpClient Client = new HttpClient();
 
-        public static async Task<string> GetRouteInfoAsync(double fromLatitude, double fromLongitude, double toLatitude, double toLongitude)
+        public static async Task<RouteInfo> GetRouteInfoAsync(double fromLatitude, double fromLongitude, double toLatitude, double toLongitude)
         {
             string url = "https://api.openrouteservice.org/v2/directions/driving-hgv/json";
-
 
             var body = new
             {
                 coordinates = new[]
                 {
-                // strict long, lati order
-                new[] { fromLongitude, fromLatitude },
-                new[] { toLongitude, toLatitude }
-            }
+            new[] { fromLongitude, fromLatitude },
+            new[] { toLongitude, toLatitude }
+        }
             };
 
-            var jsonBody = Newtonsoft.Json.JsonConvert.SerializeObject(body);
-            Console.Write("Sending: " + jsonBody);
-
+            var jsonBody = JsonConvert.SerializeObject(body);
             var content = new StringContent(jsonBody, Encoding.UTF8, "application/json");
 
             Client.DefaultRequestHeaders.Clear();
             Client.DefaultRequestHeaders.Add("Authorization", ApiKey);
 
-            var response = await Client.PostAsync(url, content);
-
-            if (response.IsSuccessStatusCode)
+            try
             {
+                var response = await Client.PostAsync(url, content);
+                if (!response.IsSuccessStatusCode)
+                {
+                    return new RouteInfo
+                    {
+                        IsSuccess = false,
+                        ErrorMessage = $"HTTP {(int)response.StatusCode}: {response.ReasonPhrase}"
+                    };
+                }
+
                 var resultJson = await response.Content.ReadAsStringAsync();
                 var result = JObject.Parse(resultJson);
 
-                var routes = result["routes"] as JArray;
-                if (routes != null && routes.Count > 0)
+                var summary = result["routes"]?[0]?["summary"];
+                if (summary != null)
                 {
-                    var summary = routes[0]["summary"];
-                    if (summary != null)
+                    double distance = summary["distance"]?.Value<double>() ?? 0;
+                    double duration = summary["duration"]?.Value<double>() ?? 0;
+
+                    return new RouteInfo
                     {
-                        double distance = summary["distance"]?.Value<double>() ?? 0;
-                        double duration = summary["duration"]?.Value<double>() ?? 0;
-
-                        return $"Відстань: {distance / 1000.0:F2} км | Розрахований час: {TimeSpan.FromSeconds(duration):hh\\:mm\\:ss}";
-                    }
+                        DistanceKm = distance / 1000.0,
+                        Duration = TimeSpan.FromSeconds(duration)
+                    };
                 }
-            }
 
-            return "Сервіс недоступний або помилка.";
+                return new RouteInfo
+                {
+                    IsSuccess = false,
+                    ErrorMessage = "Інформацію не знайдено."
+                };
+            }
+            catch (Exception ex)
+            {
+                return new RouteInfo
+                {
+                    IsSuccess = false,
+                    ErrorMessage = $"Помилка: {ex.Message}"
+                };
+            }
         }
+
+        public static double CostEstimate(double distance)
+        {
+            double minCost = 20;
+            double maxCost = 300;
+            double k = 0.05; // steepness of the curve
+            double x0 = 75;  // midpoint of the curve
+
+            double logistic = 1 / (1 + Math.Exp(-k * (distance - x0)));
+            return minCost + (maxCost - minCost) * logistic;
+        }
+    }
+    public class RouteInfo
+    {
+        public double DistanceKm { get; set; }
+        public TimeSpan Duration { get; set; }
+        public bool IsSuccess { get; set; } = true;
+        public string? ErrorMessage { get; set; }
     }
 }

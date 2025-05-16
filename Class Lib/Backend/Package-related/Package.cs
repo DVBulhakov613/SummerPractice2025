@@ -115,7 +115,7 @@ namespace Class_Lib.Backend.Package_related
         [Timestamp]
         public byte[] RowVersion { get; set; }
 
-        public void AddContent(string contentName, ContentType contentType, uint amount)
+        public void AddContent(string contentName, ContentType contentType, uint amount, string description = "")
         {
             if(contentName.IsNullOrEmpty())
                 throw new ArgumentNullException(nameof(contentName), "Назва змісту не може бути пустою.");

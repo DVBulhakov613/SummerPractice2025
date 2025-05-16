@@ -13,29 +13,29 @@ namespace OOP_CourseProject.Controls.ViewModel.ViewModels
 {
     public class PackageInfoViewModel : INotifyPropertyChanged
     {
-        private double _weight;
-        public double Weight
+        private string _weight;
+        public string Weight
         {
             get => _weight;
             set { _weight = value; OnPropertyChanged(); }
         }
 
-        private uint _length;
-        public uint Length
+        private string _length;
+        public string Length
         {
             get => _length;
             set { _length = value; OnPropertyChanged(); }
         }
 
-        private uint _width;
-        public uint Width
+        private string _width;
+        public string Width
         {
             get => _width;
             set { _width = value; OnPropertyChanged(); }
         }
 
-        private uint _height;
-        public uint Height
+        private string _height;
+        public string Height
         {
             get => _height;
             set { _height = value; OnPropertyChanged(); }

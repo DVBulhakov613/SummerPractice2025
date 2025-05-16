@@ -76,7 +76,8 @@
                       Direction="270"
                       Opacity="0.3" />
 
-
+    
+    <!-- combobox arrow thingy -->
     <ControlTemplate x:Key="ComboBoxToggleButton" TargetType="ToggleButton">
         <Border x:Name="Border"
             Background="Transparent"

@@ -9,12 +9,12 @@ namespace Class_Lib
 {
     public class Coordinates
     {
-        private double? _latitude;
-        private double? _longitude;
+        private double _latitude;
+        private double _longitude;
         private string? _address;
         private string _region;
 
-        public double? Latitude
+        public double Latitude
         {
             get
             {
@@ -27,7 +27,7 @@ namespace Class_Lib
                 _latitude = value;
             }
         }
-        public double? Longitude
+        public double Longitude
         {
             get
             {
@@ -69,7 +69,7 @@ namespace Class_Lib
         internal Coordinates()
         {
         }
-        public Coordinates(double? latitude, double? longitude, string? address, string region)
+        public Coordinates(double latitude, double longitude, string? address, string region)
         {
             var exceptions = new List<Exception>();
 

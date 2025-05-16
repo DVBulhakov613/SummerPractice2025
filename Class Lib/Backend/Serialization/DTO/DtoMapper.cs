@@ -148,8 +148,12 @@ namespace Class_Lib.Backend.Serialization.DTO
         {
             var coords = new Coordinates
             {
-                Latitude = dto.Coordinates.Latitude,
-                Longitude = dto.Coordinates.Longitude,
+                Latitude = dto.Coordinates.Latitude == null 
+                    ? throw new ArgumentException("Відсутня широта координат.")
+                    : (double)dto.Coordinates.Latitude,
+                Longitude = dto.Coordinates.Longitude == null
+                    ? throw new ArgumentException("Відсутня довгота координат.")
+                    : (double)dto.Coordinates.Longitude,
                 Address = dto.Coordinates.Address,
                 Region = dto.Coordinates.Region
             };
@@ -180,8 +184,12 @@ namespace Class_Lib.Backend.Serialization.DTO
 
         public static Coordinates ToEntity(this CoordinatesDTO dto) => new Coordinates
         {
-            Latitude = dto.Latitude,
-            Longitude = dto.Longitude,
+            Latitude = dto.Latitude == null
+                ? throw new ArgumentException("Відсутня широта координат.")
+                : (double)dto.Latitude,
+            Longitude = dto.Longitude == null
+                ? throw new ArgumentException("Відсутня довгота координат.")
+                : (double)dto.Longitude,
             Address = dto.Address,
             Region = dto.Region
         };

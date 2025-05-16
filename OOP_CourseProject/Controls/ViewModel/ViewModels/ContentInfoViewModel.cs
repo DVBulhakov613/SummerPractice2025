@@ -1,10 +1,12 @@
-﻿using GalaSoft.MvvmLight.Command;
+﻿using Class_Lib;
+using GalaSoft.MvvmLight.Command;
 using OOP_CourseProject.Controls.PackageInfo;
 using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.ComponentModel;
 using System.Linq;
+using System.Reflection;
 using System.Runtime.CompilerServices;
 using System.Text;
 using System.Threading.Tasks;
@@ -23,13 +25,13 @@ namespace OOP_CourseProject.Controls.ViewModel.ViewModels
         private string _description;
         public string Description { get => _description; set { _description = value; OnPropertyChanged(); } }
 
-        private string _selectedContentType;
-        public string SelectedContentType { get => _selectedContentType; set { _selectedContentType = value; OnPropertyChanged(); } }
+        private ContentType? _selectedContentType;
+        public ContentType? SelectedContentType { get => _selectedContentType; set { _selectedContentType = value; OnPropertyChanged(); } }
 
         private string _amount;
         public string Amount { get => _amount; set { _amount = value; OnPropertyChanged(); } }
 
-        public ObservableCollection<string> ContentTypes { get; } = new() { "Документи", "Електроніка", "Одяг" };
+        public ObservableCollection<ContentType> ContentTypes { get; } = new ((ContentType[])Enum.GetValues(typeof(ContentType)));
 
         public ICommand AddItemCommand { get; }
         public ICommand ShowSummaryCommand { get; }
@@ -46,7 +48,7 @@ namespace OOP_CourseProject.Controls.ViewModel.ViewModels
 
         private void AddItem()
         {
-            if (string.IsNullOrWhiteSpace(this.Name) || string.IsNullOrWhiteSpace(this.SelectedContentType) || string.IsNullOrWhiteSpace(this.Amount))
+            if (string.IsNullOrWhiteSpace(this.Name) || SelectedContentType == null || string.IsNullOrWhiteSpace(this.Amount))
             {
                 MessageBox.Show("Не всі обов'язкові поля заповнені.", "Увага!", MessageBoxButton.OK, MessageBoxImage.Information);
                 return;
@@ -57,10 +59,10 @@ namespace OOP_CourseProject.Controls.ViewModel.ViewModels
                     {
                         Name = this.Name,
                         Description = this.Description,
-                        ContentType = this.SelectedContentType,
-                        Amount = int.TryParse(this.Amount, out _) 
-                            ? int.Parse(this.Amount) > 0 
-                                ? int.Parse(this.Amount) 
+                        ContentType = SelectedContentType.Value,
+                        Amount = uint.TryParse(this.Amount, out _) 
+                            ? uint.Parse(this.Amount) > 0 
+                                ? uint.Parse(this.Amount) 
                                 : throw new ArgumentException("Не можна назначити від'ємне число.")
                             : throw new ArgumentException("Не можна назначити числу текст.")
                     });
@@ -122,8 +124,8 @@ namespace OOP_CourseProject.Controls.ViewModel.ViewModels
     {
         public string Name { get; set; }
         public string Description { get; set; }
-        public string ContentType { get; set; }
-        public int Amount { get; set; }
+        public ContentType ContentType { get; set; }
+        public uint Amount { get; set; }
     }
 
 }

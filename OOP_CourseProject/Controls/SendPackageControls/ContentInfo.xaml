@@ -52,9 +52,11 @@
                     <StackPanel Width="Auto" Margin="10" Grid.Column="0">
                         <TextBlock Text="Тип посилки" FontWeight="SemiBold" FontSize="14" Margin="0,0,0,5"/>
                         <ComboBox Style="{StaticResource ModernComboBox}"
+                                  ItemTemplate="{StaticResource EnumItemTemplate}"
                                   Height="40"
                                   ItemsSource="{Binding ContentTypes}"
-                                  SelectedItem="{Binding SelectedContentType, Mode=TwoWay}" />
+                                  SelectedItem="{Binding SelectedContentType, Mode=TwoWay}"
+                                  DisplayMemberPath="."/>
 
 
                     </StackPanel>
