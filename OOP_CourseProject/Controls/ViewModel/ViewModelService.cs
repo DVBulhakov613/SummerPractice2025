@@ -1,5 +1,6 @@
 ﻿using Class_Lib;
 using Class_Lib.Backend.Package_related;
+using Class_Lib.Backend.Person_related;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -25,6 +26,7 @@ namespace OOP_CourseProject.Controls.ViewModel
                 Warehouse w => new WarehouseViewModel(w),
                 Delivery d => new DeliveryViewModel(d),
                 Content c => new ContentViewModel(c),
+                Client c => new ClientViewModel(c),
                 _ => throw new NotSupportedException($"Не підтримуємий тип: {model.GetType().Name}")
             };
         }

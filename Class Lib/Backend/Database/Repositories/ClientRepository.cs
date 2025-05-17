@@ -33,11 +33,27 @@ namespace Class_Lib.Database.Repositories
             var clientIds = clients.Select(c => c.ID).ToList();
 
             // Load related entities only if the user has permission
+
+            // i know that this is not the best way to do it but it's the best i can do at the moment
             if (_user.HasPermission(AccessService.PermissionKey.ReadDelivery))
             {
                 await _context.Deliveries
                     .Where(d => clientIds.Contains(d.SenderID) || clientIds.Contains(d.ReceiverID))
                     .LoadAsync();
+
+                if(_user.HasPermission(AccessService.PermissionKey.ReadPackage))
+                {
+                    await _context.Packages
+                        .Where(p => clientIds.Contains(p.Delivery.SenderID) || clientIds.Contains(p.Delivery.ReceiverID))
+                        .LoadAsync();
+
+                    if(_user.HasPermission(AccessService.PermissionKey.ReadContent))
+                    {
+                        await _context.Contents
+                            .Where(c => clientIds.Contains(c.Package.Delivery.SenderID) || clientIds.Contains(c.Package.Delivery.ReceiverID))
+                            .LoadAsync();
+                    }
+                }
             }
 
             return clients;

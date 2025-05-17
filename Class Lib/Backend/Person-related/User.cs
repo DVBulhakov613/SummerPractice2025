@@ -17,7 +17,7 @@ namespace Class_Lib
         public Role Role { get; set; } // "Administrator", "Manager", "Employee", NOT client;
         public uint? PersonID { get; set; } // Foreign key to Person table
         public Employee Employee { get; set; } // Navigation property
-        [NotMapped] public List<int> CachedPermissions { get; set; } = [];
+        [NotMapped] public List<int> CachedPermissions { get; internal set; } = [];
 
 
         private User() { } // just for EFC
@@ -51,6 +51,16 @@ namespace Class_Lib
         }
 
         public bool HasPermissions(List<AccessService.PermissionKey> permissionKeys)
+        {
+            foreach (var permissionKey in permissionKeys)
+            {
+                if (!HasPermission(permissionKey))
+                    return false;
+            }
+            return true;
+        }
+
+        public bool HasPermissions(List<int> permissionKeys)
         {
             foreach (var permissionKey in permissionKeys)
             {

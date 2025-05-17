@@ -1,5 +1,6 @@
 ﻿using Class_Lib;
 using Class_Lib.Backend.Person_related;
+using OOP_CourseProject.Controls.ViewModel.DisplayModels;
 using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
@@ -25,6 +26,38 @@ namespace OOP_CourseProject.Controls.ViewModel
                     new() { Label = "Email", Value = client.Email }
                 }
             });
+
+            InfoSections.Add(new InfoSection
+            {
+                SectionTitle = "Пов'язані посилки",
+                InfoItems = new List<InfoItem>
+                {
+                    new()
+                    {
+                        Label= "Відправлені",
+                        Value = client.DeliveriesSent == null || client.DeliveriesSent.Count == 0 ? "Відсутні" : "Список...",
+                        OnClick = client.DeliveriesSent == null || client.DeliveriesSent.Count == 0 ? null : () =>
+                        {
+                            var deliveryViewModel = new DeliveryListViewModel(client.DeliveriesSent); // must implement IInfoProviderViewModel
+                            var window = new InfoPopupWindow(deliveryViewModel);
+                            window.ShowDialog();
+                        }
+                    },
+                    new()
+                    {
+                        Label= "Отримані",
+                        Value = client.DeliveriesReceived == null || client.DeliveriesReceived.Count == 0 ? "Відсутні" : "Список...",
+                        OnClick = client.DeliveriesReceived == null || client.DeliveriesReceived.Count == 0 ? null : () =>
+                        {
+                            var deliveryViewModel = new DeliveryListViewModel(client.DeliveriesReceived); // must implement IInfoProviderViewModel
+                            var window = new InfoPopupWindow(deliveryViewModel);
+                            window.ShowDialog();
+                        }
+                    },
+                }
+
+            });
+                
         }
     }
 }

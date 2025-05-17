@@ -66,7 +66,7 @@ namespace Class_Lib.Backend.Package_related
                 throw new AggregateException("Помилки при створенні доставки.", exceptions);
 
             Package.Delivery = this;
-            Price = price;
+            Price = price < 0 ? throw new ArgumentOutOfRangeException(null, "Ціна не може бути нижче нуля.") : price;
             IsPaid = paid;
 
             Log.Add(new PackageEvent(SentFrom, "Посилку створено", package)); // package assigned later
