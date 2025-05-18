@@ -6,7 +6,7 @@ namespace Class_Lib
     {
         public uint ID { get; internal set; } // could have either -1 or 0 for an undefined location, otherwise positive integers
         public Coordinates GeoData { get; internal set; } // location related data (coordinates, address, etc.)
-        public List<Employee>? Staff { get; set; } = new(); // staff assigned to this location
+        public List<Employee>? Staff { get; set; } = []; // staff assigned to this location
         //public List<DeliveryVehicle> Vehicles { get; set; } = new(); // vehicles currently present at this location
 
 
@@ -33,7 +33,7 @@ namespace Class_Lib
 
         public void AddEmployee(Employee employee)
         {
-            if (Staff.Contains(employee))
+            if (Staff != null ? Staff.Contains(employee) : throw new ArgumentException("Локація не має працівників."))
             {
                 throw new ArgumentException("Працівник вже існує в списку.");
             }
@@ -44,7 +44,7 @@ namespace Class_Lib
         }
         public void RemoveEmployee(Employee employee)
         {
-            if (!Staff.Remove(employee))
+            if (Staff != null ? !Staff.Remove(employee) : throw new ArgumentException("Локація не має працівників."))
             {
                 throw new ArgumentException("Вказаного працівника не знайдено в списку.");
             }

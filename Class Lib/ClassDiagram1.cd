@@ -1,256 +1,263 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
-<ClassDiagram MajorVersion="1" MinorVersion="1">
+<ClassDiagram MajorVersion="1" MinorVersion="1" MembersFormat="FullSignature">
   <Class Name="Class_Lib.Backend.Person_related.Methods.ClientMethods" Collapsed="true">
-    <Position X="24.25" Y="1.5" Width="1.5" />
+    <Position X="23.75" Y="1.5" Width="1.5" />
     <TypeIdentifier>
       <HashCode>AAAAAAAIAQAAAAAAAAAAAAEAAAAAAAgAAAAAAAAAAIA=</HashCode>
       <FileName>Backend\Database\Methods\ClientMethods.cs</FileName>
     </TypeIdentifier>
   </Class>
   <Class Name="Class_Lib.Backend.Person_related.Methods.EmployeeMethods" Collapsed="true">
-    <Position X="33" Y="2.5" Width="1.5" />
+    <Position X="32.5" Y="2.5" Width="1.5" />
     <TypeIdentifier>
       <HashCode>AAAAAAAAAQAAAAAAAAAAAAEgAAAAAAgCACAAAAASAIA=</HashCode>
       <FileName>Backend\Database\Methods\EmployeeMethods.cs</FileName>
     </TypeIdentifier>
   </Class>
   <Class Name="Class_Lib.Backend.Person_related.Methods.UserMethods" Collapsed="true">
-    <Position X="31.25" Y="7.5" Width="1.5" />
+    <Position X="30.75" Y="7.5" Width="1.5" />
     <TypeIdentifier>
       <HashCode>AAAAAAAgAAAAQAAAABAAAAEAAAAAAAgAAAAAAAAAAIA=</HashCode>
       <FileName>Backend\Database\Methods\UserMethods.cs</FileName>
     </TypeIdentifier>
   </Class>
   <Class Name="Class_Lib.Backend.Package_related.Methods.ContentMethods" Collapsed="true">
-    <Position X="29.5" Y="1.5" Width="1.5" />
+    <Position X="29" Y="1.5" Width="1.5" />
     <TypeIdentifier>
       <HashCode>AAAAAAAAAQAQAAAAAAAAAAEAAAAAAAgAAAAAAAAAAIA=</HashCode>
       <FileName>Backend\Database\Methods\ContentMethods.cs</FileName>
     </TypeIdentifier>
   </Class>
   <Class Name="Class_Lib.Backend.Package_related.Methods.DeliveryMethods" Collapsed="true">
-    <Position X="26" Y="2.5" Width="1.5" />
+    <Position X="25.5" Y="2.5" Width="1.5" />
     <TypeIdentifier>
       <HashCode>AAAAAAAAAQAAAAAAAEAAAAEAAAAAAAgAAAAAAAAAAIA=</HashCode>
       <FileName>Backend\Database\Methods\DeliveryMethods.cs</FileName>
     </TypeIdentifier>
   </Class>
   <Class Name="Class_Lib.Backend.Package_related.Methods.PackageMethods" Collapsed="true">
-    <Position X="34.75" Y="4.5" Width="1.5" />
+    <Position X="34.25" Y="4.5" Width="1.5" />
     <TypeIdentifier>
       <HashCode>AAAAAAAAAQAAAAAAAAAAAAEAAAAAAAgAAACAAAAAAIA=</HashCode>
       <FileName>Backend\Database\Methods\PackageMethods.cs</FileName>
     </TypeIdentifier>
   </Class>
   <Class Name="Class_Lib.Backend.Location_related.Methods.LocationMethods" Collapsed="true">
-    <Position X="29.5" Y="3.5" Width="1.5" />
+    <Position X="29" Y="3.5" Width="1.5" />
     <TypeIdentifier>
       <HashCode>AAQAAAAAAQAAAAAAABAAAAEAAAAAAAgAAAAAAAAAAIA=</HashCode>
       <FileName>Backend\Database\Methods\LocationMethods.cs</FileName>
     </TypeIdentifier>
   </Class>
   <Class Name="Class_Lib.Backend.Database.Methods.PackageEventMethods" Collapsed="true">
-    <Position X="31.25" Y="4.5" Width="1.5" />
+    <Position X="30.75" Y="4.5" Width="1.5" />
     <TypeIdentifier>
       <HashCode>AAEAAAAAAAAAAAAAAAAAAIgAACAAAAAAAAAAAAAAAAA=</HashCode>
       <FileName>Backend\Database\Methods\PackageEventMethods.cs</FileName>
     </TypeIdentifier>
   </Class>
   <Class Name="Class_Lib.Backend.Database.Methods.RoleMethods" Collapsed="true">
-    <Position X="29.5" Y="4.5" Width="1.5" />
+    <Position X="25.5" Y="6.5" Width="1.5" />
     <TypeIdentifier>
       <HashCode>AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA=</HashCode>
       <FileName>Backend\Database\Methods\RoleMethods.cs</FileName>
     </TypeIdentifier>
   </Class>
   <Class Name="Class_Lib.Database.Repositories.ClientRepository" Collapsed="true">
-    <Position X="21.75" Y="1.75" Width="1.5" />
+    <Position X="21.25" Y="1.75" Width="1.5" />
     <TypeIdentifier>
       <HashCode>AAAAAAAAAQAAAAAAAAAAAACAAAAIABAAAAAAAAIAAAA=</HashCode>
       <FileName>Backend\Database\Repositories\ClientRepository.cs</FileName>
     </TypeIdentifier>
   </Class>
   <Class Name="Class_Lib.Database.Repositories.EmployeeRepository" Collapsed="true">
-    <Position X="3.75" Y="1.75" Width="1.5" />
+    <Position X="1.5" Y="1.75" Width="1.75" />
     <TypeIdentifier>
       <HashCode>BAAgAAAAAQAAAAAgAAAEAAgAAAAAAAAAAAAAAgAAAAA=</HashCode>
       <FileName>Backend\Database\Repositories\EmployeeRepository.cs</FileName>
     </TypeIdentifier>
   </Class>
   <Class Name="Class_Lib.Database.Repositories.PackageRepository" Collapsed="true">
-    <Position X="6" Y="1.75" Width="1.5" />
+    <Position X="4" Y="1.75" Width="1.75" />
     <TypeIdentifier>
       <HashCode>AAAAAAAEBQAAAAAAAAAIAAAAAAAAEAAAAAIgAAAgAAA=</HashCode>
       <FileName>Backend\Database\Repositories\PackageRepository.cs</FileName>
     </TypeIdentifier>
   </Class>
   <Class Name="Class_Lib.Backend.Database.Repositories.ContentRepository" Collapsed="true">
-    <Position X="8.25" Y="1.75" Width="1.5" />
+    <Position X="6.5" Y="1.75" Width="1.75" />
     <TypeIdentifier>
       <HashCode>AAAAAAAAAQAAAABAAAAAABAAAAAAAAAAAAAAAAAAAEA=</HashCode>
       <FileName>Backend\Database\Repositories\ContentRepository.cs</FileName>
     </TypeIdentifier>
   </Class>
   <Class Name="Class_Lib.Backend.Database.Repositories.DeliveryRepository" Collapsed="true">
-    <Position X="10.5" Y="1.75" Width="1.5" />
+    <Position X="9" Y="1.75" Width="1.75" />
     <TypeIdentifier>
       <HashCode>AAAAAAAAAQAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA=</HashCode>
       <FileName>Backend\Database\Repositories\DeliveryRepository.cs</FileName>
     </TypeIdentifier>
   </Class>
   <Class Name="Class_Lib.Backend.Database.Repositories.LocationRepository" Collapsed="true">
-    <Position X="12.75" Y="1.75" Width="1.5" />
+    <Position X="11.5" Y="1.75" Width="1.75" />
     <TypeIdentifier>
       <HashCode>AAAAAABAAQAAAAAAAAABAAAAAAAAAAAAAAAAAAAAAAA=</HashCode>
       <FileName>Backend\Database\Repositories\LocationRepository.cs</FileName>
     </TypeIdentifier>
   </Class>
   <Class Name="Class_Lib.Backend.Database.Repositories.PackageEventRepository" Collapsed="true">
-    <Position X="15" Y="1.75" Width="1.5" />
+    <Position X="14" Y="1.75" Width="2" />
     <TypeIdentifier>
       <HashCode>AAAAAAAAAQAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAEA=</HashCode>
       <FileName>Backend\Database\Repositories\PackageEventRepository.cs</FileName>
     </TypeIdentifier>
   </Class>
   <Class Name="Class_Lib.Backend.Database.Repositories.RoleRepository" Collapsed="true">
-    <Position X="17.25" Y="1.75" Width="1.5" />
+    <Position X="16.75" Y="1.75" Width="1.5" />
     <TypeIdentifier>
       <HashCode>AAAAEAAAAAAABAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA=</HashCode>
       <FileName>Backend\Database\Repositories\RoleRepository.cs</FileName>
     </TypeIdentifier>
   </Class>
   <Class Name="Class_Lib.Backend.Database.Repositories.UserRepository" Collapsed="true">
-    <Position X="19.5" Y="1.75" Width="1.5" />
+    <Position X="19" Y="1.75" Width="1.5" />
     <TypeIdentifier>
       <HashCode>AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAgAAAAAAAAAAAg=</HashCode>
       <FileName>Backend\Database\Repositories\UserRepository.cs</FileName>
     </TypeIdentifier>
   </Class>
   <Class Name="Class_Lib.Repository&lt;T&gt;" Collapsed="true">
-    <Position X="12.75" Y="0.5" Width="1.5" />
+    <Position X="11.25" Y="0.5" Width="1.5" />
     <TypeIdentifier>
       <HashCode>AAEAAAAAAQAABAAAAAAAAAEAAAAAAIgAAAAAAAAAIIA=</HashCode>
       <FileName>Backend\Database\Repositories\Repository.cs</FileName>
     </TypeIdentifier>
   </Class>
   <Class Name="Class_Lib.AppDbContext" Collapsed="true">
-    <Position X="29.5" Y="0.5" Width="1.5" />
+    <Position X="29" Y="0.5" Width="1.5" />
     <TypeIdentifier>
       <HashCode>AAAAACAAAAAAAIgAECIAAAAAHgBAAAAAEAAAAABQAAA=</HashCode>
       <FileName>Backend\Database\AppDbContext.cs</FileName>
     </TypeIdentifier>
   </Class>
-  <Class Name="Class_Lib.BaseLocation">
-    <Position X="12.5" Y="3.5" Width="1.5" />
+  <Class Name="Class_Lib.BaseLocation" Collapsed="true">
+    <Position X="5.5" Y="3.5" Width="1.5" />
     <TypeIdentifier>
       <HashCode>AAAAAEAAEAAAgAAAABCABAAAACAAAAAABAAAAAAAAAA=</HashCode>
       <FileName>Backend\Location-related\Location type\BaseLocation.cs</FileName>
     </TypeIdentifier>
     <Lollipop Position="0.2" />
   </Class>
-  <Class Name="Class_Lib.PostalOffice">
-    <Position X="8.5" Y="3.5" Width="1.5" />
+  <Class Name="Class_Lib.PostalOffice" Collapsed="true">
+    <Position X="5.5" Y="6.25" Width="1.5" />
     <TypeIdentifier>
       <HashCode>AAAAAAAAAAAAAAAAAAAAAAgAAAAAAAEAAAAAAAABAAA=</HashCode>
       <FileName>Backend\Location-related\Location type\PostalOffice.cs</FileName>
     </TypeIdentifier>
     <Lollipop Position="0.2" />
   </Class>
-  <Class Name="Class_Lib.Warehouse">
-    <Position X="10.5" Y="3.5" Width="1.5" />
+  <Class Name="Class_Lib.Warehouse" Collapsed="true">
+    <Position X="5.5" Y="4.75" Width="1.5" />
     <TypeIdentifier>
       <HashCode>ABAAAAAAEAAAgQAAAFAAAAAAAAAAABAIAAAAAEAAACA=</HashCode>
       <FileName>Backend\Location-related\Location type\Warehouse.cs</FileName>
     </TypeIdentifier>
     <Lollipop Position="0.2" />
   </Class>
-  <Class Name="Class_Lib.Coordinates">
-    <Position X="19.75" Y="3.5" Width="1.5" />
+  <Class Name="Class_Lib.Coordinates" Collapsed="true">
+    <Position X="30.75" Y="1.5" Width="1.5" />
     <TypeIdentifier>
       <HashCode>AAAAAAACgEAAAAAAAIAIAAAAAAAAAAACAAAAAEAAEAA=</HashCode>
       <FileName>Backend\Location-related\Coordinates.cs</FileName>
     </TypeIdentifier>
   </Class>
-  <Class Name="Class_Lib.Content">
-    <Position X="18" Y="3.5" Width="1.5" />
+  <Class Name="Class_Lib.Content" Collapsed="true">
+    <Position X="25.5" Y="1.5" Width="1.5" />
     <TypeIdentifier>
       <HashCode>AACAIAAAAAAgABAAAAAQBASAAAAAAAAAAQAAAAAAAAA=</HashCode>
       <FileName>Backend\Package-related\Content.cs</FileName>
     </TypeIdentifier>
   </Class>
-  <Class Name="Class_Lib.PackageEvent">
-    <Position X="16.25" Y="7" Width="1.5" />
+  <Class Name="Class_Lib.PackageEvent" Collapsed="true">
+    <Position X="29" Y="4.5" Width="1.5" />
     <TypeIdentifier>
       <HashCode>AACAAAAACAAgABAAAAISAAACAAAAAAAAAAAAAAAAAAA=</HashCode>
       <FileName>Backend\Package-related\PackageEvent.cs</FileName>
     </TypeIdentifier>
   </Class>
-  <Class Name="Class_Lib.Employee">
-    <Position X="2.25" Y="3.5" Width="1.5" />
+  <Class Name="Class_Lib.Employee" Collapsed="true">
+    <Position X="2.75" Y="4.75" Width="1.5" />
     <TypeIdentifier>
       <HashCode>AAABQAAAAACACAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA=</HashCode>
       <FileName>Backend\Person-related\Employee.cs</FileName>
     </TypeIdentifier>
   </Class>
-  <Class Name="Class_Lib.Person">
-    <Position X="4.25" Y="3.5" Width="1.5" />
+  <Class Name="Class_Lib.Person" Collapsed="true">
+    <Position X="1.75" Y="3.5" Width="1.5" />
     <TypeIdentifier>
       <HashCode>AAAAAEAAACAAgIAAAAAARAAABAAAAAAAAAAAAAAAAAA=</HashCode>
       <FileName>Backend\Person-related\Person.cs</FileName>
     </TypeIdentifier>
     <Lollipop Position="0.2" />
   </Class>
-  <Class Name="Class_Lib.User">
-    <Position X="16.25" Y="3.5" Width="1.5" />
+  <Class Name="Class_Lib.User" Collapsed="true">
+    <Position X="23.75" Y="7.5" Width="1.5" />
     <TypeIdentifier>
       <HashCode>QACAAAIAAAIAAAQAEQAAAAAACAAAAAAAAgAAAAAAAAA=</HashCode>
       <FileName>Backend\Person-related\User.cs</FileName>
     </TypeIdentifier>
   </Class>
   <Class Name="Class_Lib.Backend.Services.AccessService" Collapsed="true">
-    <Position X="24.25" Y="0.5" Width="1.5" />
+    <Position X="23.75" Y="0.5" Width="1.5" />
+    <NestedTypes>
+      <Enum Name="Class_Lib.Backend.Services.AccessService.PermissionKey" Collapsed="true">
+        <TypeIdentifier>
+          <NewMemberFileName>Backend\Database\AccessService.cs</NewMemberFileName>
+        </TypeIdentifier>
+      </Enum>
+    </NestedTypes>
     <TypeIdentifier>
       <HashCode>AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAACAAAgA=</HashCode>
       <FileName>Backend\Database\AccessService.cs</FileName>
     </TypeIdentifier>
   </Class>
-  <Class Name="Class_Lib.Backend.Services.Role">
-    <Position X="18" Y="8.75" Width="1.5" />
+  <Class Name="Class_Lib.Backend.Services.Role" Collapsed="true">
+    <Position X="36" Y="5.5" Width="1.5" />
     <TypeIdentifier>
       <HashCode>AAAAACAAAAAAgAAAAAAAAAQABAAAAAAAAAAAAAAAAAA=</HashCode>
       <FileName>Backend\Database\AccessService.cs</FileName>
     </TypeIdentifier>
   </Class>
-  <Class Name="Class_Lib.Backend.Services.RolePermission">
-    <Position X="14.5" Y="9.5" Width="1.5" />
+  <Class Name="Class_Lib.Backend.Services.RolePermission" Collapsed="true">
+    <Position X="27.25" Y="6.5" Width="1.5" />
     <TypeIdentifier>
       <HashCode>AAAAAAIAAAAAAAAAEAAEAAAAAAAgAAAAAAAAAAAAAAA=</HashCode>
       <FileName>Backend\Database\AccessService.cs</FileName>
     </TypeIdentifier>
   </Class>
-  <Class Name="Class_Lib.Backend.Services.Permission">
-    <Position X="18" Y="7" Width="1.5" />
+  <Class Name="Class_Lib.Backend.Services.Permission" Collapsed="true">
+    <Position X="23.75" Y="5.5" Width="1.5" />
     <TypeIdentifier>
       <HashCode>AAAAAAAAAAAAgAAAAAAAAAQABAAAAAAAAAAAAAAAAAA=</HashCode>
       <FileName>Backend\Database\AccessService.cs</FileName>
     </TypeIdentifier>
   </Class>
-  <Class Name="Class_Lib.Backend.Services.RoleService">
-    <Position X="18" Y="12.25" Width="1.5" />
+  <Class Name="Class_Lib.Backend.Services.RoleService" Collapsed="true">
+    <Position X="29" Y="6.5" Width="1.5" />
     <TypeIdentifier>
       <HashCode>AAAAAAAAAAAABAAAAAAAAAAAAAAAAAAAAAAAAAIAAAA=</HashCode>
       <FileName>Backend\Database\AccessService.cs</FileName>
     </TypeIdentifier>
   </Class>
-  <Class Name="Class_Lib.Backend.Services.PasswordHelper">
-    <Position X="36.5" Y="4.5" Width="1.5" />
+  <Class Name="Class_Lib.Backend.Services.PasswordHelper" Collapsed="true">
+    <Position X="36" Y="4.5" Width="1.5" />
     <TypeIdentifier>
       <HashCode>AAAAAAAAAAAEAAAAAAACAAAAAAAAAAAAAAAAAAAAAAA=</HashCode>
       <FileName>Backend\Services\AuthService.cs</FileName>
     </TypeIdentifier>
   </Class>
   <Class Name="Class_Lib.Backend.Database.AppDbContextDesignTimeFactory" Collapsed="true" BaseTypeListCollapsed="true">
-    <Position X="31.25" Y="0.5" Width="1.5" />
+    <Position X="30.75" Y="0.5" Width="1.5" />
     <TypeIdentifier>
       <HashCode>AAAAAAAAAAAAAAAQAAAAAAAAAAAAAAAAAAAAAAAAAAA=</HashCode>
       <FileName>Backend\Database\AppDbContextDesignTimeFactory.cs</FileName>
@@ -258,343 +265,343 @@
     <Lollipop Position="0.2" Collapsed="true" />
   </Class>
   <Class Name="Class_Lib.Backend.Database.AppDbContextFactory" Collapsed="true">
-    <Position X="33" Y="0.5" Width="1.5" />
+    <Position X="32.5" Y="0.5" Width="1.5" />
     <TypeIdentifier>
       <HashCode>AAAAAAAAAAAAAAAQAAAAAAAAAAAAAAAIAAAAAAAAAAA=</HashCode>
       <FileName>Backend\Database\AppDbContextFactory.cs</FileName>
     </TypeIdentifier>
   </Class>
   <Class Name="Class_Lib.Backend.Database.DependencyInjection" Collapsed="true">
-    <Position X="27.75" Y="2.5" Width="1.5" />
+    <Position X="27.25" Y="2.5" Width="1.5" />
     <TypeIdentifier>
       <HashCode>AAAAAAAAAAAAAAAAAIAAAAAAAAAAAAAAAAAAAAAAAAA=</HashCode>
       <FileName>Backend\Database\DependencyInjection.cs</FileName>
     </TypeIdentifier>
   </Class>
   <Class Name="Class_Lib.Backend.Database.QueryBuilderService&lt;T&gt;" Collapsed="true">
-    <Position X="29.5" Y="5.5" Width="1.5" />
+    <Position X="29" Y="5.5" Width="1.5" />
     <TypeIdentifier>
       <HashCode>QAAAAAAAAAEAQACgAEAAAAAAAECAAIAAAAAAAAAAAAA=</HashCode>
       <FileName>Backend\Database\QueryBuilderService.cs</FileName>
     </TypeIdentifier>
   </Class>
   <Class Name="Class_Lib.Backend.Database.QueryCondition" Collapsed="true">
-    <Position X="31.25" Y="5.5" Width="1.5" />
+    <Position X="30.75" Y="5.5" Width="1.5" />
     <TypeIdentifier>
       <HashCode>AAAAAAAAAAAAAAAAABAAAAAAAAAAAAAAACAgAAAIoAA=</HashCode>
       <FileName>Backend\Database\QueryBuilderService.cs</FileName>
     </TypeIdentifier>
   </Class>
-  <Class Name="Class_Lib.Backend.Package_related.Delivery">
-    <Position X="14.5" Y="3.5" Width="1.5" />
+  <Class Name="Class_Lib.Backend.Package_related.Delivery" Collapsed="true">
+    <Position X="34.25" Y="1.5" Width="1.5" />
     <TypeIdentifier>
       <HashCode>AAiAAEAAAQBBgBAAAAASBAAAABgEAQAQBQAECAAIAAQ=</HashCode>
       <FileName>Backend\Package-related\Delivery.cs</FileName>
     </TypeIdentifier>
   </Class>
-  <Class Name="Class_Lib.Backend.Package_related.Package">
-    <Position X="19.75" Y="7" Width="1.5" />
+  <Class Name="Class_Lib.Backend.Package_related.Package" Collapsed="true">
+    <Position X="36" Y="3.5" Width="1.5" />
     <TypeIdentifier>
       <HashCode>AAAAACAABAAAgAQARGAABEJAACAAIAAgAQIAAAAAAAg=</HashCode>
       <FileName>Backend\Package-related\Package.cs</FileName>
     </TypeIdentifier>
   </Class>
-  <Class Name="Class_Lib.Backend.Person_related.Client">
-    <Position X="6.25" Y="3.5" Width="1.5" />
+  <Class Name="Class_Lib.Backend.Person_related.Client" Collapsed="true">
+    <Position X="0.5" Y="4.75" Width="1.5" />
     <TypeIdentifier>
       <HashCode>AAAAAAIAAAAAAAAAAAAAAAgAAAAAAAAAAAAAAAAAAAA=</HashCode>
       <FileName>Backend\Person-related\Client.cs</FileName>
     </TypeIdentifier>
   </Class>
   <Class Name="Class_Lib.Backend.Serialization.DTO.ClientDTO" Collapsed="true">
-    <Position X="36.5" Y="0.5" Width="1.5" />
+    <Position X="36" Y="0.5" Width="1.5" />
     <TypeIdentifier>
       <HashCode>AAAAAEAAACAAgAAAAAAAQAAABAAAAAAAAAAAAAAAAAA=</HashCode>
       <FileName>Backend\Serialization\DTO\ClientDTO.cs</FileName>
     </TypeIdentifier>
   </Class>
   <Class Name="Class_Lib.Backend.Serialization.DTO.ContentDTO" Collapsed="true">
-    <Position X="27.75" Y="1.5" Width="1.5" />
+    <Position X="27.25" Y="1.5" Width="1.5" />
     <TypeIdentifier>
       <HashCode>AACAAAAAAAAgAAAAAAAAAASAAAAAAAAAAQAAAAAAAAA=</HashCode>
       <FileName>Backend\Serialization\DTO\ContentDTO.cs</FileName>
     </TypeIdentifier>
   </Class>
   <Class Name="Class_Lib.Backend.Serialization.DTO.CoordinatesDTO" Collapsed="true">
-    <Position X="33" Y="1.5" Width="1.5" />
+    <Position X="32.5" Y="1.5" Width="1.5" />
     <TypeIdentifier>
       <HashCode>AAAAAAAAgEAAAAAAAAAIAAAAAAAAAAACAAAAAAAAAAA=</HashCode>
       <FileName>Backend\Serialization\DTO\CoordinatesDTO.cs</FileName>
     </TypeIdentifier>
   </Class>
   <Class Name="Class_Lib.Backend.Serialization.DTO.DeliveryDTO" Collapsed="true">
-    <Position X="24.25" Y="2.5" Width="1.5" />
+    <Position X="23.75" Y="2.5" Width="1.5" />
     <TypeIdentifier>
       <HashCode>AAAAAAAAAQABgAAAAAASAAAAAAAAAQAAAQAACAAAAAQ=</HashCode>
       <FileName>Backend\Serialization\DTO\DeliveryDTO.cs</FileName>
     </TypeIdentifier>
   </Class>
   <Class Name="Class_Lib.Backend.Serialization.DTO.DtoMapper" Collapsed="true">
-    <Position X="29.5" Y="2.5" Width="1.5" />
+    <Position X="29" Y="2.5" Width="1.5" />
     <TypeIdentifier>
       <HashCode>AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAABAAEAAAAAAA=</HashCode>
       <FileName>Backend\Serialization\DTO\DtoMapper.cs</FileName>
     </TypeIdentifier>
   </Class>
   <Class Name="Class_Lib.Backend.Serialization.DTO.EmployeeDTO" Collapsed="true">
-    <Position X="31.25" Y="2.5" Width="1.5" />
+    <Position X="30.75" Y="2.5" Width="1.5" />
     <TypeIdentifier>
       <HashCode>AAAAQEAAACCAgAAAAAAAQAAABAAAAAAAAAAAAAAAAAA=</HashCode>
       <FileName>Backend\Serialization\DTO\EmployeeDTO.cs</FileName>
     </TypeIdentifier>
   </Class>
   <Class Name="Class_Lib.Backend.Serialization.DTO.LocationDTO" Collapsed="true">
-    <Position X="27.75" Y="3.5" Width="1.5" />
+    <Position X="27.25" Y="3.5" Width="1.5" />
     <TypeIdentifier>
       <HashCode>AAAAAAAAEAAAgQAAAAAAAAgAICAAAAEABAAAAAAAAAA=</HashCode>
       <FileName>Backend\Serialization\DTO\LocationDTO.cs</FileName>
     </TypeIdentifier>
   </Class>
   <Class Name="Class_Lib.Backend.Serialization.DTO.PackageDTO" Collapsed="true">
-    <Position X="27.75" Y="4.5" Width="1.5" />
+    <Position X="27.25" Y="4.5" Width="1.5" />
     <TypeIdentifier>
       <HashCode>AAIAACAABAAAgAAAACAAAEBAACAAIAAAAQAAAAAAAAA=</HashCode>
       <FileName>Backend\Serialization\DTO\PackageDTO.cs</FileName>
     </TypeIdentifier>
   </Class>
   <Class Name="Class_Lib.Backend.Serialization.DTO.RoleDTO" Collapsed="true">
-    <Position X="24.25" Y="6.5" Width="1.5" />
+    <Position X="23.75" Y="6.5" Width="1.5" />
     <TypeIdentifier>
       <HashCode>AAAAAAAAAAAAgAAAAAAAAAQAAAAAAAAAEAAAAAAAAAA=</HashCode>
       <FileName>Backend\Serialization\DTO\RoleDTO.cs</FileName>
     </TypeIdentifier>
   </Class>
   <Class Name="Class_Lib.Backend.Serialization.DTO.UserDTO" Collapsed="true">
-    <Position X="29.5" Y="7.5" Width="1.5" />
+    <Position X="29" Y="7.5" Width="1.5" />
     <TypeIdentifier>
       <HashCode>AAAAAAAAAAAAgAAAEQAAAAAACAAAAAAAAAAAAAAAAAA=</HashCode>
       <FileName>Backend\Serialization\DTO\UserDTO.cs</FileName>
     </TypeIdentifier>
   </Class>
   <Class Name="Class_Lib.Backend.Serialization.JsonSerialization" Collapsed="true">
-    <Position X="26" Y="3.5" Width="1.5" />
+    <Position X="25.5" Y="3.5" Width="1.5" />
     <TypeIdentifier>
       <HashCode>AAAAAAAgAAAAAAAAAAAAAAAAACBAAAAAAAAAAAAAEAA=</HashCode>
       <FileName>Backend\Serialization\JsonSerialization.cs</FileName>
     </TypeIdentifier>
   </Class>
-  <Class Name="Class_Lib.Services.RouteService">
-    <Position X="19.75" Y="12.25" Width="1.5" />
+  <Class Name="Class_Lib.Services.RouteService" Collapsed="true">
+    <Position X="32.5" Y="6.5" Width="1.5" />
     <TypeIdentifier>
       <HashCode>AAAAAAAAAAACAAAAAAAAgAAAAAAAAAAAAAAAAACAAAQ=</HashCode>
       <FileName>Backend\Services\RouteService\RouteService.cs</FileName>
     </TypeIdentifier>
   </Class>
-  <Class Name="Class_Lib.Services.RouteInfo">
-    <Position X="16.25" Y="10.25" Width="1.5" />
+  <Class Name="Class_Lib.Services.RouteInfo" Collapsed="true">
+    <Position X="30.75" Y="6.5" Width="1.5" />
     <TypeIdentifier>
       <HashCode>AQAABAAAAAACAAAgAAAAAAAAAAAAAAAAAAAAAAAAAAA=</HashCode>
       <FileName>Backend\Services\RouteService\RouteService.cs</FileName>
     </TypeIdentifier>
   </Class>
   <Class Name="Class_Lib.Services.AlertService" Collapsed="true">
-    <Position X="27.75" Y="0.5" Width="1.5" />
+    <Position X="27.25" Y="0.5" Width="1.5" />
     <TypeIdentifier>
       <HashCode>AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA=</HashCode>
       <FileName>Backend\Services\AlertService.cs</FileName>
     </TypeIdentifier>
   </Class>
   <Class Name="Class_Lib.Migrations.SQLServerMigration" Collapsed="true">
-    <Position X="34.75" Y="6.5" Width="1.5" />
+    <Position X="34.25" Y="6.5" Width="1.5" />
     <TypeIdentifier>
       <HashCode>AAAAAAIAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAEAAAAI=</HashCode>
       <FileName>Migrations\20250425200851_SQLServer-Migration.cs</FileName>
     </TypeIdentifier>
   </Class>
   <Class Name="Class_Lib.Migrations.UserAuth" Collapsed="true">
-    <Position X="26" Y="7.5" Width="1.5" />
+    <Position X="25.5" Y="7.5" Width="1.5" />
     <TypeIdentifier>
       <HashCode>AAAAAAIAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAEAAAAI=</HashCode>
       <FileName>Migrations\20250427230605_UserAuth.cs</FileName>
     </TypeIdentifier>
   </Class>
   <Class Name="Class_Lib.Migrations.UserAuth2" Collapsed="true">
-    <Position X="27.75" Y="7.5" Width="1.5" />
+    <Position X="27.25" Y="7.5" Width="1.5" />
     <TypeIdentifier>
       <HashCode>AAAAAAIAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAEAAAAI=</HashCode>
       <FileName>Migrations\20250428105114_UserAuth2.cs</FileName>
     </TypeIdentifier>
   </Class>
   <Class Name="Class_Lib.Migrations.TPTMigration" Collapsed="true">
-    <Position X="36.5" Y="6.5" Width="1.5" />
+    <Position X="36" Y="6.5" Width="1.5" />
     <TypeIdentifier>
       <HashCode>AAAAAAIAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAEAAAAI=</HashCode>
       <FileName>Migrations\20250428145108_TPT-Migration.cs</FileName>
     </TypeIdentifier>
   </Class>
   <Class Name="Class_Lib.Migrations.Manager_ManagedLocsFix" Collapsed="true">
-    <Position X="31.25" Y="3.5" Width="1.5" />
+    <Position X="30.75" Y="3.5" Width="1.5" />
     <TypeIdentifier>
       <HashCode>AAAAAAIAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAEAAAAI=</HashCode>
       <FileName>Migrations\20250428150451_Manager_ManagedLocs-Fix.cs</FileName>
     </TypeIdentifier>
   </Class>
   <Class Name="Class_Lib.Migrations.FlattenedEmployee" Collapsed="true">
-    <Position X="24.25" Y="3.5" Width="1.5" />
+    <Position X="23.75" Y="3.5" Width="1.5" />
     <TypeIdentifier>
       <HashCode>AAAAAAIAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAEAAAAI=</HashCode>
       <FileName>Migrations\20250430063815_FlattenedEmployee.cs</FileName>
     </TypeIdentifier>
   </Class>
   <Class Name="Class_Lib.Migrations.MiscChanges" Collapsed="true">
-    <Position X="33" Y="3.5" Width="1.5" />
+    <Position X="32.5" Y="3.5" Width="1.5" />
     <TypeIdentifier>
       <HashCode>AAAAAAIAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAEAAAAI=</HashCode>
       <FileName>Migrations\20250505182258_MiscChanges.cs</FileName>
     </TypeIdentifier>
   </Class>
   <Class Name="Class_Lib.Migrations.MiscChanges_1" Collapsed="true">
-    <Position X="34.75" Y="3.5" Width="1.5" />
+    <Position X="34.25" Y="3.5" Width="1.5" />
     <TypeIdentifier>
       <HashCode>AAAAAAIAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAEAAAAI=</HashCode>
       <FileName>Migrations\20250505192613_MiscChanges_1.cs</FileName>
     </TypeIdentifier>
   </Class>
   <Class Name="Class_Lib.Migrations.AddingRoleTables" Collapsed="true">
-    <Position X="26" Y="0.5" Width="1.5" />
+    <Position X="25.5" Y="0.5" Width="1.5" />
     <TypeIdentifier>
       <HashCode>AAAAAAIAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAEAAAAI=</HashCode>
       <FileName>Migrations\20250505200724_AddingRoleTables.cs</FileName>
     </TypeIdentifier>
   </Class>
   <Class Name="Class_Lib.Migrations.EmployeePermissionsNowCached" Collapsed="true">
-    <Position X="34.75" Y="2.5" Width="1.5" />
+    <Position X="34.25" Y="2.5" Width="1.5" />
     <TypeIdentifier>
       <HashCode>AAAAAAIAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAEAAAAI=</HashCode>
       <FileName>Migrations\20250506091236_EmployeePermissionsNowCached.cs</FileName>
     </TypeIdentifier>
   </Class>
   <Class Name="Class_Lib.Migrations.PackageIdDuplicate_Fix" Collapsed="true">
-    <Position X="33" Y="4.5" Width="1.5" />
+    <Position X="32.5" Y="4.5" Width="1.5" />
     <TypeIdentifier>
       <HashCode>AAAAAAIAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAEAAAAI=</HashCode>
       <FileName>Migrations\20250506212728_PackageIdDuplicate_Fix.cs</FileName>
     </TypeIdentifier>
   </Class>
   <Class Name="Class_Lib.Migrations.PackageChanged" Collapsed="true">
-    <Position X="24.25" Y="4.5" Width="1.5" />
+    <Position X="23.75" Y="4.5" Width="1.5" />
     <TypeIdentifier>
       <HashCode>AAAAAAIAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAEAAAAI=</HashCode>
       <FileName>Migrations\20250506215513_PackageChanged.cs</FileName>
     </TypeIdentifier>
   </Class>
   <Class Name="Class_Lib.Migrations.PackageDeliveryDecoupling" Collapsed="true">
-    <Position X="26" Y="4.5" Width="1.5" />
+    <Position X="25.5" Y="4.5" Width="1.5" />
     <TypeIdentifier>
       <HashCode>AAAAAAIAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAEAAAAI=</HashCode>
       <FileName>Migrations\20250508223704_PackageDeliveryDecoupling.cs</FileName>
     </TypeIdentifier>
   </Class>
   <Class Name="Class_Lib.Migrations.RemovingUnnecessaryFields" Collapsed="true">
-    <Position X="34.75" Y="5.5" Width="1.5" />
+    <Position X="34.25" Y="5.5" Width="1.5" />
     <TypeIdentifier>
       <HashCode>AAAAAAIAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAEAAAAI=</HashCode>
       <FileName>Migrations\20250508234154_RemovingUnnecessaryFields.cs</FileName>
     </TypeIdentifier>
   </Class>
   <Class Name="Class_Lib.Migrations.RBAC_DeliveryAccess" Collapsed="true">
-    <Position X="33" Y="5.5" Width="1.5" />
+    <Position X="32.5" Y="5.5" Width="1.5" />
     <TypeIdentifier>
       <HashCode>AAAAAAIAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAEAAAAI=</HashCode>
       <FileName>Migrations\20250509102109_RBAC_DeliveryAccess.cs</FileName>
     </TypeIdentifier>
   </Class>
   <Class Name="Class_Lib.Migrations.Delivery_FinancialTracking" Collapsed="true">
-    <Position X="36.5" Y="1.5" Width="1.5" />
+    <Position X="36" Y="1.5" Width="1.5" />
     <TypeIdentifier>
       <HashCode>AAAAAAIAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAEAAAAI=</HashCode>
       <FileName>Migrations\20250509141807_Delivery_FinancialTracking.cs</FileName>
     </TypeIdentifier>
   </Class>
   <Class Name="Class_Lib.Migrations.EmployeeRbacDecoupling" Collapsed="true">
-    <Position X="36.5" Y="2.5" Width="1.5" />
+    <Position X="36" Y="2.5" Width="1.5" />
     <TypeIdentifier>
       <HashCode>AAAAAAIAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAEAAAAI=</HashCode>
       <FileName>Migrations\20250511182448_EmployeeRbacDecoupling.cs</FileName>
     </TypeIdentifier>
   </Class>
   <Class Name="Class_Lib.Migrations.PriceChangedToDouble" Collapsed="true">
-    <Position X="27.75" Y="5.5" Width="1.5" />
+    <Position X="27.25" Y="5.5" Width="1.5" />
     <TypeIdentifier>
       <HashCode>AAAAAAIAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAEAAAAI=</HashCode>
       <FileName>Migrations\20250515235155_PriceChangedToDouble.cs</FileName>
     </TypeIdentifier>
   </Class>
   <Class Name="Class_Lib.Migrations.PersonRolesSeparated" Collapsed="true">
-    <Position X="26" Y="5.5" Width="1.5" />
+    <Position X="25.5" Y="5.5" Width="1.5" />
     <TypeIdentifier>
       <HashCode>AAAAAAIAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAEAAAAI=</HashCode>
       <FileName>Migrations\20250516202449_PersonRolesSeparated.cs</FileName>
     </TypeIdentifier>
   </Class>
   <Class Name="Class_Lib.Migrations.AppDbContextModelSnapshot" Collapsed="true">
-    <Position X="34.75" Y="0.5" Width="1.5" />
+    <Position X="34.25" Y="0.5" Width="1.5" />
     <TypeIdentifier>
       <HashCode>AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAABAAA=</HashCode>
       <FileName>Migrations\AppDbContextModelSnapshot.cs</FileName>
     </TypeIdentifier>
   </Class>
   <Interface Name="Class_Lib.ICustomerFacing" Collapsed="true">
-    <Position X="24.25" Y="8.75" Width="1.5" />
+    <Position X="23.75" Y="8.75" Width="1.5" />
     <TypeIdentifier>
       <HashCode>AAAAAAAAAAAAAAAAAAAAAAgAAAAAAAEAAAAAAAAAAAA=</HashCode>
       <FileName>Backend\Location-related\Interfaces\ICustomerFacing.cs</FileName>
     </TypeIdentifier>
   </Interface>
   <Interface Name="Class_Lib.IStorage" Collapsed="true">
-    <Position X="31.25" Y="8.75" Width="1.5" />
+    <Position X="30.75" Y="8.75" Width="1.5" />
     <TypeIdentifier>
       <HashCode>AAAAAAAAAAAAgQAAABAAAAAAAAAAABAIAAAAAAAAACA=</HashCode>
       <FileName>Backend\Location-related\Interfaces\IStorage.cs</FileName>
     </TypeIdentifier>
   </Interface>
   <Interface Name="Class_Lib.IHasIdentification" Collapsed="true">
-    <Position X="27.75" Y="8.75" Width="1.5" />
+    <Position X="27.25" Y="8.75" Width="1.5" />
     <TypeIdentifier>
       <HashCode>AAAAAAAAAAAAgAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA=</HashCode>
       <FileName>Backend\IHasIdentification.cs</FileName>
     </TypeIdentifier>
   </Interface>
   <Interface Name="Class_Lib.Location_related.Interfaces.IDeliveryHandler" Collapsed="true">
-    <Position X="26" Y="8.75" Width="1.5" />
+    <Position X="25.5" Y="8.75" Width="1.5" />
     <TypeIdentifier>
       <HashCode>ABAAAAAAAAAAAAAAAFAAAAAAAAAAAAAAAAAAAEAAAAA=</HashCode>
       <FileName>Backend\Location-related\Interfaces\IDeliveryHandler.cs</FileName>
     </TypeIdentifier>
   </Interface>
   <Interface Name="Class_Lib.Location_related.Interfaces.IPackageHandler" Collapsed="true">
-    <Position X="29.5" Y="8.75" Width="1.5" />
+    <Position X="29" Y="8.75" Width="1.5" />
     <TypeIdentifier>
       <HashCode>AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAABAAA=</HashCode>
       <FileName>Backend\Location-related\Interfaces\IPackageHandler.cs</FileName>
     </TypeIdentifier>
   </Interface>
-  <Enum Name="Class_Lib.ContentType">
-    <Position X="14.5" Y="11.5" Width="1.5" />
+  <Enum Name="Class_Lib.ContentType" Collapsed="true">
+    <Position X="23.75" Y="9.75" Width="1.5" />
     <TypeIdentifier>
       <HashCode>AAAQAACAEAAAQMAAAAAAAAAAiAAAAAAGQAACAAAACAA=</HashCode>
       <FileName>Backend\Package-related\enums\ContentType.cs</FileName>
     </TypeIdentifier>
   </Enum>
-  <Enum Name="Class_Lib.PackageType">
-    <Position X="18" Y="10.75" Width="1.5" />
+  <Enum Name="Class_Lib.PackageType" Collapsed="true">
+    <Position X="27.25" Y="9.75" Width="1.5" />
     <TypeIdentifier>
       <HashCode>AAAAAAAAAAAAAAAAAAAAACAAAIAEAAAAAAAAAAAAAAA=</HashCode>
       <FileName>Backend\Package-related\enums\PackageType.cs</FileName>
     </TypeIdentifier>
   </Enum>
-  <Enum Name="Class_Lib.Backend.Package_related.enums.PackageStatus">
-    <Position X="16.25" Y="12.25" Width="1.5" />
+  <Enum Name="Class_Lib.Backend.Package_related.enums.PackageStatus" Collapsed="true">
+    <Position X="25.5" Y="9.75" Width="1.5" />
     <TypeIdentifier>
       <HashCode>AAEAAAAAEACAACAAAAAAAAAAAAAAgAAAgAAAAAAAAAA=</HashCode>
       <FileName>Backend\Package-related\enums\PackageStatus.cs</FileName>
