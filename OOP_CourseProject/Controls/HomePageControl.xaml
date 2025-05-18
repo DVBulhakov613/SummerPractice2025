@@ -6,6 +6,7 @@
              xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
              Height="Auto" Width="Auto"
+             d:DesignHeight="1000" d:DesignWidth="1700"
              Background="{StaticResource PrimaryBackgroundBrush}">
 
     <Grid>
