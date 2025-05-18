@@ -12,7 +12,10 @@
         <StackPanel VerticalAlignment="Center" HorizontalAlignment="Center">
             <TextBox x:Name="UsernameTextBox" Width="200" Margin="5"/>
             <PasswordBox x:Name="PasswordBox" Width="200" Margin="5"/>
-            <Button Content="Login" Width="200" Margin="5" Click="LoginButton_Click" Background="Gray" Visibility="Visible"/>
+            <Border CornerRadius="5" Background="{StaticResource AccentBrush}" Margin="5">
+                <Button Content="Авторизуватись" Width="200" Margin="0" Click="LoginButton_Click" Visibility="Visible"/>
+            </Border>
+            
             <Button Content="[DEBUG] SysAdmin" Width="200" Click="DebugButton_Click" Background="Gray" Visibility="Visible"/> <!-- REMOVE LATER -->
         </StackPanel>
     </Grid>

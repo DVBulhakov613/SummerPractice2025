@@ -25,10 +25,9 @@
             <ListView.ItemTemplate>
                 <DataTemplate>
                     <StackPanel>
-                        <TextBlock Text="{Binding GeoData.Region}" FontWeight="Bold"/>
-                        <TextBlock Text="{Binding GeoData.Address}"/>
                         <TextBlock Text="{Binding ID}"/>
-                        
+                        <TextBlock Text="{Binding GeoData.Address}"/>
+                        <TextBlock Text="{Binding GeoData.Region}" FontWeight="Bold"/>
                     </StackPanel>
                 </DataTemplate>
             </ListView.ItemTemplate>

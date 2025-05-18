@@ -90,8 +90,8 @@ namespace OOP_CourseProject
 
             services.AddSingleton<MainWindow>();
             services.AddTransient<HomePageControl>();
-            services.AddTransient<PackageControl>();
-            services.AddTransient<EmployeeControl>();
+            //services.AddTransient<PackageControl>();
+            //services.AddTransient<EmployeeControl>();
             services.AddTransient<QueryBuilder>();
             services.AddTransient<SendPackage>();
             services.AddTransient<PackageConfigurations>();// DEBUG LINE

@@ -31,7 +31,7 @@ namespace OOP_CourseProject
 
         private void EmployeeButton_Click(object sender, RoutedEventArgs e)
         {
-            MainContent.Content = App.AppHost.Services.GetRequiredService<EmployeeControl>();
+            //MainContent.Content = App.AppHost.Services.GetRequiredService<EmployeeControl>();
         }
 
         private void ReceivePackageButton_Click(object sender, RoutedEventArgs e)
