@@ -39,11 +39,6 @@ namespace OOP_CourseProject
             // MainContent.Content = App.AppHost.Services.GetRequiredService<ReceivePackageControl>();
         }
 
-        private void Test_Click(object sender, RoutedEventArgs e)
-        {
-            MessageBox.Show("Test button clicked!");
-        }
-
         private void ClientsButton_Click(object sender, RoutedEventArgs e)
         {
 

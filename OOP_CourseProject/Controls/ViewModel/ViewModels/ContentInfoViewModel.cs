@@ -120,6 +120,8 @@ namespace OOP_CourseProject.Controls.ViewModel.ViewModels
             => PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(name));
     }
 
+    // used to represent content in the list without creating actual content
+    // (as that would require a package to create it in the first place)
     public class ContentItem
     {
         public string Name { get; set; }

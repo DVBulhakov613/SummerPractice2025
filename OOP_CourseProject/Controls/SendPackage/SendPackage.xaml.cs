@@ -156,7 +156,7 @@ namespace OOP_CourseProject.Controls
 
         private void ClearButton_Click(object sender, RoutedEventArgs e)
         {
-
+            // to-do: clear all fields, might need a rewrite on how a lot of them are bound
         }
     }
 }
