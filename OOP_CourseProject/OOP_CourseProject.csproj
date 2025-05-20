@@ -24,6 +24,8 @@
     <None Remove="Assets\ButtonIcons\Variant=Cancel.png" />
     <None Remove="Assets\ButtonIcons\Variant=Copy.png" />
     <None Remove="Assets\ButtonIcons\Variant=Download.png" />
+    <None Remove="Assets\ButtonIcons\Variant=Edit.png" />
+    <None Remove="Assets\ButtonIcons\Variant=Edit.png.png" />
     <None Remove="Assets\ButtonIcons\Variant=Encyclopedia.png" />
     <None Remove="Assets\ButtonIcons\Variant=Information.png" />
     <None Remove="Assets\ButtonIcons\Variant=Log.png" />
@@ -96,6 +98,9 @@
       <CopyToOutputDirectory>Never</CopyToOutputDirectory>
     </Resource>
     <Resource Include="Assets\ButtonIcons\Variant=Download.png">
+      <CopyToOutputDirectory>Never</CopyToOutputDirectory>
+    </Resource>
+    <Resource Include="Assets\ButtonIcons\Variant=Edit.png">
       <CopyToOutputDirectory>Never</CopyToOutputDirectory>
     </Resource>
     <Resource Include="Assets\ButtonIcons\Variant=Encyclopedia.png">

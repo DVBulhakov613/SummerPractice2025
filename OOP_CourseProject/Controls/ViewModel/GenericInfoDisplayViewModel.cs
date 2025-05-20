@@ -10,7 +10,7 @@ namespace OOP_CourseProject.Controls.ViewModel
 {
     public class GenericInfoDisplayViewModel : InfoDisplayViewModelBase
     {
-        public ObservableCollection<object> Items { get; } = new();
+        public ObservableCollection<object> Items { get; } = [];
 
         private object _selectedItem;
         public object SelectedItem

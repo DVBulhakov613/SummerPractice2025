@@ -4,6 +4,7 @@ using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
 using OOP_CourseProject.Controls;
+using OOP_CourseProject.Controls.EmployeeControl;
 using OOP_CourseProject.Controls.SendPackageControls; // REMOVE LATER
 using System.Windows;
 
@@ -90,15 +91,15 @@ namespace OOP_CourseProject
 
             services.AddSingleton<MainWindow>();
             services.AddTransient<HomePageControl>();
-            //services.AddTransient<PackageControl>();
-            //services.AddTransient<EmployeeControl>();
-            services.AddTransient<QueryBuilder>();
             services.AddTransient<SendPackage>();
-            services.AddTransient<PackageConfigurations>();// DEBUG LINE
+            services.AddTransient<ReceivePackage>();
+            services.AddTransient<EmployeesControl>();
+            services.AddTransient<ClientsControl>();
+            services.AddTransient<LocationsControl>();
+            services.AddTransient<QueryBuilder>();
+            //services.AddTransient<PackageConfigurations>();// DEBUG LINE
             //services.AddTransient<ReceivePackageControl>();
         }
-
-
 
         protected override async void OnExit(ExitEventArgs e)
         {
@@ -106,14 +107,6 @@ namespace OOP_CourseProject
             AppHost.Dispose();
             base.OnExit(e);
         }
-
-        //protected override void OnStartup(StartupEventArgs e)
-        //{
-        //    base.OnStartup(e);
-        //    // currently on localhost because none of this is real :yum:
-        //    var connectionString = "Server=localhost\\SQLEXPRESS;Database=PackageDb;Trusted_Connection=True;MultipleActiveResultSets=true;TrustServerCertificate=True";
-        //    DbContextFactory = new AppDbContextFactory(connectionString);
-        //}
     }
 
 }

@@ -1,0 +1,45 @@
+﻿<Window x:Class="OOP_CourseProject.Controls.ClientControl.ClientControls.ClientDialog"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:local="clr-namespace:OOP_CourseProject.Controls.ClientControl.ClientControls"
+        xmlns:helpers="clr-namespace:OOP_CourseProject.Controls.Helpers"
+        mc:Ignorable="d"
+        Title="ClientDialog" Height="250" Width="500">
+    <StackPanel Margin="20">
+        <TextBox x:Name="FirstNameBox" 
+                 Style="{StaticResource PlaceholderTextBox}"
+                 FontSize="16"
+                 Height="30"
+                 helpers:TextBoxHelper.Placeholder="Ім'я"
+                 Background="{StaticResource SecondaryBackgroundBrush}"
+                 VerticalContentAlignment="Center"/>
+        <TextBox x:Name="SurnameBox" Style="{StaticResource PlaceholderTextBox}"
+                FontSize="16"
+                Height="30"
+                helpers:TextBoxHelper.Placeholder="Фамілія"
+                Background="{StaticResource SecondaryBackgroundBrush}"
+                VerticalContentAlignment="Center"/>
+        <TextBox x:Name="PhoneBox" Style="{StaticResource PlaceholderTextBox}"
+                FontSize="16"
+                Height="30"
+                helpers:TextBoxHelper.Placeholder="Номер телефону"
+                Background="{StaticResource SecondaryBackgroundBrush}"
+                VerticalContentAlignment="Center"/>
+        <TextBox x:Name="EmailBox" Style="{StaticResource PlaceholderTextBox}"
+                FontSize="16"
+                Height="30"
+                helpers:TextBoxHelper.Placeholder="Електронна пошта"
+                Background="{StaticResource SecondaryBackgroundBrush}"
+                VerticalContentAlignment="Center"/>
+        <StackPanel Orientation="Horizontal" HorizontalAlignment="Right" VerticalAlignment="Bottom" Margin="5">
+            <Border Background="{StaticResource AccentBrush}" CornerRadius="8" Margin="5" >
+                <Button Content="OK" Width="80" Click="OkButton_Click" Visibility="Visible"/>
+            </Border>
+            <Border Background="{StaticResource AccentBrush}" CornerRadius="8" Margin="5" >
+                <Button Content="Скасувати" Width="80" Click="CancelButton_Click" Visibility="Visible"/>
+            </Border>
+        </StackPanel>
+    </StackPanel>
+</Window>

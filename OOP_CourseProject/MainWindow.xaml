@@ -18,12 +18,12 @@
         <StackPanel Background="{StaticResource SecondaryBackgroundBrush}" Grid.Column="0">
             <!-- profile and navigation -->
             <Ellipse Width="100" Height="100" Fill="Red" Margin="20"/>
-            <Button Content="Домашня сторінка" Click="HomeButton_Click" Foreground="Black" Visibility="Visible" HorizontalContentAlignment="Left"/>
-            <Button Content="Відправити посилку" Click="SendPackageButton_Click" Foreground="Black" HorizontalContentAlignment="Left" Visibility="{Binding Converter={StaticResource PermissionConverter}, ConverterParameter=11}"/>
-            <Button Content="Отримати посилку" Click="ReceivePackageButton_Click" Foreground="Black" HorizontalContentAlignment="Left" Visibility="{Binding Converter={StaticResource PermissionConverter}, ConverterParameter=10}"/>
-            <Button Content="Клієнти" Click="ClientsButton_Click" Foreground="Black" HorizontalContentAlignment="Left" Visibility="{Binding Converter={StaticResource PermissionConverter}, ConverterParameter=150}"/>
-            <Button Content="Працівники" Click="EmployeesButton_Click" Foreground="Black" HorizontalContentAlignment="Left" Visibility="{Binding Converter={StaticResource PermissionConverter}, ConverterParameter=41}"/>
-            <Button Content="Локації" Click="LocationsButton_Click" Foreground="Black" HorizontalContentAlignment="Left" Visibility="{Binding Converter={StaticResource PermissionConverter}, ConverterParameter=51}"/>
+            <Button Content="Домашня сторінка" FontSize="16" Click="HomeButton_Click" Foreground="Black" Visibility="Visible" HorizontalContentAlignment="Left"/>
+            <Button Content="Відправити посилку" FontSize="16" Click="SendPackageButton_Click" Foreground="Black" HorizontalContentAlignment="Left" Visibility="{Binding Converter={StaticResource PermissionConverter}, ConverterParameter=11}"/>
+            <Button Content="Отримати посилку" FontSize="16" Click="ReceivePackageButton_Click" Foreground="Black" HorizontalContentAlignment="Left" Visibility="{Binding Converter={StaticResource PermissionConverter}, ConverterParameter=10}"/>
+            <Button Content="Клієнти" FontSize="16" Click="ClientsButton_Click" Foreground="Black" HorizontalContentAlignment="Left" Visibility="{Binding Converter={StaticResource PermissionConverter}, ConverterParameter=150}"/>
+            <Button Content="Працівники" FontSize="16" Click="EmployeesButton_Click" Foreground="Black" HorizontalContentAlignment="Left" Visibility="{Binding Converter={StaticResource PermissionConverter}, ConverterParameter=41}"/>
+            <Button Content="Локації" FontSize="16" Click="LocationsButton_Click" Foreground="Black" HorizontalContentAlignment="Left" Visibility="{Binding Converter={StaticResource PermissionConverter}, ConverterParameter=51}"/>
         </StackPanel>
 
         <!-- main content -->

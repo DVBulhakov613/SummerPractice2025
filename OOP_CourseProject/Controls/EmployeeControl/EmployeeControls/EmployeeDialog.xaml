@@ -1,0 +1,101 @@
+﻿<Window x:Class="OOP_CourseProject.Controls.EmployeeControl.EmployeeDialog"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:local="clr-namespace:OOP_CourseProject.Controls.EmployeeControl"
+        xmlns:helpers="clr-namespace:OOP_CourseProject.Controls.Helpers"
+        mc:Ignorable="d"
+        Background="{StaticResource PrimaryBackgroundBrush}"
+        Title="EmployeeDialog" Height="Auto" Width="Auto">
+    <Grid>
+        <Grid.RowDefinitions>
+            <RowDefinition Height="Auto"/>
+            <RowDefinition Height="Auto"/>
+            <RowDefinition Height="Auto"/>
+            <RowDefinition Height="*"/>
+        </Grid.RowDefinitions>
+        <Border Margin="10" Grid.Row="0" CornerRadius="20" Background="{StaticResource SecondaryBackgroundBrush}">
+            <StackPanel Margin="20">
+                <TextBox x:Name="FirstNameBox" 
+                 Style="{StaticResource PlaceholderTextBox}"
+                 FontSize="16"
+                 Height="30"
+                 helpers:TextBoxHelper.Placeholder="Ім'я"
+                 Background="{StaticResource SecondaryBackgroundBrush}"
+                 VerticalContentAlignment="Center"/>
+                <TextBox x:Name="SurnameBox" Style="{StaticResource PlaceholderTextBox}"
+                FontSize="16"
+                Height="30"
+                helpers:TextBoxHelper.Placeholder="Фамілія"
+                Background="{StaticResource SecondaryBackgroundBrush}"
+                VerticalContentAlignment="Center"/>
+                <TextBox x:Name="PhoneBox" Style="{StaticResource PlaceholderTextBox}"
+                FontSize="16"
+                Height="30"
+                helpers:TextBoxHelper.Placeholder="Номер телефону"
+                Background="{StaticResource SecondaryBackgroundBrush}"
+                VerticalContentAlignment="Center"/>
+                <TextBox x:Name="EmailBox" Style="{StaticResource PlaceholderTextBox}"
+                FontSize="16"
+                Height="30"
+                helpers:TextBoxHelper.Placeholder="Електронна пошта"
+                Background="{StaticResource SecondaryBackgroundBrush}"
+                VerticalContentAlignment="Center"/>
+                
+            </StackPanel>
+        </Border>
+
+        <Border Margin="10" Grid.Row="1" CornerRadius="8" Background="{StaticResource SecondaryBackgroundBrush}">
+            <Grid Margin="20,10,20,10" Height="30">
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="*" />
+                    <ColumnDefinition Width="30" />
+                </Grid.ColumnDefinitions>
+                <TextBox Grid.Column="0" x:Name="WorkplaceBox" 
+                         Style="{StaticResource PlaceholderTextBox}"
+                         IsReadOnly="True"
+                         Background="{StaticResource SecondaryBackgroundBrush}"
+                         FontSize="16"
+                         VerticalAlignment="Center"
+                         helpers:TextBoxHelper.Placeholder="Місце працевлаштування"
+                         Text="{Binding WorkplaceDisplay, Mode=OneWay}" />
+                <Button Grid.Column="1"
+                        Click="SelectWorkplace_Click"
+                        Background="Transparent"
+                        Padding="0"
+                        HorizontalAlignment="Stretch"
+                        VerticalAlignment="Stretch"
+                        Visibility="Visible">
+                    <Image Source="/Assets/ButtonIcons/Variant=Search.png" Width="20" Height="20" HorizontalAlignment="Center" VerticalAlignment="Center"/>
+                </Button>
+            </Grid>
+        </Border>
+
+        <!--<Border Margin="10" Grid.Row="0" CornerRadius="20" Background="{StaticResource SecondaryBackgroundBrush}">
+            <StackPanel Margin="20">
+                <TextBox x:Name="UsernameBox" Style="{StaticResource PlaceholderTextBox}"
+                            FontSize="16"
+                            Height="30"
+                            helpers:TextBoxHelper.Placeholder="Ім'я користувача"
+                            Background="{StaticResource SecondaryBackgroundBrush}"
+                            VerticalContentAlignment="Center"/>
+                <TextBox x:Name="PasswordBox" Style="{StaticResource PlaceholderTextBox}"
+                            FontSize="16"
+                            Height="30"
+                            helpers:TextBoxHelper.Placeholder="Пароль (тимчасовий - повідомте працівнику його змінити!)"
+                            Background="{StaticResource SecondaryBackgroundBrush}"
+                            VerticalContentAlignment="Center"/>
+            </StackPanel>
+        </Border>-->
+
+        <StackPanel Grid.Row="3" Orientation="Horizontal" HorizontalAlignment="Right" VerticalAlignment="Bottom" Margin="5">
+            <Border Background="{StaticResource SuccessBrush}" CornerRadius="8" Margin="5" >
+                <Button Content="OK" Width="80" Click="OkButton_Click" Visibility="Visible"/>
+            </Border>
+            <Border Background="{StaticResource ErrorBrush}" CornerRadius="8" Margin="5" >
+                <Button Content="Скасувати" Width="80" Click="CancelButton_Click" Visibility="Visible"/>
+            </Border>
+        </StackPanel>
+    </Grid>
+</Window>

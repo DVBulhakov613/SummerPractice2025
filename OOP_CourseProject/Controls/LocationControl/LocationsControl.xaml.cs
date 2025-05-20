@@ -18,9 +18,9 @@ namespace OOP_CourseProject.Controls
     /// <summary>
     /// Interaction logic for LocationControl.xaml
     /// </summary>
-    public partial class LocationControl : UserControl
+    public partial class LocationsControl : UserControl
     {
-        public LocationControl()
+        public LocationsControl()
         {
             InitializeComponent();
         }

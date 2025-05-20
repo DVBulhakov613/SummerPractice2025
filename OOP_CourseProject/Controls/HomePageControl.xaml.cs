@@ -83,9 +83,7 @@ namespace OOP_CourseProject.Controls
                 return;
             }
 
-            var db = App.AppHost.Services.GetRequiredService<DeliveryMethods>();
-
-            await db.DeleteAsync(App.CurrentEmployee, delivery);
+            await DeliveryMethods.DeleteAsync(App.CurrentEmployee, delivery);
 
             Refresh_Click(sender, e);
         }

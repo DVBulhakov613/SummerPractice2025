@@ -32,10 +32,10 @@ namespace OOP_CourseProject.Controls.ViewModel
                 SectionTitle = "Інформація компанії",
                 InfoItems = new List<InfoItem>
                 {
-                    new() { Label = "Посада", Value = $"{employee.FullName}" },
+                    new() { Label = "Посада", Value = employee.User == null ? "Невідома" : $"{employee.User.Role.Name}" },
                     new() { 
                         Label = "Місце працевлаштування", 
-                        Value = employee.WorkplaceID?.ToString() ?? "Невідомо",
+                        Value = employee.Workplace == null ? "Невідомо" : "Деталі...",
                         OnClick = employee.Workplace == null ? null : () =>
                         {
                             switch(employee.Workplace)

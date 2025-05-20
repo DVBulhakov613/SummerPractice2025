@@ -58,8 +58,8 @@ namespace OOP_CourseProject.Controls.ViewModel
                 {
                     new()
                     {
-                        Label = $"Зміст посилки {delivery.SentToID}",
-                        Value = "Деталі...",
+                        Label = $"Зміст посилки {delivery.PackageID}",
+                        Value = delivery.Package.DeclaredContent == null || delivery.Package.DeclaredContent.Count == 0 ? "Відсутнє" : "Деталі...",
                         OnClick = delivery.Package.DeclaredContent == null || delivery.Package.DeclaredContent.Count == 0 ? null : () =>
                         {
                             var contentListViewModel = new ContentListViewModel(delivery.Package.DeclaredContent); // must implement IInfoProviderViewModel

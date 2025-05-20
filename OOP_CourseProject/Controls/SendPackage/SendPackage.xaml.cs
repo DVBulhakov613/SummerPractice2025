@@ -20,6 +20,7 @@ using System.Windows.Media;
 using System.Windows.Media.Imaging;
 using System.Windows.Navigation;
 using System.Windows.Shapes;
+using System.Windows.Threading;
 
 namespace OOP_CourseProject.Controls
 {
@@ -39,6 +40,8 @@ namespace OOP_CourseProject.Controls
         protected void OnPropertyChanged(string propertyName)
             => PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(propertyName));
 
+        private readonly DispatcherTimer _debounceTimer;
+
         public SendPackage()
         {
             InitializeComponent();
@@ -46,45 +49,58 @@ namespace OOP_CourseProject.Controls
             DataContext = this;
             LocationsInfo.PropertyChanged += OnLocationsChanged;
             PackageInfo.PropertyChanged += OnLocationsChanged;
+
+            _debounceTimer = new DispatcherTimer
+            {
+                Interval = TimeSpan.FromMilliseconds(500)
+            };
+            _debounceTimer.Tick += DebounceTimer_Tick;
         }
 
-        private async void OnLocationsChanged(object? sender, PropertyChangedEventArgs e)
+        private void OnLocationsChanged(object? sender, PropertyChangedEventArgs e)
         {
             if (e.PropertyName == nameof(LocationInfoViewModel.FromLocation) ||
-                e.PropertyName == nameof(LocationInfoViewModel.ToLocation) || 
+                e.PropertyName == nameof(LocationInfoViewModel.ToLocation) ||
                 e.PropertyName == nameof(PackageInfoViewModel.Weight))
             {
-                var from = LocationsInfo.FromLocation as Class_Lib.Warehouse;
-                var to = LocationsInfo.ToLocation as Class_Lib.Warehouse;
+                // Restart debounce timer
+                _debounceTimer.Stop();
+                _debounceTimer.Start();
+            }
+        }
 
-                if (from != null && to != null && from.ID != to.ID && double.TryParse(PackageInfo.Weight, out _))
+        private async void DebounceTimer_Tick(object? sender, EventArgs e)
+        {
+            _debounceTimer.Stop();
+
+            var from = LocationsInfo.FromLocation as Class_Lib.Warehouse;
+            var to = LocationsInfo.ToLocation as Class_Lib.Warehouse;
+
+            if (from != null && to != null && from.ID != to.ID && double.TryParse(PackageInfo.Weight, out _))
+            {
+                var route = await RouteService.GetRouteInfoAsync(
+                    from.GeoData.Latitude, from.GeoData.Longitude,
+                    to.GeoData.Latitude, to.GeoData.Longitude);
+
+                if (route.IsSuccess)
                 {
-                    var route = await RouteService.GetRouteInfoAsync(
-                        from.GeoData.Latitude, from.GeoData.Longitude,
-                        to.GeoData.Latitude, to.GeoData.Longitude);
-
-                    if (route.IsSuccess)
-                    {
-                        DeliveryCost = RouteService.CostEstimate(route.DistanceKm, double.Parse(PackageInfo.Weight)).ToString("F2") + " грн";
-                        DeliveryTime = $"{route.Duration:hh\\:mm} год";
-                    }
-                    else
-                    {
-                        DeliveryCost = "Помилка маршруту";
-                        DeliveryTime = "-";
-                    }
-
-                    OnPropertyChanged(nameof(DeliveryCost));
-                    OnPropertyChanged(nameof(DeliveryTime));
+                    DeliveryCost = RouteService.CostEstimate(route.DistanceKm, double.Parse(PackageInfo.Weight)).ToString("F2") + " грн";
+                    DeliveryTime = $"{route.Duration:hh\\:mm} год";
                 }
                 else
                 {
-                    DeliveryCost = "-";
+                    DeliveryCost = "Помилка маршруту";
                     DeliveryTime = "-";
-                    OnPropertyChanged(nameof(DeliveryCost));
-                    OnPropertyChanged(nameof(DeliveryTime));
                 }
             }
+            else
+            {
+                DeliveryCost = "-";
+                DeliveryTime = "-";
+            }
+
+            OnPropertyChanged(nameof(DeliveryCost));
+            OnPropertyChanged(nameof(DeliveryTime));
         }
 
 

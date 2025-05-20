@@ -1,6 +1,4 @@
-﻿using Class_Lib;
-using Class_Lib.Backend.Location_related.Methods;
-using Class_Lib.Backend.Package_related;
+﻿using Class_Lib.Backend.Package_related;
 using OOP_CourseProject.Controls.ViewModel;
 using System.Windows;
 using System.Windows.Controls;
@@ -37,6 +35,4 @@ namespace OOP_CourseProject.Controls.PackageInfo
             }
         }
     }
-
-
 }

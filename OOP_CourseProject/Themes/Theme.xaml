@@ -197,9 +197,6 @@
                                        Stretch="Uniform"
                                        HorizontalAlignment="Stretch"
                                        VerticalAlignment="Stretch"/>
-                                <TextBlock Text="{TemplateBinding Header}" 
-                                           Margin="0,4,0,0"
-                                           HorizontalAlignment="Center"/>
                             </StackPanel>
                         </Viewbox>
                         

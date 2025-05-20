@@ -42,28 +42,5 @@ namespace Class_Lib
             if (managedLocations != null)
                 ManagedLocations = managedLocations;
         }
-
-        //static private string RoleIdToText(uint roleId)
-        //{
-        //    return roleId switch
-        //    {
-        //        1 => "Системний Адміністратор",
-        //        2 => "Менеджер",
-        //        3 => "Працівник",
-        //        _ => "Невідома роль"
-        //    };
-        //}
-
-        //static private uint TextToRoleId(string position)
-        //{
-        //    return position switch
-        //    {
-        //        "Системний Адміністратор" => 1,
-        //        "Менеджер" => 2,
-        //        "Працівник" => 3,
-        //        _ => 0
-        //    };
-        //}
-
     }
 }
