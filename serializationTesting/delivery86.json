@@ -1,0 +1,30 @@
+{
+  "ID": 86,
+  "Timestamp": "2025-05-16T14:43:49.5233417",
+  "Package": {
+    "ID": 80,
+    "PackageStatus": "STORED",
+    "CreatedAt": "2025-05-16T14:43:49.3556083",
+    "Length": 20,
+    "Width": 20,
+    "Height": 20,
+    "Weight": 5,
+    "DeclaredContent": [
+      {
+        "Name": "\u041D\u041E\u0421\u041A\u0418",
+        "Type": "Clothes",
+        "Amount": 200,
+        "PackageID": 80,
+        "Description": "\u0427\u043E\u0440\u043D\u0456 \u043D\u043E\u0441\u043A\u0438"
+      }
+    ],
+    "Type": "Package",
+    "DeliveryID": 86
+  },
+  "SenderID": 1,
+  "ReceiverID": 2,
+  "SentFromID": 1,
+  "SentToID": 2,
+  "Price": 48.61,
+  "IsPaid": false
+}

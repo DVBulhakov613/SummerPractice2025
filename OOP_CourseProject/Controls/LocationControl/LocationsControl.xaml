@@ -16,25 +16,25 @@
             
             <!-- Toolbar -->
             <StackPanel Grid.Row="0" Orientation="Horizontal" Margin="0,0,0,10">
-                <Button Background="Transparent" Command="{Binding AddCommand}" Margin="0,0,10,0" Visibility="Visible">
+                <Button Background="Transparent" Margin="0,0,10,0" Visibility="Visible" Click="AddButton_Click">
                     <StackPanel Orientation="Horizontal" VerticalAlignment="Center">
                         <Image Source="/Assets/ButtonIcons/Variant=Add.png" Width="20" Height="20" Margin="0,0,5,0"/>
                         <TextBlock Text="Додати" VerticalAlignment="Center" Foreground="Black"/>
                     </StackPanel>
                 </Button>
-                <Button Background="Transparent" Command="{Binding UpdateCommand}" Margin="0,0,10,0" Visibility="Visible">
+                <Button Background="Transparent" Margin="0,0,10,0" Visibility="Visible" Click="EditButton_Click">
                     <StackPanel Orientation="Horizontal" VerticalAlignment="Center">
                         <Image Source="/Assets/ButtonIcons/Variant=Edit.png" Width="20" Height="20" Margin="0,0,5,0"/>
                         <TextBlock Text="Оновити" VerticalAlignment="Center" Foreground="Black"/>
                     </StackPanel>
                 </Button>
-                <Button Background="Transparent" Command="{Binding DeleteCommand}" Margin="0,0,10,0" Visibility="Visible">
+                <Button Background="Transparent" Margin="0,0,10,0" Visibility="Visible" Click="RemoveButton_Click">
                     <StackPanel Orientation="Horizontal" VerticalAlignment="Center">
                         <Image Source="/Assets/ButtonIcons/Variant=Remove.png" Width="20" Height="20" Margin="0,0,5,0"/>
                         <TextBlock Text="Видалити" VerticalAlignment="Center" Foreground="Black"/>
                     </StackPanel>
                 </Button>
-                <Button Background="Transparent" Command="{Binding RefreshCommand}" Visibility="Visible">
+                <Button Background="Transparent" Visibility="Visible" Click="RefreshButton_Click">
                     <StackPanel Orientation="Horizontal" VerticalAlignment="Center">
                         <Image Source="/Assets/ButtonIcons/Variant=Refresh.png" Width="16" Height="16" Margin="0,0,5,0"/>
                         <TextBlock Text="Оновити" VerticalAlignment="Center" Foreground="Black"/>
@@ -52,8 +52,8 @@
                 <Border Grid.Column="0"
                      Background="{StaticResource SecondaryBackgroundBrush}" BorderBrush="LightGray" BorderThickness="1" CornerRadius="10"
                      Padding="10" Margin="0,0,10,0">
-                    <DataGrid ItemsSource="{Binding Locations}"
-                           SelectedItem="{Binding SelectedLocation, Mode=TwoWay}"
+                    <DataGrid ItemsSource="{Binding Items}" x:Name="LocationsDataGrid"
+                           SelectedItem="{Binding SelectedItem, Mode=TwoWay}"
                            SelectionMode="Single"
                            AutoGenerateColumns="False"
                            HeadersVisibility="Column"

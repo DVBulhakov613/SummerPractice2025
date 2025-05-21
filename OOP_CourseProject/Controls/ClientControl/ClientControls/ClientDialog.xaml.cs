@@ -1,10 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using System.Windows;
-using Class_Lib;
+﻿using System.Windows;
 using Class_Lib.Backend.Person_related;
 
 namespace OOP_CourseProject.Controls.ClientControl.ClientControls

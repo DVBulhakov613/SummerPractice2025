@@ -1,4 +1,5 @@
 ﻿using Class_Lib;
+using Class_Lib.Backend.Services;
 using Microsoft.IdentityModel.Tokens;
 using System;
 using System.Collections.Generic;
@@ -23,7 +24,7 @@ namespace OOP_CourseProject.Controls.ViewModel.DisplayModels
                     InfoItems = new List<InfoItem>
                     {
                         new() { Label = "Назва: ", Value = c.Name },
-                        new() { Label = "Тип: ", Value = c.Type.ToString() },
+                        new() { Label = "Тип: ", Value = c.Type.GetDescription() },
                         new() { Label = "Кількість: ", Value = c.Amount.ToString() },
                         new() { Label = "Опис: ", Value = string.IsNullOrEmpty(c.Description) ? "Відсутній" : c.Description}
                     }

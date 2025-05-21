@@ -7,6 +7,7 @@ using System.Text;
 using System.Threading.Tasks;
 using Class_Lib;
 using Class_Lib.Backend.Package_related;
+using Class_Lib.Backend.Services;
 
 namespace OOP_CourseProject.Controls.ViewModel
 {
@@ -46,7 +47,7 @@ namespace OOP_CourseProject.Controls.ViewModel
                     new() { Label = "Дата оформлення", Value = package.CreatedAt.ToString("HH:mm, dd-MM-yyyy") },
                     new() { Label = "Розмір", Value = $"{package.Length} x {package.Width} x {package.Height} см" },
                     new() { Label = "Вага", Value = $"{package.Weight:C2} кг" },
-                    new() { Label = "Тип", Value = $"{package.Type}" }
+                    new() { Label = "Тип", Value = $"{package.Type.GetDescription()}" }
                 }
             });
 

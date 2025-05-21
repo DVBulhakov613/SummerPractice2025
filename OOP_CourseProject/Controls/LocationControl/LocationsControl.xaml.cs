@@ -1,17 +1,16 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+﻿using Class_Lib;
+using Class_Lib.Backend.Location_related.Methods;
+using Class_Lib.Backend.Serialization.DTO;
+using Microsoft.Extensions.DependencyInjection;
+using OOP_CourseProject.Controls.Helpers;
+using OOP_CourseProject.Controls.LocationControl;
+using OOP_CourseProject.Controls.LocationControl.PostalOfficeForms;
+using OOP_CourseProject.Controls.LocationControl.WarehouseForms;
+using OOP_CourseProject.Controls.ViewModel;
 using System.Windows;
 using System.Windows.Controls;
-using System.Windows.Data;
-using System.Windows.Documents;
-using System.Windows.Input;
-using System.Windows.Media;
-using System.Windows.Media.Imaging;
-using System.Windows.Navigation;
-using System.Windows.Shapes;
+using PostalOfficeViewModel = OOP_CourseProject.Controls.LocationControl.PostalOfficeForms.PostalOfficeViewModel;
+using WarehouseViewModel = OOP_CourseProject.Controls.LocationControl.WarehouseForms.WarehouseViewModel;
 
 namespace OOP_CourseProject.Controls
 {
@@ -20,9 +19,146 @@ namespace OOP_CourseProject.Controls
     /// </summary>
     public partial class LocationsControl : UserControl
     {
+        public GenericInfoDisplayViewModel ViewModel { get; set; }
+        public LocationMethods LocationMethods { get; set; } = App.AppHost.Services.GetRequiredService<LocationMethods>();
+
         public LocationsControl()
         {
             InitializeComponent();
+            Loaded += LocationsControl_Loaded;
+        }
+
+        private async void LocationsControl_Loaded(object sender, RoutedEventArgs e)
+        {
+            ViewModel = ViewModelService.CreateViewModel(await LocationMethods.GetByCriteriaAsync(App.CurrentEmployee, p => p.ID > 0));
+            DataContext = ViewModel;
+        }
+
+
+
+        private async void AddButton_Click(object sender, RoutedEventArgs e)
+        {
+            var result = MessageBox.Show("Додати склад? 'Yes' = склад, 'No' = поштове відділення.",
+                                         "Тип локації",
+                                         MessageBoxButton.YesNoCancel);
+
+            if (result == MessageBoxResult.Cancel) return;
+
+            BaseLocation newLocation = null;
+
+            if (result == MessageBoxResult.Yes)
+            {
+                var warehouseForm = new WarehouseForm();
+                if (warehouseForm.ShowDialog() == true)
+                {
+                    newLocation = warehouseForm.WarehouseResult;
+                }
+            }
+            else if (result == MessageBoxResult.No)
+            {
+                var poForm = new PostalOfficeForm();
+                if (poForm.ShowDialog() == true)
+                {
+                    newLocation = poForm.PostalOfficeResult;
+                }
+            }
+
+            if (newLocation != null)
+            {
+                await LocationMethods.AddAsync(App.CurrentEmployee, newLocation);
+            }
+        }
+
+
+        //static private LocationType? ShowLocationTypeSelector()
+        //{
+        //    var result = MessageBox.Show("Додати склад? Натисніть 'Yes' для складу, 'No' для поштового відділення.",
+        //                                 "Тип локації",
+        //                                 MessageBoxButton.YesNoCancel);
+
+        //    return result switch
+        //    {
+        //        MessageBoxResult.Yes => LocationType.Warehouse,
+        //        MessageBoxResult.No => LocationType.PostalOffice,
+        //        _ => null
+        //    };
+        //}
+
+
+        private async void EditButton_Click(object sender, RoutedEventArgs e)
+        {
+            if (ViewModel.SelectedItem is not BaseLocation selected)
+                return;
+
+            BaseLocation updatedLocation = null;
+
+            if (selected is PostalOffice office)
+            {
+                var poForm = new PostalOfficeForm();
+                poForm.SetData(office);
+                if (poForm.ShowDialog() == true)
+                {
+                    updatedLocation = poForm.PostalOfficeResult;
+                }
+            }
+            else if (selected is Warehouse warehouse)
+            {
+                var whForm = new WarehouseForm();
+                whForm.SetData(warehouse);
+                if (whForm.ShowDialog() == true)
+                {
+                    updatedLocation = whForm.WarehouseResult;
+                }
+            }
+
+
+            if (updatedLocation != null)
+            {
+                await LocationMethods.UpdateAsync(App.CurrentEmployee, updatedLocation);
+                await RefreshAsync();
+            }
+        }
+
+
+
+        private async void RemoveButton_Click(object sender, RoutedEventArgs e)
+        {
+            if (ViewModel.SelectedItem == null)
+            {
+                MessageBox.Show("Обраний об'єкт не знайдено.", "Помилка!", MessageBoxButton.OK, MessageBoxImage.Warning);
+                return;
+            }
+            var result = MessageBox.Show($"Видалити відділення {((BaseLocation)ViewModel.SelectedItem).ID}?", "Підтвердження", MessageBoxButton.YesNo, MessageBoxImage.Warning);
+            if (result == MessageBoxResult.Yes)
+            {
+                await LocationMethods.DeleteAsync(App.CurrentEmployee, (BaseLocation)ViewModel.SelectedItem);
+                RefreshButton_Click(sender, e);
+            }
+        }
+
+        private async Task RefreshAsync()
+        {
+            ViewModel.UpdateItems(await LocationMethods.GetByCriteriaAsync(App.CurrentEmployee, p => p.ID > 0));
+        }
+
+        private async void RefreshButton_Click(object sender, RoutedEventArgs e)
+        {
+            await RefreshAsync();
+        }
+
+
+        private void SerilizeButton_Click(object sender, RoutedEventArgs e)
+        {
+            try
+            {
+                if (SerializationHelper.SerializeSelectedItemsToFolder<BaseLocation>(LocationsDataGrid, d => d.ToDto()))
+                    MessageBox.Show("Файли збережені успішно.");
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show($"Помилка. {ex.Message}", "Помилка", MessageBoxButton.OK, MessageBoxImage.Error);
+                return;
+            }
         }
     }
 }

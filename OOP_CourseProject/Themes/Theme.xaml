@@ -301,7 +301,7 @@
                                 FontWeight="Medium"
                                 VerticalAlignment="{TemplateBinding VerticalAlignment}"
                                 HorizontalAlignment="Left"
-                                Margin="5,0,0,0"
+                                Margin="0,5,0,0"
                                 Visibility="Collapsed"
                                 />
 

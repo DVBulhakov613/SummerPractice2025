@@ -1,5 +1,6 @@
 ﻿using Class_Lib;
 using Class_Lib.Backend.Package_related;
+using Class_Lib.Backend.Services;
 using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
@@ -25,7 +26,7 @@ namespace OOP_CourseProject.Controls.ViewModel.DisplayModels
                     new() { Label = "Дата оформлення", Value = delivery.Package.CreatedAt.ToString("HH:mm, dd-MM-yyyy") },
                     new() { Label = "Розмір", Value = $"{delivery.Package.Length} x {delivery.Package.Width} x {delivery.Package.Height} см" },
                     new() { Label = "Вага", Value = $"{delivery.Package.Weight:F2} кг" },
-                    new() { Label = "Тип", Value = $"{delivery.Package.Type}" }
+                    new() { Label = "Тип", Value = $"{delivery.Package.Type.GetDescription()}" }
                 }
                 });
 
@@ -77,12 +78,12 @@ namespace OOP_CourseProject.Controls.ViewModel.DisplayModels
                 {
                     new()
                     {
-                        Label = $"Надіслано з {delivery.SentFromID}"
+                        Label = "Надіслано з:", Value = $"{delivery.SentFromID} | {delivery.SentFrom.GeoData.Address}"
                     },
 
                     new()
                     {
-                        Label = $"Отримано в {delivery.SentToID}"
+                        Label = "Отримано в:", Value = $"{delivery.SentToID} | {delivery.SentFrom.GeoData.Address}"
                     }
 
                 }

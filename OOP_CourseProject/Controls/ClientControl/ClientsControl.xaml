@@ -20,6 +20,7 @@
             
             <!-- Toolbar -->
             <StackPanel Grid.Row="0" Orientation="Horizontal" Margin="0,0,0,10" Background="{StaticResource SecondaryBackgroundBrush}">
+                <!-- add -->
                 <Button Background="Transparent" Margin="0,0,10,0" Click="AddButton_Click"
                         Visibility="{Binding ., Converter={StaticResource PermissionConverter}, ConverterParameter=151}">
                     <StackPanel Orientation="Horizontal" VerticalAlignment="Center">
@@ -27,13 +28,8 @@
                         <TextBlock Text="Додати" VerticalAlignment="Center" Foreground="Black"/>
                     </StackPanel>
                 </Button>
-                <Button Background="Transparent" Margin="0,0,10,0" Click="EditButton_Click"
-                        Visibility="{Binding ., Converter={StaticResource PermissionConverter}, ConverterParameter=152}">
-                    <StackPanel Orientation="Horizontal" VerticalAlignment="Center">
-                        <Image Source="/Assets/ButtonIcons/Variant=Edit.png" Width="20" Height="20" Margin="0,0,5,0"/>
-                        <TextBlock Text="Редагувати" VerticalAlignment="Center" Foreground="Black"/>
-                    </StackPanel>
-                </Button>
+
+                <!-- remove -->
                 <Button Background="Transparent" Margin="0,0,10,0" Click="RemoveButton_Click"
                         Visibility="{Binding ., Converter={StaticResource PermissionConverter}, ConverterParameter=153}">
                     <StackPanel Orientation="Horizontal" VerticalAlignment="Center">
@@ -41,6 +37,25 @@
                         <TextBlock Text="Видалити" VerticalAlignment="Center" Foreground="Black"/>
                     </StackPanel>
                 </Button>
+
+                <!-- edit -->
+                <Button Background="Transparent" Margin="0,0,10,0" Click="EditButton_Click"
+                        Visibility="{Binding ., Converter={StaticResource PermissionConverter}, ConverterParameter=152}">
+                    <StackPanel Orientation="Horizontal" VerticalAlignment="Center">
+                        <Image Source="/Assets/ButtonIcons/Variant=Edit.png" Width="20" Height="20" Margin="0,0,5,0"/>
+                        <TextBlock Text="Редагувати" VerticalAlignment="Center" Foreground="Black"/>
+                    </StackPanel>
+                </Button>
+
+                <!-- export -->
+                <Button Background="Transparent" Margin="0,0,10,0" Visibility="Visible" Click="SerilizeButton_Click">
+                    <StackPanel Orientation="Horizontal" VerticalAlignment="Center">
+                        <Image Source="/Assets/ButtonIcons/Variant=Download.png" Width="20" Height="20" Margin="0,0,5,0"/>
+                        <TextBlock Text="Експорт" VerticalAlignment="Center" Foreground="Black"/>
+                    </StackPanel>
+                </Button>
+
+                <!-- refresh -->
                 <Button Background="Transparent" Margin="0,0,10,0" Visibility="Visible" Click="RefreshButton_Click">
                     <StackPanel Orientation="Horizontal" VerticalAlignment="Center">
                         <Image Source="/Assets/ButtonIcons/Variant=Refresh.png" Width="16" Height="16" Margin="0,0,5,0"/>
@@ -60,7 +75,7 @@
                 <Border Grid.Column="0"
                     Background="{StaticResource SecondaryBackgroundBrush}" BorderBrush="LightGray" BorderThickness="1" CornerRadius="10"
                     Padding="10" Margin="0,0,10,0">
-                    <DataGrid ItemsSource="{Binding Items}"
+                    <DataGrid ItemsSource="{Binding Items}" x:Name="ClientDataGrid"
                           SelectedItem="{Binding SelectedItem, Mode=TwoWay}"
                           SelectionMode="Single"
                           AutoGenerateColumns="False"

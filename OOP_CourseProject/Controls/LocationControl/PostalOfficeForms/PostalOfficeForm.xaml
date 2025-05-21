@@ -1,0 +1,52 @@
+﻿<Window x:Class="OOP_CourseProject.Controls.LocationControl.PostalOfficeForms.PostalOfficeForm"
+             xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+             xmlns:helpers="clr-namespace:OOP_CourseProject.Controls.Helpers"
+             mc:Ignorable="d"
+             d:DesignHeight="330" d:DesignWidth="400">
+
+    <StackPanel Margin="20" VerticalAlignment="Top">
+
+        <TextBox Style="{StaticResource PlaceholderTextBox}"
+                     helpers:TextBoxHelper.Placeholder="Адреса"
+                     Height="30"
+                     Text="{Binding Address, UpdateSourceTrigger=PropertyChanged}"
+                     />
+        <TextBox Style="{StaticResource PlaceholderTextBox}"
+                     helpers:TextBoxHelper.Placeholder="Регіон"
+                     Height="30"
+                     Text="{Binding Region, UpdateSourceTrigger=PropertyChanged}"
+                     />
+        <TextBox Style="{StaticResource PlaceholderTextBox}"
+                     helpers:TextBoxHelper.Placeholder="Довгота"
+                     Height="30"
+                     Text="{Binding Longitude, UpdateSourceTrigger=PropertyChanged}"
+                     />
+        <TextBox Style="{StaticResource PlaceholderTextBox}"
+                     helpers:TextBoxHelper.Placeholder="Широта"
+                     Height="30"
+                     Text="{Binding Latitude, UpdateSourceTrigger=PropertyChanged}"
+                     />
+        <TextBox Style="{StaticResource PlaceholderTextBox}"
+                     helpers:TextBoxHelper.Placeholder="Максимальна місткість"
+                     Height="30"
+                     Text="{Binding MaxStorageCapacity, UpdateSourceTrigger=PropertyChanged}" 
+                     />
+
+        <CheckBox Content="Автоматизований?" IsChecked="{Binding IsAutomated}" Margin="0,10,0,0"/>
+        <CheckBox Content="Публічний?" IsChecked="{Binding HandlesPublicDropOffs}" />
+        <CheckBox Content="Регіональний штаб?" IsChecked="{Binding IsRegionalHQ}" />
+
+        <StackPanel Orientation="Horizontal" Margin="0,10" HorizontalAlignment="Right">
+            <Border Background="{StaticResource SuccessBrush}" CornerRadius="8" Margin="5" >
+                <Button Content="OK" Width="80" Click="OkButton_Click" Visibility="Visible"/>
+            </Border>
+            <Border Background="{StaticResource ErrorBrush}" CornerRadius="8" Margin="5" >
+                <Button Content="Скасувати" Width="80" Click="CancelButton_Click" Visibility="Visible"/>
+            </Border>
+        </StackPanel>
+    </StackPanel>
+    
+</Window>

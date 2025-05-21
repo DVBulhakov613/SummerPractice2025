@@ -1,0 +1,30 @@
+{
+  "ID": 87,
+  "Timestamp": "2025-05-16T23:36:42.1534087",
+  "Package": {
+    "ID": 81,
+    "PackageStatus": "STORED",
+    "CreatedAt": "2025-05-16T23:36:42.0955028",
+    "Length": 45,
+    "Width": 45,
+    "Height": 20,
+    "Weight": 1,
+    "DeclaredContent": [
+      {
+        "Name": "\u0414\u0416\u041E\u0420\u0414\u0416 \u041E\u0420\u0412\u0415\u041B\u041B, \u00221948\u0022",
+        "Type": "Books",
+        "Amount": 1,
+        "PackageID": 81,
+        "Description": "\u041A\u043D\u0438\u0433\u0430 \u0414\u0436\u043E\u0440\u0434\u0436\u0430 \u041E\u0440\u0432\u0435\u043B\u043B\u0430, 1948"
+      }
+    ],
+    "Type": "Package",
+    "DeliveryID": 87
+  },
+  "SenderID": 3,
+  "ReceiverID": 2,
+  "SentFromID": 1,
+  "SentToID": 2,
+  "Price": 53.47,
+  "IsPaid": false
+}

@@ -25,7 +25,7 @@
                     <Button IsEnabled="False" Background="Transparent" Visibility="{Binding ., Converter={StaticResource PermissionConverter}, ConverterParameter=40}" Click="DelayedPackages_Click">
                         <StackPanel>
                             <TextBlock Text="Затримані посилки" Foreground="Black" FontFamily="{StaticResource PrimaryFont}" FontWeight="Bold"/>
-                            <TextBlock Text="Кількість: 10" Foreground="Gray" FontFamily="{StaticResource PrimaryFont}"/>
+                            <TextBlock Text="Кількість: n" Foreground="Gray" FontFamily="{StaticResource PrimaryFont}"/>
                         </StackPanel>
                     </Button>
                 </Border>
@@ -102,7 +102,7 @@
                                     <TextBlock Text="Видалити" VerticalAlignment="Center" Foreground="Black"/>
                                 </StackPanel>
                             </Button>
-                            <Button IsEnabled="False" Background="Transparent" 
+                            <Button Background="Transparent" 
                                     Visibility="{Binding ., Converter={StaticResource PermissionConverter}, ConverterParameter=130}" 
                                     Click="Download_Click">
                                 <StackPanel Orientation="Horizontal" VerticalAlignment="Center">
@@ -127,10 +127,11 @@
                         </StackPanel>
 
                         <!-- DataGrid -->
-                        <DataGrid Grid.Row="1"
+                        <DataGrid Grid.Row="1" x:Name="DataGrid"
                             ItemsSource="{Binding Items}"
                             SelectedItem="{Binding SelectedItem, Mode=TwoWay}"
-                            SelectionMode="Single"
+                            SelectionMode="Extended"
+                            SelectionUnit="FullRow"
                             AutoGenerateColumns="False"
                             HeadersVisibility="Column"
                             CanUserAddRows="False"

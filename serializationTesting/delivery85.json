@@ -1,0 +1,37 @@
+{
+  "ID": 85,
+  "Timestamp": "2025-05-16T14:17:16.9141981",
+  "Package": {
+    "ID": 79,
+    "PackageStatus": "STORED",
+    "CreatedAt": "2025-05-16T14:17:16.7640344",
+    "Length": 20,
+    "Width": 20,
+    "Height": 20,
+    "Weight": 3,
+    "DeclaredContent": [
+      {
+        "Name": "\u041D\u0410\u0412\u0423\u0428\u041D\u0418\u041A\u0418",
+        "Type": "Electronics",
+        "Amount": 1,
+        "PackageID": 79,
+        "Description": ""
+      },
+      {
+        "Name": "\u0427\u0410\u0428\u041A\u0410",
+        "Type": "Fragile",
+        "Amount": 2,
+        "PackageID": 79,
+        "Description": ""
+      }
+    ],
+    "Type": "Package",
+    "DeliveryID": 85
+  },
+  "SenderID": 3,
+  "ReceiverID": 3,
+  "SentFromID": 2,
+  "SentToID": 1,
+  "Price": 48.1,
+  "IsPaid": false
+}

@@ -22,25 +22,21 @@
                  FontSize="16"
                  Height="30"
                  helpers:TextBoxHelper.Placeholder="Ім'я"
-                 Background="{StaticResource SecondaryBackgroundBrush}"
                  VerticalContentAlignment="Center"/>
                 <TextBox x:Name="SurnameBox" Style="{StaticResource PlaceholderTextBox}"
                 FontSize="16"
                 Height="30"
                 helpers:TextBoxHelper.Placeholder="Фамілія"
-                Background="{StaticResource SecondaryBackgroundBrush}"
                 VerticalContentAlignment="Center"/>
                 <TextBox x:Name="PhoneBox" Style="{StaticResource PlaceholderTextBox}"
                 FontSize="16"
                 Height="30"
                 helpers:TextBoxHelper.Placeholder="Номер телефону"
-                Background="{StaticResource SecondaryBackgroundBrush}"
                 VerticalContentAlignment="Center"/>
                 <TextBox x:Name="EmailBox" Style="{StaticResource PlaceholderTextBox}"
                 FontSize="16"
                 Height="30"
                 helpers:TextBoxHelper.Placeholder="Електронна пошта"
-                Background="{StaticResource SecondaryBackgroundBrush}"
                 VerticalContentAlignment="Center"/>
                 
             </StackPanel>

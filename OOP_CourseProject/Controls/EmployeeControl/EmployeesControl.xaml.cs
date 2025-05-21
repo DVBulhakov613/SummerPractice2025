@@ -1,25 +1,12 @@
 ﻿using Class_Lib;
-using Class_Lib.Backend.Person_related;
 using Class_Lib.Backend.Person_related.Methods;
-using Class_Lib.Database.Repositories;
 using Microsoft.Extensions.DependencyInjection;
-using OOP_CourseProject.Controls.ClientControl.ClientControls;
+using OOP_CourseProject.Controls.Helpers;
 using OOP_CourseProject.Controls.ViewModel;
 using OOP_CourseProject.Controls.ViewModel.ViewModels;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using System.Windows;
 using System.Windows.Controls;
-using System.Windows.Data;
-using System.Windows.Documents;
-using System.Windows.Input;
-using System.Windows.Media;
-using System.Windows.Media.Imaging;
-using System.Windows.Navigation;
-using System.Windows.Shapes;
+using Class_Lib.Backend.Serialization.DTO;
 
 namespace OOP_CourseProject.Controls.EmployeeControl
 {
@@ -90,6 +77,20 @@ namespace OOP_CourseProject.Controls.EmployeeControl
         private async void RefreshButton_Click(object sender, RoutedEventArgs e)
         {
             ViewModel.UpdateItems(await EmployeeMethods.GetByCriteriaAsync(App.CurrentEmployee, p => p.ID > 0));
+        }
+
+        private void SerilizeButton_Click(object sender, RoutedEventArgs e)
+        {
+            try
+            {
+                if (SerializationHelper.SerializeSelectedItemsToFolder<Employee>(EmployeesDataGrid, d => d.ToDto()))
+                    MessageBox.Show("Файли збережені успішно.");
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show($"Помилка. {ex.Message}", "Помилка", MessageBoxButton.OK, MessageBoxImage.Error);
+                return;
+            }
         }
     }
 }

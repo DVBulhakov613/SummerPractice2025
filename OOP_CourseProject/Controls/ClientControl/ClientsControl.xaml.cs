@@ -1,7 +1,10 @@
-﻿using Class_Lib.Backend.Person_related;
+﻿using Class_Lib;
+using Class_Lib.Backend.Person_related;
 using Class_Lib.Backend.Person_related.Methods;
+using Class_Lib.Backend.Serialization.DTO;
 using Microsoft.Extensions.DependencyInjection;
 using OOP_CourseProject.Controls.ClientControl.ClientControls;
+using OOP_CourseProject.Controls.Helpers;
 using OOP_CourseProject.Controls.ViewModel;
 using System.Windows;
 using System.Windows.Controls;
@@ -70,6 +73,20 @@ namespace OOP_CourseProject.Controls
         private async void RefreshButton_Click(object sender, RoutedEventArgs e)
         {
             ViewModel.UpdateItems(await ClientMethods.GetByCriteriaAsync(App.CurrentEmployee, p => p.ID > 0));
+        }
+
+        private void SerilizeButton_Click(object sender, RoutedEventArgs e)
+        {
+            try
+            {
+                if (SerializationHelper.SerializeSelectedItemsToFolder<Employee>(ClientDataGrid, d => d.ToDto()))
+                    MessageBox.Show("Файли збережені успішно.");
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show($"Помилка. {ex.Message}", "Помилка", MessageBoxButton.OK, MessageBoxImage.Error);
+                return;
+            }
         }
     }
 }

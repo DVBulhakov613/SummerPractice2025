@@ -1,0 +1,22 @@
+{
+  "ID": 39,
+  "Timestamp": "2025-05-09T12:18:07.2287108",
+  "Package": {
+    "ID": 28,
+    "PackageStatus": "CANCELED",
+    "CreatedAt": "2025-01-30T23:30:00",
+    "Length": 55,
+    "Width": 54,
+    "Height": 40,
+    "Weight": 18.7,
+    "DeclaredContent": [],
+    "Type": "Package",
+    "DeliveryID": 39
+  },
+  "SenderID": 2,
+  "ReceiverID": 3,
+  "SentFromID": 2,
+  "SentToID": 3,
+  "Price": 0,
+  "IsPaid": false
+}

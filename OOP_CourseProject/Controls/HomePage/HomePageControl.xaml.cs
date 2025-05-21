@@ -1,18 +1,13 @@
-﻿using Class_Lib.Database.Repositories;
-using Class_Lib;
-using System.Linq.Expressions;
+﻿using Class_Lib.Backend.Package_related;
+using Class_Lib.Backend.Package_related.Methods;
+using Class_Lib.Backend.Serialization.DTO;
+using Microsoft.Extensions.DependencyInjection;
+using OOP_CourseProject.Controls.Helpers;
+using OOP_CourseProject.Controls.ViewModel;
+using System.IO;
+using System.Text.Json;
 using System.Windows;
 using System.Windows.Controls;
-using OOP_CourseProject.Controls.ViewModel;
-using Microsoft.Extensions.DependencyInjection;
-using Class_Lib.Backend.Database.Repositories;
-using Class_Lib.Backend.Location_related.Methods;
-using Class_Lib.Backend.Package_related.Methods;
-using Class_Lib.Backend.Person_related.Methods;
-using System.Threading.Tasks;
-using System.Xml;
-using Class_Lib.Backend.Package_related;
-using Class_Lib.Backend.Database;
 
 namespace OOP_CourseProject.Controls
 {
@@ -61,7 +56,16 @@ namespace OOP_CourseProject.Controls
 
         private void Download_Click(object sender, RoutedEventArgs e)
         {
-
+            try
+            {
+                if(SerializationHelper.SerializeSelectedItemsToFolder<Delivery>(DataGrid, d => d.ToDto()))
+                    MessageBox.Show("Файли збережені успішно.");
+            }
+            catch(Exception ex) {                 
+                MessageBox.Show($"Помилка. {ex.Message}", "Помилка", MessageBoxButton.OK, MessageBoxImage.Error);
+                return;
+            }
+            
         }
 
         private void SearchSpecific_Click(object sender, RoutedEventArgs e)

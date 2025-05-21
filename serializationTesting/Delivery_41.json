@@ -1,0 +1,22 @@
+{
+  "ID": 41,
+  "Timestamp": "2025-05-09T12:18:07.2287108",
+  "Package": {
+    "ID": 30,
+    "PackageStatus": "LOST",
+    "CreatedAt": "2025-02-14T16:15:00",
+    "Length": 29,
+    "Width": 33,
+    "Height": 25,
+    "Weight": 2.2,
+    "DeclaredContent": [],
+    "Type": "Package",
+    "DeliveryID": 41
+  },
+  "SenderID": 2,
+  "ReceiverID": 3,
+  "SentFromID": 3,
+  "SentToID": 2,
+  "Price": 0,
+  "IsPaid": false
+}
