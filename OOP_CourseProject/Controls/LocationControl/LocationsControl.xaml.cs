@@ -38,29 +38,24 @@ namespace OOP_CourseProject.Controls
 
         private async void AddButton_Click(object sender, RoutedEventArgs e)
         {
-            var result = MessageBox.Show("Додати склад? 'Yes' = склад, 'No' = поштове відділення.",
-                                         "Тип локації",
-                                         MessageBoxButton.YesNoCancel);
-
-            if (result == MessageBoxResult.Cancel) return;
+            var selector = new LocationTypeSelectionWindow();
+            if (selector.ShowDialog() != true) return;
 
             BaseLocation newLocation = null;
 
-            if (result == MessageBoxResult.Yes)
+            switch (selector.SelectedLocationType)
             {
-                var warehouseForm = new WarehouseForm();
-                if (warehouseForm.ShowDialog() == true)
-                {
-                    newLocation = warehouseForm.WarehouseResult;
-                }
-            }
-            else if (result == MessageBoxResult.No)
-            {
-                var poForm = new PostalOfficeForm();
-                if (poForm.ShowDialog() == true)
-                {
-                    newLocation = poForm.PostalOfficeResult;
-                }
+                case "Warehouse":
+                    var warehouseForm = new WarehouseForm();
+                    if (warehouseForm.ShowDialog() == true)
+                        newLocation = warehouseForm.WarehouseResult;
+                    break;
+
+                case "PostalOffice":
+                    var poForm = new PostalOfficeForm();
+                    if (poForm.ShowDialog() == true)
+                        newLocation = poForm.PostalOfficeResult;
+                    break;
             }
 
             if (newLocation != null)

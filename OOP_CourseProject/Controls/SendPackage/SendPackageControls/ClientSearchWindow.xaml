@@ -26,10 +26,10 @@
                 <DataTemplate>
                     <StackPanel>
                         <TextBlock Text="{Binding ID}" FontWeight="Bold"/>
-                        <TextBlock Text="{Binding FirstName}" FontWeight="Bold"/>
-                        <TextBlock Text="{Binding Surname}" FontWeight="Bold"/>
-                        <TextBlock Text="{Binding PhoneNumber}"/>
-                        <TextBlock Text="{Binding Email}"/>
+                        <TextBlock Text="{Binding FirstName}" />
+                        <TextBlock Text="{Binding Surname}" />
+                        <TextBlock Text="{Binding PhoneNumber}" FontStyle="Italic"/>
+                        <TextBlock Text="{Binding Email}" FontStyle="Italic"/>
 
                     </StackPanel>
                 </DataTemplate>

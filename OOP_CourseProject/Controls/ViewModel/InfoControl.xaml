@@ -3,7 +3,7 @@
              xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
              xmlns:controls="clr-namespace:OOP_CourseProject.Controls"
              Background="{StaticResource SecondaryBackgroundBrush}"
-             Width="Auto" Height="Auto" MaxHeight="400">
+             Width="Auto" Height="Auto">
     <ScrollViewer VerticalScrollBarVisibility="Auto">
         <ItemsControl ItemsSource="{Binding InfoSections}">
             <ItemsControl.ItemTemplate>

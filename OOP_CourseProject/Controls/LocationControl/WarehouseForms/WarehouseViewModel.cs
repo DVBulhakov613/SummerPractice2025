@@ -1,25 +1,23 @@
 ﻿using Class_Lib;
-using System;
-using System.Collections.Generic;
+using System.Collections.ObjectModel;
 using System.ComponentModel;
-using System.Linq;
 using System.Runtime.CompilerServices;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace OOP_CourseProject.Controls.LocationControl.WarehouseForms
 {
     public class WarehouseViewModel : INotifyPropertyChanged
     {
-        private double _longitude;
-        public double Longitude
+        public ObservableCollection<Employee> AssignedEmployees { get; } = [];
+
+        private double? _longitude;
+        public double? Longitude
         {
             get => _longitude;
             set => SetProperty(ref _longitude, value);
         }
 
-        private double _latitude;
-        public double Latitude
+        private double? _latitude;
+        public double? Latitude
         {
             get => _latitude;
             set => SetProperty(ref _latitude, value);
@@ -39,15 +37,15 @@ namespace OOP_CourseProject.Controls.LocationControl.WarehouseForms
             set => SetProperty(ref _region, value);
         }
 
-        private uint _maxStorageCapacity;
-        public uint MaxStorageCapacity
+        private uint? _maxStorageCapacity;
+        public uint? MaxStorageCapacity
         {
             get => _maxStorageCapacity;
             set => SetProperty(ref _maxStorageCapacity, value);
         }
 
-        private bool _isAutomated;
-        public bool IsAutomated
+        private bool? _isAutomated = false;
+        public bool? IsAutomated
         {
             get => _isAutomated;
             set => SetProperty(ref _isAutomated, value);
@@ -62,18 +60,32 @@ namespace OOP_CourseProject.Controls.LocationControl.WarehouseForms
             Region = coordinates.Region ?? string.Empty;
             MaxStorageCapacity = model.MaxStorageCapacity;
             IsAutomated = model.IsAutomated;
+
+            if(model.Staff != null)
+                foreach (var employee in model.Staff)
+                {
+                    AssignedEmployees.Add(employee);
+                }
         }
 
         public Warehouse ToModel()
         {
-            return new Warehouse(
-            new Coordinates(Longitude, Latitude, Address, Region),
-                MaxStorageCapacity,
-                IsAutomated
+            if (Longitude == null || Latitude == null || MaxStorageCapacity == null ||
+                IsAutomated == null)
+            {
+                throw new InvalidOperationException("Усі ці поля обов'язкові та повинні бути заповнені.");
+            }
+
+            Warehouse wh = new Warehouse(
+                new Coordinates(Longitude.Value, Latitude.Value, Address, Region),
+                MaxStorageCapacity.Value,
+                IsAutomated.Value
             );
+            if(wh.Staff != null) wh.Staff = AssignedEmployees.ToList();
+            return wh;
         }
 
-        #region INotifyPropertyChanged
+
         public event PropertyChangedEventHandler PropertyChanged;
         protected void OnPropertyChanged([CallerMemberName] string name = null)
             => PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(name));
@@ -85,6 +97,5 @@ namespace OOP_CourseProject.Controls.LocationControl.WarehouseForms
             OnPropertyChanged(name);
             return true;
         }
-        #endregion
     }
 }

@@ -1,4 +1,5 @@
 ﻿using Class_Lib;
+using System.Collections.ObjectModel;
 using System.ComponentModel;
 using System.Runtime.CompilerServices;
 
@@ -6,15 +7,17 @@ namespace OOP_CourseProject.Controls.LocationControl.PostalOfficeForms
 {
     public class PostalOfficeViewModel : INotifyPropertyChanged
     {
-        private double _longitude;
-        public double Longitude
+        public ObservableCollection<Employee> AssignedEmployees { get; } = [];
+
+        private double? _longitude;
+        public double? Longitude
         {
             get => _longitude;
             set => SetProperty(ref _longitude, value);
         }
 
-        private double _latitude;
-        public double Latitude
+        private double? _latitude;
+        public double? Latitude
         {
             get => _latitude;
             set => SetProperty(ref _latitude, value);
@@ -34,29 +37,29 @@ namespace OOP_CourseProject.Controls.LocationControl.PostalOfficeForms
             set => SetProperty(ref _region, value);
         }
 
-        private uint _maxStorageCapacity;
-        public uint MaxStorageCapacity
+        private uint? _maxStorageCapacity;
+        public uint? MaxStorageCapacity
         {
             get => _maxStorageCapacity;
             set => SetProperty(ref _maxStorageCapacity, value);
         }
 
-        private bool _isAutomated;
-        public bool IsAutomated
+        private bool? _isAutomated = false;
+        public bool? IsAutomated
         {
             get => _isAutomated;
             set => SetProperty(ref _isAutomated, value);
         }
 
-        private bool _handlesPublicDropOffs;
-        public bool HandlesPublicDropOffs
+        private bool? _handlesPublicDropOffs = false;
+        public bool? HandlesPublicDropOffs
         {
             get => _handlesPublicDropOffs;
             set => SetProperty(ref _handlesPublicDropOffs, value);
         }
 
-        private bool _isRegionalHQ;
-        public bool IsRegionalHQ
+        private bool? _isRegionalHQ = false;
+        public bool? IsRegionalHQ
         {
             get => _isRegionalHQ;
             set => SetProperty(ref _isRegionalHQ, value);
@@ -73,18 +76,31 @@ namespace OOP_CourseProject.Controls.LocationControl.PostalOfficeForms
             IsAutomated = model.IsAutomated;
             HandlesPublicDropOffs = model.HandlesPublicDropOffs;
             IsRegionalHQ = model.IsRegionalHQ;
+
+            if (model.Staff != null)
+                foreach (var employee in model.Staff)
+                    AssignedEmployees.Add(employee);
         }
 
         public PostalOffice ToModel()
         {
-            return new PostalOffice(
-            new Coordinates(Longitude, Latitude, Address, Region),
-                MaxStorageCapacity,
-                IsAutomated,
-                HandlesPublicDropOffs,
-                IsRegionalHQ
+            if (Longitude == null || Latitude == null || MaxStorageCapacity == null ||
+                IsAutomated == null || HandlesPublicDropOffs == null || IsRegionalHQ == null)
+            {
+                throw new InvalidOperationException("Усі ці поля обов'язкові та повинні бути заповнені.");
+            }
+
+            PostalOffice po = new PostalOffice(
+                new Coordinates(Longitude.Value, Latitude.Value, Address, Region),
+                MaxStorageCapacity.Value,
+                IsAutomated.Value,
+                HandlesPublicDropOffs.Value,
+                IsRegionalHQ.Value
             );
+            if (po.Staff != null) po.Staff = AssignedEmployees.ToList();
+            return po;
         }
+
 
         public event PropertyChangedEventHandler PropertyChanged;
         protected void OnPropertyChanged([CallerMemberName] string name = null)

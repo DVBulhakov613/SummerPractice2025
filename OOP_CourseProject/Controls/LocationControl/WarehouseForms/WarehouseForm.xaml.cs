@@ -31,9 +31,10 @@ namespace OOP_CourseProject.Controls.LocationControl.WarehouseForms
             {
                 if (_originalModel != null)
                 {
-                    _originalModel.UpdateGeoData(new Coordinates(ViewModel.Longitude, ViewModel.Latitude, ViewModel.Address, ViewModel.Region));
-                    _originalModel.MaxStorageCapacity = ViewModel.MaxStorageCapacity;
-                    _originalModel.IsAutomated = ViewModel.IsAutomated;
+                    _originalModel.UpdateGeoData(new Coordinates((double)ViewModel.Longitude!, (double)ViewModel.Latitude!, ViewModel.Address, ViewModel.Region));
+                    _originalModel.MaxStorageCapacity = (uint)ViewModel.MaxStorageCapacity!;
+                    _originalModel.IsAutomated = (bool)ViewModel.IsAutomated!;
+                    _originalModel.Staff = ViewModel.AssignedEmployees.ToList();
 
                     WarehouseResult = _originalModel;
                 }
@@ -51,11 +52,28 @@ namespace OOP_CourseProject.Controls.LocationControl.WarehouseForms
             }
         }
 
+
         private void CancelButton_Click(object sender, RoutedEventArgs e)
         {
             DialogResult = false;
             Close();
         }
-    }
 
+        private void AddEmployees_Click(object sender, RoutedEventArgs e)
+        {
+            var window = new EmployeeSearchWindow(
+                ViewModel.AssignedEmployees.ToList(),
+                selected =>
+                {
+                    ViewModel.AssignedEmployees.Clear();
+                    foreach (var employee in selected)
+                    {
+                        ViewModel.AssignedEmployees.Add(employee);
+                    }
+                });
+
+            window.Owner = this;
+            window.ShowDialog();
+        }
+    }
 }

@@ -3,43 +3,51 @@
              xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
              xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
-             xmlns:local="clr-namespace:OOP_CourseProject.Controls"
+             xmlns:local="clr-namespace:OOP_CourseProject.Controls.LocationControl"
              mc:Ignorable="d" 
              Height="Auto" Width="Auto"
-             d:DesignHeight="1000" d:DesignWidth="1700">
+             d:DesignHeight="1000" d:DesignWidth="1700" Background="{StaticResource PrimaryBackgroundBrush}">
     <Grid>
         <Grid Margin="20">
             <Grid.RowDefinitions>
                 <RowDefinition Height="Auto"/>
                 <RowDefinition Height="*"/>
             </Grid.RowDefinitions>
-            
+
             <!-- Toolbar -->
-            <StackPanel Grid.Row="0" Orientation="Horizontal" Margin="0,0,0,10">
+            <StackPanel Grid.Row="0" Orientation="Horizontal" Margin="0,0,0,10" Background="{StaticResource SecondaryBackgroundBrush}">
+                <!-- add -->
                 <Button Background="Transparent" Margin="0,0,10,0" Visibility="Visible" Click="AddButton_Click">
                     <StackPanel Orientation="Horizontal" VerticalAlignment="Center">
                         <Image Source="/Assets/ButtonIcons/Variant=Add.png" Width="20" Height="20" Margin="0,0,5,0"/>
                         <TextBlock Text="Додати" VerticalAlignment="Center" Foreground="Black"/>
                     </StackPanel>
                 </Button>
-                <Button Background="Transparent" Margin="0,0,10,0" Visibility="Visible" Click="EditButton_Click">
-                    <StackPanel Orientation="Horizontal" VerticalAlignment="Center">
-                        <Image Source="/Assets/ButtonIcons/Variant=Edit.png" Width="20" Height="20" Margin="0,0,5,0"/>
-                        <TextBlock Text="Оновити" VerticalAlignment="Center" Foreground="Black"/>
-                    </StackPanel>
-                </Button>
+                <!-- remove -->
                 <Button Background="Transparent" Margin="0,0,10,0" Visibility="Visible" Click="RemoveButton_Click">
                     <StackPanel Orientation="Horizontal" VerticalAlignment="Center">
                         <Image Source="/Assets/ButtonIcons/Variant=Remove.png" Width="20" Height="20" Margin="0,0,5,0"/>
                         <TextBlock Text="Видалити" VerticalAlignment="Center" Foreground="Black"/>
                     </StackPanel>
                 </Button>
-                <Button Background="Transparent" Visibility="Visible" Click="RefreshButton_Click">
+                <!-- edit -->
+                <Button Background="Transparent" Margin="0,0,10,0" Visibility="Visible" Click="EditButton_Click">
+                    <StackPanel Orientation="Horizontal" VerticalAlignment="Center">
+                        <Image Source="/Assets/ButtonIcons/Variant=Edit.png" Width="20" Height="20" Margin="0,0,5,0"/>
+                        <TextBlock Text="Оновити" VerticalAlignment="Center" Foreground="Black"/>
+                    </StackPanel>
+                </Button>
+                <!-- refresh -->
+                <Button Background="Transparent" Margin="0,0,10,0" Visibility="Visible" Click="RefreshButton_Click">
                     <StackPanel Orientation="Horizontal" VerticalAlignment="Center">
                         <Image Source="/Assets/ButtonIcons/Variant=Refresh.png" Width="16" Height="16" Margin="0,0,5,0"/>
                         <TextBlock Text="Оновити" VerticalAlignment="Center" Foreground="Black"/>
                     </StackPanel>
                 </Button>
+
+                <StackPanel Orientation="Horizontal" Margin="0,0,0,10" HorizontalAlignment="Stretch">
+                    
+                </StackPanel>
             </StackPanel>
             <!-- Main Content -->
             <Grid Grid.Row="1">
@@ -47,14 +55,15 @@
                     <ColumnDefinition Width="2*"/>
                     <ColumnDefinition Width="*"/>
                 </Grid.ColumnDefinitions>
-                
+
                 <!-- DataGrid -->
                 <Border Grid.Column="0"
                      Background="{StaticResource SecondaryBackgroundBrush}" BorderBrush="LightGray" BorderThickness="1" CornerRadius="10"
                      Padding="10" Margin="0,0,10,0">
                     <DataGrid ItemsSource="{Binding Items}" x:Name="LocationsDataGrid"
                            SelectedItem="{Binding SelectedItem, Mode=TwoWay}"
-                           SelectionMode="Single"
+                           SelectionMode="Extended"
+                           SelectionUnit="FullRow"
                            AutoGenerateColumns="False"
                            HeadersVisibility="Column"
                            CanUserAddRows="False"
@@ -68,19 +77,14 @@
                         </DataGrid.Columns>
                     </DataGrid>
                 </Border>
-                
+
                 <!-- Details Panel -->
-                <Border Grid.Column="1"
-                     Background="White" BorderBrush="LightGray" BorderThickness="1" CornerRadius="10"
-                     Padding="10">
-                    <StackPanel>
-                        <TextBlock Text="Деталі локації" FontWeight="Bold" FontSize="16" Margin="0,0,0,10"/>
-                        <TextBlock Text="{Binding SelectedLocation.LocationType}" FontSize="14"/>
-                        <TextBlock Text="{Binding SelectedLocation.GeoData.Address}" FontSize="14"/>
-                        <TextBlock Text="{Binding SelectedLocation.GeoData.Region}" FontSize="14"/>
-                        <TextBlock Text="Працівників: " FontSize="14"/>
-                        <TextBlock Text="{Binding SelectedLocation.Staff.Count}" FontSize="14"/>
-                    </StackPanel>
+                <Border Grid.Column="1" Grid.RowSpan="2" Grid.Row="0"
+                        Background="White" BorderBrush="LightGray" BorderThickness="1" CornerRadius="10"
+                        Padding="10">
+                    <local:LocationInfoControl Location="{Binding SelectedItem}"/>
+
+                    <!--<viewmodels:InfoControl InfoProvider="{Binding DataContext.SelectedInfoViewModel, RelativeSource={RelativeSource AncestorType=UserControl}}" />-->
                 </Border>
             </Grid>
         </Grid>

@@ -5,7 +5,7 @@
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
              xmlns:helpers="clr-namespace:OOP_CourseProject.Controls.Helpers"
              mc:Ignorable="d"
-             d:DesignHeight="330" d:DesignWidth="400">
+             d:DesignHeight="375" d:DesignWidth="400">
 
     <StackPanel Margin="20" VerticalAlignment="Top">
 
@@ -13,32 +13,41 @@
                      helpers:TextBoxHelper.Placeholder="Адреса"
                      Height="30"
                      Text="{Binding Address, UpdateSourceTrigger=PropertyChanged}"
+                     VerticalContentAlignment="Center"
                      />
         <TextBox Style="{StaticResource PlaceholderTextBox}"
                      helpers:TextBoxHelper.Placeholder="Регіон"
                      Height="30"
                      Text="{Binding Region, UpdateSourceTrigger=PropertyChanged}"
+                     VerticalContentAlignment="Center"
                      />
         <TextBox Style="{StaticResource PlaceholderTextBox}"
                      helpers:TextBoxHelper.Placeholder="Довгота"
                      Height="30"
                      Text="{Binding Longitude, UpdateSourceTrigger=PropertyChanged}"
+                     VerticalContentAlignment="Center"
                      />
         <TextBox Style="{StaticResource PlaceholderTextBox}"
                      helpers:TextBoxHelper.Placeholder="Широта"
                      Height="30"
                      Text="{Binding Latitude, UpdateSourceTrigger=PropertyChanged}"
+                     VerticalContentAlignment="Center"
                      />
         <TextBox Style="{StaticResource PlaceholderTextBox}"
                      helpers:TextBoxHelper.Placeholder="Максимальна місткість"
                      Height="30"
-                     Text="{Binding MaxStorageCapacity, UpdateSourceTrigger=PropertyChanged}" 
+                     Text="{Binding MaxStorageCapacity, UpdateSourceTrigger=PropertyChanged}"
+                     VerticalContentAlignment="Center"
                      />
 
         <CheckBox Content="Автоматизований?" IsChecked="{Binding IsAutomated}" Margin="0,10,0,0"/>
         <CheckBox Content="Публічний?" IsChecked="{Binding HandlesPublicDropOffs}" />
         <CheckBox Content="Регіональний штаб?" IsChecked="{Binding IsRegionalHQ}" />
-
+        
+        <Border Background="{StaticResource AccentBrush}" CornerRadius="8" Margin="5,20,5,5" >
+            <Button Content="Список працівників" Click="AddEmployees_Click" Visibility="Visible"/>
+        </Border>
+        
         <StackPanel Orientation="Horizontal" Margin="0,10" HorizontalAlignment="Right">
             <Border Background="{StaticResource SuccessBrush}" CornerRadius="8" Margin="5" >
                 <Button Content="OK" Width="80" Click="OkButton_Click" Visibility="Visible"/>

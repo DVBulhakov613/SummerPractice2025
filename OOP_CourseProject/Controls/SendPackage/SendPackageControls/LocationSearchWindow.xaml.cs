@@ -2,19 +2,9 @@
 using Class_Lib.Backend.Database.Repositories;
 using Microsoft.Extensions.DependencyInjection;
 using OOP_CourseProject.Controls.ViewModel.ViewModels;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using System.Windows;
 using System.Windows.Controls;
-using System.Windows.Data;
-using System.Windows.Documents;
 using System.Windows.Input;
-using System.Windows.Media;
-using System.Windows.Media.Imaging;
-using System.Windows.Shapes;
 
 namespace OOP_CourseProject.Controls.SendPackageControls
 {
@@ -62,11 +52,3 @@ namespace OOP_CourseProject.Controls.SendPackageControls
 
     }
 }
-
-/*
-var db = App.AppHost.Services.GetRequiredService<LocationRepository>();
-var results = await db.GetByCriteriaAsync(l =>
-    (!string.IsNullOrEmpty(l.GeoData.Address) && l.GeoData.Address.Contains(query)) ||
-    l.ID.ToString().Contains(query) ||
-    l.GeoData.Region.Contains(query)); 
-*/

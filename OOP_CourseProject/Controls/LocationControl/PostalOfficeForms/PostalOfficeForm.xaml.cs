@@ -32,11 +32,12 @@ namespace OOP_CourseProject.Controls.LocationControl.PostalOfficeForms
             {
                 if (_originalModel != null)
                 {
-                    _originalModel.UpdateGeoData(new Coordinates(ViewModel.Longitude, ViewModel.Latitude, ViewModel.Address, ViewModel.Region));
-                    _originalModel.MaxStorageCapacity = ViewModel.MaxStorageCapacity;
-                    _originalModel.IsAutomated = ViewModel.IsAutomated;
-                    _originalModel.HandlesPublicDropOffs = ViewModel.HandlesPublicDropOffs;
-                    _originalModel.IsRegionalHQ = ViewModel.IsRegionalHQ;
+                    _originalModel.UpdateGeoData(new Coordinates((double)ViewModel.Longitude!, (double)ViewModel.Latitude!, ViewModel.Address, ViewModel.Region));
+                    _originalModel.MaxStorageCapacity = (uint)ViewModel.MaxStorageCapacity!;
+                    _originalModel.IsAutomated = (bool)ViewModel.IsAutomated!;
+                    _originalModel.HandlesPublicDropOffs = (bool)ViewModel.HandlesPublicDropOffs!;
+                    _originalModel.IsRegionalHQ = (bool)ViewModel.IsRegionalHQ!;
+                    _originalModel.Staff = ViewModel.AssignedEmployees.ToList();
 
                     PostalOfficeResult = _originalModel;
                 }
@@ -59,7 +60,22 @@ namespace OOP_CourseProject.Controls.LocationControl.PostalOfficeForms
             DialogResult = false;
             Close();
         }
+
+        private void AddEmployees_Click(object sender, RoutedEventArgs e)
+        {
+            var window = new EmployeeSearchWindow(
+                ViewModel.AssignedEmployees.ToList(),
+                selected =>
+                {
+                    ViewModel.AssignedEmployees.Clear();
+                    foreach (var employee in selected)
+                    {
+                        ViewModel.AssignedEmployees.Add(employee);
+                    }
+                });
+
+            window.Owner = this;
+            window.ShowDialog();
+        }
     }
-
-
 }

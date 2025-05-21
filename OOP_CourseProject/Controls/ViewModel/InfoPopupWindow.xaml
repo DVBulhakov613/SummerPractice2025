@@ -5,6 +5,6 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:OOP_CourseProject.Controls.ViewModel"
         mc:Ignorable="d"
-        Title="Детальна інформація" SizeToContent="WidthAndHeight" ResizeMode="CanResize">
+        Title="Детальна інформація" Height="400" Width="400">
     <local:InfoControl InfoProvider="{Binding}" />
 </Window>

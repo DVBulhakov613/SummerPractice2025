@@ -7,7 +7,8 @@
         mc:Ignorable="d"
         Title="Оберіть тип локації" Height="150" Width="250" WindowStartupLocation="CenterOwner">
     <StackPanel Margin="5" VerticalAlignment="Center">
-        <ComboBox x:Name="TypeComboBox" SelectedIndex="0" Style="{StaticResource ModernComboBox}">
+        <!-- fyi applying my modern style will cause an error, thus i have to cope with the default as i have no time to fix it -->
+        <ComboBox x:Name="TypeComboBox" SelectedIndex="0">
             <ComboBoxItem Content="Склад" Tag="Warehouse"/>
             <ComboBoxItem Content="Поштове відділення" Tag="PostalOffice"/>
         </ComboBox>

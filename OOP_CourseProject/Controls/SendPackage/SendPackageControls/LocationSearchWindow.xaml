@@ -25,9 +25,9 @@
             <ListView.ItemTemplate>
                 <DataTemplate>
                     <StackPanel>
-                        <TextBlock Text="{Binding ID}"/>
+                        <TextBlock Text="{Binding ID}" FontWeight="Bold"/>
                         <TextBlock Text="{Binding GeoData.Address}"/>
-                        <TextBlock Text="{Binding GeoData.Region}" FontWeight="Bold"/>
+                        <TextBlock Text="{Binding GeoData.Region}" FontStyle="Italic"/>
                     </StackPanel>
                 </DataTemplate>
             </ListView.ItemTemplate>
@@ -38,6 +38,7 @@
                 VerticalAlignment="Bottom" 
                 HorizontalAlignment="Right"
                 Command="{Binding SelectCommand}" 
-                Margin="0,10,0,0"/>
+                Margin="0,10,0,0"
+                Visibility="Visible"/>
     </Grid>
 </Window>
