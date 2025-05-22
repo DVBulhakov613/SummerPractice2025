@@ -37,6 +37,13 @@
                         <TextBlock Text="Оновити" VerticalAlignment="Center" Foreground="Black"/>
                     </StackPanel>
                 </Button>
+                <!-- serialize -->
+                <Button Background="Transparent" Margin="0,0,10,0" Visibility="Visible" Click="ExportButton_Click">
+                    <StackPanel Orientation="Horizontal" VerticalAlignment="Center">
+                        <Image Source="/Assets/ButtonIcons/Variant=Download.png" Width="20" Height="20" Margin="0,0,5,0"/>
+                        <TextBlock Text="Експорт" VerticalAlignment="Center" Foreground="Black"/>
+                    </StackPanel>
+                </Button>
                 <!-- refresh -->
                 <Button Background="Transparent" Margin="0,0,10,0" Visibility="Visible" Click="RefreshButton_Click">
                     <StackPanel Orientation="Horizontal" VerticalAlignment="Center">
@@ -60,7 +67,7 @@
                 <Border Grid.Column="0"
                      Background="{StaticResource SecondaryBackgroundBrush}" BorderBrush="LightGray" BorderThickness="1" CornerRadius="10"
                      Padding="10" Margin="0,0,10,0">
-                    <DataGrid ItemsSource="{Binding Items}" x:Name="LocationsDataGrid"
+                    <DataGrid ItemsSource="{Binding Items}" x:Name="DataGrid"
                            SelectedItem="{Binding SelectedItem, Mode=TwoWay}"
                            SelectionMode="Extended"
                            SelectionUnit="FullRow"

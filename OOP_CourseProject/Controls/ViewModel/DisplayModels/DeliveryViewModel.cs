@@ -73,6 +73,7 @@ namespace OOP_CourseProject.Controls.ViewModel
 
             InfoSections.Add(new InfoSection
             {
+                // not checking for null / missing data because locations are required
                 SectionTitle = "Локації",
                 InfoItems = new List<InfoItem>
                 {

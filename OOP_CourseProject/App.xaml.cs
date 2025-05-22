@@ -5,6 +5,7 @@ using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
 using OOP_CourseProject.Controls;
 using OOP_CourseProject.Controls.EmployeeControl;
+using OOP_CourseProject.Controls.ReceivePackageControls;
 using OOP_CourseProject.Controls.SendPackageControls; // REMOVE LATER
 using System.Windows;
 
@@ -92,7 +93,7 @@ namespace OOP_CourseProject
             services.AddSingleton<MainWindow>();
             services.AddTransient<HomePageControl>();
             services.AddTransient<SendPackage>();
-            services.AddTransient<ReceivePackage>();
+            services.AddTransient<ReceivePackageControl>();
             services.AddTransient<EmployeesControl>();
             services.AddTransient<ClientsControl>();
             services.AddTransient<LocationsControl>();

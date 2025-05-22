@@ -10,6 +10,7 @@ namespace Class_Lib.Backend.Package_related.enums
     {
         STORED,
         IN_TRANSIT,
+        RECEIVED,
         DELIVERED,
         RETURNED,
         LOST,

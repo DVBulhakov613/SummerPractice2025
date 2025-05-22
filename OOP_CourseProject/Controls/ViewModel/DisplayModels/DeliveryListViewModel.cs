@@ -60,7 +60,7 @@ namespace OOP_CourseProject.Controls.ViewModel.DisplayModels
                     new()
                     {
                         Label = $"Зміст посилки {delivery.SentToID}",
-                        Value = "Деталі...",
+                        Value = delivery.Package.DeclaredContent == null || delivery.Package.DeclaredContent.Count == 0 ? "Невідомо / Відсутнє" : "Деталі...",
                         OnClick = delivery.Package.DeclaredContent == null || delivery.Package.DeclaredContent.Count == 0 ? null : () =>
                         {
                             var contentListViewModel = new ContentListViewModel(delivery.Package.DeclaredContent); // must implement IInfoProviderViewModel
@@ -78,12 +78,12 @@ namespace OOP_CourseProject.Controls.ViewModel.DisplayModels
                 {
                     new()
                     {
-                        Label = "Надіслано з:", Value = $"{delivery.SentFromID} | {delivery.SentFrom.GeoData.Address}"
+                        Label = "Надіслано з:", Value = $"{delivery.SentFromID} | {delivery.SentFrom.GeoData.Region}{delivery.SentFrom.GeoData.Address}"
                     },
 
                     new()
                     {
-                        Label = "Отримано в:", Value = $"{delivery.SentToID} | {delivery.SentFrom.GeoData.Address}"
+                        Label = "Отримано в:", Value = $"{delivery.SentToID} | {delivery.SentTo.GeoData.Region}{delivery.SentTo.GeoData.Address}"
                     }
 
                 }

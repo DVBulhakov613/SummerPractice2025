@@ -5,7 +5,7 @@
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
              xmlns:helpers="clr-namespace:OOP_CourseProject.Controls.Helpers"
              mc:Ignorable="d"
-             d:DesignHeight="375" d:DesignWidth="400">
+             Title="Налаштування Поштового Офісу" Height="400" Width="400">
 
     <StackPanel Margin="20" VerticalAlignment="Top">
 

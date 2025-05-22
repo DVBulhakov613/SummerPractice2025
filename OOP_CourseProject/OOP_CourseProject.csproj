@@ -18,6 +18,7 @@
     <None Remove="Assets\ButtonIcons\PackageInfo\Variant=Path\Inactive.png" />
     <None Remove="Assets\ButtonIcons\PackageInfo\Variant=Report\Active.png" />
     <None Remove="Assets\ButtonIcons\PackageInfo\Variant=Report\Inactive.png" />
+    <None Remove="Assets\ButtonIcons\PLACEHOLDER.png" />
     <None Remove="Assets\ButtonIcons\Variant=Add.png" />
     <None Remove="Assets\ButtonIcons\Variant=Announcements.png" />
     <None Remove="Assets\ButtonIcons\Variant=Barcode.png" />
@@ -81,6 +82,9 @@
       <CopyToOutputDirectory>Never</CopyToOutputDirectory>
     </Resource>
     <Resource Include="Assets\ButtonIcons\PackageInfo\Variant=Report\Inactive.png">
+      <CopyToOutputDirectory>Never</CopyToOutputDirectory>
+    </Resource>
+    <Resource Include="Assets\ButtonIcons\PLACEHOLDER.png">
       <CopyToOutputDirectory>Never</CopyToOutputDirectory>
     </Resource>
     <Resource Include="Assets\ButtonIcons\Variant=Add.png">

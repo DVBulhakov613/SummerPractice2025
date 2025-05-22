@@ -48,30 +48,18 @@
         <ListView Grid.Row="1" Grid.Column="1" ItemsSource="{Binding AssignedEmployees}">
             <ListView.ItemTemplate>
                 <DataTemplate>
-                    <Grid Margin="3">
-                        <!-- tried to make it adjust based on whatever, didnt really work unfortunately -->
-                        <Grid.ColumnDefinitions>
-                            <ColumnDefinition Width="*" />
-                            <ColumnDefinition Width="Auto" />
-                        </Grid.ColumnDefinitions>
-
-                        <TextBlock Grid.Column="0"
-                                   Text="{Binding FullName}"
-                                   VerticalAlignment="Center"
-                                   TextTrimming="CharacterEllipsis"
-                                   Width="300"/> <!-- coping by just assigning width, for now -->
-
-                        <Button Grid.Column="1"
-                                Content="🗑"
+                    <DockPanel Margin="3">
+                        <Button Content="🗑"
+                                DockPanel.Dock="Right"
                                 Width="40"
                                 Padding="0"
                                 Margin="5,0,0,0"
                                 Foreground="{StaticResource AccentBrush}"
-                                HorizontalAlignment="Right"
                                 Command="{Binding DataContext.RemoveEmployeeCommand, RelativeSource={RelativeSource AncestorType=Window}}"
-                                CommandParameter="{Binding}"
+                                CommandParameter="{Binding}" 
                                 Visibility="Visible"/>
-                    </Grid>
+                        <TextBlock Text="{Binding FullName}" VerticalAlignment="Center"/>
+                    </DockPanel>
                 </DataTemplate>
             </ListView.ItemTemplate>
         </ListView>

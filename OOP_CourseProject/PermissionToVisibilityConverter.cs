@@ -9,6 +9,9 @@ using System.Windows;
 
 namespace OOP_CourseProject
 {
+    /// <summary>
+    /// This class is used to convert a permission ID to a visibility value.
+    /// </summary>
     public class PermissionToVisibilityConverter : IValueConverter
     {
         public object Convert(object value, Type targetType, object parameter, CultureInfo culture)

@@ -86,14 +86,12 @@
                         </DataGrid.Columns>
                     </DataGrid>
                 </Border>
-                <!-- Details Panel (optional, can be customized) -->
+
                 <!-- details panel -->
                 <Border Grid.Column="1" Grid.RowSpan="2" Grid.Row="0"
                         Background="White" BorderBrush="LightGray" BorderThickness="1" CornerRadius="10"
                         Padding="10">
                     <employeeControls:EmployeeInfoControl Employee="{Binding SelectedItem}" />
-
-                    <!--<viewmodels:InfoControl InfoProvider="{Binding DataContext.SelectedInfoViewModel, RelativeSource={RelativeSource AncestorType=UserControl}}" />-->
                 </Border>
             </Grid>
         </Grid>

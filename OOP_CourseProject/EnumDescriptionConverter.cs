@@ -10,6 +10,9 @@ using System.Windows.Data;
 
 namespace OOP_CourseProject
 {
+    /// <summary>
+    /// This class is used to convert enum values to their descriptions for display in the UI.
+    /// </summary>
     public class EnumDescriptionConverter : IValueConverter
     {
         public object Convert(object value, Type targetType, object parameter, CultureInfo culture)

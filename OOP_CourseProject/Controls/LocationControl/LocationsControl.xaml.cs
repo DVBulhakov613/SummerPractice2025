@@ -1,5 +1,6 @@
 ﻿using Class_Lib;
 using Class_Lib.Backend.Location_related.Methods;
+using Class_Lib.Backend.Package_related;
 using Class_Lib.Backend.Serialization.DTO;
 using Microsoft.Extensions.DependencyInjection;
 using OOP_CourseProject.Controls.Helpers;
@@ -141,12 +142,11 @@ namespace OOP_CourseProject.Controls
             await RefreshAsync();
         }
 
-
-        private void SerilizeButton_Click(object sender, RoutedEventArgs e)
+        private void ExportButton_Click(object sender, RoutedEventArgs e)
         {
             try
             {
-                if (SerializationHelper.SerializeSelectedItemsToFolder<BaseLocation>(LocationsDataGrid, d => d.ToDto()))
+                if (SerializationHelper.SerializeSelectedItemsToFolder<BaseLocation>(DataGrid, d => d.ToDto()))
                     MessageBox.Show("Файли збережені успішно.");
             }
             catch (Exception ex)

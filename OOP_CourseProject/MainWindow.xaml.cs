@@ -3,6 +3,7 @@ using Class_Lib.Backend.Person_related;
 using Microsoft.Extensions.DependencyInjection;
 using OOP_CourseProject.Controls;
 using OOP_CourseProject.Controls.EmployeeControl;
+using OOP_CourseProject.Controls.ReceivePackageControls;
 using OOP_CourseProject.Controls.SendPackageControls; // DEBUG LINE
 using System.Linq.Expressions;
 using System.Windows;
@@ -32,7 +33,7 @@ namespace OOP_CourseProject
 
         private void ReceivePackageButton_Click(object sender, RoutedEventArgs e)
         {
-            MainContent.Content = App.AppHost.Services.GetRequiredService<ReceivePackage>();
+            MainContent.Content = App.AppHost.Services.GetRequiredService<ReceivePackageControl>();
         }
 
         private void ClientsButton_Click(object sender, RoutedEventArgs e)
