@@ -98,6 +98,7 @@ namespace OOP_CourseProject
             services.AddTransient<ClientsControl>();
             services.AddTransient<LocationsControl>();
             services.AddTransient<QueryBuilder>();
+            services.AddTransient<RolesControl>();
             //services.AddTransient<PackageConfigurations>();// DEBUG LINE
             //services.AddTransient<ReceivePackageControl>();
         }

@@ -1,4 +1,5 @@
-﻿using Class_Lib.Backend.Database.Repositories;
+﻿using Class_Lib.Backend.Database.Methods;
+using Class_Lib.Backend.Database.Repositories;
 using Class_Lib.Backend.Location_related.Methods;
 using Class_Lib.Backend.Package_related.Methods;
 using Class_Lib.Backend.Person_related.Methods;
@@ -64,6 +65,11 @@ namespace Class_Lib.Backend.Database
                 return new RoleRepository(sp.GetRequiredService<AppDbContext>());
             });
 
+            services.AddScoped<PermissionRepository>(sp =>
+            {
+                return new PermissionRepository(sp.GetRequiredService<AppDbContext>());
+            });
+
 
 
 
@@ -105,6 +111,16 @@ namespace Class_Lib.Backend.Database
             services.AddScoped<UserMethods>(sp =>
             {
                 return new UserMethods(sp.GetRequiredService<UserRepository>());
+            });
+
+            services.AddScoped<RoleMethods>(sp =>
+            {
+                return new RoleMethods(sp.GetRequiredService<RoleRepository>());
+            });
+
+            services.AddScoped<PermissionMethods>(sp =>
+            {
+                return new PermissionMethods(sp.GetRequiredService<PermissionRepository>());
             });
 
             // services

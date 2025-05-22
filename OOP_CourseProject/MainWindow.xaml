@@ -24,6 +24,7 @@
             <Button Content="Клієнти" FontSize="16" Click="ClientsButton_Click" Foreground="Black" HorizontalContentAlignment="Left" Visibility="{Binding Converter={StaticResource PermissionConverter}, ConverterParameter=150}"/>
             <Button Content="Працівники" FontSize="16" Click="EmployeesButton_Click" Foreground="Black" HorizontalContentAlignment="Left" Visibility="{Binding Converter={StaticResource PermissionConverter}, ConverterParameter=41}"/>
             <Button Content="Локації" FontSize="16" Click="LocationsButton_Click" Foreground="Black" HorizontalContentAlignment="Left" Visibility="{Binding Converter={StaticResource PermissionConverter}, ConverterParameter=51}"/>
+            <Button Content="Ролі та дозволи" FontSize="16" Click="RolesButton_Click" Foreground="Black" HorizontalContentAlignment="Left" Visibility="{Binding Converter={StaticResource PermissionConverter}, ConverterParameter=141}"/>
         </StackPanel>
 
         <!-- main content -->

@@ -151,7 +151,7 @@
                 </Border>
                 
                 <!-- details panel -->
-                <Border Grid.Column="1" Grid.RowSpan="2" Grid.Row="0"
+                <Border Grid.Column="1"
                         Background="White" BorderBrush="LightGray" BorderThickness="1" CornerRadius="10"
                         Padding="10">
                     <packages:DeliveryInfoControl Delivery="{Binding SelectedItem}" />

@@ -48,14 +48,26 @@ namespace Class_Lib
 
             #region Role Permissions specifications
 
+            modelBuilder.Entity<Role>() // auto increment for ID
+                .Property(l => l.ID)
+                .ValueGeneratedOnAdd();
+            modelBuilder.Entity<Role>() // should cascade RolePermission deletion when role is deleted
+                .HasMany(r => r.RolePermissions)
+                .WithOne(rp => rp.Role)
+                .HasForeignKey(rp => rp.RoleID)
+                .OnDelete(DeleteBehavior.Cascade);
+            modelBuilder.Entity<Role>() // should null User references when role is deleted
+                .HasMany(r => r.Users)
+                .WithOne(u => u.Role)
+                .HasForeignKey(u => u.RoleID)
+                .OnDelete(DeleteBehavior.SetNull);
+
             modelBuilder.Entity<RolePermission>()
                 .HasKey(rp => new { rp.RoleID, rp.PermissionID });
-
             modelBuilder.Entity<RolePermission>()
                 .HasOne(rp => rp.Role)
                 .WithMany(r => r.RolePermissions)
                 .HasForeignKey(rp => rp.RoleID);
-
             modelBuilder.Entity<RolePermission>()
                 .HasOne(rp => rp.Permission)
                 .WithMany(p => p.RolePermissions)

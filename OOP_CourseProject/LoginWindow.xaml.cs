@@ -17,6 +17,7 @@ namespace OOP_CourseProject
 
         private async void LoginButton_Click(object sender, RoutedEventArgs e)
         {
+            LoginButton.IsEnabled = false; // disabling the button first and foremost to prevent multiple clicks in an async operation
             var username = UsernameTextBox.Text;
             var password = PasswordBox.Password;
 
@@ -28,6 +29,7 @@ namespace OOP_CourseProject
             if (user == null || !PasswordHelper.VerifyPassword(password, user.PasswordHash))
             {
                 MessageBox.Show("Недійсне ім'я користувача або пароль.", "Помилка авторизації", MessageBoxButton.OK, MessageBoxImage.Error);
+                LoginButton.IsEnabled = true; // re-enable the button if login fails
                 return;
             }
 
@@ -40,14 +42,7 @@ namespace OOP_CourseProject
 
             DialogResult = true; // this is how App.xaml.cs will know login was successful
             Close();
-
-            //var result = await employeeRepository.Query()
-            //    .Include(e => e.User)
-            //    .Include(e => e.Role)
-            //    .Include(e => e.Role.RolePermissions)
-            //    .Include(e => e.Workplace)
-            //    .Where(e => e.ID == user.Employee.ID)
-            //    .ExecuteAsync();
+            LoginButton.IsEnabled = true; // re-enabling once closed to allow login afterwards
         }
 
         /// <summary>

@@ -13,12 +13,10 @@ namespace OOP_CourseProject.Controls.ReceivePackageControls
         public ReceivePackageInfoControl()
         {
             InitializeComponent();
-            DataContext = this;
         }
 
         public static readonly DependencyProperty PackageProperty =
-            DependencyProperty.Register(nameof(Package), typeof(Delivery), typeof(ReceivePackageInfoControl),
-                new PropertyMetadata(null, OnDeliveryChanged));
+            DependencyProperty.Register(nameof(Package), typeof(Delivery), typeof(ReceivePackageInfoControl), new PropertyMetadata(null, OnDeliveryChanged));
 
         public Delivery Package
         {

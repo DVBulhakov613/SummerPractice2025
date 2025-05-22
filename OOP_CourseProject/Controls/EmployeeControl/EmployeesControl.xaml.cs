@@ -79,7 +79,7 @@ namespace OOP_CourseProject.Controls.EmployeeControl
             ViewModel.UpdateItems(await EmployeeMethods.GetByCriteriaAsync(App.CurrentEmployee, p => p.ID > 0));
         }
 
-        private void SerilizeButton_Click(object sender, RoutedEventArgs e)
+        private void SerializeButton_Click(object sender, RoutedEventArgs e)
         {
             try
             {

@@ -4,7 +4,7 @@
              xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
              xmlns:local="clr-namespace:OOP_CourseProject.Controls"
-             
+             xmlns:packageControls="clr-namespace:OOP_CourseProject.Controls.ReceivePackageControls"
              mc:Ignorable="d"
              Background="{StaticResource PrimaryBackgroundBrush}"
              d:DesignHeight="450" d:DesignWidth="800">
@@ -65,17 +65,18 @@
                     <DataGrid x:Name="PackageDataGrid"
                               ItemsSource="{Binding Items}"
                               SelectedItem="{Binding SelectedItem, Mode=TwoWay}"
-                              SelectionMode="Single"
+                              SelectionMode="Extended"
+                              SelectionUnit="FullRow"
                               AutoGenerateColumns="False"
                               HeadersVisibility="Column"
                               CanUserAddRows="False"
                               IsReadOnly="True">
                         <DataGrid.Columns>
-                            <DataGridTextColumn Header="ID" Binding="{Binding ID}" Width="*" />
-                            <DataGridTextColumn Header="ID" Binding="{Binding PackageID}" Width="*" />
+                            <DataGridTextColumn Header="ID доставки" Binding="{Binding ID}" Width="*" />
+                            <DataGridTextColumn Header="ID посилки" Binding="{Binding PackageID}" Width="*" />
                             <DataGridTextColumn Header="Відправник" Binding="{Binding Sender.FullName}" Width="*" />
-                            <DataGridTextColumn Header="Отримувач" Binding="{Binding Reciever.FullName}" Width="*" />
-                            <DataGridTextColumn Header="Статус" Binding="{Binding Package.Status}" Width="*" />
+                            <DataGridTextColumn Header="Отримувач" Binding="{Binding Receiver.FullName}" Width="*" />
+                            <DataGridTextColumn Header="Статус" Binding="{Binding Package.PackageStatus}" Width="*" />
                         </DataGrid.Columns>
                     </DataGrid>
                 </Border>
@@ -84,7 +85,7 @@
                 <Border Grid.Column="1"
                         Background="White" BorderBrush="LightGray" BorderThickness="1" CornerRadius="10"
                         Padding="10">
-                    <!--<packageControls:ReceivePackageInfoControl Package="{Binding SelectedItem}" />-->
+                    <packageControls:ReceivePackageInfoControl Package="{Binding SelectedItem}" />
                 </Border>
             </Grid>
         </Grid>

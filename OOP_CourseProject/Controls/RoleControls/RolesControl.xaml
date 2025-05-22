@@ -5,8 +5,87 @@
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
              xmlns:local="clr-namespace:OOP_CourseProject.Controls"
              mc:Ignorable="d" 
-             d:DesignHeight="450" d:DesignWidth="800">
+             Height="Auto" Width="Auto" Background="{StaticResource PrimaryBackgroundBrush}">
     <Grid>
-            
+        <Grid Margin="20">
+            <Grid.RowDefinitions>
+                <RowDefinition Height="Auto"/>
+                <RowDefinition Height="*"/>
+            </Grid.RowDefinitions>
+            <!-- Toolbar -->
+            <StackPanel Grid.Row="0" Orientation="Horizontal" Margin="0,0,0,10" Background="{StaticResource SecondaryBackgroundBrush}">
+                <!-- add -->
+                <Button Background="Transparent" Margin="0,0,10,0" Visibility="Visible" Click="AddButton_Click">
+                    <StackPanel Orientation="Horizontal" VerticalAlignment="Center">
+                        <Image Source="/Assets/ButtonIcons/Variant=Add.png" Width="20" Height="20" Margin="0,0,5,0"/>
+                        <TextBlock Text="Додати" VerticalAlignment="Center" Foreground="Black"/>
+                    </StackPanel>
+                </Button>
+
+                <!-- remove -->
+                <Button Background="Transparent" Margin="0,0,10,0" Visibility="Visible" Click="RemoveButton_Click">
+                    <StackPanel Orientation="Horizontal" VerticalAlignment="Center">
+                        <Image Source="/Assets/ButtonIcons/Variant=Remove.png" Width="20" Height="20" Margin="0,0,5,0"/>
+                        <TextBlock Text="Видалити" VerticalAlignment="Center" Foreground="Black"/>
+                    </StackPanel>
+                </Button>
+
+                <!-- edit -->
+                <Button Background="Transparent" Margin="0,0,10,0" Visibility="Visible" Click="EditButton_Click">
+                    <StackPanel Orientation="Horizontal" VerticalAlignment="Center">
+                        <Image Source="/Assets/ButtonIcons/Variant=Edit.png" Width="20" Height="20" Margin="0,0,5,0"/>
+                        <TextBlock Text="Оновити" VerticalAlignment="Center" Foreground="Black"/>
+                    </StackPanel>
+                </Button>
+
+                <!-- export -->
+                <Button Background="Transparent" Margin="0,0,10,0" Visibility="Visible" Click="SerializeButton_Click">
+                    <StackPanel Orientation="Horizontal" VerticalAlignment="Center">
+                        <Image Source="/Assets/ButtonIcons/Variant=Download.png" Width="20" Height="20" Margin="0,0,5,0"/>
+                        <TextBlock Text="Експорт" VerticalAlignment="Center" Foreground="Black"/>
+                    </StackPanel>
+                </Button>
+
+                <!-- refresh -->
+                <Button Background="Transparent"  Margin="0,0,10,0" Visibility="Visible" Click="RefreshButton_Click">
+                    <StackPanel Orientation="Horizontal" VerticalAlignment="Center">
+                        <Image Source="/Assets/ButtonIcons/Variant=Refresh.png" Width="20" Height="20" Margin="0,0,5,0"/>
+                        <TextBlock Text="Оновити" VerticalAlignment="Center" Foreground="Black"/>
+                    </StackPanel>
+                </Button>
+            </StackPanel>
+            <!-- Main Content -->
+            <Grid Grid.Row="1">
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="2*"/>
+                    <ColumnDefinition Width="*"/>
+                </Grid.ColumnDefinitions>
+                <!-- DataGrid in Border -->
+                <Border Grid.Column="0"
+                    Background="White" BorderBrush="LightGray" BorderThickness="1" CornerRadius="10"
+                    Padding="10" Margin="0,0,10,0">
+                    <DataGrid x:Name="RolesDataGrid"
+                          ItemsSource="{Binding Items}"
+                          SelectedItem="{Binding SelectedItem, Mode=TwoWay}"
+                          SelectionMode="Single"
+                          AutoGenerateColumns="False"
+                          HeadersVisibility="Column"
+                          CanUserAddRows="False"
+                          IsReadOnly="True">
+                        <DataGrid.Columns>
+                            <DataGridTextColumn Header="ID" Binding="{Binding ID}" Width="*" />
+                            <DataGridTextColumn Header="Назва" Binding="{Binding Name}" Width="*" />
+                        </DataGrid.Columns>
+                    </DataGrid>
+                </Border>
+
+                <!-- details panel -->
+                <Border Grid.Column="1" Grid.RowSpan="2" Grid.Row="0"
+                        Background="White" BorderBrush="LightGray" BorderThickness="1" CornerRadius="10"
+                        Padding="10">
+                    <!--<employeeControls:EmployeeInfoControl Employee="{Binding SelectedItem}" />-->
+                </Border>
+            </Grid>
+        </Grid>
     </Grid>
 </UserControl>

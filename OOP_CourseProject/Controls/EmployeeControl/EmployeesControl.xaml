@@ -41,7 +41,7 @@
                 </Button>
 
                 <!-- export -->
-                <Button Background="Transparent" Margin="0,0,10,0" Visibility="Visible" Click="SerilizeButton_Click">
+                <Button Background="Transparent" Margin="0,0,10,0" Visibility="Visible" Click="SerializeButton_Click">
                     <StackPanel Orientation="Horizontal" VerticalAlignment="Center">
                         <Image Source="/Assets/ButtonIcons/Variant=Download.png" Width="20" Height="20" Margin="0,0,5,0"/>
                         <TextBlock Text="Експорт" VerticalAlignment="Center" Foreground="Black"/>

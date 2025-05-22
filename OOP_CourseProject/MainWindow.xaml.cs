@@ -50,5 +50,10 @@ namespace OOP_CourseProject
         {
             MainContent.Content = App.AppHost.Services.GetRequiredService<LocationsControl>();
         }
+
+        private void RolesButton_Click(object sender, RoutedEventArgs e)
+        {
+            MainContent.Content = App.AppHost.Services.GetRequiredService<RolesControl>();
+        }
     }
 }

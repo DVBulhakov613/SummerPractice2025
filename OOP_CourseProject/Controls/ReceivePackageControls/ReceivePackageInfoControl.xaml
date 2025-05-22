@@ -3,7 +3,7 @@
              xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
              xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
-             xmlns:local="clr-namespace:OOP_CourseProject.Controls.PackageInfo"
+             xmlns:local="clr-namespace:OOP_CourseProject.Controls.ReceivePackageControls"
              xmlns:viewmodels="clr-namespace:OOP_CourseProject.Controls.ViewModel"
              xmlns:controls="clr-namespace:OOP_CourseProject.Controls"
              mc:Ignorable="d" Height="Auto" Width="Auto">
@@ -16,7 +16,7 @@
 
         <!-- Header -->
         <StackPanel Grid.Row="0" Margin="0,0,0,10" Orientation="Horizontal">
-            <TextBlock Text="Інформація про пакунок" FontWeight="Bold" FontSize="16"/>
+            <TextBlock Text="Інформація про посилку" FontWeight="Bold" FontSize="16"/>
             <TextBlock Text="{Binding SelectedItem.ID}" FontWeight="Bold" Margin="4,0,0,0" FontSize="16"/>
         </StackPanel>
 
@@ -28,17 +28,18 @@
                         ActiveImage="/Assets/ButtonIcons/PackageInfo/Variant=FullInfo/Active.png"
                         InactiveImage="/Assets/ButtonIcons/PackageInfo/Variant=FullInfo/Inactive.png" />
                 </TabItem.Tag>
-                <viewmodels:InfoControl InfoProvider="{Binding PackageViewModel}" BorderBrush="Black" BorderThickness="0.5"/>
+                <viewmodels:InfoControl InfoProvider="{Binding DataContext.SelectedInfoViewModel, RelativeSource={RelativeSource AncestorType=UserControl}}" BorderBrush="Black" BorderThickness="0.5"/>
             </TabItem>
 
             <!-- to-do log -->
             <TabItem Style="{StaticResource ImageTabItemStyle}">
                 <TabItem.Tag>
                     <controls:TabImageSet 
-                        ActiveImage="/Assets/ButtonIcons/PackageInfo/Variant=Path/Active.png"
-                        InactiveImage="/Assets/ButtonIcons/PackageInfo/Variant=Path/Inactive.png" />
+                        ActiveImage="/Assets/ButtonIcons/PackageInfo/PLACEHOLDER.png"
+                        InactiveImage="/Assets/ButtonIcons/PackageInfo/PLACEHOLDER.png" />
                 </TabItem.Tag>
-                <!--<local:PackageLogControl Package="{Binding Package}" />-->
+                <TextBlock Text="not implemented (yet)"/>
+                <!--<local:PackageLogControl Delivery="{Binding Package, RelativeSource={RelativeSource AncestorType=UserControl}}"/>-->
             </TabItem>
 
             <!--<TabItem Style="{StaticResource ImageTabItemStyle}">

@@ -17,7 +17,7 @@ namespace OOP_CourseProject.Controls.ReceivePackageControls
     public partial class ReceivePackageControl : UserControl
     {
         public GenericInfoDisplayViewModel ViewModel { get; set; }
-        public DeliveryMethods PackageMethods { get; } = App.AppHost.Services.GetRequiredService<DeliveryMethods>();
+        public DeliveryMethods DeliveryMethods { get; } = App.AppHost.Services.GetRequiredService<DeliveryMethods>();
 
         public ReceivePackageControl()
         {
@@ -32,9 +32,18 @@ namespace OOP_CourseProject.Controls.ReceivePackageControls
                 MessageBox.Show("Ви не прив'язані до жодного відділення. Пакунки для отримання не доступні.", "Інформація", MessageBoxButton.OK, MessageBoxImage.Information);
                 return;
             }
+            else if(App.CurrentEmployee.Employee.Workplace == null && App.CurrentEmployee.CachedPermissions.Contains(2))
+            {
+                MessageBox.Show("Ви не прив'язані до жодного відділення. Показано доставки з усіх відділень.", "Інформація", MessageBoxButton.OK, MessageBoxImage.Information);
+                var packages = await DeliveryMethods.GetByCriteriaAsync(App.CurrentEmployee,
+                    p => p.Package.PackageStatus == PackageStatus.IN_TRANSIT || p.Package.PackageStatus == PackageStatus.RECEIVED
+                );
+                ViewModel = ViewModelService.CreateViewModel(packages);
+                DataContext = ViewModel;
+            }
             else
             {
-                var packages = await PackageMethods.GetByCriteriaAsync(App.CurrentEmployee,
+                var packages = await DeliveryMethods.GetByCriteriaAsync(App.CurrentEmployee,
                     p => p.SentToID == App.CurrentEmployee.Employee.WorkplaceID
                     && (p.Package.PackageStatus == PackageStatus.IN_TRANSIT || p.Package.PackageStatus == PackageStatus.RECEIVED)
                 );
@@ -45,32 +54,32 @@ namespace OOP_CourseProject.Controls.ReceivePackageControls
 
         private async void ReceiveButton_Click(object sender, RoutedEventArgs e)
         {
-            if (ViewModel.SelectedItem is not Delivery package || package.Package.PackageStatus != PackageStatus.IN_TRANSIT)
+            if (ViewModel.SelectedItem is not Delivery delivery || delivery.Package.PackageStatus != PackageStatus.IN_TRANSIT)
                 return;
 
-            package.Package.PackageStatus = PackageStatus.RECEIVED;
-            await PackageMethods.UpdateAsync(App.CurrentEmployee, package);
+            delivery.Package.PackageStatus = PackageStatus.RECEIVED;
+            await DeliveryMethods.UpdateAsync(App.CurrentEmployee, delivery);
             RefreshButton_Click(sender, e);
         }
 
         private async void DeliverButton_Click(object sender, RoutedEventArgs e)
         {
-            if (ViewModel.SelectedItem is not Delivery package || package.Package.PackageStatus != PackageStatus.RECEIVED)
+            if (ViewModel.SelectedItem is not Delivery delivery || delivery.Package.PackageStatus != PackageStatus.RECEIVED)
                 return;
 
-            package.Package.PackageStatus = PackageStatus.DELIVERED;
-            await PackageMethods.UpdateAsync(App.CurrentEmployee, package);
+            delivery.Package.PackageStatus = PackageStatus.DELIVERED;
+            await DeliveryMethods.UpdateAsync(App.CurrentEmployee, delivery);
             RefreshButton_Click(sender, e);
         }
 
         private async void RefreshButton_Click(object sender, RoutedEventArgs e)
         {
-            var packages = await PackageMethods.GetByCriteriaAsync(
+            var deliveries = await DeliveryMethods.GetByCriteriaAsync(
                 App.CurrentEmployee,
                 p => p.SentToID == App.CurrentEmployee.Employee.Workplace.ID &&
                      (p.Package.PackageStatus == PackageStatus.IN_TRANSIT || p.Package.PackageStatus == PackageStatus.RECEIVED)
             );
-            ViewModel.UpdateItems(packages);
+            ViewModel.UpdateItems(deliveries);
         }
 
         private void ExportButton_Click(object sender, RoutedEventArgs e)
