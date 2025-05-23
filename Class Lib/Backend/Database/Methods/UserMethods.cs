@@ -30,7 +30,7 @@ namespace Class_Lib.Backend.Person_related.Methods
         }
 
         // Read
-        public async Task<IEnumerable<User>> GetByCustomCriteriaAsync(User user, Expression<Func<User, bool>> filter)
+        public async Task<IEnumerable<User>> GetByCriteriaAsync(User user, Expression<Func<User, bool>> filter)
         {
             ArgumentNullException.ThrowIfNull(filter);
 

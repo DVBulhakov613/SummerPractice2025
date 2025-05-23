@@ -11,9 +11,10 @@ namespace Class_Lib
 {
     public class User
     {
+        public uint ID { get; set; } // PK
         public string Username { get; set; } // username, UNIQUE
         public string PasswordHash { get; set; } // hashed password
-        public uint RoleID { get; set; } // role ID (for db purposes)
+        public uint? RoleID { get; set; } // role ID (for db purposes)
         public Role Role { get; set; } // "Administrator", "Manager", "Employee", NOT client;
         public uint? PersonID { get; set; } // Foreign key to Person table
         public Employee Employee { get; set; } // Navigation property

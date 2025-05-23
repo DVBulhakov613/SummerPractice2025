@@ -15,7 +15,6 @@ namespace OOP_CourseProject.Controls.RoleControls
 
         public RoleDialogViewModel(IEnumerable<Permission> allPermissions, Role? editingRole = null)
         {
-            // Gather selected permission IDs from the RolePermissions junction
             var selectedPermissionIds = editingRole?.RolePermissions?.Select(rp => rp.PermissionID).ToHashSet() ?? new();
 
             foreach (var perm in allPermissions)

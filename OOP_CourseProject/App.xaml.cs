@@ -7,6 +7,7 @@ using OOP_CourseProject.Controls;
 using OOP_CourseProject.Controls.EmployeeControl;
 using OOP_CourseProject.Controls.ReceivePackageControls;
 using OOP_CourseProject.Controls.SendPackageControls; // REMOVE LATER
+using OOP_CourseProject.Controls.UserObjectControls;
 using System.Windows;
 
 namespace OOP_CourseProject
@@ -99,6 +100,7 @@ namespace OOP_CourseProject
             services.AddTransient<LocationsControl>();
             services.AddTransient<QueryBuilder>();
             services.AddTransient<RolesControl>();
+            services.AddTransient<UserObjectControl>();
             //services.AddTransient<PackageConfigurations>();// DEBUG LINE
             //services.AddTransient<ReceivePackageControl>();
         }

@@ -207,10 +207,6 @@ namespace Class_Lib
                 .HasForeignKey(e => e.WorkplaceID)
                 .OnDelete(DeleteBehavior.Restrict)
                 .IsRequired(false); // not all employees have a workplace
-            modelBuilder.Entity<Employee>() // ties user data to employee objects
-                .HasOne(e => e.User)
-                .WithOne(u => u.Employee)
-                .HasForeignKey<User>(u => u.PersonID);
             #endregion
 
             //// manager table specifications
@@ -221,15 +217,33 @@ namespace Class_Lib
 
             #region user table
             modelBuilder.Entity<User>()
-                .HasKey(u => u.PersonID); // PersonID as the PK
+                .HasKey(u => u.ID);
+            modelBuilder.Entity<User>() // auto-increment for ID
+                .Property(p => p.ID)
+                .ValueGeneratedOnAdd();
             modelBuilder.Entity<User>()
-                .HasIndex(u => u.Username) // unique index for username
+                .HasIndex(u => u.Username)
                 .IsUnique();
             modelBuilder.Entity<User>()
-                .HasOne(e => e.Role)
+                .Property(u => u.RoleID)
+                .IsRequired(false); // make RoleID nullable in the database
+
+            modelBuilder.Entity<User>()
+                .HasOne(u => u.Employee)
+                .WithOne(e => e.User)
+                .HasForeignKey<User>(u => u.PersonID)
+                .OnDelete(DeleteBehavior.Cascade);
+
+            modelBuilder.Entity<User>()
+                .HasOne(u => u.Role)
                 .WithMany(r => r.Users)
-                .HasForeignKey(e => e.RoleID)
-                .OnDelete(DeleteBehavior.Restrict);
+                .HasForeignKey(u => u.RoleID)
+                .OnDelete(DeleteBehavior.SetNull); // when Role is deleted, set User.RoleID = null
+            modelBuilder.Entity<User>()
+                .HasOne(u => u.Employee)
+                .WithOne(e => e.User)
+                .HasForeignKey<User>(u => u.PersonID)
+                .OnDelete(DeleteBehavior.Cascade); // when Employee is deleted, delete User
             #endregion
 
             #region client table specifications

@@ -77,7 +77,8 @@
                     Padding="10" Margin="0,0,10,0">
                     <DataGrid ItemsSource="{Binding Items}" x:Name="ClientDataGrid"
                           SelectedItem="{Binding SelectedItem, Mode=TwoWay}"
-                          SelectionMode="Single"
+                          SelectionMode="Extended"
+                          SelectionUnit="FullRow"
                           AutoGenerateColumns="False"
                           HeadersVisibility="Column"
                           CanUserAddRows="False"

@@ -5,6 +5,7 @@ using OOP_CourseProject.Controls;
 using OOP_CourseProject.Controls.EmployeeControl;
 using OOP_CourseProject.Controls.ReceivePackageControls;
 using OOP_CourseProject.Controls.SendPackageControls; // DEBUG LINE
+using OOP_CourseProject.Controls.UserObjectControls;
 using System.Linq.Expressions;
 using System.Windows;
 
@@ -54,6 +55,11 @@ namespace OOP_CourseProject
         private void RolesButton_Click(object sender, RoutedEventArgs e)
         {
             MainContent.Content = App.AppHost.Services.GetRequiredService<RolesControl>();
+        }
+
+        private void UsersButton_Click(object sender, RoutedEventArgs e)
+        {
+            MainContent.Content = App.AppHost.Services.GetRequiredService<UserObjectControl>();
         }
     }
 }

@@ -23,7 +23,6 @@ namespace Class_Lib.Backend.Database.Repositories
             if (_user == null)
                 throw new UnauthorizedAccessException("Користувач не авторизований.");
 
-            // Always fetch deliveries first
             if(!_user.HasPermission(PermissionKey.ReadDelivery))
                 throw new UnauthorizedAccessException("Немає дозволу читати доставки.");
 
@@ -35,8 +34,6 @@ namespace Class_Lib.Backend.Database.Repositories
                 return deliveries;
 
             var deliveryIds = deliveries.Select(d => d.ID).ToList();
-
-            // Load related entities only if the user has permission
 
             if (_user.HasPermission(PermissionKey.ReadPackage))
             {

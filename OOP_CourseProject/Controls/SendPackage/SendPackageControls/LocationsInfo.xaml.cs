@@ -13,7 +13,6 @@ namespace OOP_CourseProject.Controls.SendPackageControls
         public LocationsInfo()
         {
             InitializeComponent();
-            //DataContext = new ViewModel.ViewModels.LocationInfoViewModel();
         }
     }
 }

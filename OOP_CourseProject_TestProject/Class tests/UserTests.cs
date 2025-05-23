@@ -57,7 +57,7 @@ namespace OOP_CourseProject_TestProject.Class_tests
             await _userMethods.AddAsync(_adminUser, user);
 
             // Act
-            var retrievedUser = await _userMethods.GetByCustomCriteriaAsync(_adminUser, u => u.Username == username);
+            var retrievedUser = await _userMethods.GetByCriteriaAsync(_adminUser, u => u.Username == username);
 
             // Assert
             Assert.IsNotNull(retrievedUser);
@@ -128,7 +128,7 @@ namespace OOP_CourseProject_TestProject.Class_tests
             await _userMethods.DeleteAsync(_adminUser, "user");
 
             // Assert
-            var retrievedUser = await _userMethods.GetByCustomCriteriaAsync(_adminUser, u => u.Username == username);
+            var retrievedUser = await _userMethods.GetByCriteriaAsync(_adminUser, u => u.Username == username);
             Assert.IsFalse(retrievedUser.Any());
         }
 

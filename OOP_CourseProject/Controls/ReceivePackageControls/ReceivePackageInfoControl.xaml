@@ -35,8 +35,8 @@
             <TabItem Style="{StaticResource ImageTabItemStyle}">
                 <TabItem.Tag>
                     <controls:TabImageSet 
-                        ActiveImage="/Assets/ButtonIcons/PackageInfo/PLACEHOLDER.png"
-                        InactiveImage="/Assets/ButtonIcons/PackageInfo/PLACEHOLDER.png" />
+                        ActiveImage="/Assets/ButtonIcons/PackageInfo/Variant=Report/Active.png"
+                        InactiveImage="/Assets/ButtonIcons/PackageInfo/Variant=Report/Inactive.png" />
                 </TabItem.Tag>
                 <TextBlock Text="not implemented (yet)"/>
                 <!--<local:PackageLogControl Delivery="{Binding Package, RelativeSource={RelativeSource AncestorType=UserControl}}"/>-->

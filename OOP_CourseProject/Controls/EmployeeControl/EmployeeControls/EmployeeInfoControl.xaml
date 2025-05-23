@@ -25,19 +25,19 @@
         <Grid Grid.Row="1" HorizontalAlignment="Stretch" MaxWidth="500">
             <!-- Tabs -->
             <TabControl Grid.Row="1" Style="{StaticResource UniformTabControlStyle}">
-                <TabItem  Style="{StaticResource ImageTabItemStyle}">
+                <TabItem  Style="{StaticResource ImageTabItemStyle}" MaxHeight="70">
                     <TabItem.Tag>
                         <controls:TabImageSet 
-                            ActiveImage="/Assets/ButtonIcons/PackageInfo/Variant=FullInfo/Active.png"
-                            InactiveImage="/Assets/ButtonIcons/PackageInfo/Variant=FullInfo/Inactive.png" />
+                            ActiveImage="/Assets/ButtonIcons/PLACEHOLDER.png"
+                            InactiveImage="/Assets/ButtonIcons/PLACEHOLDER.png" />
                     </TabItem.Tag>
                     <viewmodels:InfoControl InfoProvider="{Binding DataContext.SelectedInfoViewModel, RelativeSource={RelativeSource AncestorType=UserControl}}" BorderBrush="Black" BorderThickness="0.5" />
                 </TabItem>
-                <TabItem Style="{StaticResource ImageTabItemStyle}">
+                <TabItem Style="{StaticResource ImageTabItemStyle}" MaxHeight="70">
                     <TabItem.Tag>
                         <controls:TabImageSet 
-                            ActiveImage="/Assets/ButtonIcons/PackageInfo/Variant=Path/Active.png"
-                            InactiveImage="/Assets/ButtonIcons/PackageInfo/Variant=Path/Inactive.png" />
+                            ActiveImage="/Assets/ButtonIcons/PackageInfo/Variant=Report/Active.png"
+                            InactiveImage="/Assets/ButtonIcons/PackageInfo/Variant=Report/Inactive.png" />
                     </TabItem.Tag>
                     <!--<local:PackageRouteControl Package="{Binding Package}" />-->
                 </TabItem>

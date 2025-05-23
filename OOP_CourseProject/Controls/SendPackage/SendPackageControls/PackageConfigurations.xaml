@@ -42,12 +42,12 @@
 
             <!-- Dimensions -->
             <StackPanel Grid.Row="1" Grid.Column="0" Margin="0,20,0,0">
-                <StackPanel Orientation="Horizontal">
+                <!--<StackPanel Orientation="Horizontal">
                     <TextBlock Text="Максимально допустимі габарити посилки:" FontSize="13" FontWeight="Medium" Margin="5,-5,0,0" Opacity="0.4" />
                     <TextBlock Text="100х100х100 см," FontSize="13" FontWeight="Medium" Margin="5,-5,0,0" Opacity="0.8" />
                     <TextBlock Text="вага:" FontSize="13" FontWeight="Medium" Margin="5,-5,0,0" Opacity="0.4" />
                     <TextBlock Text="50 кг" FontSize="13" FontWeight="Medium" Margin="5,-5,0,0" Opacity="0.8" />
-                </StackPanel>
+                </StackPanel>-->
                 <TextBox x:Name="Weight"
                          Style="{StaticResource PlaceholderTextBox}"
                          FontSize="16"

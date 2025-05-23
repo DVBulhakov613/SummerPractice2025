@@ -35,7 +35,7 @@ namespace Class_Lib.Backend.Database.Repositories
             if (user != null && user.HasPermission(AccessService.PermissionKey.ReadUser))
             {
                 await _context.Users
-                    .Where(u => roleIds.Contains(u.RoleID))
+                    .Where(u => u.RoleID != null && roleIds.Contains((uint)u.RoleID))
                     .LoadAsync();
             }
 

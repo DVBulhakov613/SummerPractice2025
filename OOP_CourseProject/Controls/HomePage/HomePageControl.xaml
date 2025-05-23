@@ -144,17 +144,17 @@
                                 <DataGridTextColumn Header="Пункт отримання" Binding="{Binding SentTo.GeoData.Region}" Width="*" />
                                 <DataGridTextColumn Header="Вага" Binding="{Binding Package.Weight}" Width="*" />
                                 <DataGridTextColumn Header="Ціна" Binding="{Binding Price}" Width="*" />
-                                <DataGridTextColumn Header="Оплачено?" Binding="{Binding Paid}" Width="*" />
+                                <DataGridTextColumn Header="Оплачено?" Binding="{Binding IsPaid}" Width="*" />
                             </DataGrid.Columns>
                         </DataGrid>
                     </Grid>
                 </Border>
                 
                 <!-- details panel -->
-                <Border Grid.Column="1"
+                <Border Grid.Column="1" Grid.Row="1"
                         Background="White" BorderBrush="LightGray" BorderThickness="1" CornerRadius="10"
-                        Padding="10">
-                    <packages:DeliveryInfoControl Delivery="{Binding SelectedItem}" />
+                        Padding="10" VerticalAlignment="Stretch">
+                    <packages:DeliveryInfoControl Delivery="{Binding SelectedItem}" VerticalAlignment="Stretch"/>
 
                     <!--<viewmodels:InfoControl InfoProvider="{Binding DataContext.SelectedInfoViewModel, RelativeSource={RelativeSource AncestorType=UserControl}}" />-->
                 </Border>

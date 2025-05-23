@@ -95,7 +95,8 @@
               Height="4"/>
         </Border>
     </ControlTemplate>
-
+    
+    
 
     <!-- style for combo boxes -->
     <Style TargetType="ComboBox" x:Key="ModernComboBox">

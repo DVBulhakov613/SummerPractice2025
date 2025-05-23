@@ -6,8 +6,7 @@
              xmlns:local="clr-namespace:OOP_CourseProject.Controls.PackageInfo"
              xmlns:viewmodels="clr-namespace:OOP_CourseProject.Controls.ViewModel"
              xmlns:controls="clr-namespace:OOP_CourseProject.Controls"
-             mc:Ignorable="d" 
-             Height="Auto" Width="Auto">
+             mc:Ignorable="d" Height="Auto" Width="Auto">
     <Grid>
         <Grid.RowDefinitions>
             <RowDefinition Height="Auto"/>
@@ -23,18 +22,6 @@
 
         <!-- Buttons -->
         <Grid Grid.Row="1" HorizontalAlignment="Stretch" MaxWidth="500">
-
-            <!--<Button Grid.Column="0" Padding="0" Margin="0">
-                <Image Source="/Assets/ButtonIcons/PackageInfo/Variant=FullInfo/Active.png" Stretch="Uniform"/>
-            </Button>
-
-            <Button Grid.Column="1" Padding="0" Margin="0">
-                <Image Source="/Assets/ButtonIcons/PackageInfo/Variant=Path/Inactive.png" Stretch="Uniform"/>
-            </Button>
-
-            <Button Grid.Column="2" Padding="0" Margin="0">
-                <Image Source="/Assets/ButtonIcons/PackageInfo/Variant=Log/Inactive.png" Stretch="Uniform"/>
-            </Button>-->
 
             <!-- Tabs -->
             <TabControl Grid.Row="1" Style="{StaticResource UniformTabControlStyle}">

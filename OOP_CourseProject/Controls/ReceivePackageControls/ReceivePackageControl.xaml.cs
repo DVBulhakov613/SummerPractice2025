@@ -54,8 +54,11 @@ namespace OOP_CourseProject.Controls.ReceivePackageControls
 
         private async void ReceiveButton_Click(object sender, RoutedEventArgs e)
         {
-            if (ViewModel.SelectedItem is not Delivery delivery || delivery.Package.PackageStatus != PackageStatus.IN_TRANSIT)
-                return;
+            if (ViewModel.SelectedItem is not Delivery delivery || delivery.Package.PackageStatus != PackageStatus.IN_TRANSIT || delivery.Package.PackageStatus == PackageStatus.DELIVERED)
+            { 
+                MessageBox.Show("Доставку не може бути отримано коли вона вже доставлена.", "Помилка", MessageBoxButton.OK, MessageBoxImage.Error);
+                return; 
+            }
 
             delivery.Package.PackageStatus = PackageStatus.RECEIVED;
             await DeliveryMethods.UpdateAsync(App.CurrentEmployee, delivery);
@@ -64,7 +67,7 @@ namespace OOP_CourseProject.Controls.ReceivePackageControls
 
         private async void DeliverButton_Click(object sender, RoutedEventArgs e)
         {
-            if (ViewModel.SelectedItem is not Delivery delivery || delivery.Package.PackageStatus != PackageStatus.RECEIVED)
+            if (ViewModel.SelectedItem is not Delivery delivery || delivery.Package.PackageStatus != PackageStatus.RECEIVED || delivery.Package.PackageStatus != PackageStatus.DELIVERED)
                 return;
 
             delivery.Package.PackageStatus = PackageStatus.DELIVERED;
@@ -74,10 +77,18 @@ namespace OOP_CourseProject.Controls.ReceivePackageControls
 
         private async void RefreshButton_Click(object sender, RoutedEventArgs e)
         {
+            if (App.CurrentEmployee.Employee.Workplace == null) 
+            { 
+                ViewModel.UpdateItems(await DeliveryMethods.GetByCriteriaAsync(App.CurrentEmployee, p => p.ID > 0));
+                return;
+            }
             var deliveries = await DeliveryMethods.GetByCriteriaAsync(
                 App.CurrentEmployee,
-                p => p.SentToID == App.CurrentEmployee.Employee.Workplace.ID &&
-                     (p.Package.PackageStatus == PackageStatus.IN_TRANSIT || p.Package.PackageStatus == PackageStatus.RECEIVED)
+                p =>
+                p.SentToID == App.CurrentEmployee.Employee.Workplace.ID &&
+                (p.Package.PackageStatus == PackageStatus.IN_TRANSIT ||
+                p.Package.PackageStatus == PackageStatus.RECEIVED)
+
             );
             ViewModel.UpdateItems(deliveries);
         }
