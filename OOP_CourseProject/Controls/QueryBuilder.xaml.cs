@@ -39,6 +39,7 @@ namespace OOP_CourseProject.Controls
         //}
 
         // commit comment (for a dummy commit)
+        // commit comment (for a dummy commit)
 
         public QueryBuilder()
         {
