@@ -6,6 +6,7 @@ using System.Threading.Tasks;
 
 namespace OOP_CourseProject.Controls
 {
+    // another comment because i need more commits
     public class TabImageSet
     {
         public string ActiveImage { get; set; }
