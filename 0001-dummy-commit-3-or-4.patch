@@ -1,0 +1,24 @@
+From 9889c16aa09e0d9b24c0780969de9ff7ee23ccde Mon Sep 17 00:00:00 2001
+From: Bulhakov Danylo <glukoza142@gmail.com>
+Date: Tue, 8 Jul 2025 13:28:20 +0300
+Subject: [PATCH] dummy commit #3 or 4
+
+---
+ OOP_CourseProject/Controls/TabImageSet.cs | 1 +
+ 1 file changed, 1 insertion(+)
+
+diff --git a/OOP_CourseProject/Controls/TabImageSet.cs b/OOP_CourseProject/Controls/TabImageSet.cs
+index 3623c81..198650e 100644
+--- a/OOP_CourseProject/Controls/TabImageSet.cs
++++ b/OOP_CourseProject/Controls/TabImageSet.cs
+@@ -6,6 +6,7 @@ using System.Threading.Tasks;
+ 
+ namespace OOP_CourseProject.Controls
+ {
++    // another comment because i need more commits
+     public class TabImageSet
+     {
+         public string ActiveImage { get; set; }
+-- 
+2.47.0.windows.1
+
