@@ -15,6 +15,7 @@ namespace OOP_CourseProject
     /// </summary>
     public class EnumDescriptionConverter : IValueConverter
     {
+        // there is now a comment here
         public object Convert(object value, Type targetType, object parameter, CultureInfo culture)
         {
             if (value is Enum enumValue)
