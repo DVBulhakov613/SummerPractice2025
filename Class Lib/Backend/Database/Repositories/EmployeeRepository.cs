@@ -1,4 +1,5 @@
 ﻿using Class_Lib.Backend.Database;
+using Class_Lib.Backend.Database.Interfaces;
 using Class_Lib.Backend.Package_related.enums;
 using Class_Lib.Backend.Person_related;
 using Class_Lib.Backend.Services;
@@ -12,7 +13,7 @@ using System.Threading.Tasks;
 
 namespace Class_Lib.Database.Repositories
 {
-    public class EmployeeRepository : Repository<Employee>
+    public class EmployeeRepository : Repository<Employee>, IEmployeeRepository
     {
         public EmployeeRepository(AppDbContext context, User user) : base(context, user) { }
 

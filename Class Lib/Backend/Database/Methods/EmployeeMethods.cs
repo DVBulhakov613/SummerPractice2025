@@ -5,147 +5,101 @@ using System.Collections.Generic;
 using System.Linq.Expressions;
 using System.Threading.Tasks;
 using Class_Lib.Database.Repositories;
-using System.Reflection.Metadata.Ecma335;
-using Class_Lib.Backend.Database.Repositories;
+using Class_Lib.Backend.Database.Interfaces;
 
 namespace Class_Lib.Backend.Person_related.Methods
 {
     public class EmployeeMethods
     {
-        private readonly EmployeeRepository _employeeRepository;
-        private readonly RoleRepository _roleRepository;
-        private readonly RoleService _roleService;
+        private readonly IEmployeeRepository _employeeRepository;
+        private readonly IRoleRepository _roleRepository;
+        private readonly IRoleService _roleService;
 
-        public EmployeeMethods(EmployeeRepository employeeRepository, RoleRepository roleRepository, RoleService roleService)
+        public EmployeeMethods(IEmployeeRepository employeeRepository, IRoleRepository roleRepository, IRoleService roleService)
         {
             _employeeRepository = employeeRepository;
             _roleRepository = roleRepository;
             _roleService = roleService;
         }
 
-
         // Create
         public async Task AddAsync(User user, Employee employee)
         {
-            if (!user.HasPermission(AccessService.PermissionKey.CreateEmployee))
+            await AccessService.ExecuteIfPermittedAsync(user, AccessService.PermissionKey.CreateEmployee, async () =>
             {
-                throw new UnauthorizedAccessException("Немає доступу до створення працівника.");
-            }
-
-            await _employeeRepository.AddAsync(employee);
+                await _employeeRepository.AddAsync(employee);
+            });
         }
-
 
         // Read
         public async Task<IEnumerable<Employee>> GetByCriteriaAsync(User user, Expression<Func<Employee, bool>> filter)
         {
-            if (!user.HasPermission(AccessService.PermissionKey.ReadEmployee))
-            {
-                throw new UnauthorizedAccessException("Немає доступу до перегляду працівників.");
-            }
-
+            await AccessService.ExecuteIfPermittedAsync(user, AccessService.PermissionKey.ReadEmployee, async () => { });
             return await _employeeRepository.GetByCriteriaAsync(filter);
         }
 
         // Update
         public async Task UpdateAsync(User user, Employee updatedEmployee)
         {
-            if (!user.HasPermission(AccessService.PermissionKey.UpdateEmployee))
+            await AccessService.ExecuteIfPermittedAsync(user, AccessService.PermissionKey.UpdateEmployee, async () =>
             {
-                throw new UnauthorizedAccessException("Немає доступу до оновлення працівника.");
-            }
+                var existingEmployee = await _employeeRepository.GetByIdAsync(updatedEmployee.ID)
+                    ?? throw new KeyNotFoundException("Працівника не знайдено.");
 
-            var existingEmployee = await _employeeRepository.GetByIdAsync(updatedEmployee.ID);
-            if (existingEmployee == null)
-            {
-                throw new KeyNotFoundException("Працівника не знайдено.");
-            }
+                existingEmployee.UpdateDetails(updatedEmployee);
 
-            existingEmployee.Workplace = updatedEmployee.Workplace;
-            existingEmployee.PhoneNumber = updatedEmployee.PhoneNumber;
-            existingEmployee.Email = updatedEmployee.Email;
-
-            await _employeeRepository.UpdateAsync(existingEmployee);
+                await _employeeRepository.UpdateAsync(existingEmployee);
+            });
         }
 
         // Delete
         public async Task DeleteAsync(User user, Employee employeeToDelete)
         {
-            if (!user.HasPermission(AccessService.PermissionKey.DeleteEmployee))
+            await AccessService.ExecuteIfPermittedAsync(user, AccessService.PermissionKey.DeleteEmployee, async () =>
             {
-                throw new UnauthorizedAccessException("Немає доступу до видалення працівника.");
-            }
-
-            if(employeeToDelete.User == null || employeeToDelete.User.Role == null)
-            {
-                throw new ArgumentNullException("Роль працівника не знайдена.");
-            }
-
-            if (employeeToDelete.User.Role.Name == "Системний Адміністратор")
-            {
-                // use the repository to count administrators
-                var adminCount = await _employeeRepository.GetAdministratorCountAsync();
-                if (adminCount <= 1)
+                if (employeeToDelete.IsSystemAdministrator())
                 {
-                    throw new InvalidOperationException("Не можна видалити останнього адміністратора системи.");
+                    var adminCount = await _employeeRepository.GetAdministratorCountAsync();
+                    if (adminCount <= 1)
+                        throw new InvalidOperationException("Не можна видалити останнього адміністратора системи.");
                 }
-            }
 
-            await _employeeRepository.DeleteAsync(employeeToDelete);
+                await _employeeRepository.DeleteAsync(employeeToDelete);
+            });
         }
 
-        // Employee-Specific Methods
-
-        // switches out permission list to manager's
+        // Promote to Manager
         public async Task PromoteToManagerAsync(User user, Employee employeeToUpdate, List<BaseLocation> managedLocations)
         {
-            if (!user.HasPermission(AccessService.PermissionKey.UpdateEmployee))
-                throw new UnauthorizedAccessException("Немає доступу до підвищення працівника.");
+            await AccessService.ExecuteIfPermittedAsync(user, AccessService.PermissionKey.UpdateEmployee, async () =>
+            {
+                var existingEmployee = await _employeeRepository.GetByIdAsync(employeeToUpdate.ID)
+                    ?? throw new KeyNotFoundException("Працівника не знайдено.");
+                var managerRole = await _roleRepository.GetRoleByNameAsync("Менеджер")
+                    ?? throw new KeyNotFoundException("Роль менеджера не знайдена.");
 
-            var existingEmployee = await _employeeRepository.GetByIdAsync(employeeToUpdate.ID) ?? throw new KeyNotFoundException("Працівника не знайдено.");
-            var managerRole = await _roleRepository.GetRoleByNameAsync("Менеджер") ?? throw new KeyNotFoundException("Роль менеджера не знайдена.");
-            
-            if (existingEmployee.User != null && existingEmployee.User.RoleID == managerRole.ID)
-                throw new ArgumentException("Працівник вже є менеджером.");
+                existingEmployee.PromoteToManager(managerRole, managedLocations);
 
-            existingEmployee.User ??= new User($"{existingEmployee.FirstName}.{existingEmployee.Surname}", PasswordHelper.HashPassword("defaultpassword"), managerRole, existingEmployee);
-
-            existingEmployee.User.RoleID = managerRole.ID;
-            existingEmployee.User.Role = managerRole;
-
-            existingEmployee.ManagedLocations = managedLocations;
-
-            await _roleService.CachePermissionsAsync(existingEmployee.User);
-
-            await _employeeRepository.UpdateAsync(existingEmployee);
+                await _roleService.CachePermissionsAsync(existingEmployee.User);
+                await _employeeRepository.UpdateAsync(existingEmployee);
+            });
         }
 
-
-        // switches out permission list to administrator's
+        // Promote to Administrator
         public async Task PromoteToAdministratorAsync(User user, Employee employeeToUpdate)
         {
-            if (!user.HasPermission(AccessService.PermissionKey.UpdateEmployee))
-                throw new UnauthorizedAccessException("Немає доступу до підвищення працівника.");
+            await AccessService.ExecuteIfPermittedAsync(user, AccessService.PermissionKey.UpdateEmployee, async () =>
+            {
+                var existingEmployee = await _employeeRepository.GetByIdAsync(employeeToUpdate.ID)
+                    ?? throw new KeyNotFoundException("Працівника не знайдено.");
+                var adminRole = await _roleRepository.GetRoleByNameAsync("Системний Адміністратор")
+                    ?? throw new KeyNotFoundException("Роль адміністратора не знайдена.");
 
-            var existingEmployee = await _employeeRepository.GetByIdAsync(employeeToUpdate.ID);
-            if (existingEmployee == null)
-                throw new KeyNotFoundException("Працівника не знайдено.");
+                existingEmployee.PromoteToAdministrator(adminRole);
 
-            var adminRole = await _roleRepository.GetRoleByNameAsync("Системний Адміністратор");
-            if (adminRole == null)
-                throw new KeyNotFoundException("Роль адміністратора не знайдена.");
-
-            if (existingEmployee.User != null && existingEmployee.User.RoleID == adminRole.ID)
-                throw new ArgumentException("Працівник вже є адміністратором.");
-
-            if (existingEmployee.User == null)
-                existingEmployee.User = new User($"{existingEmployee.FirstName}.{existingEmployee.Surname}", PasswordHelper.HashPassword("defaultpassword"), adminRole, existingEmployee);
-
-            existingEmployee.User.RoleID = adminRole.ID;
-
-            await _roleService.CachePermissionsAsync(existingEmployee.User);
-
-            await _employeeRepository.UpdateAsync(existingEmployee);
+                await _roleService.CachePermissionsAsync(existingEmployee.User);
+                await _employeeRepository.UpdateAsync(existingEmployee);
+            });
         }
     }
 }

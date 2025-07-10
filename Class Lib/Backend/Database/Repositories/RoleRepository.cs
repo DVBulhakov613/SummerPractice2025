@@ -1,4 +1,5 @@
-﻿using Class_Lib.Backend.Services;
+﻿using Class_Lib.Backend.Database.Interfaces;
+using Class_Lib.Backend.Services;
 using Microsoft.EntityFrameworkCore;
 using System;
 using System.Collections.Generic;
@@ -9,7 +10,7 @@ using System.Threading.Tasks;
 
 namespace Class_Lib.Backend.Database.Repositories
 {
-    public class RoleRepository : Repository<Role>
+    public class RoleRepository : Repository<Role>, IRoleRepository
     {
         public RoleRepository(AppDbContext context) : base(context)
         { }
@@ -42,14 +43,14 @@ namespace Class_Lib.Backend.Database.Repositories
             return roles;
         }
 
-        public Task<Role> GetRoleByIdAsync(uint roleId)
+        public async Task<Role> GetRoleByIdAsync(uint roleId)
         {
-            return _context.Roles.FirstOrDefaultAsync(r => r.ID == roleId);
+            return await _context.Roles.FirstOrDefaultAsync(r => r.ID == roleId);
         }
 
-        public Task<Role> GetRoleByNameAsync(string roleName)
+        public async Task<Role> GetRoleByNameAsync(string roleName)
         {
-            return _context.Roles.FirstOrDefaultAsync(r => r.Name == roleName);
+            return await _context.Roles.FirstOrDefaultAsync(r => r.Name == roleName);
         }
     }
 }

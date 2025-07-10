@@ -42,5 +42,42 @@ namespace Class_Lib
             if (managedLocations != null)
                 ManagedLocations = managedLocations;
         }
+
+        public void PromoteToManager(Role managerRole, List<BaseLocation> managedLocations)
+        {
+            if (User == null)
+                User = new User($"{FirstName}.{Surname}", PasswordHelper.HashPassword("defaultpassword"), managerRole, this);
+
+            if (User.RoleID == managerRole.ID)
+                throw new ArgumentException("Працівник вже є менеджером.");
+
+            User.RoleID = managerRole.ID;
+            User.Role = managerRole;
+            ManagedLocations = managedLocations;
+        }
+
+        public void PromoteToAdministrator(Role adminRole)
+        {
+            if (User == null)
+                User = new User($"{FirstName}.{Surname}", PasswordHelper.HashPassword("defaultpassword"), adminRole, this);
+
+            if (User.RoleID == adminRole.ID)
+                throw new ArgumentException("Працівник вже є адміністратором.");
+
+            User.RoleID = adminRole.ID;
+            User.Role = adminRole;
+        }
+
+        public void UpdateDetails(Employee updated)
+        {
+            Workplace = updated.Workplace;
+            PhoneNumber = updated.PhoneNumber;
+            Email = updated.Email;
+        }
+
+        public bool IsSystemAdministrator()
+        {
+            return User?.Role?.Name == "Системний Адміністратор";
+        }
     }
 }

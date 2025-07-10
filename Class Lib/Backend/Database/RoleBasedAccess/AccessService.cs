@@ -1,9 +1,7 @@
 ﻿using Class_Lib.Backend.Package_related;
 using Class_Lib.Backend.Person_related;
-using Microsoft.EntityFrameworkCore;
 using System;
 using System.Collections.Generic;
-using System.Data;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -118,32 +116,30 @@ namespace Class_Lib.Backend.Services
             return employee.CachedPermissions.Contains(permissionKey);
         }
 
-        // assign default permissions based on role
-        //public static async Task AssignRolePermissionsAsync(Employee employee, AppDbContext context)
-        //{
-        //    if (employee.RoleID == 0)
-        //        throw new InvalidOperationException("Працівник не має ролі.");
+        public static bool CanPerformAction(User employee, PermissionKey permissionKey)
+        {
+            return CanPerformAction(employee, (int)permissionKey);
+        }
 
-        //    // Load permissions from the RolePermissions table
-        //    var permissions = await context.RolePermissions
-        //        .Where(rp => rp.RoleID == employee.RoleID)
-        //        .Select(rp => rp.PermissionID)
-        //        .ToListAsync();
+        public static async Task ExecuteIfPermittedAsync(User user, PermissionKey permission, Func<Task> action)
+        {
+            if (user == null)
+                throw new UnauthorizedAccessException("Користувач не авторизований.");
+            if (!user.HasPermission(permission))
+                throw new UnauthorizedAccessException("Немає дозволу на цю дію.");
 
-        //    employee.Permissions = permissions.Select(p => (int)p).ToList();
-        //}
+            await action();
+        }
 
-        //public static void AssignRolePermissions(Employee employee, string role)
-        //{
-        //    if (RolePermissions.TryGetValue(role, out var permissions))
-        //    {
-        //        employee.Permissions = permissions.Select(p => (int)p).ToList();
-        //    }
-        //    else
-        //    {
-        //        throw new ArgumentException($"Роль '{role}' не існує.");
-        //    }
-        //}
+        public static void ExecuteIfPermitted(User user, PermissionKey permission, Action action)
+        {
+            if (user == null)
+                throw new UnauthorizedAccessException("Користувач не авторизований.");
+            if (!user.HasPermission(permission))
+                throw new UnauthorizedAccessException("Немає дозволу на цю дію.");
+
+            action();
+        }
 
         public static PermissionKey? GetReadPermissionForType(Type entityType)
         {
@@ -169,66 +165,6 @@ namespace Class_Lib.Backend.Services
 
                 _ => null
             };
-        }
-    }
-
-    /// <summary>
-    /// Represents a role in the system.
-    /// </summary>
-    public class Role
-    {
-        public uint ID { get; set; }
-        public string Name { get; set; }
-
-        public ICollection<RolePermission> RolePermissions { get; set; }
-        public ICollection<User> Users { get; set; }
-    }
-
-    /// <summary>
-    /// Represents a many-to-many relationship between roles and permissions.
-    /// </summary>
-    public class RolePermission
-    {
-        public uint RoleID { get; set; }
-        public uint PermissionID { get; set; }
-
-        public Role Role { get; set; }
-        public Permission Permission { get; set; }
-    }
-
-    /// <summary>
-    /// Represents a permission in the system.
-    /// </summary>
-    public class  Permission
-    {
-        public uint ID { get; set; }
-        public string Name { get; set; }
-
-        public ICollection<RolePermission> RolePermissions { get; set; }
-    }
-
-
-
-    public class RoleService
-    {
-        private readonly AppDbContext _context;
-
-        public RoleService(AppDbContext context)
-        {
-            _context = context;
-        }
-
-        public async Task CachePermissionsAsync(User employee)
-        {
-            if (employee.Role == null || employee.RoleID == 0)
-                throw new InvalidOperationException("Працівник не має ролі.");
-
-            var permissions = await _context.RolePermissions
-                .Where(rp => rp.RoleID == employee.RoleID)
-                .Select(rp => rp.PermissionID)
-                .ToListAsync();
-
-            employee.CachedPermissions = permissions.Select(p => (int)p).ToList();
         }
     }
 }
